@@ -5,8 +5,7 @@ permalink: /signals/signal-01/
 ---
 
 # Signal 1
-
-![Signal 1]({{ "/assets/images/TF001_Percolation.pdf" | relative_url }})
+![Signal 1](../assets/images/TF001_Percolation.pdf)
 
 ## Overview
 
