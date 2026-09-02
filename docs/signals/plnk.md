@@ -1,9 +1,3 @@
-
----
-layout: default
-title: Planck
----
-
 # Planck
 
 ## Overview
