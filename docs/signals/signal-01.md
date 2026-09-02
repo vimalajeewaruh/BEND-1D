@@ -1,6 +1,4 @@
 # Percolation
-![Percolation](../assets/images/TF001_Percolation.pdf)
-
 ## Overview
 
 The **Percolation** signal represents a critical onset occurring at a
@@ -59,6 +57,8 @@ $$
 The signal is consequently continuous at $x=p_c$, but it has an
 unbounded right derivative at that point. Thus, $p_c$ is a derivative
 singularity rather than a jump discontinuity.
+
+![Percolation](../assets/images/TF001_Percolation.png)
 
 ## Morphological Characteristics
 
