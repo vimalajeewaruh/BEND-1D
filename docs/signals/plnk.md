@@ -6,8 +6,6 @@ title: Planck
 
 # Planck
 
-![Planck signal](../assets/images/TF002_Planck.png)
-
 ## Overview
 
 The **Planck** signal is a dimensionless representation of a black-body
@@ -72,6 +70,8 @@ x\approx
 
 Thus, the spectral maximum occurs before the midpoint of the domain,
 producing the characteristic asymmetric shape and long right tail.
+
+![Planck signal](../assets/images/TF002_Planck.png)
 
 ## Morphological Characteristics
 
