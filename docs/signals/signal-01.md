@@ -1,5 +1,5 @@
 # Percolation
-![Signal 1](../assets/images/TF001_Percolation.pdf)
+![Percolation](../assets/images/TF001_Percolation.pdf)
 
 ## Overview
 
