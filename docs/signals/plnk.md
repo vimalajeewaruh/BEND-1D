@@ -6,7 +6,7 @@ title: Planck
 
 # Planck
 
-![Planck signal](../assets/images/TF002_Plank.png)
+![Planck signal](../assets/images/TF002_Planck.png)
 
 ## Overview
 
