@@ -16,7 +16,7 @@ f(x) ={}
 \right\}.
 ```
 
-[View ActionPotential signal](../assets/images/TF013_ActionPotential.png)
+[View ActionPotential signal](../../assets/images/TF013_ActionPotential.png)
 
 ## Morphological Characteristics
 
