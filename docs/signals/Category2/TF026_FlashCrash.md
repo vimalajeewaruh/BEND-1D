@@ -1,41 +1,18 @@
----
-layout: default
-title: TF026 — FlashCrash
----
-
-# TF026 — FlashCrash
-
-![FlashCrash signal](../assets/images/TF026_FlashCrash.png)
-
-## Overview
+# FlashCrash
 
 The **FlashCrash** signal combines an almost instantaneous market loss, partial exponential recovery, and a localized high-frequency volatility burst. A slowly varying baseline is retained throughout the interval.
 
 ## Mathematical Definition
 
-Define the baseline
+Define the baseline $b(x)=1+0.12\sqrt{x+0.02}+0.025\sin(10\pi x)$ and let $x_c=0.58$. 
 
-$$
-b(x)=1+0.12\sqrt{x+0.02}+0.025\sin(10\pi x)
-$$
-
-and let $x_c=0.58$. The crash component is
+The crash component is
 
 $$
 D(x)=-0.31\left[1+\tanh\{180(x-x_c)\}\right].
 $$
 
-For $x\geq x_c$, define the recovery
-
-$$
-R(x)=0.48\left[1-e^{-22(x-x_c)}\right]
-$$
-
-and the volatility burst
-
-$$
-V(x)=0.09e^{-10(x-x_c)}\sin\{65\pi(x-x_c)\}.
-$$
+For $x\geq x_c$, define the recovery $R(x)=0.48\left[1-e^{-22(x-x_c)}\right]$ and the volatility burst $V(x)=0.09e^{-10(x-x_c)}\sin\{65\pi(x-x_c)\}.$
 
 The complete signal is
 
@@ -44,6 +21,8 @@ f(x)=
 b(x)+D(x)
 +\mathbf{1}_{\{x\geq x_c\}}\left[R(x)+V(x)\right].
 $$
+
+[View FlashCrash signal](../../assets/images/TF026_FlashCrash.png)
 
 ## Morphological Characteristics
 
