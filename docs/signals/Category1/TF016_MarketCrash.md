@@ -1,13 +1,4 @@
----
-layout: default
-title: TF016 — MarketCrash
----
-
 # TF016 — MarketCrash
-
-![MarketCrash signal](../assets/images/TF016_MarketCrash.png)
-
-## Overview
 
 The **MarketCrash** signal combines a speculative precursor, accelerating log-periodic oscillations, an abrupt crash, and an asymmetric recovery. It deliberately places several different morphologies in one record.
 
@@ -16,10 +7,7 @@ The **MarketCrash** signal combines a speculative precursor, accelerating log-pe
 Let the crash time be $x_c=0.72$. Before the crash,
 
 $$
-f(x)
-=
-1.50
--
+f(x)= 1.50 -
 0.80(x_c-x)^{0.42}
 \left[
 1+
@@ -32,8 +20,7 @@ At $x=x_c$, the signal drops to $0.92$. After the crash,
 
 $$
 f(x)
-=
-0.92
+= 0.92
 +
 0.42
 \left[
@@ -43,6 +30,8 @@ f(x)
 $$
 
 As $x$ approaches $x_c$ from the left, the oscillations become increasingly rapid while their modulation is multiplied by the shrinking power-law factor $(x_c-x)^{0.42}$.
+
+[View MarketCrash signal](../assets/images/TF016_MarketCrash.png)
 
 ## Morphological Characteristics
 
