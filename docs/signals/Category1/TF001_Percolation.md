@@ -32,7 +32,7 @@ $$
 
 Because $0<\beta<1$, the signal is continuous at $p_c$, but its right derivative becomes unbounded as $x\downarrow p_c$.
 
-[View Percolation signal](../assets/images/TF001_Percolation.png)
+[View Percolation signal](../../assets/images/TF001_Percolation.png)
 
 ## Morphological Characteristics
 
