@@ -1,31 +1,10 @@
----
-layout: default
-title: TF024 — MuscleTwitch
----
-
-# TF024 — MuscleTwitch
-
-![MuscleTwitch signal](../assets/images/TF024_MuscleTwitch.png)
-
-## Overview
+# MuscleTwitch
 
 The **MuscleTwitch** signal is a sum of six causal asymmetric pulses with irregular onset times, amplitudes, and time constants. Several pulses overlap, producing a nonstationary biological waveform with changing local scale.
 
 ## Mathematical Definition
 
-For onset time $t_k$ and time constant $\tau_k$, define
-
-$$
-u_k(x)=\frac{x-t_k}{\tau_k}
-$$
-
-and
-
-$$
-g_k(x)=
-A_k u_k(x)e^{1-u_k(x)}
-\mathbf{1}_{\{u_k(x)\geq0\}}.
-$$
+For onset time $t_k$ and time constant $\tau_k$, define $u_k(x)=\frac{x-t_k}{\tau_k}$ and $g_k(x)=A_k u_k(x)e^{1-u_k(x)}\mathbf{1}_{\{u_k(x)\geq0\}}.$
 
 The complete signal is
 
@@ -33,21 +12,9 @@ $$
 f(x)=\sum_{k=1}^{6}g_k(x),
 $$
 
-with
+with $t=(0.10,0.24,0.39,0.44,0.67,0.83)$, $A=(0.70,1.00,0.55,0.85,1.15,0.65),$ and $\tau=(0.035,0.050,0.028,0.042,0.060,0.032).$
 
-$$
-t=(0.10,0.24,0.39,0.44,0.67,0.83),
-$$
-
-$$
-A=(0.70,1.00,0.55,0.85,1.15,0.65),
-$$
-
-and
-
-$$
-\tau=(0.035,0.050,0.028,0.042,0.060,0.032).
-$$
+[View MuscleTwitch signal](../assets/images/TF024_MuscleTwitch.png)
 
 ## Morphological Characteristics
 
