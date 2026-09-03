@@ -1,11 +1,4 @@
----
-layout: default
-title: TF004 — RingDown
----
-
-# TF004 — RingDown
-
-![RingDown signal](../assets/images/TF004_RingDown.png)
+# RingDown
 
 ## Overview
 
@@ -13,15 +6,15 @@ The **RingDown** signal is a localized underdamped response beginning at $x=0.28
 
 ## Mathematical Definition
 
-$$
-f(x)
-=
+$$f(x)=
 I(x\geq0.28)
-\exp\{-7(x-0.28)\}
-\sin\{32\pi(x-0.28)\},
+\exp[-7(x-0.28)]
+\sin[32\pi(x-0.28)],
 $$
 
 where $I(\cdot)$ is the indicator function.
+
+[View RingDown signal](../assets/images/TF004_RingDown.png)
 
 ## Morphological Characteristics
 
