@@ -1,6 +1,4 @@
-# Signal Category 01: Physically motivated library of test functions
-
-The following table summarizes 16 different signals.
+# Signal Category 01: Physically Motivated Library of Test Signals
 
 | ID | Signal |  Primary morphology |
 |---|---|---|
@@ -21,4 +19,6 @@ The following table summarizes 16 different signals.
 | TF015 | [VanHove](TF015_VanHove.md) |  Regularized near-singularity |
 | TF016 | [MarketCrash](TF016_MarketCrash.md) | Composite structural change |
 
-[Use in Denoising Experiments](denoising-experiments.md)
+---
+
+[Use of these signals in Denoising Experiments](denoising-experiments.md)
