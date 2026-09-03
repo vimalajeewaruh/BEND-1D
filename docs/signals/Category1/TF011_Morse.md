@@ -17,7 +17,7 @@ D_e
 -D_e.
 $$
 
-[View Morse signal](../assets/images/TF011_Morse.png)
+[View Morse signal](../../assets/images/TF011_Morse.png)
 
 ## Morphological Characteristics
 
