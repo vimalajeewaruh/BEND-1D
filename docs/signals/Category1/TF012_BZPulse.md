@@ -1,14 +1,4 @@
----
-layout: default
-title: TF012 — BZPulse
----
-
-# TF012 — BZPulse
-
-![BZPulse signal](../assets/images/TF012_BZPulse.png)
-
-## Overview
-
+# BZPulse
 The **BZPulse** signal is a toy excitable chemical-reaction trace. Two logistic components create a rapid autocatalytic rise and slower depletion phase, while a damped oscillatory term represents chemical relaxation.
 
 ## Mathematical Definition
@@ -16,18 +6,12 @@ The **BZPulse** signal is a toy excitable chemical-reaction trace. Two logistic 
 Let $u=x-0.55$. Then
 
 $$
-\begin{aligned}
-f(x)
-={}&
-\frac{1}{1+\exp\{-100(x-0.25)\}}
--
-\frac{1}{1+\exp\{-40(x-0.55)\}}\\
-&+
-0.20I(x\geq0.55)e^{-9u}\sin(45\pi u),
-\end{aligned}
+f(x)=\frac{1}{1+\exp\{-100(x-0.25)\}}-\frac{1}{1+\exp\{-40(x-0.55)\}}+ 0.20I(x\geq0.55)e^{-9u}\sin(45\pi u),
 $$
 
 where $I(\cdot)$ is the indicator function.
+
+[View BZPulse signal](../assets/images/TF012_BZPulse.png)
 
 ## Morphological Characteristics
 
