@@ -6,17 +6,7 @@ The **StickSlip** signal models repeated linear loading followed by abrupt relea
 
 ## Mathematical Definition
 
-Let the break points and loading amplitudes be
-
-$$
-b=(0,0.16,0.34,0.52,0.73,1)
-$$
-
-and
-
-$$
-h=(0.80,1.15,0.75,1.35,0.95).
-$$
+Let the break points and loading amplitudes be $b=(0,0.16,0.34,0.52,0.73,1)$ and $h=(0.80,1.15,0.75,1.35,0.95).$
 
 For $k=1,\ldots,5$,
 
