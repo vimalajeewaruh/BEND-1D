@@ -1,11 +1,4 @@
----
-layout: default
-title: TF005 — DiffusionBand
----
-
-# TF005 — DiffusionBand
-
-![DiffusionBand signal](../assets/images/TF005_DiffusionBand.png)
+# DiffusionBand
 
 ## Overview
 
@@ -29,6 +22,8 @@ f(x)
 \right)
 \right\}.
 $$
+
+[View DiffusionBand signal](../assets/images/TF005_DiffusionBand.png)
 
 ## Morphological Characteristics
 
