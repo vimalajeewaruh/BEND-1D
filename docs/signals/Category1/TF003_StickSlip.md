@@ -1,7 +1,5 @@
 # StickSlip
 
-## Overview
-
 The **StickSlip** signal models repeated linear loading followed by abrupt release. It is a deterministic sawtooth-like waveform motivated by frictional stress accumulation, fault slip, and atomic-force microscope loading traces.
 
 ## Mathematical Definition
