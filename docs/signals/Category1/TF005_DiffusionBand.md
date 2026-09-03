@@ -6,22 +6,20 @@ The **DiffusionBand** signal represents a finite band bounded by two smooth diff
 
 ## Mathematical Definition
 
-$$
-f(x)
-=
+```math
+f(x)=
 \frac{1}{2}
 \left\{
-\operatorname{erf}
+\mathrm{erf}
 \left(
 \frac{x-0.28}{0.025}
 \right)
--
-\operatorname{erf}
+-\mathrm{erf}
 \left(
 \frac{x-0.72}{0.070}
 \right)
 \right\}.
-$$
+```
 
 [View DiffusionBand signal](../assets/images/TF005_DiffusionBand.png)
 
