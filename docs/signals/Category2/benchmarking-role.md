@@ -6,16 +6,16 @@ The second BEND-1D module deliberately mixes several regularity classes. Many si
 
 | Signal | Benchmarking role |
 |---|---|
-| Klatno | Localized smooth transition with weak oscillations |
-| Cantilever | Multimode smooth structure with a slope defect |
-| WaterHammer | Front with damped resonance |
-| ThermalRunaway | Accelerating trend, instability, and quench |
-| Diffraction | Dominant peak, fringes, and weak satellite |
-| Titration | Multiple unequal transitions with a shoulder |
-| RabiChirp | Chirp with decaying amplitude |
-| MuscleTwitch | Irregular overlapping causal pulses |
-| Platinum5Y | Empirical multiscale market structure |
-| FlashCrash | Structural break, rebound, and transient burst |
+| [Klatno](TF017_Klatno.md) | Localized smooth transition with weak oscillations |
+| [Cantilever](TF018_Cantilever.md) | Multimode smooth structure with a slope defect |
+| [WaterHammer](TF019_WaterHammer.md) | Front with damped resonance |
+| [ThermalRunaway](TF020_ThermalRunaway.md) | Accelerating trend, instability, and quench |
+| [Diffraction](TF021_Diffraction.md) | Dominant peak, fringes, and weak satellite |
+| [Titration](TF022_Titration.md) | Multiple unequal transitions with a shoulder |
+| [RabiChirp](TF023_RabiChirp.md) | Chirp with decaying amplitude |
+| [MuscleTwitch](TF024_MuscleTwitch.md) | Irregular overlapping causal pulses |
+| [Platinum5Y](TF025_Platinum5Y.md) | Empirical multiscale market structure |
+| [FlashCrash](TF026_FlashCrash.md) | Structural break, rebound, and transient burst |
 
 ## Power-SNR Normalization
 
