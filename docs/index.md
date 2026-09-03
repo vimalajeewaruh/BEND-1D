@@ -1,4 +1,4 @@
-# BEND-1D - Benchmark for Endpoint-Neutral Denoising in One Dimension
+# BEND-1D: Benchmark for Endpoint-Neutral Denoising in One Dimension
 
 We adopt the name **BEND-1D**, standing for **Benchmark for Endpoint-Neutral Denoising in One Dimension**. BEND-1D is a morphology-oriented benchmark bank for one-dimensional signal denoising.
 
