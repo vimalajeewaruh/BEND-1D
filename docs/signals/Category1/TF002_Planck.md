@@ -18,7 +18,7 @@ f(x)=
 {\exp\{2.5/\lambda(x)\}-1}.
 $$
 
-[View Planck signal](../assets/images/TF002_Planck.png)
+[View Planck signal](../../assets/images/TF002_Planck.png)
 
 ## Morphological Characteristics
 
