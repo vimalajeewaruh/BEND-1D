@@ -32,7 +32,7 @@ A_\ell
 
 where $o_\ell$ denotes the component offset.
 
-[View ECGBeat signal](../assets/images/TF014_ECGBeat.png)
+[View ECGBeat signal](../../assets/images/TF014_ECGBeat.png)
 
 > **Specification note:** The supplied definition states that two unequal beats are used but does not specify the two R-wave locations or their relative scale factors. These values must be fixed before the signal is frozen as a fully reproducible canonical benchmark.
 
