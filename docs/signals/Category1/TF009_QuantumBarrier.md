@@ -40,7 +40,7 @@ $$
 T(V_0)=\left(1+\frac{V_0a^2}{4}\right)^{-1}.
 $$
 
-[View QuantumBarrier signal](../assets/images/TF009_QuantumBarrier.png)
+[View QuantumBarrier signal](../../assets/images/TF009_QuantumBarrier.png)
 
 ## Morphological Characteristics
 
