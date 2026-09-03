@@ -1,4 +1,4 @@
-# TF016 — MarketCrash
+# MarketCrash
 
 The **MarketCrash** signal combines a speculative precursor, accelerating log-periodic oscillations, an abrupt crash, and an asymmetric recovery. It deliberately places several different morphologies in one record.
 
