@@ -11,7 +11,7 @@ $$
 
 where $I(\cdot)$ is the indicator function.
 
-[View BZPulse signal](../assets/images/TF012_BZPulse.png)
+[View BZPulse signal](../../assets/images/TF012_BZPulse.png)
 
 ## Morphological Characteristics
 
