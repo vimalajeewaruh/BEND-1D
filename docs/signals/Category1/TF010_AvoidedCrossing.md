@@ -1,7 +1,5 @@
 # AvoidedCrossing
 
-## Overview
-
 The **AvoidedCrossing** signal models the upper branch of two interacting energy levels. The gap parameter smooths a cusp-like crossing while retaining very large local curvature, making the signal a tunable near-singularity.
 
 ## Mathematical Definition
