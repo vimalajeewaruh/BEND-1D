@@ -14,7 +14,7 @@ f(x)=
 
 The logarithmic factor creates a sharp feature near $x=0.57$, and the factor $\sqrt{x(1-x)}$ forces $f(0)=f(1)=0$.
 
-[View VanHove signal](../assets/images/TF015_VanHove.png)
+[View VanHove signal](../../assets/images/TF015_VanHove.png)
 
 ## Morphological Characteristics
 
