@@ -1,11 +1,4 @@
----
-layout: default
-title: TF010 — AvoidedCrossing
----
-
-# TF010 — AvoidedCrossing
-
-![AvoidedCrossing signal](../assets/images/TF010_AvoidedCrossing.png)
+# AvoidedCrossing
 
 ## Overview
 
@@ -14,14 +7,15 @@ The **AvoidedCrossing** signal models the upper branch of two interacting energy
 ## Mathematical Definition
 
 $$
-f(x)
-=
+f(x)=
 \sqrt{4(x-0.52)^2+\Delta^2},
 \qquad
 \Delta=0.035.
 $$
 
 When $\Delta=0$, the signal becomes a cusp. A positive $\Delta$ creates a smooth avoided crossing with minimum value $f(0.52)=\Delta$.
+
+[View AvoidedCrossing signal](../assets/images/TF010_AvoidedCrossing.png)
 
 ## Morphological Characteristics
 
