@@ -1,7 +1,5 @@
 # QuantumBarrier
 
-## Overview
-
 The **QuantumBarrier** signal represents transmission through a rectangular barrier. It combines tunneling behavior below the barrier with oscillatory transmission resonances above it.
 
 ## Mathematical Definition
