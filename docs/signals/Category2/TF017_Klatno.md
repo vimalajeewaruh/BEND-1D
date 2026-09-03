@@ -1,13 +1,4 @@
----
-layout: default
-title: TF017 — Klatno
----
-
-# TF017 — Klatno
-
-![Klatno signal](../assets/images/TF017_Klatno.png)
-
-## Overview
+# Klatno
 
 The **Klatno** signal is based on a nonlinear-pendulum separatrix. A weak residual swing and a short post-separatrix oscillation make it a multiscale benchmark. Its dominant feature is a sharply localized but smooth transition, accompanied by two weaker oscillatory components.
 
@@ -28,6 +19,8 @@ f(x)=s(x)
 $$
 
 where $\mathbf{1}_{\{x\geq0.48\}}$ equals 1 when $x\geq0.48$ and 0 otherwise.
+
+[View Klatno signal](../assets/images/TF017_Klatno.png)
 
 ## Morphological Characteristics
 
