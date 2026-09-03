@@ -3,8 +3,7 @@
 For a native test function $f_0$ and noise standard deviation $\sigma$, a common power-SNR normalization is
 
 ```math
-f =
-f_0
+f = f_0
 \sqrt{
 \frac{
 \mathrm{SNR}_{\mathrm{target}}\sigma^2
