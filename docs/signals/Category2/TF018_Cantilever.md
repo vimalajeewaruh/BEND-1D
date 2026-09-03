@@ -1,9 +1,5 @@
 # Cantilever
 
-![View Cantilever signal](../assets/images/TF018_Cantilever.png)
-
-## Overview
-
 The **Cantilever** signal combines normalized first- and third-mode cantilever responses with a weak crack or hinge perturbation. The result is a globally smooth multimode structure containing a small localized slope defect at $x_c=0.63$.
 
 ## Mathematical Definition
@@ -43,6 +39,8 @@ f(x)=
 +0.18\widetilde{\phi}_{\beta_3}(x)
 +0.12h(x).
 $$
+
+[View Cantilever signal](../../assets/images/TF018_Cantilever.png)
 
 ## Morphological Characteristics
 
