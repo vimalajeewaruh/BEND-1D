@@ -219,6 +219,4 @@ These rules separate three distinct issues: normalization of the clean signals, 
 
 
 
-[&larr; Previous (BEND-1D)](../README.md) |
-[Return to Signal Catalog](index.md) |
-[&rarr; Next (Golden Rules)](../docs/Rules.md)
+[&larr; Previous (BEND-1D)](../README.md) | [ Next &rarr; (Signal Catalog)](../docs/index.md)
