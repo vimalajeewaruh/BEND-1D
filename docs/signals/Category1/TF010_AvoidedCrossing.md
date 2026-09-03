@@ -13,7 +13,7 @@ $$
 
 When $\Delta=0$, the signal becomes a cusp. A positive $\Delta$ creates a smooth avoided crossing with minimum value $f(0.52)=\Delta$.
 
-[View AvoidedCrossing signal](../assets/images/TF010_AvoidedCrossing.png)
+[View AvoidedCrossing signal](../../assets/images/TF010_AvoidedCrossing.png)
 
 ## Morphological Characteristics
 
