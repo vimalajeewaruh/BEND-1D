@@ -12,7 +12,7 @@ $$
 
 where $I(\cdot)$ is the indicator function.
 
-[View RingDown signal](../assets/images/TF004_RingDown.png)
+[View RingDown signal](../../assets/images/TF004_RingDown.png)
 
 ## Morphological Characteristics
 
