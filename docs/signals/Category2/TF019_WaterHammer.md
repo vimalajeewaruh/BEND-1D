@@ -1,13 +1,4 @@
----
-layout: default
-title: TF019 — WaterHammer
----
-
-# TF019 — WaterHammer
-
-![WaterHammer signal](../assets/images/TF019_WaterHammer.png)
-
-## Overview
+# WaterHammer
 
 The **WaterHammer** signal models a steep hydraulic front followed by damped acoustic ringing. It combines a rapid transition with persistent but decreasing high-frequency structure.
 
@@ -22,6 +13,8 @@ f(x)=
 $$
 
 The indicator $\mathbf{1}_{\{x\geq0.30\}}$ activates the acoustic response at the hydraulic-front location.
+
+[View WaterHammer signal](../../assets/images/TF019_WaterHammer.png)
 
 ## Morphological Characteristics
 
