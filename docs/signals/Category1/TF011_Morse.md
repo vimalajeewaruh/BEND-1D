@@ -1,11 +1,4 @@
----
-layout: default
-title: TF011 — Morse
----
-
-# TF011 — Morse
-
-![Morse signal](../assets/images/TF011_Morse.png)
+# Morse
 
 ## Overview
 
@@ -13,23 +6,20 @@ The **Morse** signal is based on the Morse potential for a diatomic molecular bo
 
 ## Mathematical Definition
 
-Define
-
-$$
-r(x)=0.35+2x.
-$$
+Define $r(x)=0.35+2x.$
 
 With $D_e=1$, $a=2.8$, and $r_e=0.80$,
 
 $$
-f(x)
-=
+f(x) =
 D_e
 \left[
 1-\exp\{-a(r(x)-r_e)\}
 \right]^2
 -D_e.
 $$
+
+[View Morse signal](../assets/images/TF011_Morse.png)
 
 ## Morphological Characteristics
 
