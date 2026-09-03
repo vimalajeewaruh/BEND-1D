@@ -219,4 +219,4 @@ These rules separate three distinct issues: normalization of the clean signals, 
 
 
 
-[&larr; Previous (BEND-1D)](../README.md) | [ Next &rarr; (Signal Catalog)](../docs/index.md)
+[&larr; Previous (BEND-1D)](../index.md) | [ Next &rarr; (Signal Catalog)](../docs/sinal/index.md)
