@@ -1,7 +1,5 @@
 # Morse
 
-## Overview
-
 The **Morse** signal is based on the Morse potential for a diatomic molecular bond. It contains a steep repulsive wall, a narrow minimum, and a long dissociation tail, producing a strongly asymmetric smooth benchmark.
 
 ## Mathematical Definition
