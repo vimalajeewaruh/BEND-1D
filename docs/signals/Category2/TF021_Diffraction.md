@@ -1,54 +1,22 @@
----
-layout: default
-title: TF021 — Diffraction
----
-
-# TF021 — Diffraction
-
-![Diffraction signal](../assets/images/TF021_Diffraction.png)
-
-## Overview
+# Diffraction
 
 The **Diffraction** signal combines a dominant central diffraction envelope, double-slit-type fringes, weak sidelobes, and a small displaced satellite order. It tests whether a denoiser can preserve systematic fine structure without exaggerating weak features.
 
 ## Mathematical Definition
 
-Let
-
-$$
-z=18\pi(x-0.50)
-$$
-
-and define the main envelope
-
-$$
-A(x)=
-\left(\frac{\sin z}{z}\right)^2,
-$$
-
-with the continuous value $\sin z/z=1$ at $z=0$. The fringe modulation is
+Let $z=18\pi(x-0.50)$ and define the main envelope $A(x)=\left(\frac{\sin z}{z}\right)^2,$ with the continuous value $\sin z/z=1$ at $z=0$. The fringe modulation is
 
 $$
 M(x)=0.18+0.82\cos^2\{15\pi(x-0.50)\}.
 $$
 
-For the displaced satellite, let
-
-$$
-z_2=34\pi(x-0.67)
-$$
-
-and
-
-$$
-S(x)=0.10\left(\frac{\sin z_2}{z_2}\right)^2,
-$$
-
-again using the continuous value 1 for the ratio at $z_2=0$. The benchmark is
+For the displaced satellite, let $z_2=34\pi(x-0.67)$ and $S(x)=0.10\left(\frac{\sin z_2}{z_2}\right)^2,$ again using the continuous value 1 for the ratio at $z_2=0$. The benchmark is
 
 $$
 f(x)=A(x)M(x)+S(x).
 $$
+
+[View Diffraction signal](../../assets/images/TF021_Diffraction.png)
 
 ## Morphological Characteristics
 
