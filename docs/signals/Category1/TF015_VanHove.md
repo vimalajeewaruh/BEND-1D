@@ -1,29 +1,20 @@
----
-layout: default
-title: TF015 — VanHove
----
-
-# TF015 — VanHove
-
-![VanHove signal](../assets/images/TF015_VanHove.png)
-
-## Overview
-
+#  VanHove
 The **VanHove** signal contains a regularized logarithmic spectral enhancement embedded in a finite smooth background. A square-root envelope confines the feature to the interval, while the regularization prevents an actual interior divergence.
 
 ## Mathematical Definition
 
-$$
-f(x)
-=
+```math
+f(x)=
 -\sqrt{x(1-x)}
 \log
 \left[
 \sqrt{(x-0.57)^2+0.006^2}
 \right].
-$$
+```
 
 The logarithmic factor creates a sharp feature near $x=0.57$, and the factor $\sqrt{x(1-x)}$ forces $f(0)=f(1)=0$.
+
+[View VanHove signal](../assets/images/TF015_VanHove.png)
 
 ## Morphological Characteristics
 
