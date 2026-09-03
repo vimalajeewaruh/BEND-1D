@@ -1,11 +1,4 @@
----
-layout: default
-title: TF006 — Fano
----
-
-# TF006 — Fano
-
-![Fano signal](../assets/images/TF006_Fano.png)
+# Fano
 
 ## Overview
 
@@ -13,18 +6,10 @@ The **Fano** signal combines a broad smooth background with an asymmetric resona
 
 ## Mathematical Definition
 
-Define
+Define $\epsilon(x)=\frac{x-0.58}{0.025},\qquad q=1.5.$  Then
 
-$$
-\epsilon(x)=\frac{x-0.58}{0.025},
-\qquad q=1.5.
-$$
-
-Then
-
-$$
-f(x)
-=
+```math
+f(x) =
 0.35
 \exp
 \left\{
@@ -37,7 +22,10 @@ f(x)
 \left\{
 \frac{(q+\epsilon(x))^2}{1+\epsilon(x)^2}-1
 \right\}.
-$$
+```
+
+
+[View Fano signal](../assets/images/TF006_Fano.png)
 
 ## Morphological Characteristics
 
