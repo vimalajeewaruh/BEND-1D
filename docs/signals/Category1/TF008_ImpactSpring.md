@@ -1,7 +1,5 @@
 # ImpactSpring
 
-## Overview
-
 The **ImpactSpring** signal combines a narrow mechanical impact with two damped structural vibration modes. It contains localized energy and oscillations at two distinct frequency and decay scales.
 
 ## Mathematical Definition
