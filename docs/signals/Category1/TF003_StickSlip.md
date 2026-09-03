@@ -17,7 +17,7 @@ $$
 
 At each new segment, the signal is reset to zero. The endpoint is set to $f(1)=0$.
 
-[View StickSlip signal](../assets/images/TF003_StickSlip.png)
+[View StickSlip signal](../../assets/images/TF003_StickSlip.png)
 
 ## Morphological Characteristics
 
