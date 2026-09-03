@@ -1,15 +1,8 @@
----
-layout: default
-title: TF001 — Percolation
----
-
-# TF001 — Percolation
-
-![Percolation signal](../assets/images/TF001_Percolation.png)
+# Percolation
 
 ## Overview
 
-The **Percolation** signal represents a critical onset at a specified threshold. It is zero before the threshold and follows a fractional power law afterward. The signal is continuous at the threshold but has a singular derivative there, distinguishing it from both a jump and a smooth transition.
+The **Percolation** signal represents a critical onset at a specified threshold. It is zero below the threshold and follows a fractional power law above it. The signal is continuous at the threshold but has a singular derivative there, distinguishing it from both a jump and a smooth transition.
 
 ## Mathematical Definition
 
@@ -40,6 +33,8 @@ f(x)=
 $$
 
 Because $0<\beta<1$, the signal is continuous at $p_c$, but its right derivative becomes unbounded as $x\downarrow p_c$.
+
+[View Percolation signal](../assets/images/TF001_Percolation.png)
 
 ## Morphological Characteristics
 
