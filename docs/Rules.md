@@ -217,4 +217,8 @@ A benchmark should identify methods that perform consistently across different s
 
 These rules separate three distinct issues: normalization of the clean signals, evaluation of a method on each signal, and aggregation of performance across a heterogeneous benchmark.  Keeping these stages separate is essential for a fair and interpretable BEND-1D comparison.
 
-![Home](../README.md)  ![BEND-1D](../docs/index.md)
+
+
+[&larr; Previous (BEND-1D)](../README.md) |
+[Return to Signal Catalog](index.md) |
+[&rarr; Next (Golden Rules)](../docs/Rules.md)
