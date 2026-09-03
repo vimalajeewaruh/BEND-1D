@@ -25,7 +25,7 @@ f(x) =
 ```
 
 
-[View Fano signal](../assets/images/TF006_Fano.png)
+[View Fano signal](../../assets/images/TF006_Fano.png)
 
 ## Morphological Characteristics
 
