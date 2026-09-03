@@ -1,11 +1,4 @@
----
-layout: default
-title: TF007 — BouncingBall
----
-
-# TF007 — BouncingBall
-
-![BouncingBall signal](../assets/images/TF007_BouncingBall.png)
+# BouncingBall
 
 ## Overview
 
@@ -13,17 +6,7 @@ The **BouncingBall** signal represents repeated inelastic impacts using a sequen
 
 ## Mathematical Definition
 
-Let $e=0.72$ be the coefficient of restitution. Successive durations and maximum heights satisfy
-
-$$
-d_{k+1}=e\,d_k
-$$
-
-and
-
-$$
-H_{k+1}=e^2H_k.
-$$
+Let $e=0.72$ be the coefficient of restitution. Successive durations and maximum heights satisfy $d_{k+1}=e\,d_k$ and $H_{k+1}=e^2H_k.$
 
 On the interval $[a_k,a_k+d_k]$, define
 
@@ -34,6 +17,8 @@ u=\frac{x-a_k}{d_k}.
 $$
 
 The impact locations satisfy $a_{k+1}=a_k+d_k$. Choosing $a_1=0$ and $d_1=1-e$ causes the impact times to accumulate at $x=1$. The overall amplitude may be fixed by setting $H_1=1$.
+
+[View BouncingBall signal](../assets/images/TF007_BouncingBall.png)
 
 ## Morphological Characteristics
 
