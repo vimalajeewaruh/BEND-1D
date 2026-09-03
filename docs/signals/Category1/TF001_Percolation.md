@@ -1,7 +1,5 @@
 # Percolation
 
-## Overview
-
 The **Percolation** signal represents a critical onset at a specified threshold. It is zero below the threshold and follows a fractional power law above it. The signal is continuous at the threshold but has a singular derivative there, distinguishing it from both a jump and a smooth transition.
 
 ## Mathematical Definition
