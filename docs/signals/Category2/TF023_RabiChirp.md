@@ -1,13 +1,4 @@
----
-layout: default
-title: TF023 — RabiChirp
----
-
-# TF023 — RabiChirp
-
-![RabiChirp signal](../assets/images/TF023_RabiChirp.png)
-
-## Overview
+# RabiChirp
 
 The **RabiChirp** signal is a toy population probability for a chirped two-level quantum system. Its instantaneous oscillation frequency increases with $x$, while decoherence causes its amplitude to decrease. Fine-scale structure is therefore weakest where a denoising method is most likely to remove it.
 
@@ -15,11 +6,11 @@ The **RabiChirp** signal is a toy population probability for a chirped two-level
 
 For $0\leq x\leq1$,
 
-$$
+```math
 f(x)=
 e^{-0.9x}
-\sin^2\!\left[2\pi(3x+7x^2)\right].
-$$
+\sin^2\left[2\pi(3x+7x^2)\right].
+```
 
 The phase is
 
@@ -32,6 +23,8 @@ so its derivative increases linearly:
 $$
 \theta'(x)=2\pi(3+14x).
 $$
+
+[View RabiChirp signal](../../assets/images/TF023_RabiChirp.png)
 
 ## Morphological Characteristics
 
