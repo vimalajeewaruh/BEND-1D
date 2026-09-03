@@ -1,12 +1,4 @@
----
-layout: default
-title: TF002 — Planck
----
-
-# TF002 — Planck
-
-![Planck signal](../assets/images/TF002_Planck.png)
-
+# Planck
 ## Overview
 
 The **Planck** signal is a dimensionless black-body spectral profile. It is smooth but strongly asymmetric, with a steep rise, a single spectral maximum, and a gradually decreasing tail. It tests whether a denoiser can preserve rapidly varying curvature and peak geometry without introducing artificial discontinuities.
@@ -26,6 +18,8 @@ f(x)=
 \frac{\lambda(x)^{-5}}
 {\exp\{2.5/\lambda(x)\}-1}.
 $$
+
+[View Planck signal](../assets/images/TF002_Planck.png)
 
 ## Morphological Characteristics
 
