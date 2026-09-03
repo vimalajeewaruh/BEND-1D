@@ -1,13 +1,4 @@
----
-layout: default
-title: TF022 — Titration
----
-
-# TF022 — Titration
-
-![Titration signal](../assets/images/TF022_Titration.png)
-
-## Overview
+# Titration
 
 The **Titration** signal contains three transitions with distinctly different characteristic widths. A weak Gaussian shoulder between the main equivalence regions represents a small complexation or indicator response.
 
@@ -15,16 +6,13 @@ The **Titration** signal contains three transitions with distinctly different ch
 
 For $0\leq x\leq1$,
 
-$$
-\begin{aligned}
-f(x)={}&
-0.08\log(1+20x)
-+0.55\tanh\!\left(\frac{x-0.31}{0.018}\right)\\
-&+0.32\tanh\!\left(\frac{x-0.69}{0.060}\right)
-+0.13\tanh\!\left(\frac{x-0.84}{0.014}\right)\\
-&+0.07\exp\!\left[-\left(\frac{x-0.50}{0.028}\right)^2\right].
-\end{aligned}
-$$
+```math
+f(x)= 0.08\log(1+20x)
++0.55\tanh\!\left(\frac{x-0.31}{0.018}\right)+0.32\tanh\!\left(\frac{x-0.69}{0.060}\right)
++0.13\tanh\!\left(\frac{x-0.84}{0.014}\right)+0.07\exp\!\left[-\left(\frac{x-0.50}{0.028}\right)^2\right].
+```
+
+[View Titration signal](../../assets/images/TF022_Titration.png)
 
 ## Morphological Characteristics
 
