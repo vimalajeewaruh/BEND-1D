@@ -1,11 +1,4 @@
----
-layout: default
-title: TF003 — StickSlip
----
-
-# TF003 — StickSlip
-
-![StickSlip signal](../assets/images/TF003_StickSlip.png)
+# StickSlip
 
 ## Overview
 
@@ -35,6 +28,8 @@ b_k\leq x<b_{k+1}.
 $$
 
 At each new segment, the signal is reset to zero. The endpoint is set to $f(1)=0$.
+
+[View StickSlip signal](../assets/images/TF003_StickSlip.png)
 
 ## Morphological Characteristics
 
