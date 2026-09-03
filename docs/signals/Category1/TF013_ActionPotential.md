@@ -1,26 +1,12 @@
----
-layout: default
-title: TF013 — ActionPotential
----
-
-# TF013 — ActionPotential
-
-![ActionPotential signal](../assets/images/TF013_ActionPotential.png)
-
-## Overview
-
+# ActionPotential
 The **ActionPotential** signal is a simplified membrane-voltage morphology. Its three components represent rapid depolarization, slower repolarization, and an after-hyperpolarization or undershoot.
 
 ## Mathematical Definition
 
-$$
-\begin{aligned}
-f(x)
-={}&
-\frac{1.20}{1+\exp\{-180(x-0.23)\}}
--
-\frac{1.05}{1+\exp\{-55(x-0.53)\}}\\
-&-
+```math
+f(x) ={}
+\frac{1.20}{1+\exp\{-180(x-0.23)\}} -
+\frac{1.05}{1+\exp\{-55(x-0.53)\}} -
 0.22
 \exp
 \left\{
@@ -28,8 +14,9 @@ f(x)
 \frac{x-0.67}{0.065}
 \right)^2
 \right\}.
-\end{aligned}
-$$
+```
+
+[View ActionPotential signal](../assets/images/TF013_ActionPotential.png)
 
 ## Morphological Characteristics
 
