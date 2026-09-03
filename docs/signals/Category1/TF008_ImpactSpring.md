@@ -26,7 +26,7 @@ I(x\geq0.27)e^{-8u}\sin(34\pi u)
 
 where $I(\cdot)$ is the indicator function.
 
-[View ImpactSpring signal](../assets/images/TF008_ImpactSpring.png)
+[View ImpactSpring signal](../../assets/images/TF008_ImpactSpring.png)
 
 ## Morphological Characteristics
 
