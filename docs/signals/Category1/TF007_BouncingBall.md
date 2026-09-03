@@ -16,7 +16,7 @@ $$
 
 The impact locations satisfy $a_{k+1}=a_k+d_k$. Choosing $a_1=0$ and $d_1=1-e$ causes the impact times to accumulate at $x=1$. The overall amplitude may be fixed by setting $H_1=1$.
 
-[View BouncingBall signal](../assets/images/TF007_BouncingBall.png)
+[View BouncingBall signal](../../assets/images/TF007_BouncingBall.png)
 
 ## Morphological Characteristics
 
