@@ -1,5 +1,4 @@
 # Planck
-## Overview
 
 The **Planck** signal is a dimensionless black-body spectral profile. It is smooth but strongly asymmetric, with a steep rise, a single spectral maximum, and a gradually decreasing tail. It tests whether a denoiser can preserve rapidly varying curvature and peak geometry without introducing artificial discontinuities.
 
