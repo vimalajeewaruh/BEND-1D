@@ -19,7 +19,7 @@ f(x)=
 \right\}.
 ```
 
-[View DiffusionBand signal](../assets/images/TF005_DiffusionBand.png)
+[View DiffusionBand signal](../../assets/images/TF005_DiffusionBand.png)
 
 ## Morphological Characteristics
 
