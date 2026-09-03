@@ -171,3 +171,5 @@ The present consolidation is intentionally conservative: the existing functions,
 10. freeze a versioned public release of BEND-1D.
 
 The guiding principle is that the benchmark should test a denoiser on *controlled signal morphology*, not on accidental implementation features of the test functions.
+
+![Home](../docs/index.md)  ![Golden Rules](../docs/Rules.md)   ![Signal Catalog](../docs/signals/) 
