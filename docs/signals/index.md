@@ -12,23 +12,25 @@ implementation, and references.
 
 ## Available Signals
 
-### 1. Signal 1
+### 1. Percolation
 
-![Signal 1]({{ "/assets/images/signal-01.png" | relative_url }})
+![Percolation](../assets/images/TF001_Percolation.png)
+
 
 A smooth and slowly varying test signal.
 
-[View Signal 1 →]({{ "/signals/signal-01/" | relative_url }})
+[View Percolation →](../signals/signal-01/)
 
 ---
 
 ### 2. Signal 2
 
-![Signal 2]({{ "/assets/images/signal-02.png" | relative_url }})
+![Planck](../assets/images/TF002_Planck.png)
+
 
 An oscillatory signal with constant frequency.
 
-[View Signal 2 →]({{ "/signals/signal-02/" | relative_url }})
+[View Planck→](../signals/plnk/)
 
 ---
 
