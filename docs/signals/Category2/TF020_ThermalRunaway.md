@@ -1,13 +1,4 @@
----
-layout: default
-title: TF020 — ThermalRunaway
----
-
-# TF020 — ThermalRunaway
-
-![ThermalRunaway signal](../assets/images/TF020_ThermalRunaway.png)
-
-## Overview
+# ThermalRunaway
 
 The **ThermalRunaway** signal is a toy reactor trace containing an accelerating trend, a growing oscillatory instability, a sharp turnover, rapid post-critical cooling, and a small cooling undershoot.
 
@@ -61,6 +52,8 @@ f_{-}(x), & x<x_c,\\
 f_{+}(x), & x\geq x_c.
 \end{cases}
 $$
+
+[ThermalRunaway signal](../../assets/images/TF020_ThermalRunaway.png)
 
 > **Implementation note:** The original description does not specify the undershoot amplitude or width. The values above are explicit defaults and may be replaced by the authoritative values used to generate your reference signal.
 
