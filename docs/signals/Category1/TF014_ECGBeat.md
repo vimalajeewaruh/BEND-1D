@@ -1,54 +1,26 @@
----
-layout: default
-title: TF014 — ECGBeat
----
-
-# TF014 — ECGBeat
-
-![ECGBeat signal](../assets/images/TF014_ECGBeat.png)
-
-## Overview
-
+# ECGBeat
 The **ECGBeat** signal is an idealized electrocardiographic trace constructed from signed Gaussian components representing the P, Q, R, S, and T waves. Two unequal beats are placed in $[0,1]$, producing a mixture of broad low-frequency components and narrow QRS features.
 
 ## Mathematical Definition
 
 For each beat, the waveform is
 
-$$
-f(x)
-=
+```math
+f(x) =
 \sum_{\ell}
 A_\ell
 \exp
 \left\{
 -\frac{(x-\mu_\ell)^2}{2s_\ell^2}
 \right\}.
-$$
+```
 
-Relative to each R-wave location, the P, Q, R, S, and T offsets are
-
-$$
-(-0.15,-0.025,0,0.025,0.16),
-$$
-
-with amplitudes
-
-$$
-(0.15,-0.12,1,-0.25,0.32)
-$$
-
-and widths
-
-$$
-(0.035,0.010,0.008,0.012,0.060).
-$$
+Relative to each R-wave location, the P, Q, R, S, and T offsets are $(-0.15,-0.025,0,0.025,0.16),$ with amplitudes $(0.15,-0.12,1,-0.25,0.32)$ and widths $(0.035,0.010,0.008,0.012,0.060).$
 
 For two beats with R-wave locations $r_j$ and beat-specific scale factors $c_j$, the complete signal may be written as
 
-$$
-f(x)
-=
+```math
+f(x) =
 \sum_{j=1}^{2}c_j
 \sum_{\ell=1}^{5}
 A_\ell
@@ -56,9 +28,11 @@ A_\ell
 \left\{
 -\frac{(x-r_j-o_\ell)^2}{2s_\ell^2}
 \right\},
-$$
+```
 
 where $o_\ell$ denotes the component offset.
+
+[View ECGBeat signal](../assets/images/TF014_ECGBeat.png)
 
 > **Specification note:** The supplied definition states that two unequal beats are used but does not specify the two R-wave locations or their relative scale factors. These values must be fixed before the signal is frozen as a fully reproducible canonical benchmark.
 
