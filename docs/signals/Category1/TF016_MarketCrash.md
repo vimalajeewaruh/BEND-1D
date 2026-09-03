@@ -31,7 +31,7 @@ $$
 
 As $x$ approaches $x_c$ from the left, the oscillations become increasingly rapid while their modulation is multiplied by the shrinking power-law factor $(x_c-x)^{0.42}$.
 
-[View MarketCrash signal](../assets/images/TF016_MarketCrash.png)
+[View MarketCrash signal](../../assets/images/TF016_MarketCrash.png)
 
 ## Morphological Characteristics
 
