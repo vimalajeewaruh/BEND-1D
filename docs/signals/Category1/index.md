@@ -1,4 +1,4 @@
-# Signal Category 01: Physically Motivated Library of Test Signals
+# Category 01: Physically Motivated Library of Test Signals
 
 | ID | Signal |  Primary morphology |
 |---|---|---|
