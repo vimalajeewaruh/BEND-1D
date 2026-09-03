@@ -20,7 +20,7 @@ $$
 
 where $\mathbf{1}_{\{x\geq0.48\}}$ equals 1 when $x\geq0.48$ and 0 otherwise.
 
-[View Klatno signal](../assets/images/TF017_Klatno.png)
+[View Klatno signal](../../assets/images/TF017_Klatno.png)
 
 ## Morphological Characteristics
 
