@@ -1,11 +1,6 @@
----
-layout: default
-title: TF018 — Cantilever
----
+# Cantilever
 
-# TF018 — Cantilever
-
-![Cantilever signal](../assets/images/TF018_Cantilever.png)
+![View Cantilever signal](../assets/images/TF018_Cantilever.png)
 
 ## Overview
 
@@ -21,21 +16,9 @@ $$
 -c_\beta\left[\sinh(\beta x)-\sin(\beta x)\right],
 $$
 
-where
+where $c_\beta=\frac{\cosh\beta+\cos\beta}{\sinh\beta+\sin\beta}.$
 
-$$
-c_\beta=
-\frac{\cosh\beta+\cos\beta}
-{\sinh\beta+\sin\beta}.
-$$
-
-The two modal parameters are
-
-$$
-\beta_1=1.8751040687,
-\qquad
-\beta_3=7.8547574382.
-$$
+The two modal parameters are $\beta_1=1.8751040687,\quad \beta_3=7.8547574382.$
 
 Using maximum-absolute-value normalization,
 
