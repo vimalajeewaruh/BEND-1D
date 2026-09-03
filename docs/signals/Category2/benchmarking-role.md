@@ -1,4 +1,4 @@
-# Category 2 Benchmarking Role
+# Category 2:  Application-oriented Test Functions
 
 The second BEND-1D module deliberately mixes several regularity classes. Many signals contain a dominant low-frequency structure together with a weaker local feature, oscillation, slope defect, transient, or structural change.
 
