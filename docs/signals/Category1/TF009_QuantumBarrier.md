@@ -1,11 +1,4 @@
----
-layout: default
-title: TF009 — QuantumBarrier
----
-
-# TF009 — QuantumBarrier
-
-![QuantumBarrier signal](../assets/images/TF009_QuantumBarrier.png)
+# QuantumBarrier
 
 ## Overview
 
@@ -13,17 +6,12 @@ The **QuantumBarrier** signal represents transmission through a rectangular barr
 
 ## Mathematical Definition
 
-Let the barrier height be $V_0=1$, the dimensionless width be $a=7$, and
-
-$$
-E(x)=0.15+1.70x.
-$$
+Let the barrier height be $V_0=1$, the dimensionless width be $a=7$, and $E(x)=0.15+1.70x.$ 
 
 For $E<V_0$,
 
 $$
-T(E)
-=
+T(E)=
 \left[
 1+
 \frac{
@@ -37,8 +25,7 @@ $$
 For $E>V_0$,
 
 $$
-T(E)
-=
+T(E) =
 \left[
 1+
 \frac{
@@ -54,6 +41,8 @@ The test function is $f(x)=T(E(x))$. At $E=V_0$, the continuous limiting value i
 $$
 T(V_0)=\left(1+\frac{V_0a^2}{4}\right)^{-1}.
 $$
+
+[View QuantumBarrier signal](../assets/images/TF009_QuantumBarrier.png)
 
 ## Morphological Characteristics
 
