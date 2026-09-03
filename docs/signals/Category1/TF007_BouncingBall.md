@@ -1,7 +1,5 @@
 # BouncingBall
 
-## Overview
-
 The **BouncingBall** signal represents repeated inelastic impacts using a sequence of ballistic parabolic arcs. Successive arcs become shorter and lower, while the impact times accumulate at $x=1$. The signal is continuous, but its slope changes abruptly at every impact.
 
 ## Mathematical Definition
