@@ -1,11 +1,4 @@
----
-layout: default
-title: TF008 — ImpactSpring
----
-
-# TF008 — ImpactSpring
-
-![ImpactSpring signal](../assets/images/TF008_ImpactSpring.png)
+# ImpactSpring
 
 ## Overview
 
@@ -15,7 +8,7 @@ The **ImpactSpring** signal combines a narrow mechanical impact with two damped 
 
 Let $u=x-0.27$. Then
 
-$$
+```math
 \begin{aligned}
 f(x)
 ={}&
@@ -32,9 +25,11 @@ I(x\geq0.27)e^{-8u}\sin(34\pi u)\\
 &+
 0.28I(x\geq0.27)e^{-11u}\sin(82\pi u),
 \end{aligned}
-$$
+```
 
 where $I(\cdot)$ is the indicator function.
+
+[View ImpactSpring signal](../assets/images/TF008_ImpactSpring.png)
 
 ## Morphological Characteristics
 
