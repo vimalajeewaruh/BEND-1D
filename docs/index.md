@@ -172,4 +172,4 @@ The present consolidation is intentionally conservative: the existing functions,
 
 The guiding principle is that the benchmark should test a denoiser on *controlled signal morphology*, not on accidental implementation features of the test functions.
 
-![Home](../docs/index.md)  ![Golden Rules](../docs/Rules.md)   ![Signal Catalog](../docs/signals/) 
+[&larr; Home](../README.md) | [Golden Rules](../docs/Rules.md)  | [Signal Catalog &rarr;](../docs/signals/index.md) 
