@@ -1,15 +1,9 @@
----
-layout: default
-title: Use in Denoising Experiments
----
-
-# Use in Denoising Experiments
+# Use of Signal Category 01 in Denoising Experiments
 
 For a native test function $f_0$ and noise standard deviation $\sigma$, a common power-SNR normalization is
 
-$$
-f
-=
+```math
+f =
 f_0
 \sqrt{
 \frac{
@@ -18,7 +12,7 @@ f_0
 N^{-1}\sum_{i=1}^N f_0(t_i)^2
 }
 }.
-$$
+```
 
 This normalization preserves the morphology of each test function while placing the sixteen signals on a common signal-to-noise scale.
 
@@ -28,4 +22,4 @@ The library is intentionally heterogeneous. It includes jumps, derivative discon
 
 ---
 
-[← Return to Signal Catalog](index.md)
+[← Return to Signal Catalog 01](index.md)
