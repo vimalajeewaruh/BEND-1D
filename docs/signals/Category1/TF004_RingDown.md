@@ -1,7 +1,5 @@
 # RingDown
 
-## Overview
-
 The **RingDown** signal is a localized underdamped response beginning at $x=0.28$. Its oscillation amplitude decreases exponentially after onset. Similar morphology occurs in mechanical vibration, acoustic decay, resonant circuits, and magnetic-resonance transients.
 
 ## Mathematical Definition
