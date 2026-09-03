@@ -1,7 +1,5 @@
 # DiffusionBand
 
-## Overview
-
 The **DiffusionBand** signal represents a finite band bounded by two smooth diffusive interfaces. The left boundary is sharper than the right boundary, mimicking a concentration or temperature band whose interfaces have experienced different amounts of diffusion.
 
 ## Mathematical Definition
