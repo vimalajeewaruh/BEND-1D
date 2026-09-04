@@ -44,18 +44,18 @@ engineering, biomedical, environmental, and economic measurements.
 
 ## Browse by Category
 
-| Category | Signal range | Number | Main emphasis |
-|---|---:|---:|---|
-| [Category 1](signals/Category1/) | TF001–TF016 | 16 | Foundational application-oriented morphologies, including critical onsets, spectra, impacts, oscillations, and structural changes |
-| [Category 2](signals/Category2/) | TF017–TF026 | 10 | Additional application-oriented signals with local defects, transients, multiscale peaks, and asymmetric behavior |
-| [Category 3](signals/Category3/) | TF027–TF042 | 16 | Physiological, mechanical, oceanographic, acoustic, and atmospheric measurement structures |
-| [Category 4](signals/Category4/) | TF043–TF058 | 16 | Measurement-science signals from production, environmental monitoring, spectroscopy, seismology, and analytical instruments |
-| [Category 5](signals/Category5/) | TF059–TF070 | 12 | Cross-disciplinary smoothing problems with sharp peaks, shoulders, notches, transitions, and thin-layer anomalies |
-| [Category 6](signals/Category6/) | TF071–TF100 | 30 | Modern cross-disciplinary signals from engineering, computing, astronomy, economics, acoustics, geology, and neuroscience |
-| [Category 7](signals/Category7/) | TF101–TF125 | 25 | Contemporary applications and artificial stress tests involving quantum systems, fusion, genomics, AI infrastructure, and weak hidden features |
-| [Category 8](signals/Category8/) | TF126–TF155 | 30 | Modern sensing signals and adversarial MishMash constructions with incompatible local scales and regularities |
-| [Category 9](signals/Category9/) | TF156–TF180 | 25 | Scientific and mechanism-inspired signals together with controlled diagnostics for alignment, boundaries, resolution, scale bias, and regularity |
-| [Category 10](signals/Category10/) | TF181–TF230 | 50 | Research-frontier measurement morphologies and mathematical adversaries involving critical-time behavior, cancellation, and heterogeneous regularity |
+| Category | Signal range | Main emphasis |
+|---|---:|---|
+| [Category 1](docs/docs/signals/Category1/index.md) | 1–16 | Foundational application-oriented morphologies, including critical onsets, spectra, impacts, oscillations, and structural changes |
+| [Category 2](docs/signals/Category2/index.md) | 17–26 |  Additional application-oriented signals with local defects, transients, multiscale peaks, and asymmetric behavior |
+| [Category 3](docs/signals/Category3/index.md) | 27–42 |  Physiological, mechanical, oceanographic, acoustic, and atmospheric measurement structures |
+| [Category 4](docs/signals/Category4/) | 43–58 |  Measurement-science signals from production, environmental monitoring, spectroscopy, seismology, and analytical instruments |
+| [Category 5](docs/signals/Category5/index.md) | 59–70 |  Cross-disciplinary smoothing problems with sharp peaks, shoulders, notches, transitions, and thin-layer anomalies |
+| [Category 6](docs/signals/Category6/index.md) | 71–100 |  Modern cross-disciplinary signals from engineering, computing, astronomy, economics, acoustics, geology, and neuroscience |
+| [Category 7](docs/signals/Category7/index.md) | 101–125 |  Contemporary applications and artificial stress tests involving quantum systems, fusion, genomics, AI infrastructure, and weak hidden features |
+| [Category 8](docs/signals/Category8/index.md) | 126–155 |  Modern sensing signals and adversarial MishMash constructions with incompatible local scales and regularities |
+| [Category 9](docs/signals/Category9/index.md) | 156–180 |  Scientific and mechanism-inspired signals together with controlled diagnostics for alignment, boundaries, resolution, scale bias, and regularity |
+| [Category 10](docs/signals/Category10/index.md) | 181–230 |  Research-frontier measurement morphologies and mathematical adversaries involving critical-time behavior, cancellation, and heterogeneous regularity |
 
 ## What Each Signal Page Contains
 
@@ -72,16 +72,16 @@ Every signal page provides:
 ## Recommended Benchmark Workflow
 
 1. Select a signal or a morphology-balanced collection from the
-   [signal catalog](signals/).
+   [signal catalog](docs/signals/index.md).
 2. Generate the deterministic clean signal using its MATLAB or Python code.
 3. Apply the common power–SNR normalization described in the
-   [Golden Rules](golden-rules.html).
+   [Golden Rules](docs/Rules.md).
 4. Add noise using the same noisy realization for every method being compared.
 5. Apply each denoising or smoothing method without changing the native signal
    morphology.
 6. Report signal-wise results, morphology-specific results, and the balanced
    global score described in the
-   [denoising-experiment guide](denoising-experiments.html).
+   [denoising-experiment guide](docs/denoising-experiments.md).
 
 ## Core Evaluation Principle
 
@@ -90,7 +90,7 @@ Every signal page provides:
 Raw AMSE values should not be pooled across heterogeneous signals as the only
 global score. Relative risks should be computed signal by signal and aggregated
 geometrically, with morphology-balanced weighting when category sizes differ.
-See the [Golden Rules](golden-rules.html) for the full definitions.
+See the [Golden Rules](docs/Rules.md) for the full definitions.
 
 ## Code and Reproducibility
 
@@ -98,9 +98,9 @@ Each signal page contains copy-ready MATLAB and Python code. The centralized
 source folders provide scripts for generating the complete signal bank and its
 figures:
 
-- [Browse the MATLAB source][matlab-code]
-- [Browse the Python source][python-code]
-- [Report a code or documentation issue][issues]
+- [Browse the MATLAB source][docs/codes/matlab.md]
+- [Browse the Python source][docs/codes/python.md]
+- [Report a code or documentation issue][docs/issues]
 
 All functions are defined on $0\leq x\leq1$ in their native deterministic
 forms. Power–SNR normalization should be applied only when constructing a
@@ -112,7 +112,7 @@ If BEND-1D contributes to a publication, presentation, software package, or
 teaching resource, please cite the library and record the version, signal IDs,
 sample size, noise model, SNR definition, and code commit used in the analysis.
 
-[View the citation information](citation.html).
+[View the citation information](docs/citation.md).
 
 ## License and Contributions
 
@@ -127,7 +127,7 @@ are welcome through the [contribution guide](contributing.html) or the
 evaluation for one-dimensional denoising research.
 
 <!-- Replace YOUR-USERNAME/YOUR-REPOSITORY in the four links below. -->
-[repository]: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
-[matlab-code]: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY/tree/main/code/matlab
-[python-code]: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY/tree/main/code/python
-[issues]: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY/issues
+[repository]: https://github.com/vimalajeewaruh/BEND-1D
+[matlab-code]: https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/matlab
+[python-code]: https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/python
+[issues]: https://github.com/vimalajeewaruh/BEND-1D/issues
