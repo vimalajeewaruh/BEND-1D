@@ -5,9 +5,9 @@ BEND-1D signals**. Each signal is defined on the unit interval and is returned
 in its native scale. Apply power–SNR normalization only when constructing a
 denoising experiment.
 
-[Browse Signals](../signals/) ·
-[Python Code](python.html) ·
-[Golden Rules](../golden-rules.html) ·
+[Browse Signals](index.md) ·
+[Python Code](python.md) ·
+[Golden Rules](Rules.md) ·
 [Return Home](../)
 
 ---
