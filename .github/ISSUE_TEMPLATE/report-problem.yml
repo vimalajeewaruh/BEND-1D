@@ -1,0 +1,129 @@
+name: Report a BEND-1D problem
+description: Report an error in a signal, formula, image, link, or implementation.
+title: "[Report]: "
+labels: []
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve BEND-1D.
+
+        Please provide enough information for us to reproduce and investigate
+        the problem. Do not include private or sensitive information.
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Type of problem
+      description: Which part of BEND-1D is affected?
+      options:
+        - Signal definition or formula
+        - MATLAB implementation
+        - Python implementation
+
+        - Signal image
+        - Broken link or website problem
+        - Documentation
+        - Benchmarking or normalization procedure procedure
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: signal
+    attributes:
+      label: Signal identifier
+      description: Provide the signal number and name, if applicable.
+      placeholder: "Example: TF001 Percolation"
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Signal category
+      options:
+        - Not applicable
+        - Category 1
+        - Category 2
+        - Category 3
+        - Category 4
+        - Category 5
+        - Category 6
+        - Category 7
+        - Category 8
+        - Category 9
+        - Category 10
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Description of the problem
+      description: Clearly explain what appears to be incorrect or broken.
+      placeholder: "Describe the problem and where it appears."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Explain what you expected to see.
+      placeholder: "Describe the correct or expected behavior."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Provide the commands, parameters, sample size, and steps needed to reproduce the problem.
+      placeholder: |
+        1. Open or run ...
+        2. Use N = ...
+        3. Observe ...
+
+  - type: dropdown
+    id: software
+    attributes:
+      label: Software
+      options:
+        - Not applicable
+        - MATLAB
+        - Python
+        - Both MATLAB and Python
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: BEND-1D version or commit
+      description: Provide the release number or Git commit if known.
+      placeholder: "Example: v1.0.0 or commit abc1234"
+
+  - type: input
+    id: environment
+    attributes:
+      label: Software environment
+      description: Provide the MATLAB release or Python and package versions.
+      placeholder: "Example: MATLAB R2025b or Python 3.12, NumPy 2.1"
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional information
+      description: Add code, error messages, screenshots, plots, or other useful information.
+      placeholder: "Drag and drop screenshots or files here."
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Preliminary checks
+      options:
+        - label: I searched the existing issues and did not find the same report.
+          required: true
+        - label: I have identified the affected signal or page as precisely as possible.
+          required: true
