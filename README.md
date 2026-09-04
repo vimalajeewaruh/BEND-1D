@@ -1,17 +1,17 @@
 # BEND-1D
 
-## Benchmark for Evaluation of Nonlinear Denoising in One Dimension
+## Denoising Benchmark Function Repository
 
 A reproducible library of **230 one-dimensional test signals** representing
 different smoothness, oscillation, discontinuity, localization, multiscale,
 transient, and singularity structures.
 
-[Get Started](getting-started.html) ·
+[Get Started](getting-started.md) ·
 [Browse All Signals](docs/index.md) ·
 [Golden Rules](docs/Rules.md) ·
-[MATLAB Code][matlab-code] ·
-[Python Code][python-code] ·
-[View on GitHub][repository]
+[MATLAB Code](docs/codes/matlab/) ·
+[Python Code](docs/codes/python/) ·
+[View on GitHub](repository)
 
 ---
 
@@ -98,9 +98,9 @@ Each signal page contains copy-ready MATLAB and Python code. The centralized
 source folders provide scripts for generating the complete signal bank and its
 figures:
 
-- [Browse the MATLAB source][docs/codes/matlab.md]
-- [Browse the Python source][docs/codes/python.md]
-- [Report a code or documentation issue][docs/issues]
+- [Browse the MATLAB source](docs/codes/matlab.md)
+- [Browse the Python source](docs/codes/python.md)
+- [Report a code or documentation issue](docs/issues)
 
 All functions are defined on $0\leq x\leq1$ in their native deterministic
 forms. Power–SNR normalization should be applied only when constructing a
