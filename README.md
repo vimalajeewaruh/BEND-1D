@@ -100,7 +100,7 @@ figures:
 
 - [Browse the MATLAB source](docs/codes/matlab.md)
 - [Browse the Python source](docs/codes/python.md)
-- [Report a code or documentation issue](docs/issues)
+- [Report a code or documentation issue][issues]
 
 All functions are defined on $0\leq x\leq1$ in their native deterministic
 forms. Power–SNR normalization should be applied only when constructing a
@@ -130,4 +130,4 @@ evaluation for one-dimensional denoising research.
 [repository]: https://github.com/vimalajeewaruh/BEND-1D
 [matlab-code]: https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/matlab
 [python-code]: https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/python
-[issues]: https://github.com/vimalajeewaruh/BEND-1D/issues
+[issues]: https://github.com/vimalajeewaruh/BEND-1D/issues/new/choose
