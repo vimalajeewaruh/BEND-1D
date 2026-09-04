@@ -1,7 +1,6 @@
 # Citing BEND-1D
 
-If you use BEND-1D in a publication, presentation, software package, or
-teaching resource, please cite the library.
+If you use BEND-1D in a publication, presentation, software package, or teaching resource, please cite the library.
 
 ## Suggested Citation
 
@@ -9,8 +8,6 @@ Dixon Vimalajeewa, Malith Premarathne, and Brani Vidakovic. *BEND-1D: A Reproduc
 Benchmark Signals for Denoising and Smoothing*. 2026. Available from:
 [https://github.com/vimalajeewaruh/BEND-1S](https://github.com/vimalajeewaruh/BEND-1D).
 
-Please replace the repository address above with the actual BEND-1D
-repository URL.
 
 ## BibTeX
 
