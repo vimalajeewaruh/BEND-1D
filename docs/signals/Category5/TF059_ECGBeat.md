@@ -15,21 +15,13 @@ The **ECGBeat** signal represents one electrocardiographic beat. A small broad P
 
 Let
 
-$$
+```math
 G(x;\mu,s)=\exp\!\left[-\frac12\left(\frac{x-\mu}{s}\right)^2\right].
-$$
+```
 
-The baseline is
+The baseline is $B(x)=0.018\sin(2.5\pi x)+0.010\sin(6.2\pi x+0.4).$
 
-$$
-B(x)=0.018\sin(2.5\pi x)+0.010\sin(6.2\pi x+0.4).
-$$
-
-The waveform components are
-
-$$
-P(x)=0.12G(x;0.18,0.030),
-$$
+The waveform components are $P(x)=0.12G(x;0.18,0.030),$
 
 $$
 Q(x)=-0.16G(x;0.365,0.010),
