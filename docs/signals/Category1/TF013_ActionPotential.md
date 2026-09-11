@@ -39,40 +39,13 @@ f(x) ={}
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-depolarization = 1.20./(1+exp(-180*(x-0.23)));
-repolarization = 1.05./(1+exp(-55*(x-0.53)));
-undershoot = 0.22*exp(-((x-0.67)/0.065).^2);
-f = depolarization-repolarization-undershoot;
-
-plot(x,f,'LineWidth',1.5)
-xlabel('x'); ylabel('f(x)');
-title('TF013 — ActionPotential'); grid on
-exportgraphics(gcf,'TF013_ActionPotential.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF013_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF013_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-depolarization = 1.20/(1+np.exp(-180*(x-0.23)))
-repolarization = 1.05/(1+np.exp(-55*(x-0.53)))
-undershoot = 0.22*np.exp(-((x-0.67)/0.065)**2)
-f = depolarization-repolarization-undershoot
 
-plt.plot(x, f, linewidth=1.5)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF013 — ActionPotential")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF013_ActionPotential.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
