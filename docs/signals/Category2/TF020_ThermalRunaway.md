@@ -44,7 +44,6 @@ w_q=0.035.
 $$
 
 Thus
-
 $$
 f(x)=
 \begin{cases}
