@@ -41,59 +41,13 @@ The impact locations satisfy $a_{k+1}=a_k+d_k$. Choosing $a_1=0$ and $d_1=1-e$ c
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-e = 0.72;
-d = 1-e;
-H = 1;
-a = 0;
-f = zeros(size(x));
-
-while d > 1/(10*N) && a < 1
-    idx = (x >= a) & (x <= min(a+d,1));
-    u = (x(idx)-a)/d;
-    f(idx) = 4*H*u.*(1-u);
-    a = a+d;
-    d = e*d;
-    H = e^2*H;
-end
-f(end) = 0;
-
-plot(x,f,'LineWidth',1.3)
-xlabel('x'); ylabel('f(x)');
-title('TF007 — BouncingBall'); grid on
-exportgraphics(gcf,'TF007_BouncingBall.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF007_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF008_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-e = 0.72
-d, H, a = 1-e, 1.0, 0.0
-f = np.zeros_like(x)
 
-while d > 1/(10*N) and a < 1:
-    idx = (x >= a) & (x <= min(a+d, 1))
-    u = (x[idx]-a)/d
-    f[idx] = 4*H*u*(1-u)
-    a += d
-    d *= e
-    H *= e**2
-f[-1] = 0.0
-
-plt.plot(x, f, linewidth=1.3)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF007 — BouncingBall")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF007_BouncingBall.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
