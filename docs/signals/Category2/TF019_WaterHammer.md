@@ -39,41 +39,13 @@ The indicator $\mathbf{1}_{\{x\geq0.30\}}$ activates the acoustic response at th
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-xc = 0.30;
-u = x-xc;
-
-f = 0.65*(1+tanh(120*u)) ...
-    + 0.38*(x>=xc).*exp(-6*u).*cos(54*pi*u);
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF019 — WaterHammer'); grid on
-exportgraphics(gcf,'TF019_WaterHammer.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF019_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF019_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-xc = 0.30
-u = x - xc
 
-f = (0.65 * (1 + np.tanh(120*u))
-     + 0.38 * (x >= xc) * np.exp(-6*u) * np.cos(54*np.pi*u))
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF019 — WaterHammer")
-plt.grid(alpha=0.3); plt.tight_layout()
-plt.savefig("TF019_WaterHammer.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
