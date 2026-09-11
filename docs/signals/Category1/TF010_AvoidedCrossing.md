@@ -36,36 +36,13 @@ When $\Delta=0$, the signal becomes a cusp. A positive $\Delta$ creates a smooth
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-Delta = 0.035;
-f = sqrt(4*(x-0.52).^2 + Delta^2);
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF010 — AvoidedCrossing'); grid on
-exportgraphics(gcf,'TF010_AvoidedCrossing.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF010_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF010_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-Delta = 0.035
-f = np.sqrt(4*(x-0.52)**2 + Delta**2)
 
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF010 — AvoidedCrossing")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF010_AvoidedCrossing.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
