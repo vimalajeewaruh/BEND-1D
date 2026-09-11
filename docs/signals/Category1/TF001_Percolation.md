@@ -56,18 +56,9 @@ Because $0<\beta<1$, the signal is continuous at $p_c$, but its right derivative
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-pc = 0.38;
-beta = 0.41;
-f = max(x-pc,0).^beta;
+The MATLAB implementation is available here:
 
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF001 — Percolation'); grid on
-exportgraphics(gcf,'TF001_Percolation.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF001_matlab.md)
 
 ## Python Implementation
 
