@@ -41,54 +41,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-
-z = 18*pi*(x-0.50);
-A = ones(size(x));
-idx = (z~=0);
-A(idx) = (sin(z(idx))./z(idx)).^2;
-
-M = 0.18 + 0.82*cos(15*pi*(x-0.50)).^2;
-
-z2 = 34*pi*(x-0.67);
-S = 0.10*ones(size(x));
-idx2 = (z2~=0);
-S(idx2) = 0.10*(sin(z2(idx2))./z2(idx2)).^2;
-
-f = A.*M + S;
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF021 — Diffraction'); grid on
-exportgraphics(gcf,'TF021_Diffraction.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF021_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF021_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
 
-# np.sinc(y) = sin(pi*y)/(pi*y)
-z = 18*np.pi*(x-0.50)
-A = np.sinc(z/np.pi)**2
-M = 0.18 + 0.82*np.cos(15*np.pi*(x-0.50))**2
-
-z2 = 34*np.pi*(x-0.67)
-S = 0.10*np.sinc(z2/np.pi)**2
-f = A*M + S
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF021 — Diffraction")
-plt.grid(alpha=0.3); plt.tight_layout()
-plt.savefig("TF021_Diffraction.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
