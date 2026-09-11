@@ -45,7 +45,7 @@ The impact locations satisfy $a_{k+1}=a_k+d_k$. Choosing $a_1=0$ and $d_1=1-e$ c
 
 ## Python Implementation
 
-[View Python implementation](../../codes/python/TF008_python.md)
+[View Python implementation](../../codes/python/TF007_python.md)
 
 
 
