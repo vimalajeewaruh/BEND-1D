@@ -37,43 +37,13 @@ f(x)= 0.08\log(1+20x)
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-
-f = 0.08*log(1+20*x) ...
-    + 0.55*tanh((x-0.31)/0.018) ...
-    + 0.32*tanh((x-0.69)/0.060) ...
-    + 0.13*tanh((x-0.84)/0.014) ...
-    + 0.07*exp(-((x-0.50)/0.028).^2);
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF022 — Titration'); grid on
-exportgraphics(gcf,'TF022_Titration.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF022_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF022_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
 
-f = (0.08*np.log(1 + 20*x)
-     + 0.55*np.tanh((x-0.31)/0.018)
-     + 0.32*np.tanh((x-0.69)/0.060)
-     + 0.13*np.tanh((x-0.84)/0.014)
-     + 0.07*np.exp(-((x-0.50)/0.028)**2))
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF022 — Titration")
-plt.grid(alpha=0.3); plt.tight_layout()
-plt.savefig("TF022_Titration.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
