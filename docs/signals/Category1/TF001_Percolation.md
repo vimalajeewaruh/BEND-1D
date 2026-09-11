@@ -60,22 +60,9 @@ Because $0<\beta<1$, the signal is continuous at $p_c$, but its right derivative
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF001_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-pc, beta = 0.38, 0.41
-f = np.maximum(x-pc, 0)**beta
 
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF001 — Percolation")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF001_Percolation.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
