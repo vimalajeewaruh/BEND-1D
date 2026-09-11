@@ -4,11 +4,7 @@ The **Planck** signal is a dimensionless black-body spectral profile. It is smoo
 
 ## Mathematical Definition
 
-For $0\leq x\leq1$, define
-
-$$
-\lambda(x)=0.08+0.92x.
-$$
+For $0\leq x\leq1$, define $\lambda(x)=0.08+0.92x.$
 
 The signal is
 
@@ -42,36 +38,11 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-lambda = 0.08 + 0.92*x;
-f = lambda.^(-5) ./ expm1(2.5 ./ lambda);
 
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF002 — Planck'); grid on
-exportgraphics(gcf,'TF002_Planck.png','Resolution',300);
-~~~
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
 
-N = 1024
-x = np.linspace(0, 1, N)
-lam = 0.08 + 0.92*x
-f = lam**(-5) / np.expm1(2.5/lam)
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF002 — Planck")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF002_Planck.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
