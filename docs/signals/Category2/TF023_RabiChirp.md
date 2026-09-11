@@ -48,34 +48,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-
-f = exp(-0.9*x).*sin(2*pi*(3*x+7*x.^2)).^2;
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF023 — RabiChirp'); grid on
-exportgraphics(gcf,'TF023_RabiChirp.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF023_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF023_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-f = np.exp(-0.9*x) * np.sin(2*np.pi*(3*x + 7*x**2))**2
 
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF023 — RabiChirp")
-plt.grid(alpha=0.3); plt.tight_layout()
-plt.savefig("TF023_RabiChirp.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
