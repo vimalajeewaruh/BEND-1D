@@ -45,43 +45,13 @@ where $\mathbf{1}_{\{x\geq0.48\}}$ equals 1 when $x\geq0.48$ and 0 otherwise.
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-xc = 0.48;
-u = x-xc;
-
-s = 4*atan(exp(12*u))-pi;
-f = s + 0.18*exp(-2.2*x).*sin(8*pi*x) ...
-      + 0.10*(x>=xc).*exp(-8*u).*sin(36*pi*u);
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF017 — Klatno'); grid on
-exportgraphics(gcf,'TF017_Klatno.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF017_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF017_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-xc = 0.48
-u = x - xc
 
-s = 4 * np.arctan(np.exp(12 * u)) - np.pi
-f = (s + 0.18 * np.exp(-2.2 * x) * np.sin(8 * np.pi * x)
-     + 0.10 * (x >= xc) * np.exp(-8 * u) * np.sin(36 * np.pi * u))
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF017 — Klatno")
-plt.grid(alpha=0.3); plt.tight_layout()
-plt.savefig("TF017_Klatno.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
