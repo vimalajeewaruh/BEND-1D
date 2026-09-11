@@ -4,7 +4,7 @@ If you use BEND-1D in a publication, presentation, software package, or teaching
 
 ## Suggested Citation
 
-Dixon Vimalajeewa, Malith Premarathne, and Brani Vidakovic. *BEND-1D: A Reproducible Library of One-Dimensional
+Dixon Vimalajeewa, Malith Premarathna, and Brani Vidakovic. *BEND-1D: A Reproducible Library of One-Dimensional
 Benchmark Signals for Denoising and Smoothing*. 2026. Available from:
 [https://github.com/vimalajeewaruh/BEND-1S](https://github.com/vimalajeewaruh/BEND-1D).
 
@@ -13,7 +13,7 @@ Benchmark Signals for Denoising and Smoothing*. 2026. Available from:
 
 ```bibtex
 @software{vimalajeewa_bend1d_2026,
-  author  = {Vimalajeewa, Dixon, Premarathne, Malith, Vidakovic, Brani},
+  author  = {Vimalajeewa, Dixon, Premarathna, Malith, Vidakovic, Brani},
   title   = {BEND-1D: A Reproducible Library of One-Dimensional
              Benchmark Signals for Denoising and Smoothing},
   year    = {2026},
