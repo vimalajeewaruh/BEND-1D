@@ -45,35 +45,12 @@ f(x)=
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-f = 0.5*(erf((x-0.28)/0.025) - erf((x-0.72)/0.070));
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF005 — DiffusionBand'); grid on
-exportgraphics(gcf,'TF005_DiffusionBand.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF005_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.special import erf
+[View Python implementation](../../codes/python/TF005_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-f = 0.5*(erf((x-0.28)/0.025) - erf((x-0.72)/0.070))
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF005 — DiffusionBand")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF005_DiffusionBand.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
