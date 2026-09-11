@@ -1,3 +1,4 @@
+~~~python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -12,3 +13,4 @@ plt.title("TF001 — Percolation")
 plt.grid(alpha=0.3)
 plt.tight_layout()
 plt.savefig("TF001_Percolation.png", dpi=300)
+~~~
