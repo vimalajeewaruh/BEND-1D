@@ -56,8 +56,6 @@ Because $0<\beta<1$, the signal is continuous at $p_c$, but its right derivative
 
 ## MATLAB Implementation
 
-The MATLAB implementation is available here:
-
 [View MATLAB implementation](../../codes/matlab/TF001_matlab.md)
 
 ## Python Implementation
