@@ -37,34 +37,13 @@ The logarithmic factor creates a sharp feature near $x=0.57$, and the factor $\s
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-f = -sqrt(x.*(1-x)).*log(sqrt((x-0.57).^2+0.006^2));
-
-plot(x,f,'LineWidth',1.5)
-xlabel('x'); ylabel('f(x)');
-title('TF015 — VanHove'); grid on
-exportgraphics(gcf,'TF015_VanHove.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF015_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF015_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-f = -np.sqrt(x*(1-x))*np.log(np.sqrt((x-0.57)**2+0.006**2))
 
-plt.plot(x, f, linewidth=1.5)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF015 — VanHove")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF015_VanHove.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
