@@ -36,42 +36,13 @@ where $I(\cdot)$ is the indicator function.
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-x0 = 0.28;
-f = zeros(size(x));
-idx = x >= x0;
-u = x(idx)-x0;
-f(idx) = exp(-7*u).*sin(32*pi*u);
-
-plot(x,f,'LineWidth',1.4)
-xlabel('x'); ylabel('f(x)');
-title('TF004 — RingDown'); grid on
-exportgraphics(gcf,'TF004_RingDown.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF004_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF004_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-x0 = 0.28
-f = np.zeros_like(x)
-idx = x >= x0
-u = x[idx] - x0
-f[idx] = np.exp(-7*u)*np.sin(32*np.pi*u)
 
-plt.plot(x, f, linewidth=1.4)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF004 — RingDown")
-plt.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("TF004_RingDown.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
