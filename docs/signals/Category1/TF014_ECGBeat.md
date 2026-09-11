@@ -59,45 +59,13 @@ where $o_\ell$ denotes the component offset.
 
 ## MATLAB Implementation
 
-~~~matlab
-function f = ECGBeatSignal(x,rLocations,beatScales)
-% rLocations and beatScales must each contain two values.
-
-offsets = [-0.15 -0.025 0 0.025 0.16];
-amplitudes = [0.15 -0.12 1 -0.25 0.32];
-widths = [0.035 0.010 0.008 0.012 0.060];
-f = zeros(size(x));
-
-for j = 1:2
-    for ell = 1:5
-        mu = rLocations(j)+offsets(ell);
-        f = f + beatScales(j)*amplitudes(ell)* ...
-            exp(-(x-mu).^2/(2*widths(ell)^2));
-    end
-end
-end
-~~~
+[View MATLAB implementation](../../codes/matlab/TF014_matlab.md)
 
 After the canonical R-wave locations and scale factors are selected, save the plot as **TF014_ECGBeat.png**.
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-
-def ecg_beat_signal(x, r_locations, beat_scales):
-    """Generate two ECG-like beats with specified R locations and scales."""
-    offsets = np.array([-0.15, -0.025, 0, 0.025, 0.16])
-    amplitudes = np.array([0.15, -0.12, 1, -0.25, 0.32])
-    widths = np.array([0.035, 0.010, 0.008, 0.012, 0.060])
-    f = np.zeros_like(x, dtype=float)
-
-    for r, scale in zip(r_locations, beat_scales):
-        for offset, amplitude, width in zip(offsets, amplitudes, widths):
-            mu = r+offset
-            f += scale*amplitude*np.exp(-(x-mu)**2/(2*width**2))
-    return f
-~~~
+[View Python implementation](../../codes/python/TF014_python.md)
 
 ## Recommended Uses
 
