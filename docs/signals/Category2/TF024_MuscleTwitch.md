@@ -38,48 +38,13 @@ with $t=(0.10,0.24,0.39,0.44,0.67,0.83)$, $A=(0.70,1.00,0.55,0.85,1.15,0.65),$ a
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-t = [0.10 0.24 0.39 0.44 0.67 0.83];
-A = [0.70 1.00 0.55 0.85 1.15 0.65];
-tau = [0.035 0.050 0.028 0.042 0.060 0.032];
-
-f = zeros(size(x));
-for k = 1:numel(t)
-    u = (x-t(k))/tau(k);
-    f = f + A(k)*u.*exp(1-u).*(u>=0);
-end
-
-plot(x,f,'LineWidth',1.6)
-xlabel('x'); ylabel('f(x)');
-title('TF024 — MuscleTwitch'); grid on
-exportgraphics(gcf,'TF024_MuscleTwitch.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF024_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF024_python.md)
 
-N = 1024
-x = np.linspace(0, 1, N)
-t = np.array([0.10, 0.24, 0.39, 0.44, 0.67, 0.83])
-A = np.array([0.70, 1.00, 0.55, 0.85, 1.15, 0.65])
-tau = np.array([0.035, 0.050, 0.028, 0.042, 0.060, 0.032])
 
-f = np.zeros_like(x)
-for tk, Ak, tauk in zip(t, A, tau):
-    u = (x-tk)/tauk
-    f += Ak*u*np.exp(1-u)*(u >= 0)
-
-plt.plot(x, f, linewidth=1.6)
-plt.xlabel("x"); plt.ylabel("f(x)")
-plt.title("TF024 — MuscleTwitch")
-plt.grid(alpha=0.3); plt.tight_layout()
-plt.savefig("TF024_MuscleTwitch.png", dpi=300)
-~~~
 
 ## Recommended Uses
 
