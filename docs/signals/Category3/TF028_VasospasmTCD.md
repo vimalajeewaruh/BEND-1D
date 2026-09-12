@@ -37,7 +37,8 @@ f(x)=0.35+0.18p(x)+o(x)\left[0.48+0.18p(x)\right]
 +0.035\sin(2.2\pi x).
 $$
 
-![VasospasmTCD signal](../../assets/images/TF028_VasospasmTCD.png)
+
+[VasospasmTCD signal](../../assets/images/TF028_VasospasmTCD.png)
 
 ## Morphological Characteristics
 
