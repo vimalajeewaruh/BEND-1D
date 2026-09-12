@@ -1,4 +1,4 @@
-# TF028 — VasospasmTCD
+# VasospasmTCD
 
 ## Overview
 
