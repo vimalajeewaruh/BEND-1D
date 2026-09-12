@@ -1,11 +1,4 @@
----
-layout: default
-title: TF030 — CheyneStokes
----
-
-# TF030 — CheyneStokes
-
-![CheyneStokes signal](../../assets/images/TF030_CheyneStokes.png)
+# CheyneStokes
 
 ## Overview
 
@@ -39,6 +32,9 @@ $$
 f(x)=E(x)\left[\sin\phi(x)+0.13\sin\{2\phi(x)-0.35\}\right].
 $$
 
+[CheyneStokes signal](../../assets/images/TF030_CheyneStokes.png)
+
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -60,36 +56,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N); env = zeros(size(x));
-episode = [0.00 0.26; 0.34 0.60; 0.68 0.94];
-for k = 1:size(episode,1)
-    a = episode(k,1); b = episode(k,2);
-    ind = x>=a & x<=b; u = (x(ind)-a)/(b-a);
-    env(ind) = sin(pi*u).^1.65;
-end
-phase = 2*pi*(12*x+0.55*x.^2);
-f = env.*(sin(phase)+0.13*sin(2*phase-0.35));
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('f(x)'); title('TF030 — CheyneStokes')
-exportgraphics(gcf,'TF030_CheyneStokes.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF030_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N); env = np.zeros_like(x)
-for a,b in [(0.00,0.26),(0.34,0.60),(0.68,0.94)]:
-    ind = (x>=a)&(x<=b); u = (x[ind]-a)/(b-a)
-    env[ind] = np.sin(np.pi*u)**1.65
-phase = 2*np.pi*(12*x+0.55*x**2)
-f = env*(np.sin(phase)+0.13*np.sin(2*phase-0.35))
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF030 — CheyneStokes")
-plt.tight_layout(); plt.savefig("TF030_CheyneStokes.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF030_python.md)
+
+
 
 ## Recommended Uses
 
