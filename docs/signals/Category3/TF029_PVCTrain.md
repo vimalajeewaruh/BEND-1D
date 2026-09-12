@@ -1,9 +1,4 @@
----
-layout: default
-title: TF029 — PVCTrain
----
-
-# TF029 — PVCTrain
+# PVCTrain
 
 ## Overview
 
