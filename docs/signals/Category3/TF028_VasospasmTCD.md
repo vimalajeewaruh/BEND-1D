@@ -61,34 +61,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-phase = 2*pi*(9.0*x + 0.06*sin(2*pi*0.8*x));
-pulse = 0.55*sin(phase) + 0.23*sin(2*phase-0.55) ...
-    + 0.10*sin(3*phase-1.00);
-onset = 1./(1+exp(-65*(x-0.56)));
-f = 0.35 + 0.18*pulse + onset.*(0.48+0.18*pulse) ...
-    + 0.035*sin(2*pi*1.1*x);
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('f(x)'); title('TF028 — VasospasmTCD')
-exportgraphics(gcf,'TF028_VasospasmTCD.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF028_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0, 1, N)
-phase = 2*np.pi*(9*x + 0.06*np.sin(2*np.pi*0.8*x))
-pulse = (0.55*np.sin(phase) + 0.23*np.sin(2*phase-0.55)
-         + 0.10*np.sin(3*phase-1.00))
-onset = 1/(1+np.exp(-65*(x-0.56)))
-f = 0.35 + 0.18*pulse + onset*(0.48+0.18*pulse) + 0.035*np.sin(2*np.pi*1.1*x)
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF028 — VasospasmTCD")
-plt.tight_layout(); plt.savefig("TF028_VasospasmTCD.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF011_python.md)
+
+
 
 ## Recommended Uses
 
