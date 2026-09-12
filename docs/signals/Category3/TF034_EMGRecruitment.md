@@ -1,11 +1,4 @@
----
-layout: default
-title: TF034 — EMGRecruitment
----
-
-# TF034 — EMGRecruitment
-
-![EMGRecruitment signal](../../assets/images/TF034_EMGRecruitment.png)
+# EMGRecruitment
 
 ## Overview
 
@@ -35,6 +28,8 @@ $$
 f(x)=E(x)q(x).
 $$
 
+[EMGRecruitment signal](../../assets/images/TF034_EMGRecruitment.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -56,33 +51,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-env = 0.08+0.92./(1+exp(-35*(x-0.32)));
-osc = 0.62*sin(2*pi*(24*x+17*x.^2)) ...
-    + 0.38*sin(2*pi*(49*x+0.80*sin(2*pi*1.3*x))) ...
-    + 0.23*sin(2*pi*83*x+0.35) + 0.12*sin(2*pi*121*x-0.8);
-f = env.*osc;
-plot(x,f,'LineWidth',1.1); grid on
-xlabel('x'); ylabel('f(x)'); title('TF034 — EMGRecruitment')
-exportgraphics(gcf,'TF034_EMGRecruitment.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF034_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-env = 0.08+0.92/(1+np.exp(-35*(x-0.32)))
-osc = (0.62*np.sin(2*np.pi*(24*x+17*x**2))
-       + 0.38*np.sin(2*np.pi*(49*x+0.80*np.sin(2*np.pi*1.3*x)))
-       + 0.23*np.sin(2*np.pi*83*x+0.35)+0.12*np.sin(2*np.pi*121*x-0.8))
-f = env*osc
-plt.plot(x,f,linewidth=1.1); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF034 — EMGRecruitment")
-plt.tight_layout(); plt.savefig("TF034_EMGRecruitment.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF034_python.md)
+
+
 
 ## Recommended Uses
 
