@@ -5,8 +5,6 @@ title: TF028 — VasospasmTCD
 
 # TF028 — VasospasmTCD
 
-![VasospasmTCD signal](../../assets/images/TF028_VasospasmTCD.png)
-
 ## Overview
 
 The **VasospasmTCD** signal is a toy transcranial-Doppler velocity trace. Cardiac pulsatility persists throughout the record, while a smooth pathological onset increases both mean velocity and pulsatile amplitude.
@@ -57,6 +55,8 @@ $$
 | $0.56$ | Onset center | 0.56 |
 | $65$ | Onset sharpness | 65 |
 | $9$ | Nominal cardiac frequency | 9 |
+
+![VasospasmTCD signal](../../assets/images/TF028_VasospasmTCD.png)
 
 ## MATLAB Implementation
 
