@@ -1,11 +1,4 @@
----
-layout: default
-title: TF031 — EEGBurstSuppress
----
-
-# TF031 — EEGBurstSuppress
-
-![EEGBurstSuppress signal](../../assets/images/TF031_EEGBurstSuppress.png)
+# EEGBurstSuppress
 
 ## Overview
 
@@ -41,6 +34,8 @@ $$
 f(x)=0.018\sin(10\pi x)+\sum_{k=1}^{3}A_kw_k(x)\psi(x).
 $$
 
+[EEGBurstSuppress signal](../../assets/images/TF031_EEGBurstSuppress.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -62,38 +57,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-f = 0.018*sin(2*pi*5*x);
-c = [0.17 0.46 0.75]; s = [0.095 0.125 0.085]; A = [0.95 1.15 0.82];
-for k = 1:numel(c)
-    w = exp(-0.5*((x-c(k))/s(k)).^2).^2;
-    osc = sin(2*pi*(31*x+4.5*x.^2)) + 0.52*sin(2*pi*53*x+0.7) ...
-        + 0.23*sin(2*pi*79*x-0.4);
-    f = f + A(k)*w.*osc;
-end
-plot(x,f,'LineWidth',1.2); grid on
-xlabel('x'); ylabel('f(x)'); title('TF031 — EEGBurstSuppress')
-exportgraphics(gcf,'TF031_EEGBurstSuppress.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF031_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-f = 0.018*np.sin(2*np.pi*5*x)
-c = [0.17,0.46,0.75]; s = [0.095,0.125,0.085]; A = [0.95,1.15,0.82]
-osc = (np.sin(2*np.pi*(31*x+4.5*x**2)) + 0.52*np.sin(2*np.pi*53*x+0.7)
-       + 0.23*np.sin(2*np.pi*79*x-0.4))
-for ck,sk,ak in zip(c,s,A):
-    w = np.exp(-((x-ck)/sk)**2)
-    f += ak*w*osc
-plt.plot(x,f,linewidth=1.2); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF031 — EEGBurstSuppress")
-plt.tight_layout(); plt.savefig("TF031_EEGBurstSuppress.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF031_python.md)
+
+
 
 ## Recommended Uses
 
