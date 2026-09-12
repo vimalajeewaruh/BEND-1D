@@ -1,8 +1,3 @@
----
-layout: default
-title: TF028 — VasospasmTCD
----
-
 # TF028 — VasospasmTCD
 
 ## Overview
