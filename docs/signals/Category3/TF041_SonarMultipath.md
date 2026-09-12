@@ -1,11 +1,4 @@
----
-layout: default
-title: TF041 — SonarMultipath
----
-
-# TF041 — SonarMultipath
-
-![SonarMultipath signal](../../assets/images/TF041_SonarMultipath.png)
+# SonarMultipath
 
 ## Overview
 
@@ -42,6 +35,8 @@ $$
 
 > **Required dependency:** The supplied MATLAB block calls `chirp_packet` but does not include its definition. Add the authoritative helper to reproduce the reference signal exactly. This page does not invent a replacement formula.
 
+[SonarMultipath signal](../../assets/images/TF041_SonarMultipath.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -62,41 +57,15 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-% Requires the project's authoritative chirp_packet.m helper.
-N = 1024; x = linspace(0,1,N);
-f = chirp_packet(x,0.22,0.030,28,145,1.00) ...
-  + chirp_packet(x,0.405,0.036,28,120,0.48) ...
-  + chirp_packet(x,0.545,0.043,26,105,0.28);
-u = x-0.56; ind = u>=0; rev = zeros(size(x));
-rev(ind) = 0.18*exp(-5.5*u(ind)).*(sin(2*pi*18*u(ind)) ...
-    + 0.35*sin(2*pi*43*u(ind)+0.5));
-f = f+rev;
-plot(x,f,'LineWidth',1.1); grid on
-xlabel('x'); ylabel('f(x)'); title('TF041 — SonarMultipath')
-exportgraphics(gcf,'TF041_SonarMultipath.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF040_matlab.md)
 
 ## Python Implementation
 
+[View Python implementation](../../codes/python/TF040_python.md)
+
 The exact Python implementation also requires a translation of the authoritative `chirp_packet` helper. Once that function is available, the supplied construction is:
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-# from project_helpers import chirp_packet
-N = 1024; x = np.linspace(0,1,N)
-f = (chirp_packet(x,0.22,0.030,28,145,1.00)
-     + chirp_packet(x,0.405,0.036,28,120,0.48)
-     + chirp_packet(x,0.545,0.043,26,105,0.28))
-u = x-0.56; ind = u>=0; rev = np.zeros_like(x)
-rev[ind] = 0.18*np.exp(-5.5*u[ind])*(np.sin(2*np.pi*18*u[ind])
-           + 0.35*np.sin(2*np.pi*43*u[ind]+0.5))
-f += rev
-plt.plot(x,f,linewidth=1.1); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF041 — SonarMultipath")
-plt.tight_layout(); plt.savefig("TF041_SonarMultipath.png",dpi=300)
-~~~
+
 
 ## Recommended Uses
 
