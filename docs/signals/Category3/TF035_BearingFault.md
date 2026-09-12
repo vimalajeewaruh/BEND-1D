@@ -1,11 +1,6 @@
----
-layout: default
-title: TF035 — BearingFault
----
 
-# TF035 — BearingFault
 
-![BearingFault signal](../../assets/images/TF035_BearingFault.png)
+# BearingFault
 
 ## Overview
 
@@ -44,6 +39,8 @@ $$
 f(x)=\sum_{k=1}^{9}\left[I_k(x)+R_k(x)\right].
 $$
 
+[BearingFault signal](../../assets/images/TF035_BearingFault.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -65,41 +62,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N); f = zeros(size(x));
-baseTimes = 0.075:0.112:0.97;
-for k = 1:numel(baseTimes)
-    tk = baseTimes(k)+0.0045*sin(2*pi*(k-1)/5);
-    u = x-tk; ind = u>=0;
-    impact = 0.65*exp(-0.5*(u/0.0035).^2);
-    ring = zeros(size(x));
-    ring(ind) = exp(-48*u(ind)).*(sin(2*pi*58*u(ind)) ...
-        + 0.32*sin(2*pi*103*u(ind)));
-    f = f+impact+ring;
-end
-plot(x,f,'LineWidth',1.1); grid on
-xlabel('x'); ylabel('f(x)'); title('TF035 — BearingFault')
-exportgraphics(gcf,'TF035_BearingFault.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF035_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N); f = np.zeros_like(x)
-base_times = np.arange(0.075,0.971,0.112)
-for k,b in enumerate(base_times):
-    t = b+0.0045*np.sin(2*np.pi*k/5); u = x-t; ind = u>=0
-    impact = 0.65*np.exp(-0.5*(u/0.0035)**2)
-    ring = np.zeros_like(x)
-    ring[ind] = np.exp(-48*u[ind])*(np.sin(2*np.pi*58*u[ind])
-                + 0.32*np.sin(2*np.pi*103*u[ind]))
-    f += impact+ring
-plt.plot(x,f,linewidth=1.1); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF035 — BearingFault")
-plt.tight_layout(); plt.savefig("TF035_BearingFault.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF035_python.md)
+
 
 ## Recommended Uses
 
