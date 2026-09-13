@@ -19,39 +19,19 @@ $$
 With $u_k=x-t_k$, define
 
 $$
-P_k(x)
-=
-0.45A_k
-\exp\left[
--\frac{1}{2}
-\left(
-\frac{u_k}{0.0025}
-\right)^2
-\right]
+P_k(x)=0.45A_k\exp\left[-\frac{1}{2}\left(\frac{u_k}{0.0025}\right)^2\right].
 $$
 
 and
 
 $$
-R_k(x)
-=
-A_k
-\mathbf{1}_{\{u_k\geq 0\}}
-e^{-(30+8k)u_k}
-\sin\left\{
-2\pi(45+4k)u_k
-\right\}.
+R_k(x)=A_k\mathbf{1}_{\{u_k\geq 0\}}e^{-(30+8k)u_k}\sin\left\{2\pi(45+4k)u_k\right\}.
 $$
 
 The signal is
 
 $$
-f(x)
-=
-\sum_{k=1}^{10}
-\left[
-P_k(x)+R_k(x)
-\right].
+f(x)=\sum_{k=1}^{10}\left[P_k(x)+R_k(x)\right].
 $$
 
 [FractureAE signal](../../assets/images/TF054_FractureAE.png)
