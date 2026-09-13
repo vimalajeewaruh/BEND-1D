@@ -1,8 +1,3 @@
----
-layout: default
-title: BEND-1D Category 4 Signal Catalog
----
-
 # BEND-1D Category 4
 
 Category 4 contains measurement-science test functions **TF043–TF058**. These deterministic surrogates represent physical, biological, environmental, and production processes observed through instruments.
