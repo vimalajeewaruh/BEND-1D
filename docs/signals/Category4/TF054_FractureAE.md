@@ -25,7 +25,7 @@ $$
 and
 
 $$
-R_k(x)=A_k\mathbf{1}_{\{u_k\geq 0\}}e^{-(30+8k)u_k}\sin\left\{2\pi(45+4k)u_k\right\}.
+R_k(x)=A_k I(u_k\geq 0)e^{-(30+8k)u_k}\sin\left(2\pi(45+4k)u_k\right).
 $$
 
 The signal is
