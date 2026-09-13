@@ -1,11 +1,4 @@
----
-layout: default
-title: TF046 — PlateWear
----
-
-# TF046 — PlateWear
-
-![PlateWear signal](../../assets/images/TF046_PlateWear.png)
+# PlateWear
 
 ## Overview
 
@@ -39,6 +32,8 @@ $$
 f(x)=w_1(x)+M(x)+w_2(x)+m(x).
 $$
 
+[PlateWear signal](../../assets/images/TF046_PlateWear.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -60,33 +55,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-wear1 = 1-0.38*x.^0.82;
-maintenance = 0.20./(1+exp(-160*(x-0.56)));
-wear2 = -0.28*max(x-0.56,0);
-micro = 0.018*sin(2*pi*12*x).*(1-0.4*x);
-f = wear1+maintenance+wear2+micro;
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('f(x)'); title('TF046 — PlateWear')
-exportgraphics(gcf,'TF046_PlateWear.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF046_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-wear1 = 1-0.38*x**0.82
-maintenance = 0.20/(1+np.exp(-160*(x-0.56)))
-wear2 = -0.28*np.maximum(x-0.56,0)
-micro = 0.018*np.sin(2*np.pi*12*x)*(1-0.4*x)
-f = wear1+maintenance+wear2+micro
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF046 — PlateWear")
-plt.tight_layout(); plt.savefig("TF046_PlateWear.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF046_python.md)
+
+
 
 ## Recommended Uses
 
