@@ -22,7 +22,7 @@ $$
 f(x)=
 \begin{cases}
 0.07E(x)+\exp\left[-\dfrac12\left(\dfrac{E(x)-0.36}{0.18}\right)^2\right],
-& x\leq0.5, \\[6pt]
+& x\leq0.5, \\
 0.07E(x)-0.82\exp\left[-\dfrac12\left(\dfrac{E(x)-0.08}{0.22}\right)^2\right],
 & x>0.5.
 \end{cases}
