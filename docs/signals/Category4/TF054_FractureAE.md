@@ -1,11 +1,4 @@
----
-layout: default
-title: TF054 — FractureAE
----
-
-# TF054 — FractureAE
-
-![FractureAE signal](../../assets/images/TF054_FractureAE.png)
+# FractureAE
 
 ## Overview
 
@@ -16,31 +9,52 @@ The **FractureAE** signal represents acoustic-emission activity during progressi
 The event times and amplitudes are
 
 $$
-t=(0.16,0.31,0.47,0.60,0.70,0.775,0.835,0.885,0.925,0.955),
+t=(0.16,\,0.31,\,0.47,\,0.60,\,0.70,\,0.775,\,0.835,\,0.885,\,0.925,\,0.955),
 $$
 
 $$
-A=(0.22,0.28,0.25,0.35,0.42,0.55,0.68,0.82,1.00,1.18).
+A=(0.22,\,0.28,\,0.25,\,0.35,\,0.42,\,0.55,\,0.68,\,0.82,\,1.00,\,1.18).
 $$
 
 With $u_k=x-t_k$, define
 
 $$
-P_k(x)=0.45A_k\exp\!\left[-\frac12\left(\frac{u_k}{0.0025}\right)^2\right]
+P_k(x)
+=
+0.45A_k
+\exp\left[
+-\frac{1}{2}
+\left(
+\frac{u_k}{0.0025}
+\right)^2
+\right]
 $$
 
 and
 
 $$
-R_k(x)=A_k\mathbf{1}_{\{u_k\geq0\}}
-e^{-(30+8k)u_k}\sin\{2\pi(45+4k)u_k\}.
+R_k(x)
+=
+A_k
+\mathbf{1}_{\{u_k\geq 0\}}
+e^{-(30+8k)u_k}
+\sin\left\{
+2\pi(45+4k)u_k
+\right\}.
 $$
 
 The signal is
 
 $$
-f(x)=\sum_{k=1}^{10}\left[P_k(x)+R_k(x)\right].
+f(x)
+=
+\sum_{k=1}^{10}
+\left[
+P_k(x)+R_k(x)
+\right].
 $$
+
+[FractureAE signal](../../assets/images/TF054_FractureAE.png)
 
 ## Morphological Characteristics
 
