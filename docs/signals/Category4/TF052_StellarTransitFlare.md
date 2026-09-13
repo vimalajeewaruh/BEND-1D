@@ -1,11 +1,4 @@
----
-layout: default
-title: TF052 — StellarTransitFlare
----
-
-# TF052 — StellarTransitFlare
-
-![StellarTransitFlare signal](../../assets/images/TF052_StellarTransitFlare.png)
+# StellarTransitFlare
 
 ## Overview
 
@@ -37,6 +30,8 @@ The signal is
 $$
 f(x)=B(x)+T(x)+F(x).
 $$
+
+[StellarTransitFlare signal](../../assets/images/TF052_StellarTransitFlare.png)
 
 ## Morphological Characteristics
 
