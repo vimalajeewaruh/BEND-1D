@@ -1,11 +1,4 @@
----
-layout: default
-title: TF056 — EpidemicSeasonal
----
-
-# TF056 — EpidemicSeasonal
-
-![EpidemicSeasonal signal](../../assets/images/TF056_EpidemicSeasonal.png)
+# EpidemicSeasonal
 
 ## Overview
 
@@ -35,6 +28,8 @@ $$
 f(x)=S(x)+O(x)+I(x).
 $$
 
+[EpidemicSeasonal signal](../../assets/images/TF056_EpidemicSeasonal.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -54,33 +49,16 @@ $$
 | $0.95$ | Outbreak magnitude | 0.95 |
 | $70$ | Intervention sharpness | 70 |
 
+
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-season = 0.30+0.10*sin(2*pi*4*x-0.8);
-outbreak = 0.95*exp(-0.5*((x-0.54)/0.060).^2);
-intervention = -0.18./(1+exp(-70*(x-0.63)));
-f = season+outbreak+intervention;
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('f(x)'); title('TF056 — EpidemicSeasonal')
-exportgraphics(gcf,'TF056_EpidemicSeasonal.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF056_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-season = 0.30+0.10*np.sin(2*np.pi*4*x-0.8)
-outbreak = 0.95*np.exp(-0.5*((x-0.54)/0.060)**2)
-intervention = -0.18/(1+np.exp(-70*(x-0.63)))
-f = season+outbreak+intervention
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF056 — EpidemicSeasonal")
-plt.tight_layout(); plt.savefig("TF056_EpidemicSeasonal.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF056_python.md)
+
+
 
 ## Recommended Uses
 
