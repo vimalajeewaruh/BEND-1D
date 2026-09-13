@@ -1,11 +1,4 @@
----
-layout: default
-title: TF048 — IceCore
----
-
-# TF048 — IceCore
-
-![IceCore signal](../../assets/images/TF048_IceCore.png)
+# IceCore
 
 ## Overview
 
@@ -42,6 +35,8 @@ $$
 f(x)=L(x)+H(x)+E(x)+S(x).
 $$
 
+[IceCore signal](../../assets/images/TF048_IceCore.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -63,33 +58,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-slow = 0.34*sin(2*pi*1.25*x)+0.16*sin(2*pi*3.4*x+0.7);
-fine = 0.045*sin(2*pi*27*x).*(0.7+0.3*cos(2*pi*x));
-event = -0.62*exp(-0.5*((x-0.58)/0.018).^2);
-step = 0.20*(1./(1+exp(-85*(x-0.62)))-1./(1+exp(-55*(x-0.76))));
-f = slow+fine+event+step;
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF048 — IceCore')
-exportgraphics(gcf,'TF048_IceCore.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF048_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-slow = 0.34*np.sin(2*np.pi*1.25*x)+0.16*np.sin(2*np.pi*3.4*x+0.7)
-fine = 0.045*np.sin(2*np.pi*27*x)*(0.7+0.3*np.cos(2*np.pi*x))
-event = -0.62*np.exp(-0.5*((x-0.58)/0.018)**2)
-step = 0.20*(1/(1+np.exp(-85*(x-0.62)))-1/(1+np.exp(-55*(x-0.76))))
-f = slow+fine+event+step
-plt.plot(x,f,linewidth=1.3); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF048 — IceCore")
-plt.tight_layout(); plt.savefig("TF048_IceCore.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF048_python.md)
+
+
 
 ## Recommended Uses
 
