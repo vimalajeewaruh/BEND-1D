@@ -1,8 +1,3 @@
----
-layout: default
-title: Category 4 — Benchmarking Role
----
-
 # Category 4 Benchmarking Role
 
 Category 4 focuses on deterministic measurement-science surrogates. Each signal represents a process observed through an instrument rather than a complete mechanistic model.
