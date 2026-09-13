@@ -1,11 +1,4 @@
----
-layout: default
-title: TF055 — Pharmacokinetic
----
-
-# TF055 — Pharmacokinetic
-
-![Pharmacokinetic signal](../../assets/images/TF055_Pharmacokinetic.png)
+# Pharmacokinetic
 
 ## Overview
 
@@ -36,6 +29,8 @@ $$
 f(x)=A(12x)E(12x)+S(12x).
 $$
 
+[Pharmacokinetic signal](../../assets/images/TF055_Pharmacokinetic.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -55,35 +50,16 @@ $$
 | $0.24,1.3$ | Elimination rates | As shown |
 | $5.3$ h | Shoulder onset | 5.3 |
 
+
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N); t = 12*x;
-absorb = 1-exp(-2.2*t);
-elim = 0.78*exp(-0.24*t)+0.22*exp(-1.3*t);
-f = absorb.*elim;
-u = max(t-5.3,0);
-f = f+(t>=5.3).*0.16.*(1-exp(-2.8*u)).*exp(-0.55*u);
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('Concentration'); title('TF055 — Pharmacokinetic')
-exportgraphics(gcf,'TF055_Pharmacokinetic.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF055_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N); t = 12*x
-absorb = 1-np.exp(-2.2*t)
-elim = 0.78*np.exp(-0.24*t)+0.22*np.exp(-1.3*t)
-f = absorb*elim
-u = np.maximum(t-5.3,0)
-f += (t>=5.3)*0.16*(1-np.exp(-2.8*u))*np.exp(-0.55*u)
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("Concentration"); plt.title("TF055 — Pharmacokinetic")
-plt.tight_layout(); plt.savefig("TF055_Pharmacokinetic.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF055_python.md)
+
+
 
 ## Recommended Uses
 
