@@ -12,7 +12,7 @@ $$
 E(x)=
 \begin{cases}
 -1+4x, & 0\leq x\leq0.5,\\
-3-4x, & 0.5<x\leq1.
+3-4x, & 0.5<x\le 1
 \end{cases}
 $$
 
