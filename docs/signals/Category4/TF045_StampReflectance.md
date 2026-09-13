@@ -1,11 +1,4 @@
----
-layout: default
-title: TF045 — StampReflectance
----
-
-# TF045 — StampReflectance
-
-![StampReflectance signal](../../assets/images/TF045_StampReflectance.png)
+# StampReflectance
 
 ## Overview
 
@@ -45,6 +38,8 @@ $$
 f(x)=B\{\lambda(x)\}-A_1\{\lambda(x)\}-A_2\{\lambda(x)\}-S\{\lambda(x)\}.
 $$
 
+[StampReflectance signal](../../assets/images/TF045_StampReflectance.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -66,33 +61,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N); lambda = 400+300*x;
-baseline = 0.72+0.00035*(lambda-550);
-band1 = 0.42*exp(-0.5*((lambda-525)/38).^2);
-band2 = 0.16*exp(-0.5*((lambda-585)/24).^2);
-shoulder = 0.08*exp(-0.5*((lambda-455)/18).^2);
-f = baseline-band1-band2-shoulder;
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('Reflectance'); title('TF045 — StampReflectance')
-exportgraphics(gcf,'TF045_StampReflectance.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF045_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N); wavelength = 400+300*x
-baseline = 0.72+0.00035*(wavelength-550)
-band1 = 0.42*np.exp(-0.5*((wavelength-525)/38)**2)
-band2 = 0.16*np.exp(-0.5*((wavelength-585)/24)**2)
-shoulder = 0.08*np.exp(-0.5*((wavelength-455)/18)**2)
-f = baseline-band1-band2-shoulder
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("Reflectance"); plt.title("TF045 — StampReflectance")
-plt.tight_layout(); plt.savefig("TF045_StampReflectance.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF045_python.md)
+
+
 
 ## Recommended Uses
 
