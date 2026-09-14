@@ -1,11 +1,4 @@
----
-layout: default
-title: TF060 — ArterialPulse
----
-
-# TF060 — ArterialPulse
-
-![ArterialPulse signal](../../assets/images/TF060_ArterialPulse.png)
+# ArterialPulse
 
 ## Overview
 
@@ -41,6 +34,8 @@ $$
 f(x)=0.065+0.92M(x)+N(x)+R(x)+D(x).
 $$
 
+[ArterialPulse signal](../../assets/images/TF060_ArterialPulse.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -62,33 +57,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N); u = max(x-0.07,0);
-main = u.^2.15.*exp(-8.8*u); main = main/max(main);
-notch = -0.115*exp(-0.5*((x-0.50)/0.012).^2);
-rebound = 0.060*exp(-0.5*((x-0.545)/0.021).^2);
-tail = 0.065*(x>=0.53).*exp(-4.8*(x-0.53));
-f = 0.065+0.92*main+notch+rebound+tail;
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('f(x)'); title('TF060 — ArterialPulse')
-exportgraphics(gcf,'TF060_ArterialPulse.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF060_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N); u = np.maximum(x-0.07,0)
-main = u**2.15*np.exp(-8.8*u); main /= main.max()
-notch = -0.115*np.exp(-0.5*((x-0.50)/0.012)**2)
-rebound = 0.060*np.exp(-0.5*((x-0.545)/0.021)**2)
-tail = 0.065*(x>=0.53)*np.exp(-4.8*(x-0.53))
-f = 0.065+0.92*main+notch+rebound+tail
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF060 — ArterialPulse")
-plt.tight_layout(); plt.savefig("TF060_ArterialPulse.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF060_python.md)
+
+
 
 ## Recommended Uses
 
