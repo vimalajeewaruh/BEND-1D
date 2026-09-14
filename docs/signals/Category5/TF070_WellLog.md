@@ -1,11 +1,4 @@
----
-layout: default
-title: TF070 — WellLog
----
-
-# TF070 — WellLog
-
-![WellLog signal](../../assets/images/TF070_WellLog.png)
+# WellLog
 
 ## Overview
 
@@ -41,6 +34,8 @@ $$
 f(x)=B(x)+T(x)+0.020\mathbf{1}_{\{0.18<x<0.82\}}\sin(34\pi x).
 $$
 
+[WellLog signal](../../assets/images/TF070_WellLog.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -62,35 +57,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-s = @(z,c,w) 1./(1+exp(-(z-c)/w));
-f = 0.48+0.10*x+0.025*sin(2*pi*3*x);
-f = f+0.30*s(x,0.18,0.004)-0.40*s(x,0.39,0.005) ...
-    +0.26*s(x,0.64,0.0045)-0.20*s(x,0.82,0.004);
-thin = 0.24*(s(x,0.515,0.0028)-s(x,0.548,0.0028));
-f = f+thin+0.020*sin(2*pi*17*x).*(x>0.18 & x<0.82);
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('Log response'); title('TF070 — WellLog')
-exportgraphics(gcf,'TF070_WellLog.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF070_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-step = lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f = 0.48+0.10*x+0.025*np.sin(2*np.pi*3*x)
-f += 0.30*step(0.18,0.004)-0.40*step(0.39,0.005)
-f += 0.26*step(0.64,0.0045)-0.20*step(0.82,0.004)
-thin = 0.24*(step(0.515,0.0028)-step(0.548,0.0028))
-f += thin+0.020*np.sin(2*np.pi*17*x)*((x>0.18)&(x<0.82))
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("Log response"); plt.title("TF070 — WellLog")
-plt.tight_layout(); plt.savefig("TF070_WellLog.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF070_python.md)
+
+
 
 ## Recommended Uses
 
