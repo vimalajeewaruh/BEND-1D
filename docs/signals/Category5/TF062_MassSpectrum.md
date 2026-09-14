@@ -1,11 +1,4 @@
----
-layout: default
-title: TF062 — MassSpectrum
----
-
-# TF062 — MassSpectrum
-
-![MassSpectrum signal](../../assets/images/TF062_MassSpectrum.png)
+# MassSpectrum
 
 ## Overview
 
@@ -40,6 +33,8 @@ f(x)=0.022+0.018x+0.035G(x;0.73,0.18)
 +\sum_{k=1}^{8}A_kG(x;c_k,w_k).
 $$
 
+[MassSpectrum signal](../../assets/images/TF062_MassSpectrum.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -61,36 +56,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-f = 0.022+0.018*x+0.035*exp(-0.5*((x-0.73)/0.18).^2);
-c = [0.11 0.24 0.365 0.492 0.510 0.675 0.82 0.905];
-A = [0.28 0.62 0.40 1.00 0.72 0.35 0.78 0.24];
-w = [0.0045 0.0065 0.0035 0.0050 0.0042 0.0075 0.0055 0.0030];
-for k = 1:numel(c)
-    f = f+A(k)*exp(-0.5*((x-c(k))/w(k)).^2);
-end
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('Intensity'); title('TF062 — MassSpectrum')
-exportgraphics(gcf,'TF062_MassSpectrum.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF062_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-f = 0.022+0.018*x+0.035*np.exp(-0.5*((x-0.73)/0.18)**2)
-c = [0.11,0.24,0.365,0.492,0.510,0.675,0.82,0.905]
-A = [0.28,0.62,0.40,1.00,0.72,0.35,0.78,0.24]
-w = [0.0045,0.0065,0.0035,0.0050,0.0042,0.0075,0.0055,0.0030]
-for ck,ak,wk in zip(c,A,w):
-    f += ak*np.exp(-0.5*((x-ck)/wk)**2)
-plt.plot(x,f,linewidth=1.3); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("Intensity"); plt.title("TF062 — MassSpectrum")
-plt.tight_layout(); plt.savefig("TF062_MassSpectrum.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF062_python.md)
+
+
 
 ## Recommended Uses
 
