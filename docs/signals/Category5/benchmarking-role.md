@@ -1,8 +1,3 @@
----
-layout: default
-title: Category 5 — Benchmarking Role
----
-
 # Category 5 Benchmarking Role
 
 Category 5 broadens the application range of BEND-1D while emphasizing whether smoothing can preserve small scientifically meaningful structures near dominant components.
