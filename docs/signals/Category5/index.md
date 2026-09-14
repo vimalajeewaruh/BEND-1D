@@ -1,8 +1,3 @@
----
-layout: default
-title: BEND-1D Category 5 Signal Catalog
----
-
 # BEND-1D Category 5
 
 Category 5 contains cross-disciplinary smoothing test functions **TF059–TF070**. These deterministic surrogates emphasize narrow peaks adjacent to broad structure, weak shoulders, regime changes, localized oscillations, nonlinear transitions, and small scientifically meaningful features beside dominant components.
