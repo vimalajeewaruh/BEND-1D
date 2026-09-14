@@ -1,11 +1,4 @@
----
-layout: default
-title: TF066 — BatteryDischarge
----
-
-# TF066 — BatteryDischarge
-
-![BatteryDischarge signal](../../assets/images/TF066_BatteryDischarge.png)
+# BatteryDischarge
 
 ## Overview
 
@@ -45,6 +38,8 @@ $$
 f(x)=P(x)+D(x)+R(x)+S(x)+T(x)+M(x).
 $$
 
+[BatteryDischarge signal](../../assets/images/TF066_BatteryDischarge.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -66,37 +61,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024; x = linspace(0,1,N);
-plateau = 1.05-0.075*x-0.020*x.^2;
-phaseDrop = -0.060./(1+exp(-55*(x-0.36)));
-phaseRecover = 0.036./(1+exp(-48*(x-0.50)));
-shoulder = 0.018*exp(-0.5*((x-0.62)/0.050).^2);
-terminal = -0.55./(1+exp(-48*(x-0.885)));
-ripple = 0.006*sin(2*pi*6*x).*exp(-1.2*x);
-f = plateau+phaseDrop+phaseRecover+shoulder+terminal+ripple;
-plot(x,f,'LineWidth',1.4); grid on
-xlabel('x'); ylabel('Voltage'); title('TF066 — BatteryDischarge')
-exportgraphics(gcf,'TF066_BatteryDischarge.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF066_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N = 1024; x = np.linspace(0,1,N)
-plateau = 1.05-0.075*x-0.020*x**2
-phase_drop = -0.060/(1+np.exp(-55*(x-0.36)))
-phase_recover = 0.036/(1+np.exp(-48*(x-0.50)))
-shoulder = 0.018*np.exp(-0.5*((x-0.62)/0.050)**2)
-terminal = -0.55/(1+np.exp(-48*(x-0.885)))
-ripple = 0.006*np.sin(2*np.pi*6*x)*np.exp(-1.2*x)
-f = plateau+phase_drop+phase_recover+shoulder+terminal+ripple
-plt.plot(x,f,linewidth=1.4); plt.grid(alpha=0.3)
-plt.xlabel("x"); plt.ylabel("Voltage"); plt.title("TF066 — BatteryDischarge")
-plt.tight_layout(); plt.savefig("TF066_BatteryDischarge.png",dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF066_python.md)
+
+
 
 ## Recommended Uses
 
