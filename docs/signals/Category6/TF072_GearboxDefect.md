@@ -1,11 +1,4 @@
----
-layout: default
-title: TF072 — GearboxDefect
----
-
-# TF072 — GearboxDefect
-
-![GearboxDefect signal](../../assets/images/TF072_GearboxDefect.png)
+# GearboxDefect
 
 ## Overview
 
@@ -26,6 +19,8 @@ $$
 f(x)=C(x)+\sum_{k=1}^{9}a_k\mathbf{1}_{\{x\geq c_k\}}e^{-75u_k}\sin(250\pi u_k).
 $$
 
+[GearboxDefect signal](../../assets/images/TF072_GearboxDefect.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -45,29 +40,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-f=(1+0.28*sin(2*pi*5*x-0.3)).*(0.32*sin(2*pi*46*x)+0.12*sin(2*pi*92*x+0.4));
-c=0.12:0.105:0.96;
-for k=1:numel(c), a=0.22+0.16*(c(k)>0.5); u=max(x-c(k),0);
- f=f+a*(x>=c(k)).*exp(-75*u).*sin(2*pi*125*u); end
-plot(x,f); grid on; title('TF072 — GearboxDefect')
-exportgraphics(gcf,'TF072_GearboxDefect.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF072_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N)
-f=(1+0.28*np.sin(2*np.pi*5*x-0.3))*(0.32*np.sin(2*np.pi*46*x)+0.12*np.sin(2*np.pi*92*x+0.4))
-for c in np.arange(0.12,0.961,0.105):
-    a=0.22+0.16*(c>0.5); u=np.maximum(x-c,0)
-    f+=a*(x>=c)*np.exp(-75*u)*np.sin(2*np.pi*125*u)
-plt.plot(x,f); plt.grid(alpha=.3); plt.title('TF072 — GearboxDefect'); plt.tight_layout()
-plt.savefig('TF072_GearboxDefect.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF072_python.md)
+
+
 
 ## Recommended Uses
 
