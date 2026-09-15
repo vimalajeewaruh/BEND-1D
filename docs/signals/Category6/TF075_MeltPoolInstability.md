@@ -1,11 +1,4 @@
----
-layout: default
-title: TF075 — MeltPoolInstability
----
-
-# TF075 — MeltPoolInstability
-
-![MeltPoolInstability signal](../../assets/images/TF075_MeltPoolInstability.png)
+# MeltPoolInstability
 
 ## Overview
 
@@ -22,6 +15,8 @@ f(x)={}&0.35+0.28x-0.10x^2+(0.025+0.035x)\sin\{2\pi(8x+3x^2)\}\\
 &+0.12[s(x;0.72,0.012)-s(x;0.86,0.018)].
 \end{aligned}
 $$
+
+[MeltPoolInstability signal](../../assets/images/TF075_MeltPoolInstability.png)
 
 ## Morphological Characteristics
 
@@ -42,27 +37,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.35+0.28*x-0.10*x.^2+(0.025+0.035*x).*sin(2*pi*(8*x+3*x.^2));
-f=f+0.52*exp(-0.5*((x-0.61)/0.010).^2)-0.20*exp(-0.5*((x-0.635)/0.016).^2);
-f=f+0.12*(s(x,0.72,0.012)-s(x,0.86,0.018));
-plot(x,f); grid on; title('TF075 — MeltPoolInstability')
-exportgraphics(gcf,'TF075_MeltPoolInstability.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF075_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); step=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.35+.28*x-.10*x**2+(.025+.035*x)*np.sin(2*np.pi*(8*x+3*x**2))
-f+=.52*np.exp(-.5*((x-.61)/.010)**2)-.20*np.exp(-.5*((x-.635)/.016)**2)
-f+=.12*(step(.72,.012)-step(.86,.018))
-plt.plot(x,f); plt.grid(alpha=.3); plt.title('TF075 — MeltPoolInstability'); plt.tight_layout()
-plt.savefig('TF075_MeltPoolInstability.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF075_python.md)
+
+
 
 ## Recommended Uses
 
