@@ -1,11 +1,4 @@
----
-layout: default
-title: TF077 — NetworkTrafficBursts
----
-
-# TF077 — NetworkTrafficBursts
-
-![NetworkTrafficBursts signal](../../assets/images/TF077_NetworkTrafficBursts.png)
+# NetworkTrafficBursts
 
 ## Overview
 
@@ -26,6 +19,8 @@ $$
 
 where $c=(0.235,0.275,0.338,0.615,0.658,0.705,0.774)$, $a=(0.18,0.11,0.21,0.16,0.25,0.14,0.22)$, and $w=(0.009,0.006,0.010,0.008,0.011,0.006,0.009)$.
 
+[NetworkTrafficBursts signal](../../assets/images/TF077_NetworkTrafficBursts.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -44,33 +39,13 @@ where $c=(0.235,0.275,0.338,0.615,0.658,0.705,0.774)$, $a=(0.18,0.11,0.21,0.16,0
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.25+0.08*sin(2*pi*2*x)+0.045*x;
-f=f+0.28*(s(x,0.20,0.012)-s(x,0.40,0.018));
-f=f+0.34*(s(x,0.57,0.015)-s(x,0.83,0.020));
-c=[0.235 0.275 0.338 0.615 0.658 0.705 0.774];
-a=[0.18 0.11 0.21 0.16 0.25 0.14 0.22];
-w=[0.009 0.006 0.010 0.008 0.011 0.006 0.009];
-for k=1:numel(c), f=f+a(k)*exp(-0.5*((x-c(k))/w(k)).^2); end
-plot(x,f); grid on; title('TF077 — NetworkTrafficBursts')
-exportgraphics(gcf,'TF077_NetworkTrafficBursts.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF077_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); s=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.25+.08*np.sin(2*np.pi*2*x)+.045*x
-f+=.28*(s(.20,.012)-s(.40,.018))+.34*(s(.57,.015)-s(.83,.020))
-c=[.235,.275,.338,.615,.658,.705,.774]; a=[.18,.11,.21,.16,.25,.14,.22]
-w=[.009,.006,.010,.008,.011,.006,.009]
-for ck,ak,wk in zip(c,a,w): f+=ak*np.exp(-.5*((x-ck)/wk)**2)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF077_NetworkTrafficBursts.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF077_python.md)
+
+
 
 ## Recommended Uses
 
