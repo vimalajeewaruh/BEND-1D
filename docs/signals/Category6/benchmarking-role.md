@@ -1,8 +1,3 @@
----
-layout: default
-title: Category 6 Benchmarking Role
----
-
 # Category 6 Benchmarking Role
 
 Category 6 deliberately mixes modern application domains and signal regularity classes. Its purpose is not to simulate complete systems, but to test whether denoising and smoothing methods preserve small, localized, multiscale, or scientifically meaningful morphology.
