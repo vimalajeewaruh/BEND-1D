@@ -1,11 +1,4 @@
----
-layout: default
-title: TF100 — NeuralBurstAdaptation
----
-
-# TF100 — NeuralBurstAdaptation
-
-![NeuralBurstAdaptation signal](../../assets/images/TF100_NeuralBurstAdaptation.png)
+# NeuralBurstAdaptation
 
 ## Overview
 
@@ -37,6 +30,8 @@ $$
 f(x)=0.08+0.035\sin(2\pi\,1.8x)+\sum_{k=1}^{9}a_k g_k(x)[0.75+0.25o_k(x)]-0.10s(x;0.52,0.12).
 $$
 
+[NeuralBurstAdaptation signal](../../assets/images/TF100_NeuralBurstAdaptation.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -56,37 +51,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.08+0.035*sin(2*pi*1.8*x);
-c=[0.12 0.24 0.355 0.465 0.57 0.67 0.765 0.855 0.935];
-a=[0.70 0.64 0.58 0.54 0.49 0.45 0.42 0.39 0.36];
-for k=1:numel(c)
-    width=0.010+0.0025*k; env=exp(-0.5*((x-c(k))/width).^2);
-    localOsc=0.60*sin(2*pi*(72*x+0.8*k));
-    f=f+a(k)*env.*(0.75+0.25*localOsc);
-end
-f=f-0.10*s(x,0.52,0.12);
-plot(x,f); grid on; title('TF100 — NeuralBurstAdaptation')
-exportgraphics(gcf,'TF100_NeuralBurstAdaptation.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0100_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); s=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.08+.035*np.sin(2*np.pi*1.8*x)
-c=[.12,.24,.355,.465,.57,.67,.765,.855,.935]
-a=[.70,.64,.58,.54,.49,.45,.42,.39,.36]
-for k,(ck,ak) in enumerate(zip(c,a),start=1):
-    width=.010+.0025*k; env=np.exp(-.5*((x-ck)/width)**2)
-    localOsc=.60*np.sin(2*np.pi*(72*x+.8*k)); f+=ak*env*(.75+.25*localOsc)
-f-=.10*s(.52,.12)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF100_NeuralBurstAdaptation.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0100_python.md)
+
+
 
 ## Recommended Uses
 
