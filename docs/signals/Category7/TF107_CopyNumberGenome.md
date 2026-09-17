@@ -1,11 +1,5 @@
----
-layout: default
-title: TF107 — CopyNumberGenome
----
+# CopyNumberGenome
 
-# TF107 — CopyNumberGenome
-
-![CopyNumberGenome signal](../../assets/images/TF107_CopyNumberGenome.png)
 
 ## Overview
 
@@ -23,6 +17,8 @@ f(x)={}&0.48+0.025\sin(10\pi x)\\
 &+0.30[S(x;0.74,0.003)-S(x;0.79,0.003)].
 \end{aligned}
 $$
+
+[CopyNumberGenome signal](../../assets/images/TF107_CopyNumberGenome.png)
 
 ## Morphological Characteristics
 
@@ -43,28 +39,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.48+0.025*sin(2*pi*5*x);
-f=f+0.20*(S(x,0.18,0.004)-S(x,0.39,0.004)) ...
-    -0.15*(S(x,0.52,0.004)-S(x,0.66,0.004)) ...
-    +0.30*(S(x,0.74,0.003)-S(x,0.79,0.003));
-plot(x,f); grid on; title('TF107 — CopyNumberGenome')
-exportgraphics(gcf,'TF107_CopyNumberGenome.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0107_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.48+.025*np.sin(2*np.pi*5*x)
-f+=.20*(S(.18,.004)-S(.39,.004))-.15*(S(.52,.004)-S(.66,.004))
-f+=.30*(S(.74,.003)-S(.79,.003))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF107_CopyNumberGenome.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0107_python.md)
+
+
 
 ## Recommended Uses
 
