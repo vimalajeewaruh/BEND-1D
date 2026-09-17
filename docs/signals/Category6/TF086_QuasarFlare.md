@@ -1,11 +1,5 @@
----
-layout: default
-title: TF086 — QuasarFlare
----
+# QuasarFlare
 
-# TF086 — QuasarFlare
-
-![QuasarFlare signal](../../assets/images/TF086_QuasarFlare.png)
 
 ## Overview
 
@@ -35,6 +29,8 @@ $$
 f(x)=b(x)+q(x)+0.075g(x;0.20,0.018)+0.055g(x;0.84,0.014).
 $$
 
+[QuasarFlare signal](../../assets/images/TF086_QuasarFlare.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -54,30 +50,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-wander=0.34+0.055*sin(2*pi*1.4*x+0.2)+0.035*sin(2*pi*3.3*x-0.6)+0.020*x;
-left=0.52*exp(-0.5*((x-0.56)/0.060).^2);
-right=0.52*exp(-(x-0.56)/0.18).*(x>=0.56);
-flare=left.*(x<0.56)+right;
-small=0.075*exp(-0.5*((x-0.20)/0.018).^2)+0.055*exp(-0.5*((x-0.84)/0.014).^2);
-f=wander+flare+small;
-plot(x,f); grid on; title('TF086 — QuasarFlare')
-exportgraphics(gcf,'TF086_QuasarFlare.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF086_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); g=lambda c,w: np.exp(-.5*((x-c)/w)**2)
-wander=.34+.055*np.sin(2*np.pi*1.4*x+.2)+.035*np.sin(2*np.pi*3.3*x-.6)+.020*x
-left=.52*g(.56,.060); right=.52*np.exp(-(x-.56)/.18)*(x>=.56)
-flare=left*(x<.56)+right; small=.075*g(.20,.018)+.055*g(.84,.014); f=wander+flare+small
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF086_QuasarFlare.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF086_python.md)
+
+
 
 ## Recommended Uses
 
