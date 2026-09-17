@@ -1,11 +1,5 @@
----
-layout: default
-title: TF092 — PercussiveAttackDecay
----
+# PercussiveAttackDecay
 
-# TF092 — PercussiveAttackDecay
-
-![PercussiveAttackDecay signal](../../assets/images/TF092_PercussiveAttackDecay.png)
 
 ## Overview
 
@@ -24,6 +18,8 @@ Then
 $$
 f(x)=a(x)[0.68e^{-7u}+0.32e^{-24u}]+0.18I(x\ge t_0)e^{-12u}\sin(2\pi\,58u).
 $$
+
+[PercussiveAttackDecay signal](../../assets/images/TF092_PercussiveAttackDecay.png)
 
 ## Morphological Characteristics
 
@@ -44,28 +40,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); t0=0.18; u=max(x-t0,0);
-attack=1.10*(1-exp(-180*u)).*(x>=t0);
-decay=attack.*(0.68*exp(-7*u)+0.32*exp(-24*u));
-ring=(x>=t0).*0.18.*exp(-12*u).*sin(2*pi*58*u);
-f=decay+ring;
-plot(x,f); grid on; title('TF092 — PercussiveAttackDecay')
-exportgraphics(gcf,'TF092_PercussiveAttackDecay.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF092_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); t0=.18; u=np.maximum(x-t0,0)
-attack=1.10*(1-np.exp(-180*u))*(x>=t0)
-decay=attack*(.68*np.exp(-7*u)+.32*np.exp(-24*u))
-ring=(x>=t0)*.18*np.exp(-12*u)*np.sin(2*np.pi*58*u); f=decay+ring
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF092_PercussiveAttackDecay.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF092_python.md)
+
+
 
 ## Recommended Uses
 
