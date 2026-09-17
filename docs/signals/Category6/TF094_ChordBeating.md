@@ -1,11 +1,5 @@
----
-layout: default
-title: TF094 — ChordBeating
----
+# ChordBeating
 
-# TF094 — ChordBeating
-
-![ChordBeating signal](../../assets/images/TF094_ChordBeating.png)
 
 ## Overview
 
@@ -26,6 +20,8 @@ $$
 f(x)=E(x)[0.42\sin(2\pi\,27x)+0.39\sin(2\pi\,29x+0.2)+0.23\sin(2\pi\,41x-0.4)].
 $$
 
+[ChordBeating signal](../../assets/images/TF094_ChordBeating.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -44,25 +40,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-env=s(x,0.10,0.030)-s(x,0.90,0.040);
-f=env.*(0.42*sin(2*pi*27*x)+0.39*sin(2*pi*29*x+0.2)+0.23*sin(2*pi*41*x-0.4));
-plot(x,f); grid on; title('TF094 — ChordBeating')
-exportgraphics(gcf,'TF094_ChordBeating.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF094_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); s=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-env=s(.10,.030)-s(.90,.040)
-f=env*(.42*np.sin(2*np.pi*27*x)+.39*np.sin(2*np.pi*29*x+.2)+.23*np.sin(2*np.pi*41*x-.4))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF094_ChordBeating.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF094_python.md)
+
+
 
 ## Recommended Uses
 
