@@ -1,11 +1,5 @@
----
-layout: default
-title: TF078 — LatencyIncident
----
+# LatencyIncident
 
-# TF078 — LatencyIncident
-
-![LatencyIncident signal](../../assets/images/TF078_LatencyIncident.png)
 
 ## Overview
 
@@ -23,6 +17,8 @@ f(x)={}&0.16+0.025\sin(6\pi x)+0.33[s(x;0.36,0.050)-s(x;0.63,0.020)]\\
 $$
 
 where $c=(0.50,0.535,0.56,0.585,0.615)$, $a=(0.22,0.42,0.30,0.55,0.26)$, and $w=(0.008,0.006,0.007,0.005,0.008)$.
+
+[LatencyIncident signal](../../assets/images/TF078_LatencyIncident.png)
 
 ## Morphological Characteristics
 
@@ -43,30 +39,13 @@ where $c=(0.50,0.535,0.56,0.585,0.615)$, $a=(0.22,0.42,0.30,0.55,0.26)$, and $w=
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.16+0.025*sin(2*pi*3*x)+0.33*(s(x,0.36,0.050)-s(x,0.63,0.020));
-c=[0.50 0.535 0.56 0.585 0.615]; a=[0.22 0.42 0.30 0.55 0.26];
-w=[0.008 0.006 0.007 0.005 0.008];
-for k=1:numel(c), f=f+a(k)*exp(-0.5*((x-c(k))/w(k)).^2); end
-u=max(x-0.63,0); f=f+(x>=0.63).*0.22.*exp(-10*u);
-plot(x,f); grid on; title('TF078 — LatencyIncident')
-exportgraphics(gcf,'TF078_LatencyIncident.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF078_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); s=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.16+.025*np.sin(2*np.pi*3*x)+.33*(s(.36,.050)-s(.63,.020))
-c=[.50,.535,.56,.585,.615]; a=[.22,.42,.30,.55,.26]; w=[.008,.006,.007,.005,.008]
-for ck,ak,wk in zip(c,a,w): f+=ak*np.exp(-.5*((x-ck)/wk)**2)
-u=np.maximum(x-.63,0); f+=(x>=.63)*.22*np.exp(-10*u)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF078_LatencyIncident.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF078_python.md)
+
+
 
 ## Recommended Uses
 
