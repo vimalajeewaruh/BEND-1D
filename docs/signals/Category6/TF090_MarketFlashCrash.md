@@ -1,11 +1,5 @@
----
-layout: default
-title: TF090 — MarketFlashCrash
----
+# MarketFlashCrash
 
-# TF090 — MarketFlashCrash
-
-![MarketFlashCrash signal](../../assets/images/TF090_MarketFlashCrash.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&1+0.10x+0.025\sin(6\pi x)-0.62s(x;0.535,0.004)\\
 &+0.16I(x\ge0.585)[1-e^{-4.5(x-0.585)}].
 \end{aligned}
 $$
+
+[MarketFlashCrash signal](../../assets/images/TF090_MarketFlashCrash.png)
 
 ## Morphological Characteristics
 
@@ -42,30 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-pre=1+0.10*x+0.025*sin(2*pi*3*x);
-crash=-0.62*s(x,0.535,0.004); rebound=0.44*s(x,0.585,0.009);
-aftershock=-0.13*exp(-0.5*((x-0.665)/0.015).^2);
-u=max(x-0.585,0); normalization=(x>=0.585).*0.16.*(1-exp(-4.5*u));
-f=pre+crash+rebound+aftershock+normalization;
-plot(x,f); grid on; title('TF090 — MarketFlashCrash')
-exportgraphics(gcf,'TF090_MarketFlashCrash.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF090_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); s=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-pre=1+.10*x+.025*np.sin(2*np.pi*3*x); crash=-.62*s(.535,.004); rebound=.44*s(.585,.009)
-aftershock=-.13*np.exp(-.5*((x-.665)/.015)**2)
-u=np.maximum(x-.585,0); normalization=(x>=.585)*.16*(1-np.exp(-4.5*u))
-f=pre+crash+rebound+aftershock+normalization
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF090_MarketFlashCrash.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF090_python.md)
+
+
 
 ## Recommended Uses
 
