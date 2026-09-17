@@ -1,11 +1,4 @@
----
-layout: default
-title: TF109 — SemiconductorMetrology
----
-
-# TF109 — SemiconductorMetrology
-
-![SemiconductorMetrology signal](../../assets/images/TF109_SemiconductorMetrology.png)
+# SemiconductorMetrology
 
 ## Overview
 
@@ -18,6 +11,8 @@ Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
 $$
 f(x)=0.62+0.11x+0.035\sin(18\pi x)+0.018\sin(62\pi x)-0.08S(x;0.58,0.004)+0.12g(x;0.76,0.010).
 $$
+
+[SemiconductorMetrology signal](../../assets/images/TF109_SemiconductorMetrology.png)
 
 ## Morphological Characteristics
 
@@ -38,25 +33,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.62+0.11*x+0.035*sin(2*pi*9*x)+0.018*sin(2*pi*31*x);
-f=f-0.08*S(x,0.58,0.004)+0.12*exp(-0.5*((x-0.76)/0.010).^2);
-plot(x,f); grid on; title('TF109 — SemiconductorMetrology')
-exportgraphics(gcf,'TF109_SemiconductorMetrology.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0109_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.62+.11*x+.035*np.sin(2*np.pi*9*x)+.018*np.sin(2*np.pi*31*x)
-f+=-.08*S(.58,.004)+.12*np.exp(-.5*((x-.76)/.010)**2)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF109_SemiconductorMetrology.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0109_python.md)
+
+
 
 ## Recommended Uses
 
