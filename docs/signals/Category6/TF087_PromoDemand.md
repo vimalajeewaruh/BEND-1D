@@ -1,11 +1,5 @@
----
-layout: default
-title: TF087 — PromoDemand
----
+# PromoDemand
 
-# TF087 — PromoDemand
-
-![PromoDemand signal](../../assets/images/TF087_PromoDemand.png)
 
 ## Overview
 
@@ -23,6 +17,8 @@ f(x)={}&0.34+0.055x+0.065\sin(10\pi x-0.4)+0.025\sin(20\pi x)\\
 &+0.15I(x\ge0.58)e^{-8(x-0.58)}.
 \end{aligned}
 $$
+
+[PromoDemand signal](../../assets/images/TF087_PromoDemand.png)
 
 ## Morphological Characteristics
 
@@ -43,29 +39,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); s=@(z,c,w) 1./(1+exp(-(z-c)/w));
-season=0.34+0.055*x+0.065*sin(2*pi*5*x-0.4)+0.025*sin(2*pi*10*x);
-promo=0.36*(s(x,0.34,0.010)-s(x,0.58,0.016));
-stockout=-0.25*(s(x,0.48,0.006)-s(x,0.535,0.006));
-u=max(x-0.58,0); carry=(x>=0.58).*0.15.*exp(-8*u);
-f=season+promo+stockout+carry;
-plot(x,f); grid on; title('TF087 — PromoDemand')
-exportgraphics(gcf,'TF087_PromoDemand.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF087_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); s=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-season=.34+.055*x+.065*np.sin(2*np.pi*5*x-.4)+.025*np.sin(2*np.pi*10*x)
-promo=.36*(s(.34,.010)-s(.58,.016)); stockout=-.25*(s(.48,.006)-s(.535,.006))
-u=np.maximum(x-.58,0); carry=(x>=.58)*.15*np.exp(-8*u); f=season+promo+stockout+carry
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF087_PromoDemand.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF087_python.md)
+
+
 
 ## Recommended Uses
 
