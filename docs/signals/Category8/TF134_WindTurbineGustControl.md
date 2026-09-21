@@ -1,11 +1,5 @@
----
-layout: default
-title: TF134 — WindTurbineGustControl
----
+# WindTurbineGustControl
 
-# TF134 — WindTurbineGustControl
-
-![WindTurbineGustControl signal](../../assets/images/TF134_WindTurbineGustControl.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&0.25+0.08\sin(12\pi x)+0.03\sin(36\pi x)\\
 &+0.20I(x\ge0.50)e^{-9u}\sin(30\pi u)+0.12S(x;0.56,0.020).
 \end{aligned}
 $$
+
+[WindTurbineGustControl signal](../../assets/images/TF134_WindTurbineGustControl.png)
 
 ## Morphological Characteristics
 
@@ -42,28 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-u=max(x-0.50,0);
-f=0.25+0.08*sin(2*pi*6*x)+0.03*sin(2*pi*18*x) ...
- +0.48*exp(-0.5*((x-0.49)/0.035).^2) ...
- +(x>=0.50).*0.20.*exp(-9*u).*sin(2*pi*15*u)+0.12*S(x,0.56,0.020);
-plot(x,f); grid on; title('TF134 — WindTurbineGustControl')
-exportgraphics(gcf,'TF134_WindTurbineGustControl.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0134_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w)); u=np.maximum(x-.50,0)
-f=.25+.08*np.sin(2*np.pi*6*x)+.03*np.sin(2*np.pi*18*x)
-f+=.48*np.exp(-.5*((x-.49)/.035)**2)+(x>=.50)*.20*np.exp(-9*u)*np.sin(2*np.pi*15*u)
-f+=.12*S(.56,.020)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF134_WindTurbineGustControl.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0134_python.md)
+
+
 
 ## Recommended Uses
 
