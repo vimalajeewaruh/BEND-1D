@@ -1,11 +1,4 @@
----
-layout: default
-title: TF114 — GNSSMultipathSlip
----
-
-# TF114 — GNSSMultipathSlip
-
-![GNSSMultipathSlip signal](../../assets/images/TF114_GNSSMultipathSlip.png)
+# GNSSMultipathSlip
 
 ## Overview
 
@@ -21,6 +14,8 @@ f(x)={}&0.12\sin(10\pi x)+0.035\sin(34\pi x+0.4)+0.42S(x;0.57,0.003)\\
 &-0.25I(x\ge0.57)[1-e^{-5(x-0.57)}].
 \end{aligned}
 $$
+
+[GNSSMultipathSlip signal](../../assets/images/TF114_GNSSMultipathSlip.png)
 
 ## Morphological Characteristics
 
@@ -41,25 +36,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.12*sin(2*pi*5*x)+0.035*sin(2*pi*17*x+0.4)+0.42*S(x,0.57,0.003);
-u=max(x-0.57,0); f=f-(x>=0.57).*0.25.*(1-exp(-5*u));
-plot(x,f); grid on; title('TF114 — GNSSMultipathSlip')
-exportgraphics(gcf,'TF114_GNSSMultipathSlip.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0114_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.12*np.sin(2*np.pi*5*x)+.035*np.sin(2*np.pi*17*x+.4)+.42*S(.57,.003)
-u=np.maximum(x-.57,0); f-=(x>=.57)*.25*(1-np.exp(-5*u))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF114_GNSSMultipathSlip.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0114_python.md)
+
+
 
 ## Recommended Uses
 
