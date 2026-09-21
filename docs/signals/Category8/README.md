@@ -17,7 +17,7 @@ docs/assets/images/
 Each signal page uses an image path such as:
 
 ```markdown
-![DASFiberEvent signal](../../assets/images/TF126_DASFiberEvent.png)
+[DASFiberEvent signal](../../assets/images/TF126_DASFiberEvent.png)
 ```
 
 Add this link to `docs/signals/index.md`:
