@@ -1,11 +1,5 @@
----
-layout: default
-title: TF124 — NestedWavePackets
----
+# NestedWavePackets
 
-# TF124 — NestedWavePackets
-
-![NestedWavePackets signal](../../assets/images/TF124_NestedWavePackets.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&0.30g(x;0.50,0.22)\sin(16\pi x)\\
 &+0.17g(x;0.59,0.022)\sin(170\pi x).
 \end{aligned}
 $$
+
+[NestedWavePackets signal](../../assets/images/TF124_NestedWavePackets.png)
 
 ## Morphological Characteristics
 
@@ -42,28 +38,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-p1=0.30*exp(-0.5*((x-0.50)/0.22).^2).*sin(2*pi*8*x);
-p2=0.24*exp(-0.5*((x-0.56)/0.080).^2).*sin(2*pi*28*x);
-p3=0.17*exp(-0.5*((x-0.59)/0.022).^2).*sin(2*pi*85*x);
-f=p1+p2+p3;
-plot(x,f); grid on; title('TF124 — NestedWavePackets')
-exportgraphics(gcf,'TF124_NestedWavePackets.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0124_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N)
-p1=.30*np.exp(-.5*((x-.50)/.22)**2)*np.sin(2*np.pi*8*x)
-p2=.24*np.exp(-.5*((x-.56)/.080)**2)*np.sin(2*np.pi*28*x)
-p3=.17*np.exp(-.5*((x-.59)/.022)**2)*np.sin(2*np.pi*85*x); f=p1+p2+p3
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF124_NestedWavePackets.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0124_python.md)
+
 
 ## Recommended Uses
 
