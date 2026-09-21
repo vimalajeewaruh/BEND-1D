@@ -1,8 +1,3 @@
----
-layout: default
-title: BEND-1D Category 7 Signal Catalog
----
-
 # BEND-1D Category 7
 
 Category 7 contains contemporary and artificial smoothing test functions **TF101–TF125**. The first twenty are application-oriented deterministic surrogates spanning quantum technology, fusion, genomics, manufacturing, detectors, space science, navigation, remote sensing, cybersecurity, AI infrastructure, and neural imaging. The final five are deliberately artificial stress tests.
