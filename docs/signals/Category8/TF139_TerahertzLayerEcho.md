@@ -1,11 +1,5 @@
----
-layout: default
-title: TF139 — TerahertzLayerEcho
----
+# TerahertzLayerEcho
 
-# TF139 — TerahertzLayerEcho
-
-![TerahertzLayerEcho signal](../../assets/images/TF139_TerahertzLayerEcho.png)
 
 ## Overview
 
@@ -30,6 +24,8 @@ a=(0.60,0.42,0.50,0.40,0.28,0.11),\quad
 w=(0.012,0.014,0.010,0.010,0.016,0.012).
 $$
 
+[TerahertzLayerEcho signal](../../assets/images/TF139_TerahertzLayerEcho.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -48,31 +44,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); f=zeros(size(x));
-c=[0.15 0.34 0.50 0.525 0.72 0.88]; a=[0.60 0.42 0.50 0.40 0.28 0.11];
-w=[0.012 0.014 0.010 0.010 0.016 0.012];
-for k=1:numel(c)
-    z=(x-c(k))/w(k); f=f+a(k)*z.*exp(-0.5*z.^2);
-end
-u=max(x-0.72,0); f=f+(x>=0.72).*0.07.*exp(-9*u).*sin(2*pi*35*u);
-plot(x,f); grid on; title('TF139 — TerahertzLayerEcho')
-exportgraphics(gcf,'TF139_TerahertzLayerEcho.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0139_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); f=np.zeros_like(x)
-c=[.15,.34,.50,.525,.72,.88]; a=[.60,.42,.50,.40,.28,.11]; w=[.012,.014,.010,.010,.016,.012]
-for ck,ak,wk in zip(c,a,w):
-    z=(x-ck)/wk; f+=ak*z*np.exp(-.5*z**2)
-u=np.maximum(x-.72,0); f+=(x>=.72)*.07*np.exp(-9*u)*np.sin(2*np.pi*35*u)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF139_TerahertzLayerEcho.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0139_python.md)
+
+
 
 ## Recommended Uses
 
