@@ -1,8 +1,3 @@
----
-layout: default
-title: Category 7 Benchmarking Role
----
-
 # Category 7 Benchmarking Role
 
 Category 7 extends BEND-1D toward contemporary applications and deliberately artificial stress tests. The signals emphasize weak anomalies beside dominant components, close or overlapping events, abrupt regime changes, phase-sensitive oscillations, chirps, short-lived states, and nested multiscale structure.
