@@ -1,11 +1,5 @@
----
-layout: default
-title: TF127 — PhotoacousticAline
----
+# PhotoacousticAline
 
-# TF127 — PhotoacousticAline
-
-![PhotoacousticAline signal](../../assets/images/TF127_PhotoacousticAline.png)
 
 ## Overview
 
@@ -30,6 +24,8 @@ a=(0.35,0.52,0.95,0.70,0.42,0.20),\quad
 w=(0.010,0.012,0.008,0.008,0.014,0.010).
 $$
 
+[PhotoacousticAline signal](../../assets/images/TF127_PhotoacousticAline.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -49,32 +45,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); f=zeros(size(x));
-c=[0.16 0.33 0.515 0.535 0.72 0.88];
-a=[0.35 0.52 0.95 0.70 0.42 0.20]; w=[0.010 0.012 0.008 0.008 0.014 0.010];
-for k=1:numel(c)
-    z=(x-c(k))/w(k); f=f+a(k)*(1-z.^2).*exp(-0.5*z.^2);
-end
-f=f.*exp(-0.45*x);
-plot(x,f); grid on; title('TF127 — PhotoacousticAline')
-exportgraphics(gcf,'TF127_PhotoacousticAline.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0127_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); f=np.zeros_like(x)
-c=[.16,.33,.515,.535,.72,.88]; a=[.35,.52,.95,.70,.42,.20]
-w=[.010,.012,.008,.008,.014,.010]
-for ck,ak,wk in zip(c,a,w):
-    z=(x-ck)/wk; f+=ak*(1-z**2)*np.exp(-.5*z**2)
-f*=np.exp(-.45*x)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF127_PhotoacousticAline.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0127_python.md)
+
+
 
 ## Recommended Uses
 
