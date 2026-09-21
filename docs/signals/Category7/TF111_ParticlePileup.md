@@ -1,11 +1,5 @@
----
-layout: default
-title: TF111 — ParticlePileup
----
+# ParticlePileup
 
-# TF111 — ParticlePileup
-
-![ParticlePileup signal](../../assets/images/TF111_ParticlePileup.png)
 
 ## Overview
 
@@ -26,6 +20,8 @@ c=(0.14,0.30,0.49,0.515,0.72,0.88),\qquad
 a=(0.35,0.58,0.85,0.70,0.50,0.27).
 $$
 
+[ParticlePileup signal](../../assets/images/TF111_ParticlePileup.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -45,29 +41,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); f=zeros(size(x));
-c=[0.14 0.30 0.49 0.515 0.72 0.88]; a=[0.35 0.58 0.85 0.70 0.50 0.27];
-for k=1:numel(c)
-    u=max(x-c(k),0);
-    f=f+a(k)*(x>=c(k)).*(1-exp(-140*u)).*exp(-18*u);
-end
-plot(x,f); grid on; title('TF111 — ParticlePileup')
-exportgraphics(gcf,'TF111_ParticlePileup.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0111_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); f=np.zeros_like(x)
-c=[.14,.30,.49,.515,.72,.88]; a=[.35,.58,.85,.70,.50,.27]
-for ck,ak in zip(c,a):
-    u=np.maximum(x-ck,0); f+=ak*(x>=ck)*(1-np.exp(-140*u))*np.exp(-18*u)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF111_ParticlePileup.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0111_python.md)
+
+
 
 ## Recommended Uses
 
