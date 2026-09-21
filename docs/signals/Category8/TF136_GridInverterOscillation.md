@@ -1,11 +1,5 @@
----
-layout: default
-title: TF136 — GridInverterOscillation
----
+# GridInverterOscillation
 
-# TF136 — GridInverterOscillation
-
-![GridInverterOscillation signal](../../assets/images/TF136_GridInverterOscillation.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&0.30+0.02x+0.16S(x;0.30,0.006)\\
 &-0.10S(x;0.64,0.010).
 \end{aligned}
 $$
+
+[GridInverterOscillation signal](../../assets/images/TF136_GridInverterOscillation.png)
 
 ## Morphological Characteristics
 
@@ -42,27 +38,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-u=max(x-0.30,0);
-f=0.30+0.02*x+0.16*S(x,0.30,0.006) ...
- +(x>=0.30).*0.34.*exp(-5*u).*sin(2*pi*(10*u+4*u.^2)) ...
- -0.10*S(x,0.64,0.010);
-plot(x,f); grid on; title('TF136 — GridInverterOscillation')
-exportgraphics(gcf,'TF136_GridInverterOscillation.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0136_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w)); u=np.maximum(x-.30,0)
-f=.30+.02*x+.16*S(.30,.006)
-f+=(x>=.30)*.34*np.exp(-5*u)*np.sin(2*np.pi*(10*u+4*u**2))-.10*S(.64,.010)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF136_GridInverterOscillation.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0136_python.md)
+
 
 ## Recommended Uses
 
