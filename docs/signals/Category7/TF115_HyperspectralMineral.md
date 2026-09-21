@@ -1,11 +1,5 @@
----
-layout: default
-title: TF115 — HyperspectralMineral
----
+# HyperspectralMineral
 
-# TF115 — HyperspectralMineral
-
-![HyperspectralMineral signal](../../assets/images/TF115_HyperspectralMineral.png)
 
 ## Overview
 
@@ -30,6 +24,8 @@ $$
 w=(0.030,0.040,0.018,0.016,0.024).
 $$
 
+[HyperspectralMineral signal](../../assets/images/TF115_HyperspectralMineral.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -49,26 +45,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); f=0.78+0.08*x;
-c=[0.22 0.46 0.59 0.625 0.81]; a=[0.12 0.25 0.18 0.14 0.08];
-w=[0.030 0.040 0.018 0.016 0.024];
-for k=1:numel(c), f=f-a(k)*exp(-0.5*((x-c(k))/w(k)).^2); end
-plot(x,f); grid on; title('TF115 — HyperspectralMineral')
-exportgraphics(gcf,'TF115_HyperspectralMineral.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0115_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); f=.78+.08*x
-c=[.22,.46,.59,.625,.81]; a=[.12,.25,.18,.14,.08]; w=[.030,.040,.018,.016,.024]
-for ck,ak,wk in zip(c,a,w): f-=ak*np.exp(-.5*((x-ck)/wk)**2)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF115_HyperspectralMineral.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0115_python.md)
+
+
 
 ## Recommended Uses
 
