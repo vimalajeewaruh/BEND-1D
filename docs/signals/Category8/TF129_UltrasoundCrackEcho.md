@@ -1,11 +1,5 @@
----
-layout: default
-title: TF129 — UltrasoundCrackEcho
----
+# UltrasoundCrackEcho
 
-# TF129 — UltrasoundCrackEcho
-
-![UltrasoundCrackEcho signal](../../assets/images/TF129_UltrasoundCrackEcho.png)
 
 ## Overview
 
@@ -21,6 +15,8 @@ f(x)={}&0.32I(x\ge0.08)e^{-35u}\sin(2\pi\,68u)\\
 &+0.14g(x;0.58,0.008)+0.78g(x;0.62,0.016)+0.16g(x;0.79,0.022).
 \end{aligned}
 $$
+
+[UltrasoundCrackEcho signal](../../assets/images/TF129_UltrasoundCrackEcho.png)
 
 ## Morphological Characteristics
 
@@ -41,30 +37,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); u=max(x-0.08,0);
-ring=(x>=0.08).*0.32.*exp(-35*u).*sin(2*pi*68*u);
-crack=0.14*exp(-0.5*((x-0.58)/0.008).^2);
-backwall=0.78*exp(-0.5*((x-0.62)/0.016).^2);
-reverberation=0.16*exp(-0.5*((x-0.79)/0.022).^2);
-f=ring+crack+backwall+reverberation;
-plot(x,f); grid on; title('TF129 — UltrasoundCrackEcho')
-exportgraphics(gcf,'TF129_UltrasoundCrackEcho.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0129_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); u=np.maximum(x-.08,0)
-ring=(x>=.08)*.32*np.exp(-35*u)*np.sin(2*np.pi*68*u)
-crack=.14*np.exp(-.5*((x-.58)/.008)**2)
-backwall=.78*np.exp(-.5*((x-.62)/.016)**2)
-reverberation=.16*np.exp(-.5*((x-.79)/.022)**2); f=ring+crack+backwall+reverberation
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF129_UltrasoundCrackEcho.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0129_python.md)
+
+
 
 ## Recommended Uses
 
