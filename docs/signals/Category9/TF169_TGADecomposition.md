@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF169 — TGA Decomposition"
----
+# TGA Decomposition
 
-# TF169 — TGA Decomposition
-
-![TGA Decomposition](../../assets/images/TF169_TGADecomposition.png)
 
 ## Overview
 
@@ -31,6 +25,8 @@ f(x)=1
 \end{aligned}
 $$
 
+[TGA Decomposition](../../assets/images/TF169_TGADecomposition.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -52,39 +48,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-S = @(z,c,w) 1./(1+exp(-(z-c)/w));
-f = 1 ...
-    - 0.18*S(x,0.20,0.022) ...
-    - 0.38*S(x,0.49,0.030) ...
-    - 0.10*S(x,0.61,0.015) ...
-    - 0.25*S(x,0.77,0.020);
-
-plot(x,f,'LineWidth',1.5); grid on
-xlabel('x'); ylabel('f(x)'); title('TF169 — TGA Decomposition')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0169_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0169_python.md)
 
-N = 1024
-x = np.linspace(0.0, 1.0, N)
-S = lambda z, c, w: 1.0 / (1.0 + np.exp(-(z - c) / w))
-f = 1.0
-f = f - 0.18 * S(x, 0.20, 0.022)
-f = f - 0.38 * S(x, 0.49, 0.030)
-f = f - 0.10 * S(x, 0.61, 0.015)
-f = f - 0.25 * S(x, 0.77, 0.020)
 
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF169 — TGA Decomposition")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
