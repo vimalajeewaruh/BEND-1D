@@ -1,8 +1,3 @@
----
-layout: default
-title: "Category 9 — Benchmarking Role"
----
-
 # Category 9 — Benchmarking Role
 
 Category 9 combines twenty mechanism-inspired signals with five controlled diagnostics. The application-oriented functions test whether a method can preserve scientifically recognizable structure; the final five isolate specific methodological sensitivities.
