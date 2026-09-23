@@ -36,11 +36,11 @@ where $r=(0.48,0.715)$ and $b=(0.18,0.12)$.
 
 ## MATLAB Implementation
 
-[View MATLAB implementation](../../codes/matlab/TF0184_matlab.md)
+[View MATLAB implementation](../../codes/matlab/TF184_matlab.md)
 
 ## Python Implementation
 
-[View Python implementation](../../codes/python/TF0184_python.md)
+[View Python implementation](../../codes/python/TF184_python.md)
 
 
 ## Recommended Uses
