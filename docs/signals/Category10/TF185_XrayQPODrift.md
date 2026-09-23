@@ -1,6 +1,5 @@
 # XrayQPODrift
 
-
 ## Overview
 
 A quasi-periodic oscillation changes both amplitude and instantaneous frequency, causing its wavelet representation to migrate across scales while its visibility changes.
