@@ -1,11 +1,4 @@
----
-layout: default
-title: TF160 — FresnelOccultation
----
-
-# TF160 — FresnelOccultation
-
-![FresnelOccultation signal](../../assets/images/TF160_FresnelOccultation.png)
+# FresnelOccultation
 
 ## Overview
 
@@ -22,6 +15,8 @@ f(x)={}&1-0.82[S(x;0.35,0.004)-S(x;0.68,0.004)]\\
 \sin\{2\pi[16(x-c_k)+55(x-c_k)|x-c_k|]\}.
 \end{aligned}
 $$
+
+[FresnelOccultation signal](../../assets/images/TF160_FresnelOccultation.png)
 
 ## Morphological Characteristics
 
@@ -42,30 +37,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=1-0.82*(S(x,0.35,0.004)-S(x,0.68,0.004));
-c=[0.35 0.68]; signs=[1 -1];
-for k=1:2
-    u=x-c(k);
-    f=f+signs(k)*0.15*exp(-0.5*(u/0.052).^2).*sin(2*pi*(16*u+55*u.*abs(u)));
-end
-plot(x,f); grid on; title('TF160 — FresnelOccultation')
-exportgraphics(gcf,'TF160_FresnelOccultation.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0160_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=1-.82*(S(.35,.004)-S(.68,.004))
-for c,sign in zip([.35,.68],[1,-1]):
-    u=x-c; f+=sign*.15*np.exp(-.5*(u/.052)**2)*np.sin(2*np.pi*(16*u+55*u*np.abs(u)))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF160_FresnelOccultation.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0160_python.md)
+
+
 
 ## Recommended Uses
 
