@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF171 — Seismic Dispersive Wave"
----
+# Seismic Dispersive Wave
 
-# TF171 — Seismic Dispersive Wave
-
-![Seismic Dispersive Wave](../../assets/images/TF171_SeismicDispersiveWave.png)
 
 ## Overview
 
@@ -24,6 +18,8 @@ f(x)={}&0.015\sin(6\pi x)
 &+0.10I_{0.72}(x)e^{-9u_{0.72}(x)}\sin\{96\pi u_{0.72}(x)\}.
 \end{aligned}
 $$
+
+[Seismic Dispersive Wave](../../assets/images/TF171_SeismicDispersiveWave.png)
 
 ## Morphological Characteristics
 
@@ -45,41 +41,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-f = 0.015*sin(2*pi*3*x) + ...
-    0.10*exp(-0.5*((x-0.24)/0.025).^2).*sin(2*pi*42*x);
-u = max(x-0.39,0);
-env = (x>=0.39).*exp(-0.5*((x-0.64)/0.16).^2);
-f = f + 0.48*env.*sin(2*pi*(34*u-10*u.^2));
-uCoda = max(x-0.72,0);
-f = f + (x>=0.72).*0.10.*exp(-9*uCoda).*sin(2*pi*48*uCoda);
-
-plot(x,f,'LineWidth',1.2); grid on
-xlabel('x'); ylabel('f(x)'); title('TF171 — Seismic Dispersive Wave')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0171_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0171_python.md)
 
-N = 1024
-x = np.linspace(0.0, 1.0, N)
-f = 0.015 * np.sin(2*np.pi*3*x)
-f += 0.10 * np.exp(-0.5*((x-0.24)/0.025)**2) * np.sin(2*np.pi*42*x)
-u = np.maximum(x-0.39, 0.0)
-env = (x >= 0.39) * np.exp(-0.5*((x-0.64)/0.16)**2)
-f += 0.48 * env * np.sin(2*np.pi*(34*u-10*u**2))
-u_coda = np.maximum(x-0.72, 0.0)
-f += (x >= 0.72) * 0.10 * np.exp(-9*u_coda) * np.sin(2*np.pi*48*u_coda)
 
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF171 — Seismic Dispersive Wave")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
