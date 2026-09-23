@@ -1,11 +1,4 @@
----
-layout: default
-title: TF140 — BridgeStrainEvent
----
-
-# TF140 — BridgeStrainEvent
-
-![BridgeStrainEvent signal](../../assets/images/TF140_BridgeStrainEvent.png)
+# BridgeStrainEvent
 
 ## Overview
 
@@ -22,6 +15,8 @@ f(x)={}&0.18+0.16x+0.05\sin(3\pi x)
 &+0.10S(x;0.62,0.004)+0.10I(x\ge0.62)e^{-12u}\sin(2\pi\,28u).
 \end{aligned}
 $$
+
+[BridgeStrainEvent signal](../../assets/images/TF140_BridgeStrainEvent.png)
 
 ## Morphological Characteristics
 
@@ -42,28 +37,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.18+0.16*x+0.05*sin(2*pi*1.5*x);
-for c=[0.18 0.34 0.52 0.76], f=f+0.16*exp(-0.5*((x-c)/0.025).^2); end
-u=max(x-0.62,0);
-f=f+0.10*S(x,0.62,0.004)+(x>=0.62).*0.10.*exp(-12*u).*sin(2*pi*28*u);
-plot(x,f); grid on; title('TF140 — BridgeStrainEvent')
-exportgraphics(gcf,'TF140_BridgeStrainEvent.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0140_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.18+.16*x+.05*np.sin(2*np.pi*1.5*x)
-for c in [.18,.34,.52,.76]: f+=.16*np.exp(-.5*((x-c)/.025)**2)
-u=np.maximum(x-.62,0); f+=.10*S(.62,.004)+(x>=.62)*.10*np.exp(-12*u)*np.sin(2*np.pi*28*u)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF140_BridgeStrainEvent.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0140_python.md)
+
 
 ## Recommended Uses
 
