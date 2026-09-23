@@ -1,11 +1,5 @@
----
-layout: default
-title: TF143 — DoubletOnCliff
----
+# DoubletOnCliff
 
-# TF143 — DoubletOnCliff
-
-![DoubletOnCliff signal](../../assets/images/TF143_DoubletOnCliff.png)
 
 ## Overview
 
@@ -18,6 +12,8 @@ Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
 $$
 f(x)=0.75S(x;0.53,0.015)+0.28g(x;0.505,0.008)+0.24g(x;0.548,0.008).
 $$
+
+[DoubletOnCliff signal](../../assets/images/TF143_DoubletOnCliff.png)
 
 ## Morphological Characteristics
 
@@ -38,25 +34,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.75*S(x,0.53,0.015)+0.28*exp(-0.5*((x-0.505)/0.008).^2) ...
- +0.24*exp(-0.5*((x-0.548)/0.008).^2);
-plot(x,f); grid on; title('TF143 — DoubletOnCliff')
-exportgraphics(gcf,'TF143_DoubletOnCliff.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0143_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.75*S(.53,.015)+.28*np.exp(-.5*((x-.505)/.008)**2)
-f+=.24*np.exp(-.5*((x-.548)/.008)**2)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF143_DoubletOnCliff.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0143_python.md)
+
 
 ## Recommended Uses
 
