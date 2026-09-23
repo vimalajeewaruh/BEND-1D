@@ -37,11 +37,11 @@ $$
 
 ## MATLAB Implementation
 
-[View MATLAB implementation](../../codes/matlab/TF0185_matlab.md)
+[View MATLAB implementation](../../codes/matlab/TF185_matlab.md)
 
 ## Python Implementation
 
-[View Python implementation](../../codes/python/TF0185_python.md)
+[View Python implementation](../../codes/python/TF185_python.md)
 
 
 
