@@ -1,11 +1,5 @@
----
-layout: default
-title: TF146 — MultiscaleComb
----
+# MultiscaleComb
 
-# TF146 — MultiscaleComb
-
-![MultiscaleComb signal](../../assets/images/TF146_MultiscaleComb.png)
 
 ## Overview
 
@@ -32,6 +26,8 @@ f(x)=0.25\sum_{c\in\mathcal C_1}g(x;c,0.030)
 +0.07\sum_{k=1}^{16}(-1)^k g(x;c_{3k},0.003).
 $$
 
+[MultiscaleComb signal](../../assets/images/TF146_MultiscaleComb.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -50,29 +46,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); f=zeros(size(x));
-for c=0.10:0.20:0.90, f=f+0.25*exp(-0.5*((x-c)/0.030).^2); end
-for c=0.15:0.10:0.95, f=f+0.16*exp(-0.5*((x-c)/0.010).^2); end
-cs=0.18:0.05:0.93;
-for k=1:numel(cs), f=f+0.07*(-1)^k*exp(-0.5*((x-cs(k))/0.003).^2); end
-plot(x,f); grid on; title('TF146 — MultiscaleComb')
-exportgraphics(gcf,'TF146_MultiscaleComb.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0146_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); f=np.zeros_like(x)
-for c in np.arange(.10,.901,.20): f+=.25*np.exp(-.5*((x-c)/.030)**2)
-for c in np.arange(.15,.951,.10): f+=.16*np.exp(-.5*((x-c)/.010)**2)
-for k,c in enumerate(np.arange(.18,.931,.05),start=1):
-    f+=.07*(-1)**k*np.exp(-.5*((x-c)/.003)**2)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF146_MultiscaleComb.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0146_python.md)
+
+
 
 ## Recommended Uses
 
