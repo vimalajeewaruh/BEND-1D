@@ -46,11 +46,11 @@ Then $f(x)=b(x)+(1-0.25x)p(x)+e(x)$.
 
 ## MATLAB Implementation
 
-[View MATLAB implementation](../../codes/matlab/TF0126_matlab.md)
+[View MATLAB implementation](../../codes/matlab/TF126_matlab.md)
 
 ## Python Implementation
 
-[View Python implementation](../../codes/python/TF0126_python.md)
+[View Python implementation](../../codes/python/TF126_python.md)
 
 
 
