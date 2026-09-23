@@ -1,11 +1,5 @@
----
-layout: default
-title: TF151 — PeakOnPeak
----
+# PeakOnPeak
 
-# TF151 — PeakOnPeak
-
-![PeakOnPeak signal](../../assets/images/TF151_PeakOnPeak.png)
 
 ## Overview
 
@@ -18,6 +12,8 @@ Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
 $$
 f(x)=0.75g(x;0.50,0.18)+0.26g(x;0.58,0.060)+0.22g(x;0.605,0.015)-0.10g(x;0.610,0.0035).
 $$
+
+[PeakOnPeak signal](../../assets/images/TF151_PeakOnPeak.png)
 
 ## Morphological Characteristics
 
@@ -37,25 +33,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-f=0.75*exp(-0.5*((x-0.50)/0.18).^2)+0.26*exp(-0.5*((x-0.58)/0.060).^2) ...
- +0.22*exp(-0.5*((x-0.605)/0.015).^2)-0.10*exp(-0.5*((x-0.610)/0.0035).^2);
-plot(x,f); grid on; title('TF151 — PeakOnPeak')
-exportgraphics(gcf,'TF151_PeakOnPeak.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0151_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N)
-f=.75*np.exp(-.5*((x-.50)/.18)**2)+.26*np.exp(-.5*((x-.58)/.060)**2)
-f+=.22*np.exp(-.5*((x-.605)/.015)**2)-.10*np.exp(-.5*((x-.610)/.0035)**2)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF151_PeakOnPeak.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0151_python.md)
+
+
+
 
 ## Recommended Uses
 
