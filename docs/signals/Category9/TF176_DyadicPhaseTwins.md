@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF176 — Dyadic Phase Twins"
----
+# Dyadic Phase Twins
 
-# TF176 — Dyadic Phase Twins
-
-![Dyadic Phase Twins](../../assets/images/TF176_DyadicPhaseTwins.png)
 
 ## Overview
 
@@ -34,6 +28,8 @@ f(x)=\sum_{k=1}^{4}
 \cos\{2\pi34(x-c_k)\}.
 $$
 
+[Dyadic Phase Twins](../../assets/images/TF176_DyadicPhaseTwins.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -55,40 +51,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 4096;
-x = linspace(0,1,N);
-f = zeros(size(x));
-idx = [512 1409 2306 3203];
-centers = (idx-1)/(N-1);
-for k = 1:numel(centers)
-    u = x-centers(k);
-    f = f + exp(-0.5*(u/0.014).^2).*cos(2*pi*34*u);
-end
-
-plot(x,f,'LineWidth',1.2); grid on
-xlabel('x'); ylabel('f(x)'); title('TF176 — Dyadic Phase Twins')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0176_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0176_python.md)
 
-N = 4096
-x = np.linspace(0.0, 1.0, N)
-indices = np.array([512, 1409, 2306, 3203])  # one-based indices
-centers = (indices - 1) / (N - 1)
-f = np.zeros_like(x)
-for center in centers:
-    u = x-center
-    f += np.exp(-0.5*(u/0.014)**2)*np.cos(2*np.pi*34*u)
 
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF176 — Dyadic Phase Twins")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
