@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF180 — Hölder Ladder"
----
+# Hölder Ladder
 
-# TF180 — Hölder Ladder
-
-![Hölder Ladder](../../assets/images/TF180_HolderLadder.png)
 
 ## Overview
 
@@ -40,6 +34,8 @@ $$
 f_i=0.42\sum_{k=1}^{5}\frac{\psi_{ik}}{M_k}.
 $$
 
+[Hölder Ladder](../../assets/images/TF180_HolderLadder.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -62,46 +58,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-f = zeros(size(x));
-centers = [0.10 0.29 0.49 0.69 0.89];
-alpha = [0.25 0.50 1.00 1.50 2.50];
-w = 0.040;
-for k = 1:numel(centers)
-    z = (x-centers(k))/w;
-    phi = exp(-0.5*z.^2).*(1-0.62*abs(z).^alpha(k));
-    phi = phi/max(abs(phi));
-    f = f + 0.42*phi;
-end
-
-plot(x,f,'LineWidth',1.2); grid on
-xlabel('x'); ylabel('f(x)'); title('TF180 — Hölder Ladder')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0180_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0180_python.md)
 
-N = 1024
-x = np.linspace(0.0, 1.0, N)
-centers = np.array([0.10, 0.29, 0.49, 0.69, 0.89])
-alpha = np.array([0.25, 0.50, 1.00, 1.50, 2.50])
-w = 0.040
-f = np.zeros_like(x)
-for center, exponent in zip(centers, alpha):
-    z = (x-center)/w
-    phi = np.exp(-0.5*z**2)*(1-0.62*np.abs(z)**exponent)
-    phi /= np.max(np.abs(phi))
-    f += 0.42*phi
 
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF180 — Hölder Ladder")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
