@@ -1,11 +1,5 @@
----
-layout: default
-title: TF159 — QuantumHallPlateaus
----
+# QuantumHallPlateaus
 
-# TF159 — QuantumHallPlateaus
-
-![QuantumHallPlateaus signal](../../assets/images/TF159_QuantumHallPlateaus.png)
 
 ## Overview
 
@@ -31,6 +25,8 @@ a=(0.14,0.16,0.18,0.17,0.15,0.12),\quad
 w=(0.004,0.004,0.005,0.004,0.005,0.004).
 $$
 
+[QuantumHallPlateaus signal](../../assets/images/TF159_QuantumHallPlateaus.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -49,28 +45,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w)); f=0.10*ones(size(x));
-c=[0.13 0.27 0.41 0.57 0.73 0.87]; a=[0.14 0.16 0.18 0.17 0.15 0.12];
-w=[0.004 0.004 0.005 0.004 0.005 0.004];
-for k=1:numel(c), f=f+a(k)*S(x,c(k),w(k)); end
-f=f+0.025*exp(-2.4*x).*sin(2*pi*(11*x+8*x.^2)).*(1-S(x,0.58,0.025));
-plot(x,f); grid on; title('TF159 — QuantumHallPlateaus')
-exportgraphics(gcf,'TF159_QuantumHallPlateaus.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0159_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w)); f=.10*np.ones_like(x)
-c=[.13,.27,.41,.57,.73,.87]; a=[.14,.16,.18,.17,.15,.12]; w=[.004,.004,.005,.004,.005,.004]
-for ck,ak,wk in zip(c,a,w): f+=ak*S(ck,wk)
-f+=.025*np.exp(-2.4*x)*np.sin(2*np.pi*(11*x+8*x**2))*(1-S(.58,.025))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF159_QuantumHallPlateaus.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0159_python.md)
+
+
+
 
 ## Recommended Uses
 
