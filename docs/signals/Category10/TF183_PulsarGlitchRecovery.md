@@ -34,11 +34,11 @@ Then $f(x)=\sin\{\phi(x)\}$.
 
 ## MATLAB Implementation
 
-[View MATLAB implementation](../../codes/matlab/TF0183_matlab.md)
+[View MATLAB implementation](../../codes/matlab/TF183_matlab.md)
 
 ## Python Implementation
 
-[View Python implementation](../../codes/python/TF0183_python.md)
+[View Python implementation](../../codes/python/TF183_python.md)
 
 
 
