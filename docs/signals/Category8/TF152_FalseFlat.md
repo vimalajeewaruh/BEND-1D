@@ -1,11 +1,5 @@
----
-layout: default
-title: TF152 — FalseFlat
----
+# FalseFlat
 
-# TF152 — FalseFlat
-
-![FalseFlat signal](../../assets/images/TF152_FalseFlat.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&0.55g(x;0.17,0.09)+0.62g(x;0.84,0.08)\\
 &+0.045[S(x;0.49,0.003)-S(x;0.60,0.003)].
 \end{aligned}
 $$
+
+[FalseFlat signal](../../assets/images/TF152_FalseFlat.png)
 
 ## Morphological Characteristics
 
@@ -42,27 +38,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.55*exp(-0.5*((x-0.17)/0.09).^2)+0.62*exp(-0.5*((x-0.84)/0.08).^2) ...
- +0.035*sin(2*pi*19*x).*(S(x,0.35,0.02)-S(x,0.66,0.02)) ...
- +0.045*(S(x,0.49,0.003)-S(x,0.60,0.003));
-plot(x,f); grid on; title('TF152 — FalseFlat')
-exportgraphics(gcf,'TF152_FalseFlat.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0152_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.55*np.exp(-.5*((x-.17)/.09)**2)+.62*np.exp(-.5*((x-.84)/.08)**2)
-f+=.035*np.sin(2*np.pi*19*x)*(S(.35,.02)-S(.66,.02))
-f+=.045*(S(.49,.003)-S(.60,.003))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF152_FalseFlat.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0152_python.md)
+
+
+
 
 ## Recommended Uses
 
