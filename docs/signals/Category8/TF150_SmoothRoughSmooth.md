@@ -1,11 +1,5 @@
----
-layout: default
-title: TF150 — SmoothRoughSmooth
----
+# SmoothRoughSmooth
 
-# TF150 — SmoothRoughSmooth
-
-![SmoothRoughSmooth signal](../../assets/images/TF150_SmoothRoughSmooth.png)
 
 ## Overview
 
@@ -30,6 +24,8 @@ $$
 f(x)=L(x)(1-S_{0.33})+W[0.20+q(x)]+R(x)S_{0.68}.
 $$
 
+[SmoothRoughSmooth signal](../../assets/images/TF150_SmoothRoughSmooth.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -48,29 +44,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-left=0.20+0.22*sin(2*pi*2*x); roughWindow=S(x,0.33,0.008)-S(x,0.68,0.008);
-rough=0.16*sin(2*pi*17*x)+0.08*sin(2*pi*41*x+0.3)+0.04*sin(2*pi*91*x-0.2);
-right=0.20+0.18*cos(2*pi*2*(x-0.68));
-f=left.*(1-S(x,0.33,0.008))+roughWindow.*(0.20+rough)+right.*S(x,0.68,0.008);
-plot(x,f); grid on; title('TF150 — SmoothRoughSmooth')
-exportgraphics(gcf,'TF150_SmoothRoughSmooth.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0150_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-left=.20+.22*np.sin(2*np.pi*2*x); window=S(.33,.008)-S(.68,.008)
-rough=.16*np.sin(2*np.pi*17*x)+.08*np.sin(2*np.pi*41*x+.3)+.04*np.sin(2*np.pi*91*x-.2)
-right=.20+.18*np.cos(2*np.pi*2*(x-.68))
-f=left*(1-S(.33,.008))+window*(.20+rough)+right*S(.68,.008)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF150_SmoothRoughSmooth.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0150_python.md)
+
 
 ## Recommended Uses
 
