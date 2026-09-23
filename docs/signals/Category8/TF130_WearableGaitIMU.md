@@ -40,11 +40,11 @@ where $\mathcal C=(0.11,0.23,0.35,0.47,0.60,0.72,0.84,0.95)$.
 
 ## MATLAB Implementation
 
-[View MATLAB implementation](../../codes/matlab/TF0130_matlab.md)
+[View MATLAB implementation](../../codes/matlab/TF130_matlab.md)
 
 ## Python Implementation
 
-[View Python implementation](../../codes/python/TF0130_python.md)
+[View Python implementation](../../codes/python/TF130_python.md)
 
 
 
