@@ -1,11 +1,4 @@
----
-layout: default
-title: "TF161 — Capnogram Breaths"
----
-
-# TF161 — Capnogram Breaths
-
-![Capnogram Breaths](../../assets/images/TF161_CapnogramBreaths.png)
+# Capnogram Breaths
 
 ## Overview
 
@@ -51,6 +44,8 @@ f(x)=\sum_{k=1}^{5}G_k(x)p_k(x)
 \qquad 0\le x\le1.
 $$
 
+[Capnogram Breaths](../../assets/images/TF161_CapnogramBreaths.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -73,54 +68,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-S = @(z,c,w) 1./(1+exp(-(z-c)/w));
-
-f = zeros(size(x));
-starts = [0.01 0.205 0.400 0.595 0.790];
-for k = 1:numel(starts)
-    rise = starts(k) + 0.045;
-    fall = starts(k) + 0.145;
-    gate = S(x,rise,0.0035) - S(x,fall,0.0035);
-    slope = 0.80 + 0.12*(x-rise)/(fall-rise);
-    if k == 4
-        slope = 0.70 + 0.34*(x-rise)/(fall-rise);
-    end
-    f = f + gate.*slope;
-end
-f = f - 0.12*exp(-0.5*((x-0.685)/0.009).^2);
-
-plot(x,f,'LineWidth',1.5); grid on
-xlabel('x'); ylabel('f(x)'); title('TF161 — Capnogram Breaths')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0160_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0160_python.md)
 
-N = 1024
-x = np.linspace(0.0, 1.0, N)
-S = lambda z, c, w: 1.0 / (1.0 + np.exp(-(z - c) / w))
 
-f = np.zeros_like(x)
-starts = np.array([0.010, 0.205, 0.400, 0.595, 0.790])
-for k, start in enumerate(starts, start=1):
-    rise, fall = start + 0.045, start + 0.145
-    gate = S(x, rise, 0.0035) - S(x, fall, 0.0035)
-    slope = 0.80 + 0.12 * (x - rise) / (fall - rise)
-    if k == 4:
-        slope = 0.70 + 0.34 * (x - rise) / (fall - rise)
-    f += gate * slope
-f -= 0.12 * np.exp(-0.5 * ((x - 0.685) / 0.009) ** 2)
-
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF161 — Capnogram Breaths")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
