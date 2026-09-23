@@ -1,11 +1,4 @@
----
-layout: default
-title: "TF170 — Van der Pol Relaxation"
----
-
-# TF170 — Van der Pol Relaxation
-
-![Van der Pol Relaxation](../../assets/images/TF170_VanDerPolRelaxation.png)
+# Van der Pol Relaxation
 
 ## Overview
 
@@ -28,6 +21,9 @@ $$
 f_i=\frac{y_1(t_i)}{\max_j|y_1(t_j)|}.
 $$
 
+[Van der Pol Relaxation](../../assets/images/TF170_VanDerPolRelaxation.png)
+
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -49,61 +45,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-mu = 7.0;
-dt = 20/(N-1);
-y1 = zeros(1,N); y2 = zeros(1,N);
-y1(1) = 2; y2(1) = 0;
-rhs = @(a,b) [b; mu*(1-a.^2).*b-a];
-for k = 1:N-1
-    yy = [y1(k); y2(k)];
-    k1 = rhs(yy(1),yy(2));
-    q = yy + 0.5*dt*k1;
-    k2 = rhs(q(1),q(2));
-    q = yy + 0.5*dt*k2;
-    k3 = rhs(q(1),q(2));
-    q = yy + dt*k3;
-    k4 = rhs(q(1),q(2));
-    yn = yy + dt*(k1+2*k2+2*k3+k4)/6;
-    y1(k+1) = yn(1); y2(k+1) = yn(2);
-end
-f = y1/max(abs(y1));
-
-plot(x,f,'LineWidth',1.5); grid on
-xlabel('x'); ylabel('f(x)'); title('TF170 — Van der Pol Relaxation')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0170_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0170_python.md)
 
-N = 1024
-x = np.linspace(0.0, 1.0, N)
-mu = 7.0
-dt = 20.0 / (N - 1)
-y = np.zeros((N, 2))
-y[0] = [2.0, 0.0]
-
-def rhs(state):
-    y1, y2 = state
-    return np.array([y2, mu * (1.0 - y1**2) * y2 - y1])
-
-for k in range(N - 1):
-    k1 = rhs(y[k])
-    k2 = rhs(y[k] + 0.5 * dt * k1)
-    k3 = rhs(y[k] + 0.5 * dt * k2)
-    k4 = rhs(y[k] + dt * k3)
-    y[k + 1] = y[k] + dt * (k1 + 2*k2 + 2*k3 + k4) / 6.0
-f = y[:, 0] / np.max(np.abs(y[:, 0]))
-
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF170 — Van der Pol Relaxation")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
