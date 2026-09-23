@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF179 — Equal-Energy Scale Ladder"
----
+# Equal-Energy Scale Ladder
 
-# TF179 — Equal-Energy Scale Ladder
-
-![Equal-Energy Scale Ladder](../../assets/images/TF179_EqualEnergyScaleLadder.png)
 
 ## Overview
 
@@ -35,6 +29,8 @@ $$
 f(x)=\sum_{k=1}^{5}A_k[1-z_k(x)^2]e^{-z_k(x)^2/2}.
 $$
 
+[Equal-Energy Scale Ladder](../../assets/images/TF179_EqualEnergyScaleLadder.png)
+
 ## Morphological Characteristics
 
 | Property | Description |
@@ -57,44 +53,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N = 1024;
-x = linspace(0,1,N);
-f = zeros(size(x));
-centers = [0.10 0.27 0.45 0.65 0.85];
-widths = [0.005 0.008 0.013 0.022 0.037];
-wref = 0.013;
-for k = 1:numel(centers)
-    z = (x-centers(k))/widths(k);
-    A = sqrt(wref/widths(k));
-    f = f + A*(1-z.^2).*exp(-0.5*z.^2);
-end
-
-plot(x,f,'LineWidth',1.2); grid on
-xlabel('x'); ylabel('f(x)'); title('TF179 — Equal-Energy Scale Ladder')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0179_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
+[View Python implementation](../../codes/python/TF0179_python.md)
 
-N = 1024
-x = np.linspace(0.0, 1.0, N)
-centers = np.array([0.10, 0.27, 0.45, 0.65, 0.85])
-widths = np.array([0.005, 0.008, 0.013, 0.022, 0.037])
-wref = 0.013
-f = np.zeros_like(x)
-for center, width in zip(centers, widths):
-    z = (x-center)/width
-    amplitude = np.sqrt(wref/width)
-    f += amplitude*(1-z**2)*np.exp(-0.5*z**2)
 
-plt.plot(x, f)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF179 — Equal-Energy Scale Ladder")
-plt.grid(True); plt.show()
-~~~
 
 ## Recommended Uses
 
