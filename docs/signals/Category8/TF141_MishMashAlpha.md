@@ -1,11 +1,4 @@
----
-layout: default
-title: TF141 — MishMashAlpha
----
-
-# TF141 — MishMashAlpha
-
-![MishMashAlpha signal](../../assets/images/TF141_MishMashAlpha.png)
+# MishMashAlpha
 
 ## Overview
 
@@ -21,6 +14,8 @@ f(x)={}&0.18x+0.25S(x;0.68,0.004)+0.32\sqrt{|x-0.27|}\\
 &+0.22e^{-((x-0.48)/0.012)^2/2}+0.18\sin[2\pi(7x+18x^2)].
 \end{aligned}
 $$
+
+[MishMashAlpha signal](../../assets/images/TF141_MishMashAlpha.png)
 
 ## Morphological Characteristics
 
@@ -41,25 +36,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.18*x+0.25*S(x,0.68,0.004)+0.32*sqrt(abs(x-0.27)) ...
- +0.22*exp(-0.5*((x-0.48)/0.012).^2)+0.18*sin(2*pi*(7*x+18*x.^2));
-plot(x,f); grid on; title('TF141 — MishMashAlpha')
-exportgraphics(gcf,'TF141_MishMashAlpha.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0141_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.18*x+.25*S(.68,.004)+.32*np.sqrt(np.abs(x-.27))
-f+=.22*np.exp(-.5*((x-.48)/.012)**2)+.18*np.sin(2*np.pi*(7*x+18*x**2))
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF141_MishMashAlpha.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0141_python.md)
+
 
 ## Recommended Uses
 
