@@ -1,11 +1,4 @@
----
-layout: default
-title: "TF183 — PulsarGlitchRecovery"
----
-
-# TF183 — PulsarGlitchRecovery
-
-![PulsarGlitchRecovery signal](../../assets/images/TF183_PulsarGlitchRecovery.png)
+# PulsarGlitchRecovery
 
 ## Overview
 
@@ -19,6 +12,8 @@ $$
 +0.16(1-e^{-u/0.18})\}\right].
 $$
 Then $f(x)=\sin\{\phi(x)\}$.
+
+[PulsarGlitchRecovery signal](../../assets/images/TF183_PulsarGlitchRecovery.png)
 
 ## Morphological Characteristics
 
@@ -39,29 +34,13 @@ Then $f(x)=\sin\{\phi(x)\}$.
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-c=0.43; u=max(x-c,0); h=double(x>=c);
-phase=2*pi*(9*x+h.*(2.4*u+0.22*(1-exp(-u/0.03))+0.16*(1-exp(-u/0.18))));
-f=sin(phase);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF183 — PulsarGlitchRecovery')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0183_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-c=0.43; u=np.maximum(x-c,0); h=(x>=c).astype(float)
-phase=2*np.pi*(9*x+h*(2.4*u+0.22*(1-np.exp(-u/0.03))+0.16*(1-np.exp(-u/0.18))))
-f=np.sin(phase)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF183 — PulsarGlitchRecovery")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF0183_python.md)
+
+
 
 ## Recommended Uses
 
