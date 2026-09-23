@@ -1,8 +1,3 @@
----
-layout: default
-title: Category 8 Benchmarking Role
----
-
 # Category 8 Benchmarking Role
 
 Category 8 combines fifteen modern sensing surrogates with fifteen adversarial MishMash signals. It is designed to expose oversmoothing, resolution loss, phase distortion, poor local adaptation, and the limitations of judging recovery only through global mean squared error.
