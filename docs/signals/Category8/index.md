@@ -1,8 +1,3 @@
----
-layout: default
-title: BEND-1D Category 8 Signal Catalog
----
-
 # BEND-1D Category 8
 
 Category 8 contains modern sensing and adversarial MishMash test functions **TF126–TF155**. TF126–TF140 represent contemporary measurement systems; TF141–TF155 deliberately combine incompatible local regularities, frequency behavior, dynamic ranges, and feature widths.
