@@ -1,8 +1,3 @@
----
-layout: default
-title: BEND-1D Category 9 Signal Catalog
----
-
 # BEND-1D Category 9
 
 Category 9 contains scientific and mechanism-inspired signals **TF156–TF175** and controlled diagnostic stress tests **TF176–TF180**. It emphasizes genuine edge-associated oscillations, multistage physical processes, weak scientific features, deterministic roughness, translation sensitivity, boundary effects, resolving power, scale bias, and local Hölder regularity.
