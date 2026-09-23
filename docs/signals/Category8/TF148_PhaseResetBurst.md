@@ -1,11 +1,5 @@
----
-layout: default
-title: TF148 — PhaseResetBurst
----
+# PhaseResetBurst
 
-# TF148 — PhaseResetBurst
-
-![PhaseResetBurst signal](../../assets/images/TF148_PhaseResetBurst.png)
 
 ## Overview
 
@@ -19,6 +13,8 @@ $$
 f(x)=0.28\sin[36\pi x+0.95S(x;0.48,0.003)]
 +0.20e^{-((x-0.67)/0.035)^2/2}\sin(140\pi x).
 $$
+
+[PhaseResetBurst signal](../../assets/images/TF148_PhaseResetBurst.png)
 
 ## Morphological Characteristics
 
@@ -39,25 +35,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N); S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.28*sin(2*pi*18*x+0.95*S(x,0.48,0.003)) ...
- +0.20*exp(-0.5*((x-0.67)/0.035).^2).*sin(2*pi*70*x);
-plot(x,f); grid on; title('TF148 — PhaseResetBurst')
-exportgraphics(gcf,'TF148_PhaseResetBurst.png','Resolution',300);
-~~~
+[View MATLAB implementation](../../codes/matlab/TF0148_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024; x=np.linspace(0,1,N); S=lambda c,w: 1/(1+np.exp(-(x-c)/w))
-f=.28*np.sin(2*np.pi*18*x+.95*S(.48,.003))
-f+=.20*np.exp(-.5*((x-.67)/.035)**2)*np.sin(2*np.pi*70*x)
-plt.plot(x,f); plt.grid(alpha=.3); plt.tight_layout()
-plt.savefig('TF148_PhaseResetBurst.png',dpi=300)
-~~~
+[View Python implementation](../../codes/python/TF0148_python.md)
+
 
 ## Recommended Uses
 
