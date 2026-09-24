@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF211 — PianoInharmonicDecay"
----
+# PianoInharmonicDecay
 
-# TF211 — PianoInharmonicDecay
-
-![PianoInharmonicDecay signal](../../assets/images/TF211_PianoInharmonicDecay.png)
 
 ## Overview
 
@@ -20,6 +14,8 @@ f(x)=g(x)\sum_{k=1}^{4}a_ke^{-\lambda_ku}
 \sin(2\pi\nu_ku+\phi_k),
 $$
 with $(a_k,\lambda_k,\nu_k,\phi_k)$ given exactly in the code.
+
+[PianoInharmonicDecay signal](../../assets/images/TF211_PianoInharmonicDecay.png)
 
 ## Morphological Characteristics
 
@@ -40,32 +36,13 @@ with $(a_k,\lambda_k,\nu_k,\phi_k)$ given exactly in the code.
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-u=max(x-0.035,0); gate=S(x,0.035,0.0025);
-f=gate.*(0.62*exp(-2.2*u).*sin(2*pi*7*u) ...
- +0.34*exp(-4.0*u).*sin(2*pi*14.25*u+0.15) ...
- +0.22*exp(-6.0*u).*sin(2*pi*21.7*u+0.4) ...
- +0.14*exp(-8.0*u).*sin(2*pi*29.5*u+0.7));
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF211 — PianoInharmonicDecay')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF211_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-S=lambda z,c,w: 1/(1+np.exp(-(z-c)/w))
-u=np.maximum(x-0.035,0); gate=S(x,0.035,0.0025)
-f=gate*(0.62*np.exp(-2.2*u)*np.sin(2*np.pi*7*u)+0.34*np.exp(-4.0*u)*np.sin(2*np.pi*14.25*u+0.15)+0.22*np.exp(-6.0*u)*np.sin(2*np.pi*21.7*u+0.4)+0.14*np.exp(-8.0*u)*np.sin(2*np.pi*29.5*u+0.7))
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF211 — PianoInharmonicDecay")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF211_python.md)
+
+
 
 ## Recommended Uses
 
