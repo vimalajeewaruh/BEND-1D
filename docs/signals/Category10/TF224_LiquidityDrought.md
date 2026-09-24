@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF224 — LiquidityDrought"
----
+# LiquidityDrought
 
-# TF224 — LiquidityDrought
-
-![LiquidityDrought signal](../../assets/images/TF224_LiquidityDrought.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&0.95-0.38x-0.34L(x;0.61,0.008)\\
 +0.07G(x;0.595,0.010)-0.10G(x;0.625,0.012).
 \end{aligned}
 $$
+
+[LiquidityDrought signal](../../assets/images/TF224_LiquidityDrought.png)
 
 ## Morphological Characteristics
 
@@ -42,29 +38,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-S=@(z,c,w) 1./(1+exp(-(z-c)/w)); G=@(z,c,w) exp(-0.5*((z-c)/w).^2);
-f=0.95-0.38*x-0.34*S(x,0.61,0.008); u=max(x-0.61,0);
-f=f+(x>=0.61).*0.27.*(1-exp(-u/0.18))+0.07*G(x,0.595,0.010)-0.10*G(x,0.625,0.012);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF224 — LiquidityDrought')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF224_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-S=lambda z,c,w: 1/(1+np.exp(-(z-c)/w)); G=lambda z,c,w: np.exp(-0.5*((z-c)/w)**2)
-f=0.95-0.38*x-0.34*S(x,0.61,0.008); u=np.maximum(x-0.61,0)
-f+=(x>=0.61)*0.27*(1-np.exp(-u/0.18))+0.07*G(x,0.595,0.010)-0.10*G(x,0.625,0.012)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF224 — LiquidityDrought")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF224_python.md)
+
+
+
 
 ## Recommended Uses
 
