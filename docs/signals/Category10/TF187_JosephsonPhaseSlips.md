@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF187 — JosephsonPhaseSlips"
----
+# JosephsonPhaseSlips
 
-# TF187 — JosephsonPhaseSlips
-
-![JosephsonPhaseSlips signal](../../assets/images/TF187_JosephsonPhaseSlips.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ The signal is
 $$
 f(x)=0.75\sin\{\phi(x)\}+0.12\sin\{2\phi(x)+0.4\}.
 $$
+
+[JosephsonPhaseSlips signal](../../assets/images/TF187_JosephsonPhaseSlips.png)
 
 ## Morphological Characteristics
 
@@ -42,28 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-phi=2*pi*12*x+0.75*pi*double(x>=0.28) ...
-    -1.05*pi*double(x>=0.53)+0.60*pi*double(x>=0.78);
-f=0.75*sin(phi)+0.12*sin(2*phi+0.4);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF187 — JosephsonPhaseSlips')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF187_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-phi=2*np.pi*12*x+0.75*np.pi*(x>=0.28)-1.05*np.pi*(x>=0.53)+0.60*np.pi*(x>=0.78)
-f=0.75*np.sin(phi)+0.12*np.sin(2*phi+0.4)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF187 — JosephsonPhaseSlips")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF187_python.md)
+
+
 
 ## Recommended Uses
 
