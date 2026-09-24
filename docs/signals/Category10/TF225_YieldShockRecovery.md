@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF225 — YieldShockRecovery"
----
+# YieldShockRecovery
 
-# TF225 — YieldShockRecovery
-
-![YieldShockRecovery signal](../../assets/images/TF225_YieldShockRecovery.png)
 
 ## Overview
 
@@ -19,6 +13,8 @@ f(x)=0.18+0.10x+\sum_{k=1}^{2}I(x\ge c_k)a_k
 [0.72e^{-u_k/t_{1,k}}+0.28e^{-u_k/t_{2,k}}],
 $$
 with the parameter vectors listed below.
+
+[YieldShockRecovery signal](../../assets/images/TF225_YieldShockRecovery.png)
 
 ## Morphological Characteristics
 
@@ -40,30 +36,13 @@ with the parameter vectors listed below.
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-f=0.18+0.10*x; c=[0.43 0.76]; a=[0.72 -0.32]; t1=[0.055 0.040]; t2=[0.24 0.14];
-for k=1:2
- u=max(x-c(k),0); f=f+(x>=c(k)).*a(k).*(0.72*exp(-u/t1(k))+0.28*exp(-u/t2(k)));
-end
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF225 — YieldShockRecovery')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF226_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-f=0.18+0.10*x
-for c,a,t1,t2 in zip([0.43,0.76],[0.72,-0.32],[0.055,0.040],[0.24,0.14]):
-    u=np.maximum(x-c,0); f+=(x>=c)*a*(0.72*np.exp(-u/t1)+0.28*np.exp(-u/t2))
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF225 — YieldShockRecovery")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF226_python.md)
+
+
 
 ## Recommended Uses
 
