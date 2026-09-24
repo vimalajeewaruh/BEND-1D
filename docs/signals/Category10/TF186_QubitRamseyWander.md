@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF186 — QubitRamseyWander"
----
+# QubitRamseyWander
 
-# TF186 — QubitRamseyWander
-
-![QubitRamseyWander signal](../../assets/images/TF186_QubitRamseyWander.png)
 
 ## Overview
 
@@ -21,6 +15,9 @@ $$
 \phi(x)=2\pi(8x+2.8x^2)+0.55\sin(2\pi1.4x),
 \qquad f(x)=V(x)\cos\{\phi(x)\}.
 $$
+
+
+[QubitRamseyWander signal](../../assets/images/TF186_QubitRamseyWander.png)
 
 ## Morphological Characteristics
 
@@ -41,31 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-G=@(z,c,w) exp(-0.5*((z-c)/w).^2);
-vis=(0.92-0.35*x).*(1-0.78*G(x,0.56,0.055));
-phase=2*pi*(8*x+2.8*x.^2)+0.55*sin(2*pi*1.4*x);
-f=vis.*cos(phase);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF186 — QubitRamseyWander')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF186_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-G=lambda z,c,w: np.exp(-0.5*((z-c)/w)**2)
-vis=(0.92-0.35*x)*(1-0.78*G(x,0.56,0.055))
-phase=2*np.pi*(8*x+2.8*x**2)+0.55*np.sin(2*np.pi*1.4*x)
-f=vis*np.cos(phase)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF186 — QubitRamseyWander")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF186_python.md)
+
+
 
 ## Recommended Uses
 
