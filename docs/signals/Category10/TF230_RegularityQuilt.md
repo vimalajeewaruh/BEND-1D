@@ -7,6 +7,8 @@ Five adjacent compact bumps meet continuously at zero but use different powers a
 
 ## Mathematical Definition
 
+For the interval $[a_k,b_k]$, set
+
 $$
 s=\frac{x-a_k}{b_k-a_k}
 $$
