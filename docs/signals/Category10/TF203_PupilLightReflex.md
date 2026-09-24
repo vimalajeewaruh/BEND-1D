@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF203 — PupilLightReflex"
----
+# PupilLightReflex
 
-# TF203 — PupilLightReflex
-
-![PupilLightReflex signal](../../assets/images/TF203_PupilLightReflex.png)
 
 ## Overview
 
@@ -21,6 +15,8 @@ and, with $G(x;c,w)=e^{-((x-c)/w)^2/2}$,
 $$
 f(x)=1-0.72r(x)+0.10G(x;0.68,0.07).
 $$
+
+[PupilLightReflex signal](../../assets/images/TF203_PupilLightReflex.png)
 
 ## Morphological Characteristics
 
@@ -41,31 +37,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-G=@(z,c,w) exp(-0.5*((z-c)/w).^2);
-u=max(x-0.25,0);
-resp=(x>=0.25).*(1-exp(-u/0.014)).*exp(-u/0.22);
-f=1-0.72*resp+0.10*G(x,0.68,0.07);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF203 — PupilLightReflex')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF203_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-G=lambda z,c,w: np.exp(-0.5*((z-c)/w)**2)
-u=np.maximum(x-0.25,0)
-resp=(x>=0.25)*(1-np.exp(-u/0.014))*np.exp(-u/0.22)
-f=1-0.72*resp+0.10*G(x,0.68,0.07)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF203 — PupilLightReflex")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF203_python.md)
+
+
 
 ## Recommended Uses
 
