@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF222 — BubbleLogPeriodic"
----
+# BubbleLogPeriodic
 
-# TF222 — BubbleLogPeriodic
-
-![BubbleLogPeriodic signal](../../assets/images/TF222_BubbleLogPeriodic.png)
 
 ## Overview
 
@@ -23,6 +17,8 @@ $$
 f(x)=0.24+0.42(1-e^{-u/0.12})
 +0.03e^{-12u}\sin(36\pi u).
 $$
+
+[BubbleLogPeriodic signal](../../assets/images/TF222_BubbleLogPeriodic.png)
 
 ## Morphological Characteristics
 
@@ -44,31 +40,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-xc=0.83; f=zeros(size(x)); pre=x<xc; t=max(xc-x,1e-5);
-f(pre)=1-1.05*t(pre).^0.55.*(1+0.14*cos(8.5*log(t(pre))+0.4));
-u=max(x-xc,0);
-f(~pre)=0.24+0.42*(1-exp(-u(~pre)/0.12))+0.03*sin(2*pi*18*u(~pre)).*exp(-12*u(~pre));
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF222 — BubbleLogPeriodic')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF222_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-xc=0.83; f=np.zeros_like(x); pre=x<xc; t=np.maximum(xc-x,1e-5)
-f[pre]=1-1.05*t[pre]**0.55*(1+0.14*np.cos(8.5*np.log(t[pre])+0.4))
-u=np.maximum(x-xc,0)
-f[~pre]=0.24+0.42*(1-np.exp(-u[~pre]/0.12))+0.03*np.sin(2*np.pi*18*u[~pre])*np.exp(-12*u[~pre])
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF222 — BubbleLogPeriodic")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF222_python.md)
+
+
+
 
 ## Recommended Uses
 
