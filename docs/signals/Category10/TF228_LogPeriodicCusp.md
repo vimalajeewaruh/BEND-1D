@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF228 — LogPeriodicCusp"
----
+# LogPeriodicCusp
 
-# TF228 — LogPeriodicCusp
-
-![LogPeriodicCusp signal](../../assets/images/TF228_LogPeriodicCusp.png)
 
 ## Overview
 
@@ -21,6 +15,8 @@ The sampled signal is centered and normalized:
 $$
 f_i=\frac{r(x_i)-\bar r}{\max_j|r(x_j)-\bar r|}.
 $$
+
+[LogPeriodicCusp signal](../../assets/images/TF228_LogPeriodicCusp.png)
 
 ## Morphological Characteristics
 
@@ -42,16 +38,12 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-u=x-0.57; au=abs(u);
-f=au.^0.34.*(1+0.62*sin(10.5*log(au+0.0025)));
-f=f-mean(f); f=f/max(abs(f));
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF228 — LogPeriodicCusp')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF228_matlab.md)
 
 ## Python Implementation
+
+[View Python implementation](../../codes/python/TF228_python.md)
+
 
 ~~~python
 import numpy as np
