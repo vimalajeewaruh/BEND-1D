@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF219 — HeatwaveFrontBreak"
----
+# HeatwaveFrontBreak
 
-# TF219 — HeatwaveFrontBreak
-
-![HeatwaveFrontBreak signal](../../assets/images/TF219_HeatwaveFrontBreak.png)
 
 ## Overview
 
@@ -18,6 +12,8 @@ $$
 f(x)=0.18+0.72L(x;0.28,0.075)-0.82L(x;0.79,0.012)
 +[0.02+0.05L(x;0.35,0.08)]\sin(18\pi x).
 $$
+
+[HeatwaveFrontBreak signal](../../assets/images/TF219_HeatwaveFrontBreak.png)
 
 ## Morphological Characteristics
 
@@ -38,29 +34,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.18+0.72*S(x,0.28,0.075)-0.82*S(x,0.79,0.012);
-f=f+(0.02+0.05*S(x,0.35,0.08)).*sin(2*pi*9*x);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF219 — HeatwaveFrontBreak')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF219_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-S=lambda z,c,w: 1/(1+np.exp(-(z-c)/w))
-f=0.18+0.72*S(x,0.28,0.075)-0.82*S(x,0.79,0.012)
-f+=(0.02+0.05*S(x,0.35,0.08))*np.sin(2*np.pi*9*x)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF219 — HeatwaveFrontBreak")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF219_python.md)
+
+
 
 ## Recommended Uses
 
