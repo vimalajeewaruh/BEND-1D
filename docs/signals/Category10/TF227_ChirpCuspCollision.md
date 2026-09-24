@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF227 — ChirpCuspCollision"
----
+# ChirpCuspCollision
 
-# TF227 — ChirpCuspCollision
-
-![ChirpCuspCollision signal](../../assets/images/TF227_ChirpCuspCollision.png)
 
 ## Overview
 
@@ -21,6 +15,8 @@ For sampled values, center and normalize:
 $$
 f_i=\frac{r(x_i)-\bar r}{\max_j|r(x_j)-\bar r|}.
 $$
+
+[ChirpCuspCollision signal](../../assets/images/TF227_ChirpCuspCollision.png)
 
 ## Morphological Characteristics
 
@@ -42,29 +38,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-u=x-0.52; au=abs(u);
-f=au.^0.5+0.48*au.^(1/3).*sin(0.18./(au+0.004));
-f=f-mean(f); f=f/max(abs(f));
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF227 — ChirpCuspCollision')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF227_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-u=x-0.52; au=np.abs(u)
-f=au**0.5+0.48*au**(1/3)*np.sin(0.18/(au+0.004))
-f-=np.mean(f); f/=np.max(np.abs(f))
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF227 — ChirpCuspCollision")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF227_python.md)
+
+
+
 
 ## Recommended Uses
 
