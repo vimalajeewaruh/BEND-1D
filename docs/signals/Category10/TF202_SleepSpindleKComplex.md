@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF202 — SleepSpindleKComplex"
----
+# SleepSpindleKComplex
 
-# TF202 — SleepSpindleKComplex
-
-![SleepSpindleKComplex signal](../../assets/images/TF202_SleepSpindleKComplex.png)
 
 ## Overview
 
@@ -19,6 +13,8 @@ f(x)=0.06\sin(2\pi2.4x)-0.75G(x;0.43,0.035)
 +0.48G(x;0.475,0.048)
 +0.32G(x;0.66,0.075)\sin\{2\pi37(x-0.66)\}.
 $$
+
+[SleepSpindleKComplex signal](../../assets/images/TF202_SleepSpindleKComplex.png)
 
 ## Morphological Characteristics
 
@@ -39,31 +35,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-G=@(z,c,w) exp(-0.5*((z-c)/w).^2);
-kcomp=-0.75*G(x,0.43,0.035)+0.48*G(x,0.475,0.048);
-spindle=0.32*G(x,0.66,0.075).*sin(2*pi*37*(x-0.66));
-slow=0.06*sin(2*pi*2.4*x); f=slow+kcomp+spindle;
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF202 — SleepSpindleKComplex')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF202_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-G=lambda z,c,w: np.exp(-0.5*((z-c)/w)**2)
-kcomp=-0.75*G(x,0.43,0.035)+0.48*G(x,0.475,0.048)
-spindle=0.32*G(x,0.66,0.075)*np.sin(2*np.pi*37*(x-0.66))
-slow=0.06*np.sin(2*np.pi*2.4*x); f=slow+kcomp+spindle
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF202 — SleepSpindleKComplex")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF202_python.md)
+
+
 
 ## Recommended Uses
 
