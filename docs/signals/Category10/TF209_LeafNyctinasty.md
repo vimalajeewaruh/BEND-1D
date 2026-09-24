@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF209 — LeafNyctinasty"
----
+# LeafNyctinasty
 
-# TF209 — LeafNyctinasty
-
-![LeafNyctinasty signal](../../assets/images/TF209_LeafNyctinasty.png)
 
 ## Overview
 
@@ -21,6 +15,8 @@ f(x)={}&0.12+0.78[L(x;0.08,0.025)-L(x;0.38,0.050)]\\
 +0.025\sin(10\pi x).
 \end{aligned}
 $$
+
+[LeafNyctinasty signal](../../assets/images/TF209_LeafNyctinasty.png)
 
 ## Morphological Characteristics
 
@@ -42,29 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.12+0.78*(S(x,0.08,0.025)-S(x,0.38,0.050)) ...
- +0.72*(S(x,0.57,0.022)-S(x,0.88,0.060))+0.025*sin(2*pi*5*x);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF209 — LeafNyctinasty')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF209_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-S=lambda z,c,w: 1/(1+np.exp(-(z-c)/w))
-f=0.12+0.78*(S(x,0.08,0.025)-S(x,0.38,0.050))
-f+=0.72*(S(x,0.57,0.022)-S(x,0.88,0.060))+0.025*np.sin(2*np.pi*5*x)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF209 — LeafNyctinasty")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF209_python.md)
+
+
 
 ## Recommended Uses
 
