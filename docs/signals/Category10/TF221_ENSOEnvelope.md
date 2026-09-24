@@ -1,11 +1,6 @@
----
-layout: default
-title: "TF221 — ENSOEnvelope"
----
+# ENSOEnvelope
 
-# TF221 — ENSOEnvelope
 
-![ENSOEnvelope signal](../../assets/images/TF221_ENSOEnvelope.png)
 
 ## Overview
 
@@ -22,6 +17,8 @@ $$
 f(x)=A(x)\sin\phi(x)+0.22G(x;0.28,0.06)
 -0.18G(x;0.57,0.07)+0.25G(x;0.83,0.045).
 $$
+
+[ENSOEnvelope signal](../../assets/images/TF221_ENSOEnvelope.png)
 
 ## Morphological Characteristics
 
@@ -42,29 +39,14 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-G=@(z,c,w) exp(-0.5*((z-c)/w).^2);
-amp=0.45+0.20*sin(2*pi*0.75*x+0.4); phase=2*pi*(2.1*x+0.22*x.^2);
-f=amp.*sin(phase)+0.22*G(x,0.28,0.06)-0.18*G(x,0.57,0.07)+0.25*G(x,0.83,0.045);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF221 — ENSOEnvelope')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF221_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-G=lambda z,c,w: np.exp(-0.5*((z-c)/w)**2)
-amp=0.45+0.20*np.sin(2*np.pi*0.75*x+0.4); phase=2*np.pi*(2.1*x+0.22*x**2)
-f=amp*np.sin(phase)+0.22*G(x,0.28,0.06)-0.18*G(x,0.57,0.07)+0.25*G(x,0.83,0.045)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF221 — ENSOEnvelope")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF221_python.md)
+
+
+
 
 ## Recommended Uses
 
