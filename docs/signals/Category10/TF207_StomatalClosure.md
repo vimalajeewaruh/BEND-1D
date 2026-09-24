@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF207 — StomatalClosure"
----
+# StomatalClosure
 
-# TF207 — StomatalClosure
-
-![StomatalClosure signal](../../assets/images/TF207_StomatalClosure.png)
 
 ## Overview
 
@@ -20,6 +14,8 @@ $$
 f(x)=1-0.62L(x;0.39,0.020)
 +0.30L(x;0.79,0.055)-0.06G(x;0.50,0.055).
 $$
+
+[StomatalClosure signal](../../assets/images/TF207_StomatalClosure.png)
 
 ## Morphological Characteristics
 
@@ -40,27 +36,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-S=@(z,c,w) 1./(1+exp(-(z-c)/w)); G=@(z,c,w) exp(-0.5*((z-c)/w).^2);
-f=1-0.62*S(x,0.39,0.020)+0.30*S(x,0.79,0.055)-0.06*G(x,0.50,0.055);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF207 — StomatalClosure')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF207_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-S=lambda z,c,w: 1/(1+np.exp(-(z-c)/w)); G=lambda z,c,w: np.exp(-0.5*((z-c)/w)**2)
-f=1-0.62*S(x,0.39,0.020)+0.30*S(x,0.79,0.055)-0.06*G(x,0.50,0.055)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF207 — StomatalClosure")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF207_python.md)
+
+
 
 ## Recommended Uses
 
