@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF210 — FungalGrowthPulse"
----
+# FungalGrowthPulse
 
-# TF210 — FungalGrowthPulse
-
-![FungalGrowthPulse signal](../../assets/images/TF210_FungalGrowthPulse.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ f(x)={}&0.06+0.12x+0.19L(x;0.19,0.035)
 &+0.018\sin(18\pi x)[L(x;0.17,0.03)-L(x;0.88,0.03)].
 \end{aligned}
 $$
+
+[FungalGrowthPulse signal](../../assets/images/TF210_FungalGrowthPulse.png)
 
 ## Morphological Characteristics
 
@@ -42,31 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-S=@(z,c,w) 1./(1+exp(-(z-c)/w));
-f=0.06+0.12*x+0.19*S(x,0.19,0.035)+0.15*S(x,0.39,0.018) ...
- +0.27*S(x,0.63,0.050)+0.12*S(x,0.84,0.020);
-f=f+0.018*sin(2*pi*9*x).*(S(x,0.17,0.03)-S(x,0.88,0.03));
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF210 — FungalGrowthPulse')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF210_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-S=lambda z,c,w: 1/(1+np.exp(-(z-c)/w))
-f=0.06+0.12*x+0.19*S(x,0.19,0.035)+0.15*S(x,0.39,0.018)
-f+=0.27*S(x,0.63,0.050)+0.12*S(x,0.84,0.020)
-f+=0.018*np.sin(2*np.pi*9*x)*(S(x,0.17,0.03)-S(x,0.88,0.03))
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF210 — FungalGrowthPulse")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF210_python.md)
+
+
 
 ## Recommended Uses
 
