@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF226 — AnalyticNearPole"
----
+# AnalyticNearPole
 
-# TF226 — AnalyticNearPole
-
-![AnalyticNearPole signal](../../assets/images/TF226_AnalyticNearPole.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ $$
 f_i=\frac{r(x_i)}{\max_j r(x_j)}.
 $$
 The complex poles occur at $0.52\pm0.015i$.
+
+[AnalyticNearPole signal](../../assets/images/TF226_AnalyticNearPole.png)
 
 ## Morphological Characteristics
 
@@ -42,25 +38,14 @@ The complex poles occur at $0.52\pm0.015i$.
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-raw=1./((x-0.52).^2+0.015^2); f=raw/max(raw);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF226 — AnalyticNearPole')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF226_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-raw=1/((x-0.52)**2+0.015**2); f=raw/np.max(raw)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF226 — AnalyticNearPole")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF226_python.md)
+
+
+
 
 ## Recommended Uses
 
