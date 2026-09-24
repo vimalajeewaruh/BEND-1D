@@ -7,15 +7,25 @@ Five adjacent compact bumps meet continuously at zero but use different powers a
 
 ## Mathematical Definition
 
-For interval $[a_k,b_k]$, set
-$s=(x-a_k)/(b_k-a_k)$ and
 $$
-f(x)=A_k[4s(1-s)]^{p_k},\qquad a_k\le x\le b_k.
+s=\frac{x-a_k}{b_k-a_k}
 $$
+
+and
+
+$$
+f(x)=A_k[4s(1-s)]^{p_k},
+\qquad a_k\le x\le b_k.
+$$
+
 The rows $(a_k,b_k,p_k,A_k)$ are
+
 $$
-(0,.2,4,1),\ (.2,.4,3,-.85),\ (.4,.6,2,.90),\
-(.6,.8,1.5,-.80),\ (.8,1,.5,.65).
+(0,.2,4,1),\quad
+(.2,.4,3,-.85),\quad
+(.4,.6,2,.90),\quad
+(.6,.8,1.5,-.80),\quad
+(.8,1,.5,.65).
 $$
 
 [RegularityQuilt signal](../../assets/images/TF230_RegularityQuilt.png)
