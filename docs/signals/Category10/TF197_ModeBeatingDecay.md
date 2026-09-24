@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF197 — ModeBeatingDecay"
----
+# ModeBeatingDecay
 
-# TF197 — ModeBeatingDecay
-
-![ModeBeatingDecay signal](../../assets/images/TF197_ModeBeatingDecay.png)
 
 ## Overview
 
@@ -18,6 +12,8 @@ $$
 f(x)=e^{-2.4x}\{\sin(30\pi x)+0.93\sin(32.8\pi x+0.15)\}
 +0.28e^{-5.8x}\sin(66\pi x+0.6).
 $$
+
+[ModeBeatingDecay signal](../../assets/images/TF197_ModeBeatingDecay.png)
 
 ## Morphological Characteristics
 
@@ -36,29 +32,17 @@ $$
 | Main decay rate | $2.4$ |
 | Third frequency/decay | $33/5.8$ |
 
+
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-f=exp(-2.4*x).*(sin(2*pi*15*x)+0.93*sin(2*pi*16.4*x+0.15)) ...
- +0.28*exp(-5.8*x).*sin(2*pi*33*x+0.6);
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF197 — ModeBeatingDecay')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF197_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-f=np.exp(-2.4*x)*(np.sin(2*np.pi*15*x)+0.93*np.sin(2*np.pi*16.4*x+0.15))
-f+=0.28*np.exp(-5.8*x)*np.sin(2*np.pi*33*x+0.6)
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF197 — ModeBeatingDecay")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF197_python.md)
+
+
+
 
 ## Recommended Uses
 
