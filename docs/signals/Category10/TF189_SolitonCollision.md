@@ -1,11 +1,6 @@
----
-layout: default
-title: "TF189 — SolitonCollision"
----
+# SolitonCollision
 
-# TF189 — SolitonCollision
 
-![SolitonCollision signal](../../assets/images/TF189_SolitonCollision.png)
 
 ## Overview
 
@@ -20,6 +15,8 @@ f(x)=0.66Q\left(\frac{x-0.40}{0.045}\right)
 +0.82Q\left(\frac{x-0.50}{0.030}\right)
 \cos\{58\pi(x-0.50)\}.
 $$
+
+[SolitonCollision signal](../../assets/images/TF189_SolitonCollision.png)
 
 ## Morphological Characteristics
 
@@ -41,29 +38,13 @@ $$
 
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-sech2=@(z) 1./cosh(z).^2;
-f=0.66*sech2((x-0.40)/0.045)+0.66*sech2((x-0.60)/0.045) ...
- +0.82*sech2((x-0.50)/0.030).*cos(2*pi*29*(x-0.50));
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF189 — SolitonCollision')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF189_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-sech2=lambda z: 1/np.cosh(z)**2
-f=0.66*sech2((x-0.40)/0.045)+0.66*sech2((x-0.60)/0.045)
-f+=0.82*sech2((x-0.50)/0.030)*np.cos(2*np.pi*29*(x-0.50))
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF189 — SolitonCollision")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF189_python.md)
+
+
 
 ## Recommended Uses
 
