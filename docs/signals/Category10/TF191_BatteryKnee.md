@@ -1,11 +1,5 @@
----
-layout: default
-title: "TF191 — BatteryKnee"
----
+# BatteryKnee
 
-# TF191 — BatteryKnee
-
-![BatteryKnee signal](../../assets/images/TF191_BatteryKnee.png)
 
 ## Overview
 
@@ -22,6 +16,8 @@ The normalized degradation curve is
 $$
 f(x)=1-0.18x-0.58\left[\frac{s(x)}{s(1)}\right]^{1.55}.
 $$
+
+[BatteryKnee signal](../../assets/images/TF191_BatteryKnee.png)
 
 ## Morphological Characteristics
 
@@ -41,33 +37,17 @@ $$
 | Power | $1.55$ |
 | Nonlinear loss | $0.58$ |
 
+
 ## MATLAB Implementation
 
-~~~matlab
-N=1024; x=linspace(0,1,N);
-kappa=26; x0=0.64;
-sp=log1p(exp(kappa*(x-x0)))/kappa;
-sp1=log1p(exp(kappa*(1-x0)))/kappa;
-f=1-0.18*x-0.58*(sp/sp1).^1.55;
-plot(x,f,'LineWidth',1.3); grid on
-xlabel('x'); ylabel('f(x)'); title('TF191 — BatteryKnee')
-~~~
+[View MATLAB implementation](../../codes/matlab/TF191_matlab.md)
 
 ## Python Implementation
 
-~~~python
-import numpy as np
-import matplotlib.pyplot as plt
-N=1024
-x=np.linspace(0.0,1.0,N)
-kappa=26; x0=0.64
-sp=np.log1p(np.exp(kappa*(x-x0)))/kappa
-sp1=np.log1p(np.exp(kappa*(1-x0)))/kappa
-f=1-0.18*x-0.58*(sp/sp1)**1.55
-plt.plot(x,f); plt.grid(True)
-plt.xlabel("x"); plt.ylabel("f(x)"); plt.title("TF191 — BatteryKnee")
-plt.show()
-~~~
+[View Python implementation](../../codes/python/TF191_python.md)
+
+
+
 
 ## Recommended Uses
 
