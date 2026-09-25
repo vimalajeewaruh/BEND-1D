@@ -46,16 +46,16 @@ engineering, biomedical, environmental, and economic measurements.
 
 | Category | Signal range | Main emphasis |
 |---|---:|---|
-| [Category 1](docs/docs/signals/Category1/index.md) | 1–16 | Foundational application-oriented morphologies, including critical onsets, spectra, impacts, oscillations, and structural changes |
-| [Category 2](docs/signals/Category2/index.md) | 17–26 |  Additional application-oriented signals with local defects, transients, multiscale peaks, and asymmetric behavior |
-| [Category 3](docs/signals/Category3/index.md) | 27–42 |  Physiological, mechanical, oceanographic, acoustic, and atmospheric measurement structures |
-| [Category 4](docs/signals/Category4/) | 43–58 |  Measurement-science signals from production, environmental monitoring, spectroscopy, seismology, and analytical instruments |
-| [Category 5](docs/signals/Category5/index.md) | 59–70 |  Cross-disciplinary smoothing problems with sharp peaks, shoulders, notches, transitions, and thin-layer anomalies |
-| [Category 6](docs/signals/Category6/index.md) | 71–100 |  Modern cross-disciplinary signals from engineering, computing, astronomy, economics, acoustics, geology, and neuroscience |
-| [Category 7](docs/signals/Category7/index.md) | 101–125 |  Contemporary applications and artificial stress tests involving quantum systems, fusion, genomics, AI infrastructure, and weak hidden features |
-| [Category 8](docs/signals/Category8/index.md) | 126–155 |  Modern sensing signals and adversarial MishMash constructions with incompatible local scales and regularities |
-| [Category 9](docs/signals/Category9/index.md) | 156–180 |  Scientific and mechanism-inspired signals together with controlled diagnostics for alignment, boundaries, resolution, scale bias, and regularity |
-| [Category 10](docs/signals/Category10/index.md) | 181–230 |  Research-frontier measurement morphologies and mathematical adversaries involving critical-time behavior, cancellation, and heterogeneous regularity |
+| [1](docs/signals/Category1/index.md) | 1–16 | Foundational application-oriented morphologies, including critical onsets, spectra, impacts, oscillations, and structural changes |
+| [2](docs/signals/Category2/index.md) | 17–26 |  Additional application-oriented signals with local defects, transients, multiscale peaks, and asymmetric behavior |
+| [3](docs/signals/Category3/index.md) | 27–42 |  Physiological, mechanical, oceanographic, acoustic, and atmospheric measurement structures |
+| [4](docs/signals/Category4/index.md) | 43–58 |  Measurement-science signals from production, environmental monitoring, spectroscopy, seismology, and analytical instruments |
+| [5](docs/signals/Category5/index.md) | 59–70 |  Cross-disciplinary smoothing problems with sharp peaks, shoulders, notches, transitions, and thin-layer anomalies |
+| [6](docs/signals/Category6/index.md) | 71–100 |  Modern cross-disciplinary signals from engineering, computing, astronomy, economics, acoustics, geology, and neuroscience |
+| [7](docs/signals/Category7/index.md) | 101–125 |  Contemporary applications and artificial stress tests involving quantum systems, fusion, genomics, AI infrastructure, and weak hidden features |
+| [8](docs/signals/Category8/index.md) | 126–155 |  Modern sensing signals and adversarial MishMash constructions with incompatible local scales and regularities |
+| [9](docs/signals/Category9/index.md) | 156–180 |  Scientific and mechanism-inspired signals together with controlled diagnostics for alignment, boundaries, resolution, scale bias, and regularity |
+| [10](docs/signals/Category10/index.md) | 181–230 |  Research-frontier measurement morphologies and mathematical adversaries involving critical-time behavior, cancellation, and heterogeneous regularity |
 
 ## What Each Signal Page Contains
 
