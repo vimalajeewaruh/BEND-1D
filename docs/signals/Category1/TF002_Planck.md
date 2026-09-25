@@ -4,15 +4,23 @@ The **Planck** signal is a dimensionless black-body spectral profile. It is smoo
 
 ## Mathematical Definition
 
-For $0\leq x\leq1$, define $\lambda(x)=0.08+0.92x.$
+For $0 \leq x \leq 1$, define
+
+$$
+\lambda(x) = \lambda_0 + ax,
+$$
+
+where $\lambda_0 = 0.08$ and $a = 0.92$.
 
 The signal is
 
 $$
 f(x)=
 \frac{\lambda(x)^{-5}}
-{\exp\{2.5/\lambda(x)\}-1}.
+{\exp\{c/\lambda(x)\}-1},
 $$
+
+where $c = 2.5$.
 
 [View Planck signal](../../assets/images/TF002_Planck.png)
 
@@ -32,9 +40,9 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.08$ | Lower value of $\lambda(x)$ | 0.08 |
-| $0.92$ | Spectral-coordinate range | 0.92 |
-| $2.5$ | Exponential shape constant | 2.5 |
+| $\lambda_0$ | Lower value of $\lambda(x)$ | 0.08 |
+| $a$ | Linear coefficient in $\lambda(x)$ | 0.92 |
+| $c$ | Exponential shape constant | 2.5 |
 
 ## MATLAB Implementation
 
