@@ -4,13 +4,18 @@ The **RingDown** signal is a localized underdamped response beginning at $x=0.28
 
 ## Mathematical Definition
 
-$$f(x)=
-I(x\geq0.28)
-\exp[-7(x-0.28)]
-\sin[32\pi(x-0.28)],
+For $0 \leq x \leq 1$, define
+
+$$
+f(x)
+=
+I(x \geq x_0)
+\exp\{-\alpha(x-x_0)\}
+\sin\{\omega(x-x_0)\},
 $$
 
-where $I(\cdot)$ is the indicator function.
+where $I(\cdot)$ is the indicator function, with
+$x_0=0.28$, $\alpha=7$, and $\omega=32\pi$.
 
 [View RingDown signal](../../assets/images/TF004_RingDown.png)
 
@@ -31,8 +36,8 @@ where $I(\cdot)$ is the indicator function.
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
 | $x_0$ | Onset location | 0.28 |
-| $7$ | Exponential decay rate | 7 |
-| $32\pi$ | Angular-frequency coefficient | $32\pi$ |
+| $\alpha$ | Exponential decay rate | 7 |
+| $\omega$ | Angular-frequency coefficient | $32\pi$ |
 
 ## MATLAB Implementation
 
