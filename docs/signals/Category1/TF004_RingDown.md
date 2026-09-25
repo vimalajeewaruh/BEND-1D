@@ -6,6 +6,8 @@ The **RingDown** signal is a localized underdamped response beginning at $x=0.28
 
 For $0 \leq x \leq 1$, define
 
+For \(0 \leq x \leq 1\), define
+
 $$
 f(x)
 =
@@ -14,8 +16,8 @@ I(x \geq x_0)
 \sin\{\omega(x-x_0)\},
 $$
 
-where $I(\cdot)$ is the indicator function, with
-$x_0=0.28$, $\alpha=7$, and $\omega=32\pi$.
+where \(I(\cdot)\) is the indicator function, with
+\(x_0=0.28\), \(\alpha=7\), and \(\omega=32\pi\).
 
 [View RingDown signal](../../assets/images/TF004_RingDown.png)
 
