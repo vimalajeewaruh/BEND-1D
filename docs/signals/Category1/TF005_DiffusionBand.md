@@ -6,14 +6,14 @@ The **DiffusionBand** signal represents a finite band bounded by two smooth diff
 
 For $0 \leq x \leq 1$, define
 
-$$
+```math
 f(x)=\frac{1}{2}
 \left\{
 \operatorname{erf}\left(\frac{x-\mu_L}{w_L}\right)
 -
 \operatorname{erf}\left(\frac{x-\mu_R}{w_R}\right)
-\right\},
-$$
+\right\}.
+```
 
 where $\mu_L=0.28$, $w_L=0.025$, $\mu_R=0.72$, and $w_R=0.070$.
 
