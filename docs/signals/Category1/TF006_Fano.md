@@ -6,22 +6,17 @@ The **Fano** signal combines a broad smooth background with an asymmetric resona
 
 ## Mathematical Definition
 
-Define $\epsilon(x)=\frac{x-0.58}{0.025},\qquad q=1.5.$  Then
+Define
 
 ```math
-f(x) =
-0.35
-\exp
-\left\{
--\left(
-\frac{x-0.26}{0.12}
-\right)^2
-\right\}
-+
-0.75
-\left\{
-\frac{(q+\epsilon(x))^2}{1+\epsilon(x)^2}-1
-\right\}.
+\epsilon(x)=\frac{x-x_r}{w_r},
+```
+
+with $q=1.5$. Then
+
+```math
+f(x)=0.35\exp\left[-\left(\frac{x-\mu_b}{w_b}\right)^2\right]
++0.75\left[\frac{(q+\epsilon(x))^2}{1+\epsilon(x)^2}-1\right].
 ```
 
 
