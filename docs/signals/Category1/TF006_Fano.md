@@ -39,10 +39,10 @@ f(x)=0.35\exp\left[-\left(\frac{x-\mu_b}{w_b}\right)^2\right]
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
 | $q$ | Fano asymmetry parameter | 1.5 |
-| $0.58$ | Resonance location | 0.58 |
-| $0.025$ | Resonance width scale | 0.025 |
-| $0.26$ | Background center | 0.26 |
-| $0.12$ | Background width | 0.12 |
+| $x_r$ | Resonance location | 0.58 |
+| $w_r$ | Resonance width scale | 0.025 |
+| $\mu_b$ | Background center | 0.26 |
+| $w_b$ | Background width | 0.12 |
 
 ## MATLAB Implementation
 
