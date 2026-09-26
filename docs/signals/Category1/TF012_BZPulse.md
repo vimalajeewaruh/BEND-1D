@@ -3,11 +3,16 @@ The **BZPulse** signal is a toy excitable chemical-reaction trace. Two logistic 
 
 ## Mathematical Definition
 
-Let $u=x-0.55$. Then
+Let $u=x-x_d$. Then
 
-$$
-f(x)=\frac{1}{1+\exp\{-100(x-0.25)\}}-\frac{1}{1+\exp\{-40(x-0.55)\}}+ 0.20I(x\geq0.55)e^{-9u}\sin(45\pi u),
-$$
+```math
+f(x)=
+\frac{1}{1+\exp[-k_r(x-x_r)]}
+-
+\frac{1}{1+\exp[-k_d(x-x_d)]}
++
+A\,I(x\geq x_d)e^{-\alpha u}\sin(\omega u),
+```
 
 where $I(\cdot)$ is the indicator function.
 
@@ -29,11 +34,13 @@ where $I(\cdot)$ is the indicator function.
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $100$ | Rise steepness | 100 |
-| $40$ | Depletion steepness | 40 |
-| $0.20$ | Relaxation amplitude | 0.20 |
-| $9$ | Relaxation decay rate | 9 |
-| $45\pi$ | Relaxation frequency coefficient | $45\pi$ |
+| $x_r$ | Rise location | 0.25 |
+| $x_d$ | Depletion/relaxation location | 0.55 |
+| $k_r$ | Rise steepness | 100 |
+| $k_d$ | Depletion steepness | 40 |
+| $A$ | Relaxation amplitude | 0.20 |
+| $\alpha$ | Relaxation decay rate | 9 |
+| $\omega$ | Relaxation frequency coefficient | $45\pi$ |
 
 ## MATLAB Implementation
 
