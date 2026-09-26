@@ -6,39 +6,46 @@ The **Cantilever** signal combines normalized first- and third-mode cantilever r
 
 For a mode parameter $\beta$, define
 
-$$
+```math
 \phi_\beta(x)=
 \cosh(\beta x)-\cos(\beta x)
--c_\beta\left[\sinh(\beta x)-\sin(\beta x)\right],
-$$
+-c_\beta[\sinh(\beta x)-\sin(\beta x)],
+```
 
-where $c_\beta=\frac{\cosh\beta+\cos\beta}{\sinh\beta+\sin\beta}.$
+where
 
-The two modal parameters are $\beta_1=1.8751040687,\quad \beta_3=7.8547574382.$
+```math
+c_\beta=
+\frac{\cosh\beta+\cos\beta}
+{\sinh\beta+\sin\beta}.
+```
 
-Using maximum-absolute-value normalization,
+The two modal parameters are $\beta_1=1.8751040687$ and $\beta_3=7.8547574382$.
 
-$$
+Using maximum-absolute-value normalization, define
+
+```math
 \widetilde{\phi}_\beta(x)=
-\frac{\phi_\beta(x)}{\max_{0\leq t\leq1}|\phi_\beta(t)|}.
-$$
+\frac{\phi_\beta(x)}
+{\max_{0\leq t\leq1}|\phi_\beta(t)|}.
+```
 
-With $x_c=0.63$, define the slope-defect term
+Define the slope-defect term
 
-$$
+```math
 h(x)=(x-x_c)_+-(1-x_c)x,
-\qquad
-(v)_+=\max(v,0).
-$$
+```
+
+where $(v)_+=\max(v,0)$.
 
 The benchmark is
 
-$$
+```math
 f(x)=
 \widetilde{\phi}_{\beta_1}(x)
-+0.18\widetilde{\phi}_{\beta_3}(x)
-+0.12h(x).
-$$
++A_3\widetilde{\phi}_{\beta_3}(x)
++A_hh(x).
+```
 
 [View Cantilever signal](../../assets/images/TF018_Cantilever.png)
 
@@ -61,8 +68,8 @@ $$
 | $\beta_1$ | First-mode parameter | 1.8751040687 |
 | $\beta_3$ | Third-mode parameter | 7.8547574382 |
 | $x_c$ | Defect location | 0.63 |
-| $0.18$ | Third-mode weight | 0.18 |
-| $0.12$ | Defect weight | 0.12 |
+| $A_3$ | Third-mode weight | 0.18 |
+| $A_h$ | Defect weight | 0.12 |
 
 ## MATLAB Implementation
 
