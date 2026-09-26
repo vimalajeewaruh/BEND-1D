@@ -4,20 +4,17 @@ The **MarketCrash** signal combines a speculative precursor, accelerating log-pe
 
 ## Mathematical Definition
 
-Let $x_c$ denote the crash time. Before the crash,
+Let $x_c$ denote the crash time. For $x<x_c$, define
 
 ```math
 f(x)=A-B(x_c-x)^\beta
-\left[1+C\cos\{\omega\log(x_c-x)\}\right],
-\quad x<x_c.
-
+\left[1+C\cos\{\omega\log(x_c-x)\}\right].
 ```
 
-At $x=x_c$, the signal drops to $f_c$. After the crash,
+At $x=x_c$, the signal drops to $f_c$. For $x\geq x_c$, define
 
 ```math
-f(x)=f_c+R\left[1-e^{-\lambda(x-x_c)}\right],
-\qquad x\geq x_c.
+f(x)=f_c+R\left[1-e^{-\lambda(x-x_c)}\right].
 ```
 
 As $x$ approaches $x_c$ from the left, the oscillations become increasingly rapid while their modulation is multiplied by the shrinking power-law factor $(x_c-x)^\beta$.
