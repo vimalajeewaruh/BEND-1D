@@ -9,7 +9,8 @@ Let $x_c$ denote the crash time. Before the crash,
 ```math
 f(x)=A-B(x_c-x)^\beta
 \left[1+C\cos\{\omega\log(x_c-x)\}\right],
-\qquad x<x_c.
+\quad x<x_c.
+
 ```
 
 At $x=x_c$, the signal drops to $f_c$. After the crash,
