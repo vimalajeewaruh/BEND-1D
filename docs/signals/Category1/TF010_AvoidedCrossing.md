@@ -4,14 +4,14 @@ The **AvoidedCrossing** signal models the upper branch of two interacting energy
 
 ## Mathematical Definition
 
-$$
-f(x)=
-\sqrt{4(x-0.52)^2+\Delta^2},
-\qquad
-\Delta=0.035.
-$$
+For $0 \leq x \leq 1$, define
 
-When $\Delta=0$, the signal becomes a cusp. A positive $\Delta$ creates a smooth avoided crossing with minimum value $f(0.52)=\Delta$.
+```math
+f(x)=\sqrt{4(x-x_0)^2+\Delta^2}.
+```
+
+When $\Delta=0$, the signal becomes a cusp. A positive $\Delta$ creates a smooth avoided crossing with minimum value $f(x_0)=\Delta$.
+
 
 [View AvoidedCrossing signal](../../assets/images/TF010_AvoidedCrossing.png)
 
@@ -31,7 +31,7 @@ When $\Delta=0$, the signal becomes a cusp. A positive $\Delta$ creates a smooth
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.52$ | Crossing location | 0.52 |
+| $x_0$ | Crossing location | 0.52 |
 | $\Delta$ | Minimum gap | 0.035 |
 
 ## MATLAB Implementation
