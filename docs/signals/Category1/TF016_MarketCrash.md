@@ -4,32 +4,22 @@ The **MarketCrash** signal combines a speculative precursor, accelerating log-pe
 
 ## Mathematical Definition
 
-Let the crash time be $x_c=0.72$. Before the crash,
+Let $x_c$ denote the crash time. Before the crash,
 
-$$
-f(x)= 1.50 -
-0.80(x_c-x)^{0.42}
-\left[
-1+
-0.12\cos\{9\log(x_c-x)\}
-\right],
+```math
+f(x)=A-B(x_c-x)^\beta
+\left[1+C\cos\{\omega\log(x_c-x)\}\right],
 \qquad x<x_c.
-$$
+```
 
-At $x=x_c$, the signal drops to $0.92$. After the crash,
+At $x=x_c$, the signal drops to $f_c$. After the crash,
 
-$$
-f(x)
-= 0.92
-+
-0.42
-\left[
-1-e^{-8(x-x_c)}
-\right],
+```math
+f(x)=f_c+R\left[1-e^{-\lambda(x-x_c)}\right],
 \qquad x\geq x_c.
-$$
+```
 
-As $x$ approaches $x_c$ from the left, the oscillations become increasingly rapid while their modulation is multiplied by the shrinking power-law factor $(x_c-x)^{0.42}$.
+As $x$ approaches $x_c$ from the left, the oscillations become increasingly rapid while their modulation is multiplied by the shrinking power-law factor $(x_c-x)^\beta$.
 
 [View MarketCrash signal](../../assets/images/TF016_MarketCrash.png)
 
@@ -51,10 +41,14 @@ As $x$ approaches $x_c$ from the left, the oscillations become increasingly rapi
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
 | $x_c$ | Crash location | 0.72 |
-| $0.42$ | Pre-crash power exponent | 0.42 |
-| $9$ | Log-periodic frequency | 9 |
-| $0.12$ | Oscillation modulation | 0.12 |
-| $8$ | Recovery rate | 8 |
+| $A$ | Pre-crash baseline | 1.50 |
+| $B$ | Pre-crash power-law amplitude | 0.80 |
+| $\beta$ | Pre-crash power exponent | 0.42 |
+| $C$ | Oscillation modulation | 0.12 |
+| $\omega$ | Log-periodic frequency | 9 |
+| $f_c$ | Post-crash starting level | 0.92 |
+| $R$ | Recovery amplitude | 0.42 |
+| $\lambda$ | Recovery rate | 8 |
 
 ## MATLAB Implementation
 
