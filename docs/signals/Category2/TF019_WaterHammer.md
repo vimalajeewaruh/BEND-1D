@@ -4,15 +4,17 @@ The **WaterHammer** signal models a steep hydraulic front followed by damped aco
 
 ## Mathematical Definition
 
-For $0\leq x\leq1$, let $u=x-0.30$. Then
+For $0\leq x\leq1$, let $u=x-x_c$. Then
 
-$$
+```math
 f(x)=
-0.65\left[1+\tanh\{120(x-0.30)\}\right]
-+0.38\mathbf{1}_{\{x\geq0.30\}}e^{-6u}\cos(54\pi u).
-$$
+A_f[1+\tanh\{k(x-x_c)\}]
++
+A_r I(x\geq x_c)e^{-\alpha u}\cos(\omega u),
+```
 
-The indicator $\mathbf{1}_{\{x\geq0.30\}}$ activates the acoustic response at the hydraulic-front location.
+where $I(\cdot)$ is the indicator function that activates the acoustic response at the hydraulic-front location.
+
 
 [View WaterHammer signal](../../assets/images/TF019_WaterHammer.png)
 
@@ -33,9 +35,11 @@ The indicator $\mathbf{1}_{\{x\geq0.30\}}$ activates the acoustic response at th
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
 | $x_c$ | Front location | 0.30 |
-| $120$ | Front sharpness | 120 |
-| $6$ | Ringing decay rate | 6 |
-| $54\pi$ | Ringing angular frequency | $54\pi$ |
+| $A_f$ | Front amplitude | 0.65 |
+| $k$ | Front sharpness | 120 |
+| $A_r$ | Ringing amplitude | 0.38 |
+| $\alpha$ | Ringing decay rate | 6 |
+| $\omega$ | Ringing angular frequency | $54\pi$ |
 
 ## MATLAB Implementation
 
