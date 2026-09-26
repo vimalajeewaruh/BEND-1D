@@ -3,16 +3,14 @@ The **VanHove** signal contains a regularized logarithmic spectral enhancement e
 
 ## Mathematical Definition
 
+For $0 \leq x \leq 1$, define
+
 ```math
-f(x)=
--\sqrt{x(1-x)}
-\log
-\left[
-\sqrt{(x-0.57)^2+0.006^2}
-\right].
+f(x)=-\sqrt{x(1-x)}
+\log\left[\sqrt{(x-x_0)^2+\varepsilon^2}\right].
 ```
 
-The logarithmic factor creates a sharp feature near $x=0.57$, and the factor $\sqrt{x(1-x)}$ forces $f(0)=f(1)=0$.
+The logarithmic factor creates a sharp feature near $x=x_0$, while the factor $\sqrt{x(1-x)}$ forces $f(0)=f(1)=0$.
 
 [View VanHove signal](../../assets/images/TF015_VanHove.png)
 
@@ -32,8 +30,8 @@ The logarithmic factor creates a sharp feature near $x=0.57$, and the factor $\s
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.57$ | Feature location | 0.57 |
-| $0.006$ | Logarithmic regularization scale | 0.006 |
+| $x_0$ | Feature location | 0.57 |
+| $\varepsilon$ | Logarithmic regularization scale | 0.006 |
 
 ## MATLAB Implementation
 
