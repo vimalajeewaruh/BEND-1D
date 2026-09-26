@@ -62,10 +62,14 @@ f(x)=A(x)M(x)+S(x).
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $18\pi$ | Main-envelope scale | $18\pi$ |
-| $15\pi$ | Fringe angular frequency | $15\pi$ |
-| $34\pi$ | Satellite scale | $34\pi$ |
-| $0.10$ | Satellite amplitude | 0.10 |
+| $x_1$ | Main-envelope center | 0.50 |
+| $k_1$ | Main-envelope scale | $18\pi$ |
+| $a_0$ | Fringe baseline | 0.18 |
+| $a_1$ | Fringe modulation amplitude | 0.82 |
+| $\omega$ | Fringe angular frequency | $15\pi$ |
+| $x_2$ | Satellite center | 0.67 |
+| $k_2$ | Satellite scale | $34\pi$ |
+| $A_s$ | Satellite amplitude | 0.10 |
 
 ## MATLAB Implementation
 
