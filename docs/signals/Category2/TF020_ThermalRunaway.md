@@ -4,53 +4,42 @@ The **ThermalRunaway** signal is a toy reactor trace containing an accelerating 
 
 ## Mathematical Definition
 
-Let $x_c=0.68$. Before the critical point, define
+Let $x_c$ denote the critical point. Before the critical point, define
 
-$$
-b(x)=-\log\!\left(1-\frac{x}{x_c+0.035}\right)
-$$
+```math
+b(x)=-\log\left(1-\frac{x}{x_c+\delta}\right).
+```
 
-and
+For $x<x_c$, define
 
-$$
-f_{-}(x)=
-b(x)+0.12\left(\frac{x}{x_c}\right)^3\sin(20\pi x),
-\qquad x<x_c.
-$$
+```math
+f_-(x)=
+b(x)
++A_o\left(\frac{x}{x_c}\right)^3\sin(\omega x).
+```
 
-Let
+The value at the critical point is
 
-$$
+```math
 f_c=
--\log\!\left(1-\frac{x_c}{x_c+0.035}\right)
-+0.12\sin(20\pi x_c).
-$$
+-\log\left(1-\frac{x_c}{x_c+\delta}\right)
++A_o\sin(\omega x_c).
+```
 
-The supplied specification states that the post-critical branch begins continuously at $f_c$, decays exponentially with rate 11, and includes a negative Gaussian centered at $x=0.80$. A convenient explicit implementation is
+For $x\geq x_c$, define
 
-$$
-f_{+}(x)=
-f_c e^{-11(x-x_c)}
--A_q\exp\!\left[-\left(\frac{x-0.80}{w_q}\right)^2\right]
-+A_q\exp\!\left[-\left(\frac{x_c-0.80}{w_q}\right)^2\right]e^{-11(x-x_c)},
-$$
+```math
+f_+(x)=
+f_c e^{-\lambda(x-x_c)}
+-A_q\exp\left[-\left(\frac{x-x_q}{w_q}\right)^2\right]
++A_q\exp\left[-\left(\frac{x_c-x_q}{w_q}\right)^2\right]
+e^{-\lambda(x-x_c)}.
+```
 
-for $x\geq x_c$. The last term makes the post-critical branch exactly continuous at $x_c$. This page uses the implementation convention
+The final term ensures that the post-critical branch is continuous at $x=x_c$.
 
-$$
-A_q=0.20,
-\qquad
-w_q=0.035.
-$$
+Thus, $f(x)=f_-(x)$ for $x<x_c$ and $f(x)=f_+(x)$ for $x\geq x_c$.
 
-Thus
-$$
-f(x)=
-\begin{cases}
-f_{-}(x), & x<x_c,\\
-f_{+}(x), & x\geq x_c.
-\end{cases}
-$$
 
 [ThermalRunaway signal](../../assets/images/TF020_ThermalRunaway.png)
 
@@ -73,7 +62,11 @@ $$
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
 | $x_c$ | Critical point | 0.68 |
-| $11$ | Post-critical decay rate | 11 |
+| $\delta$ | Pre-critical offset | 0.035 |
+| $A_o$ | Pre-critical oscillation amplitude | 0.12 |
+| $\omega$ | Pre-critical angular frequency | $20\pi$ |
+| $\lambda$ | Post-critical decay rate | 11 |
+| $x_q$ | Undershoot center | 0.80 |
 | $A_q$ | Undershoot amplitude | 0.20* |
 | $w_q$ | Undershoot width | 0.035* |
 
