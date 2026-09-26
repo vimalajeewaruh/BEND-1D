@@ -22,17 +22,15 @@ where $I(\cdot)$ is the indicator function.
 
 ## Morphological Characteristics
 
-| Parameter | Meaning | Default |
-|---|---|---:|
-| $N$ | Number of samples | 1024 |
-| $x_0$ | Impact location | 0.27 |
-| $A$ | Impact amplitude | 1.20 |
-| $w$ | Impact width | 0.006 |
-| $\alpha_1$ | First-mode decay rate | 8 |
-| $\alpha_2$ | Second-mode decay rate | 11 |
-| $\omega_1$ | First-mode frequency coefficient | $34\pi$ |
-| $\omega_2$ | Second-mode frequency coefficient | $82\pi$ |
-| $B$ | Second-mode amplitude | 0.28 |
+| Property | Description |
+|---|---|
+| Primary family | Transients and ring-downs |
+| Secondary tags | Impact, multimode, multiscale resonance |
+| Impact location | $x=x_0$ |
+| Narrow-impact width | $w$ |
+| Structural modes | Two |
+| Envelope | Exponentially damped oscillations |
+| Main challenge | Separating a narrow impulse from two damped modes |
 
 
 ## Parameters
