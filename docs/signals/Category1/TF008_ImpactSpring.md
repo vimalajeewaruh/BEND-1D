@@ -34,16 +34,20 @@ where $I(\cdot)$ is the indicator function.
 | $\omega_2$ | Second-mode frequency coefficient | $82\pi$ |
 | $B$ | Second-mode amplitude | 0.28 |
 
+
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
 | $x_0$ | Impact location | 0.27 |
-| $1.20$ | Impact amplitude | 1.20 |
-| $0.006$ | Impact width | 0.006 |
-| $8,11$ | Mode decay rates | 8 and 11 |
-| $34\pi,82\pi$ | Mode frequency coefficients | $34\pi$ and $82\pi$ |
+| $A$ | Impact amplitude | 1.20 |
+| $w$ | Impact width | 0.006 |
+| $\alpha_1$ | First-mode decay rate | 8 |
+| $\alpha_2$ | Second-mode decay rate | 11 |
+| $\omega_1$ | First-mode frequency coefficient | $34\pi$ |
+| $\omega_2$ | Second-mode frequency coefficient | $82\pi$ |
+| $B$ | Second-mode amplitude | 0.28 |
 
 ## MATLAB Implementation
 
