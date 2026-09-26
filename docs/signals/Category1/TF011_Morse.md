@@ -4,18 +4,17 @@ The **Morse** signal is based on the Morse potential for a diatomic molecular bo
 
 ## Mathematical Definition
 
-Define $r(x)=0.35+2x.$
+Define
 
-With $D_e=1$, $a=2.8$, and $r_e=0.80$,
+```math
+r(x)=r_0+bx.
+```
 
-$$
-f(x) =
-D_e
-\left[
-1-\exp\{-a(r(x)-r_e)\}
-\right]^2
--D_e.
-$$
+Then
+
+```math
+f(x)=D_e\left[1-\exp\{-a(r(x)-r_e)\}\right]^2-D_e.
+```
 
 [View Morse signal](../../assets/images/TF011_Morse.png)
 
@@ -39,7 +38,8 @@ $$
 | $D_e$ | Well depth | 1 |
 | $a$ | Width/steepness parameter | 2.8 |
 | $r_e$ | Equilibrium separation | 0.80 |
-| $r(x)$ | Coordinate transformation | $0.35+2x$ |
+| $r_0$ | Coordinate offset | 0.35 |
+| $b$ | Coordinate scaling coefficient | 2 |
 
 ## MATLAB Implementation
 
