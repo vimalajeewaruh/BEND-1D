@@ -4,24 +4,16 @@ The **ImpactSpring** signal combines a narrow mechanical impact with two damped 
 
 ## Mathematical Definition
 
-Let $u=x-0.27$. Then
+Let $u=x-x_0$. Then
 
 ```math
 f(x)
 =
-1.20
-\exp
-\left\{
--\frac{1}{2}
-\left(
-\frac{x-0.27}{0.006}
-\right)^2
-\right\}
+A\exp\left[-\frac{1}{2}\left(\frac{x-x_0}{w}\right)^2\right]
 +
-I(x\geq0.27)e^{-8u}\sin(34\pi u)
+I(x\geq x_0)e^{-\alpha_1 u}\sin(\omega_1 u)
 +
-0.28I(x\geq0.27)e^{-11u}\sin(82\pi u),
-
+B\,I(x\geq x_0)e^{-\alpha_2 u}\sin(\omega_2 u),
 ```
 
 where $I(\cdot)$ is the indicator function.
@@ -30,14 +22,17 @@ where $I(\cdot)$ is the indicator function.
 
 ## Morphological Characteristics
 
-| Property | Description |
-|---|---|
-| Primary family | Transients and ring-downs |
-| Secondary tags | Impact, multimode, multiscale resonance |
-| Impact location | $x=0.27$ |
-| Narrow-impact width | 0.006 |
-| Structural modes | Two |
-| Main challenge | Separating an impulse from two damped modes |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $N$ | Number of samples | 1024 |
+| $x_0$ | Impact location | 0.27 |
+| $A$ | Impact amplitude | 1.20 |
+| $w$ | Impact width | 0.006 |
+| $\alpha_1$ | First-mode decay rate | 8 |
+| $\alpha_2$ | Second-mode decay rate | 11 |
+| $\omega_1$ | First-mode frequency coefficient | $34\pi$ |
+| $\omega_2$ | Second-mode frequency coefficient | $82\pi$ |
+| $B$ | Second-mode amplitude | 0.28 |
 
 ## Parameters
 
