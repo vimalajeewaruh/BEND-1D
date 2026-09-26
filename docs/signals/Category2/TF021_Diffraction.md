@@ -4,17 +4,45 @@ The **Diffraction** signal combines a dominant central diffraction envelope, dou
 
 ## Mathematical Definition
 
-Let $z=18\pi(x-0.50)$ and define the main envelope $A(x)=\left(\frac{\sin z}{z}\right)^2,$ with the continuous value $\sin z/z=1$ at $z=0$. The fringe modulation is
+Define the main-envelope coordinate
 
-$$
-M(x)=0.18+0.82\cos^2\{15\pi(x-0.50)\}.
-$$
+```math
+z=k_1(x-x_1),
+```
 
-For the displaced satellite, let $z_2=34\pi(x-0.67)$ and $S(x)=0.10\left(\frac{\sin z_2}{z_2}\right)^2,$ again using the continuous value 1 for the ratio at $z_2=0$. The benchmark is
+and the main envelope
 
-$$
+```math
+A(x)=\left(\frac{\sin z}{z}\right)^2,
+```
+
+with the continuous value $\sin(z)/z=1$ at $z=0$.
+
+The fringe modulation is
+
+```math
+M(x)=a_0+a_1\cos^2[\omega(x-x_1)].
+```
+
+For the displaced satellite, define
+
+```math
+z_2=k_2(x-x_2),
+```
+
+and
+
+```math
+S(x)=A_s\left(\frac{\sin z_2}{z_2}\right)^2,
+```
+
+again using the continuous value $\sin(z_2)/z_2=1$ at $z_2=0$.
+
+The benchmark is
+
+```math
 f(x)=A(x)M(x)+S(x).
-$$
+```
 
 [View Diffraction signal](../../assets/images/TF021_Diffraction.png)
 
