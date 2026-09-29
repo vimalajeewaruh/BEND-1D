@@ -7,38 +7,45 @@ The **PollutionEpisode** signal contains a repeating diurnal cycle and two short
 
 ## Mathematical Definition
 
-Define the diurnal background
+Define the diurnal background component
 
-$$
-D(x)=0.36+0.11\sin(14\pi x-0.5)+0.04\sin(28\pi x+0.2),
-$$
+```math
+D(x)=b_0+A_1\sin(2\pi f_Dx+\delta_1)
++A_2\sin(4\pi f_Dx+\delta_2).
+```
 
-and the two episodes
+Define the first pollution episode
 
-$$
-E_1(x)=0.62\exp\!\left[-\frac12\left(\frac{x-0.38}{0.030}\right)^2\right],
-$$
+```math
+E_1(x)=A_{E1}\exp\left[
+-\frac12\left(\frac{x-\mu_1}{s_1}\right)^2
+\right].
+```
 
-$$
-E_2(x)=0.42\exp\!\left[-\frac12\left(\frac{x-0.73}{0.055}\right)^2\right].
-$$
+Define the second pollution episode
+
+```math
+E_2(x)=A_{E2}\exp\left[
+-\frac12\left(\frac{x-\mu_2}{s_2}\right)^2
+\right].
+```
 
 The signal is
 
-$$
+```math
 f(x)=D(x)+E_1(x)+E_2(x).
-$$
+```
 
-[PollutionEpisode signal](../../assets/images/TF057_PollutionEpisode.png)
+[View PollutionEpisode signal](../../assets/images/TF057_PollutionEpisode.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Periodic background with unequal transient episodes |
-| Diurnal frequency | 7 plus a second harmonic |
-| Episode centers | $x=0.38$ and $x=0.73$ |
-| Episode widths | 0.030 and 0.055 |
+| Diurnal frequency | $f_D$ plus a second harmonic |
+| Episode centers | $x=\mu_1$ and $x=\mu_2$ |
+| Episode widths | $s_1$ and $s_2$ |
 | Main challenge | Preserving short episodes without distorting periodic background |
 
 ## Parameters
@@ -46,10 +53,18 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.62$ | First episode magnitude | 0.62 |
-| $0.42$ | Second episode magnitude | 0.42 |
-| $7$ | Diurnal frequency | 7 |
-
+| $b_0$ | Background level | 0.36 |
+| $A_1$ | Primary background amplitude | 0.11 |
+| $A_2$ | Second-harmonic amplitude | 0.04 |
+| $f_D$ | Diurnal frequency | 7 |
+| $\delta_1$ | Primary phase shift | -0.5 |
+| $\delta_2$ | Second-harmonic phase shift | 0.2 |
+| $A_{E1}$ | First episode magnitude | 0.62 |
+| $\mu_1$ | First episode center | 0.38 |
+| $s_1$ | First episode width | 0.030 |
+| $A_{E2}$ | Second episode magnitude | 0.42 |
+| $\mu_2$ | Second episode center | 0.73 |
+| $s_2$ | Second episode width | 0.055 |
 
 ## MATLAB Implementation
 
