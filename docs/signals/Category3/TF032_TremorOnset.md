@@ -8,20 +8,27 @@ The **TremorOnset** signal begins with a nearly quiescent baseline and smoothly 
 
 ## Mathematical Definition
 
-Define the onset envelope and amplitude modulation
+Define the onset envelope
 
-$$
-E(x)=\frac{1}{1+e^{-75(x-0.42)}},
-\qquad
-A(x)=0.78+0.15\sin(2.5\pi x).
-$$
+```math
+E(x)=\frac{1}{1+e^{-k(x-x_c)}},
+```
+
+and the amplitude modulation
+
+```math
+A(x)=A_0+A_m\sin(\omega_m x).
+```
 
 The signal is
 
-$$
-f(x)=0.025\sin(6\pi x)
-+E(x)A(x)\left[\sin(36\pi x)+0.24\sin(72\pi x+0.65)\right].
-$$
+```math
+f(x)=
+A_b\sin(\omega_b x)
++
+E(x)A(x)
+[\sin(\omega_1x)+A_h\sin(\omega_2x+\delta)].
+```
 
 [TremorOnset signal](../../assets/images/TF032_TremorOnset.png)
 
@@ -30,8 +37,8 @@ $$
 | Property | Description |
 |---|---|
 | Primary family | Smooth onset of sustained oscillation |
-| Onset center | $x=0.42$ |
-| Dominant oscillation | 18 cycles per unit interval |
+| Onset center | $x=x_c$ |
+| Dominant oscillation | $f_1$ cycles per unit interval |
 | Additional structure | Weak harmonic and slow amplitude modulation |
 | Main challenge | Simultaneous onset localization and periodic-signal preservation |
 
@@ -40,10 +47,17 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $75$ | Onset sharpness | 75 |
-| $0.42$ | Onset center | 0.42 |
-| $18$ | Dominant frequency | 18 |
-| $36$ | Harmonic frequency | 36 |
+| $x_c$ | Onset center | 0.42 |
+| $k$ | Onset sharpness | 75 |
+| $A_0$ | Mean oscillation amplitude | 0.78 |
+| $A_m$ | Amplitude-modulation strength | 0.15 |
+| $\omega_m$ | Modulation angular frequency | $2.5\pi$ |
+| $A_b$ | Background oscillation amplitude | 0.025 |
+| $\omega_b$ | Background angular frequency | $6\pi$ |
+| $\omega_1$ | Dominant angular frequency | $36\pi$ |
+| $A_h$ | Harmonic amplitude | 0.24 |
+| $\omega_2$ | Harmonic angular frequency | $72\pi$ |
+| $\delta$ | Harmonic phase shift | 0.65 |
 
 ## MATLAB Implementation
 
