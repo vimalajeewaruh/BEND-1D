@@ -24,7 +24,7 @@ f(x)=
 bE(x)+A_O\exp\left[
 -\frac12\left(\frac{E(x)-\mu_O}{s_O}\right)^2
 \right],
-& x\leq x_r,\\[6pt]
+& x\leq x_r,\\
 bE(x)-A_R\exp\left[
 -\frac12\left(\frac{E(x)-\mu_R}{s_R}\right)^2
 \right],
