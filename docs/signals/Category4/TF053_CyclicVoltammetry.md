@@ -9,27 +9,25 @@ The **CyclicVoltammetry** signal parameterizes current along a forward and rever
 Define the potential sweep
 
 ```math
-E(x)=
-\begin{cases}
-E_{\min}+v_Fx, & 0\leq x\leq x_r,\\
-E_{\max}-v_Rx, & x_r<x\leq 1.
-\end{cases}
+\begin{aligned}
+E(x) &= E_{\min}+v_Fx, && 0\leq x\leq x_r,\\
+E(x) &= E_{\max}-v_Rx, && x_r<x\leq 1.
+\end{aligned}
 ```
 
 The current is
 
 ```math
-f(x)=
-\begin{cases}
-bE(x)+A_O\exp\left[
--\frac12\left(\frac{E(x)-\mu_O}{s_O}\right)^2
-\right],
-& x\leq x_r,\\
-bE(x)-A_R\exp\left[
--\frac12\left(\frac{E(x)-\mu_R}{s_R}\right)^2
-\right],
-& x>x_r.
-\end{cases}
+\begin{aligned}
+f(x)
+&=bE(x)+A_O\exp\left[-\frac12
+\left(\frac{E(x)-\mu_O}{s_O}\right)^2\right],
+&& x\leq x_r,\\
+f(x)
+&=bE(x)-A_R\exp\left[-\frac12
+\left(\frac{E(x)-\mu_R}{s_R}\right)^2\right],
+&& x>x_r.
+\end{aligned}
 ```
 
 
