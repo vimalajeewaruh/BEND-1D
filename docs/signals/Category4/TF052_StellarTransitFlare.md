@@ -40,7 +40,7 @@ f(x)=B(x)+T(x)+F(x).
 ```
 
 
-[StellarTransitFlare signal](../../assets/images/TF052_StellarTransitFlare.png)
+[View StellarTransitFlare signal](../../assets/images/TF052_StellarTransitFlare.png)
 
 ## Morphological Characteristics
 
