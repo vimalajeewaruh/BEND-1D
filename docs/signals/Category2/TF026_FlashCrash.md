@@ -4,23 +4,40 @@ The **FlashCrash** signal combines an almost instantaneous market loss, partial 
 
 ## Mathematical Definition
 
-Define the baseline $b(x)=1+0.12\sqrt{x+0.02}+0.025\sin(10\pi x)$ and let $x_c=0.58$. 
+Define the baseline
+
+```math
+b(x)=b_0+A_b\sqrt{x+\delta}+B_b\sin(\omega_b x),
+```
+
+and let $x_c$ denote the crash location.
 
 The crash component is
 
-$$
-D(x)=-0.31\left[1+\tanh\{180(x-x_c)\}\right].
-$$
+```math
+D(x)=-A_c[1+\tanh\{k_c(x-x_c)\}].
+```
 
-For $x\geq x_c$, define the recovery $R(x)=0.48\left[1-e^{-22(x-x_c)}\right]$ and the volatility burst $V(x)=0.09e^{-10(x-x_c)}\sin\{65\pi(x-x_c)\}.$
+For $x\geq x_c$, define the recovery component
+
+```math
+R(x)=A_r[1-e^{-\lambda_r(x-x_c)}],
+```
+
+and the volatility burst
+
+```math
+V(x)=A_v e^{-\lambda_v(x-x_c)}
+\sin[\omega_v(x-x_c)].
+```
 
 The complete signal is
 
-$$
-f(x)=
-b(x)+D(x)
-+\mathbf{1}_{\{x\geq x_c\}}\left[R(x)+V(x)\right].
-$$
+```math
+f(x)=b(x)+D(x)+I(x\geq x_c)[R(x)+V(x)],
+```
+
+where $I(\cdot)$ is the indicator function.
 
 [View FlashCrash signal](../../assets/images/TF026_FlashCrash.png)
 
@@ -30,7 +47,7 @@ $$
 |---|---|
 | Primary family | Structural break with rebound and transient burst |
 | Signal type | Deterministic and nonstationary |
-| Crash location | $x_c=0.58$ |
+| Crash location | $x=x_c$ |
 | Recovery | Partial exponential rebound |
 | Fine structure | Localized damped high-frequency oscillation |
 | Main challenge | Preserving the crash and volatility burst without producing ringing |
@@ -40,11 +57,19 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
+| $b_0$ | Baseline level | 1 |
+| $A_b$ | Square-root trend amplitude | 0.12 |
+| $\delta$ | Square-root offset | 0.02 |
+| $B_b$ | Baseline oscillation amplitude | 0.025 |
+| $\omega_b$ | Baseline angular frequency | $10\pi$ |
 | $x_c$ | Crash location | 0.58 |
-| $180$ | Crash sharpness | 180 |
-| $22$ | Recovery rate | 22 |
-| $10$ | Volatility decay rate | 10 |
-| $65\pi$ | Volatility angular frequency | $65\pi$ |
+| $A_c$ | Crash amplitude | 0.31 |
+| $k_c$ | Crash sharpness | 180 |
+| $A_r$ | Recovery amplitude | 0.48 |
+| $\lambda_r$ | Recovery rate | 22 |
+| $A_v$ | Volatility-burst amplitude | 0.09 |
+| $\lambda_v$ | Volatility decay rate | 10 |
+| $\omega_v$ | Volatility angular frequency | $65\pi$ |
 
 ## MATLAB Implementation
 
