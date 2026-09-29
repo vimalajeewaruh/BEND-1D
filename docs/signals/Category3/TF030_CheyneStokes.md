@@ -33,7 +33,7 @@ E(x)
 [\sin\phi(x)+A_h\sin(2\phi(x)-\delta)].
 ```
 
-[CheyneStokes signal](../../assets/images/TF030_CheyneStokes.png)
+[View CheyneStokes signal](../../assets/images/TF030_CheyneStokes.png)
 
 
 ## Morphological Characteristics
