@@ -49,8 +49,8 @@ The common power-SNR normalization can then be applied as described on the [benc
 |---|---|
 | Primary family | Empirical multiscale market structure |
 | Signal type | Data-derived and nonstationary |
-| Native observations | 60 monthly prices |
-| Smoothing | Three-point weights $(1,6,1)/8$ for interior months |
+| Native observations | $M$ monthly prices |
+| Smoothing | Three-point weighted smoothing for interior months |
 | Interpolation | Shape-preserving piecewise cubic |
 | Main challenge | Retaining bends and reversals without fitting observational noise |
 
@@ -59,9 +59,10 @@ The common power-SNR normalization can then be applied as described on the [benc
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of interpolated samples | 1024 |
-| $60$ | Number of monthly observations | 60 |
-| $1/8,6/8,1/8$ | Interior smoothing weights | As shown |
-| Aug. 2021–Jul. 2026 | Observation interval | 60 months |
+| $M$ | Number of monthly observations | 60 |
+| $w_{-1}$ | Previous-month smoothing weight | $1/8$ |
+| $w_0$ | Current-month smoothing weight | $6/8$ |
+| $w_{+1}$ | Next-month smoothing weight | $1/8$ |
 
 ## MATLAB Implementation
 
