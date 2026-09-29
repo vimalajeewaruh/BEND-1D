@@ -6,36 +6,36 @@ The **StampReflectance** signal is a toy visible reflectance spectrum for a colo
 
 ## Mathematical Definition
 
-Map the unit interval to wavelength in nanometers:
+Map the unit interval to wavelength by
 
 $$
-\lambda(x)=400+300x.
+\lambda(x)=\lambda_{\min}+(\lambda_{\max}-\lambda_{\min})x.
 $$
 
-Define
+Define the baseline
 
 $$
-B(\lambda)=0.72+0.00035(\lambda-550),
+B(\lambda)=B_0+\beta(\lambda-\lambda_0),
+$$
+
+and the absorption components
+
+$$
+A_1(\lambda)=a_1\exp\left[-\frac12\left(\frac{\lambda-\mu_1}{s_1}\right)^2\right],
 $$
 
 $$
-A_1(\lambda)=0.42\exp\!\left[-\frac12\left(\frac{\lambda-525}{38}\right)^2\right],
+A_2(\lambda)=a_2\exp\left[-\frac12\left(\frac{\lambda-\mu_2}{s_2}\right)^2\right],
 $$
 
 $$
-A_2(\lambda)=0.16\exp\!\left[-\frac12\left(\frac{\lambda-585}{24}\right)^2\right],
-$$
-
-and
-
-$$
-S(\lambda)=0.08\exp\!\left[-\frac12\left(\frac{\lambda-455}{18}\right)^2\right].
+S(\lambda)=a_s\exp\left[-\frac12\left(\frac{\lambda-\mu_s}{s_s}\right)^2\right].
 $$
 
 The reflectance signal is
 
 $$
-f(x)=B\{\lambda(x)\}-A_1\{\lambda(x)\}-A_2\{\lambda(x)\}-S\{\lambda(x)\}.
+f(x)=B(\lambda(x))-A_1(\lambda(x))-A_2(\lambda(x))-S(\lambda(x)).
 $$
 
 [StampReflectance signal](../../assets/images/TF045_StampReflectance.png)
@@ -45,9 +45,9 @@ $$
 | Property | Description |
 |---|---|
 | Primary family | Smooth spectrum with unequal absorption structures |
-| Wavelength range | 400–700 nm |
-| Main band | Centered near 525 nm |
-| Secondary features | Band near 585 nm and shoulder near 455 nm |
+| Wavelength range | $\lambda_{\min}$–$\lambda_{\max}$ nm |
+| Main band | Centered at $\mu_1$ |
+| Secondary features | Band at $\mu_2$ and shoulder at $\mu_s$ |
 | Main challenge | Avoiding oversmoothing of diagnostically weak bands |
 
 ## Parameters
@@ -55,9 +55,20 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $525$ nm | Principal-band center | 525 |
-| $585$ nm | Secondary-band center | 585 |
-| $455$ nm | Shoulder center | 455 |
+| $\lambda_{\min}$ | Minimum wavelength | 400 nm |
+| $\lambda_{\max}$ | Maximum wavelength | 700 nm |
+| $B_0$ | Baseline reflectance | 0.72 |
+| $\beta$ | Baseline slope | 0.00035 |
+| $\lambda_0$ | Baseline reference wavelength | 550 nm |
+| $a_1$ | Principal-band amplitude | 0.42 |
+| $\mu_1$ | Principal-band center | 525 nm |
+| $s_1$ | Principal-band width | 38 nm |
+| $a_2$ | Secondary-band amplitude | 0.16 |
+| $\mu_2$ | Secondary-band center | 585 nm |
+| $s_2$ | Secondary-band width | 24 nm |
+| $a_s$ | Shoulder amplitude | 0.08 |
+| $\mu_s$ | Shoulder center | 455 nm |
+| $s_s$ | Shoulder width | 18 nm |
 
 ## MATLAB Implementation
 
