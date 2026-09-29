@@ -11,8 +11,8 @@ Define the potential sweep
 $$
 E(x)=
 \begin{cases}
-E_{\min}+v_Fx, & 0\leq x\leq x_r, \\
-E_{\max}-v_Rx, & x_r<x\leq1.
+E_0+v_Fx, & 0\leq x\leq x_r, \\
+E_1-v_Rx, & x_r<x\leq 1.
 \end{cases}
 $$
 
@@ -46,8 +46,8 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $E_{\min}$ | Initial potential | -1 |
-| $E_{\max}$ | Reverse-sweep intercept | 3 |
+| $E_0$ | Forward-sweep intercept | -1 |
+| $E_1$ | Reverse-sweep intercept | 3 |
 | $v_F$ | Forward sweep rate | 4 |
 | $v_R$ | Reverse sweep rate | 4 |
 | $x_r$ | Sweep-reversal location | 0.5 |
@@ -58,7 +58,6 @@ $$
 | $A_R$ | Reduction-peak magnitude | 0.82 |
 | $\mu_R$ | Reduction-peak center | 0.08 |
 | $s_R$ | Reduction-peak width | 0.22 |
-
 
 ## MATLAB Implementation
 
