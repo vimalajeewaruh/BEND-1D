@@ -6,39 +6,58 @@ The **Pharmacokinetic** signal represents absorption followed by biexponential e
 
 ## Mathematical Definition
 
-Let $t=12x$ hours. Define
+Let
 
-$$
-A(t)=1-e^{-2.2t},
-$$
+```math
+t=T x,
+```
 
-$$
-E(t)=0.78e^{-0.24t}+0.22e^{-1.3t},
-$$
+where $T$ is the total time interval in hours.
 
-and, with $u=(t-5.3)_+$,
+Define the absorption component
 
-$$
-S(t)=0.16\mathbf{1}_{\{t\geq5.3\}}
-\left(1-e^{-2.8u}\right)e^{-0.55u}.
-$$
+```math
+A(t)=1-e^{-k_a t}.
+```
+
+Define the biexponential elimination component
+
+```math
+E(t)=w_1e^{-k_1t}+w_2e^{-k_2t}.
+```
+
+With
+
+```math
+u=(t-t_s)_+,
+```
+
+define the delayed shoulder
+
+```math
+S(t)=
+\begin{cases}
+0, & t<t_s,\\
+A_s\left(1-e^{-k_su}\right)e^{-k_du}, & t\geq t_s.
+\end{cases}
+```
 
 The signal is
 
-$$
-f(x)=A(12x)E(12x)+S(12x).
-$$
+```math
+f(x)=A(Tx)E(Tx)+S(Tx).
+```
 
-[Pharmacokinetic signal](../../assets/images/TF055_Pharmacokinetic.png)
+[View Pharmacokinetic signal](../../assets/images/TF055_Pharmacokinetic.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Asymmetric absorption and multirate elimination |
-| Time interval | 0–12 hours |
+| Time interval | 0–$T$ hours |
 | Main decay | Fast and slow exponential components |
-| Secondary feature | Delayed shoulder after 5.3 hours |
+| Secondary feature | Delayed shoulder after $t_s$ hours |
 | Main challenge | Preserving a weak shoulder within a long asymmetric decay |
 
 ## Parameters
@@ -46,9 +65,16 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $2.2$ | Main absorption rate | 2.2 |
-| $0.24,1.3$ | Elimination rates | As shown |
-| $5.3$ h | Shoulder onset | 5.3 |
+| $T$ | Total time interval (hours) | 12 |
+| $k_a$ | Main absorption rate | 2.2 |
+| $w_1$ | Slow-elimination weight | 0.78 |
+| $w_2$ | Fast-elimination weight | 0.22 |
+| $k_1$ | Slow elimination rate | 0.24 |
+| $k_2$ | Fast elimination rate | 1.3 |
+| $t_s$ | Shoulder onset (hours) | 5.3 |
+| $A_s$ | Shoulder amplitude | 0.16 |
+| $k_s$ | Shoulder rise rate | 2.8 |
+| $k_d$ | Shoulder decay rate | 0.55 |
 
 
 ## MATLAB Implementation
