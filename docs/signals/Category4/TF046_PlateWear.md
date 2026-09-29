@@ -9,21 +9,22 @@ The **PlateWear** signal represents a print-quality measurement accumulated over
 Define
 
 $$
-w_1(x)=1-0.38x^{0.82},
+w_1(x)=b_0-A_wx^p,
 $$
 
 $$
-M(x)=\frac{0.20}{1+e^{-160(x-0.56)}},
+M(x)=\frac{A_M}{1+e^{-k(x-x_c)}},
 $$
 
 $$
-w_2(x)=-0.28(x-0.56)_+,
+w_2(x)=-\gamma(x-x_c)_+,
+\qquad (u)_+=\max(u,0),
 $$
 
 and
 
 $$
-m(x)=0.018\sin(24\pi x)(1-0.4x).
+m(x)=A_m\sin(\omega_m x)(1-\beta_m x).
 $$
 
 Then
@@ -32,7 +33,7 @@ $$
 f(x)=w_1(x)+M(x)+w_2(x)+m(x).
 $$
 
-[PlateWear signal](../../assets/images/TF046_PlateWear.png)
+[View PlateWear signal](../../assets/images/TF046_PlateWear.png)
 
 ## Morphological Characteristics
 
@@ -40,7 +41,7 @@ $$
 |---|---|
 | Primary family | Long smooth trend with discrete intervention |
 | Pre-maintenance behavior | Gradual nonlinear deterioration |
-| Maintenance location | $x=0.56$ |
+| Maintenance location | $x=x_c$ |
 | Fine structure | Weak decreasing-amplitude oscillation |
 | Main challenge | Preserving a reset embedded in long-term wear |
 
@@ -49,9 +50,16 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.56$ | Maintenance location | 0.56 |
-| $160$ | Reset sharpness | 160 |
-| $12$ | Microwear frequency | 12 |
+| $b_0$ | Initial wear level | 1 |
+| $A_w$ | Wear-trend amplitude | 0.38 |
+| $p$ | Wear exponent | 0.82 |
+| $A_M$ | Maintenance-reset amplitude | 0.20 |
+| $x_c$ | Maintenance location | 0.56 |
+| $k$ | Reset sharpness | 160 |
+| $\gamma$ | Post-maintenance slope | 0.28 |
+| $A_m$ | Microwear amplitude | 0.018 |
+| $\omega_m$ | Microwear angular frequency | $24\pi$ |
+| $\beta_m$ | Microwear amplitude-decay coefficient | 0.4 |
 
 ## MATLAB Implementation
 
