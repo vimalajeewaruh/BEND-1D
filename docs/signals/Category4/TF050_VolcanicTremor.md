@@ -8,38 +8,40 @@ The **VolcanicTremor** signal has a smooth onset followed by persistent quasi-pe
 
 Define the onset envelope
 
-$$
-E(x)=\frac{1}{1+e^{-55(x-0.29)}},
-$$
+```math
+E(x)=\frac{1}{1+e^{-k(x-x_c)}}.
+```
 
-the carrier
+Define the carrier
 
-$$
-C(x)=\sin\{2\pi(17x+0.9x^2)\}+0.33\sin(70\pi x+0.4),
-$$
+```math
+C(x)=\sin\left[2\pi(f_0x+\beta x^2)\right]
++A_h\sin(\omega_hx+\delta).
+```
 
-and the burst modulation
+Define the burst modulation
 
-$$
-B(x)=1+0.55\exp\!\left[-\frac12\left(\frac{x-0.49}{0.045}\right)^2\right]
-+0.42\exp\!\left[-\frac12\left(\frac{x-0.72}{0.035}\right)^2\right].
-$$
+```math
+B(x)=1
++A_1\exp\left[-\frac12\left(\frac{x-\mu_1}{s_1}\right)^2\right]
++A_2\exp\left[-\frac12\left(\frac{x-\mu_2}{s_2}\right)^2\right].
+```
 
 The signal is
 
-$$
+```math
 f(x)=E(x)B(x)C(x).
-$$
+```
 
-[VolcanicTremor signal](../../assets/images/TF050_VolcanicTremor.png)
+[View VolcanicTremor signal](../../assets/images/TF050_VolcanicTremor.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Tremor onset with localized amplitude bursts |
-| Onset center | $x=0.29$ |
-| Burst centers | $x=0.49$ and $x=0.72$ |
+| Onset center | $x=x_c$ |
+| Burst centers | $x=\mu_1$ and $x=\mu_2$ |
 | Oscillation | Chirped component plus frequency 35 component |
 | Main challenge | Joint onset and nonstationary-amplitude preservation |
 
@@ -48,9 +50,19 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $55$ | Onset sharpness | 55 |
-| $0.045$ | First burst width | 0.045 |
-| $0.035$ | Second burst width | 0.035 |
+| $x_c$ | Onset center | 0.29 |
+| $k$ | Onset sharpness | 55 |
+| $f_0$ | Initial carrier frequency | 17 |
+| $\beta$ | Chirp coefficient | 0.9 |
+| $A_h$ | Secondary-component amplitude | 0.33 |
+| $\omega_h$ | Secondary angular frequency | $70\pi$ |
+| $\delta$ | Secondary phase shift | 0.4 |
+| $A_1$ | First burst amplitude | 0.55 |
+| $\mu_1$ | First burst center | 0.49 |
+| $s_1$ | First burst width | 0.045 |
+| $A_2$ | Second burst amplitude | 0.42 |
+| $\mu_2$ | Second burst center | 0.72 |
+| $s_2$ | Second burst width | 0.035 |
 
 ## MATLAB Implementation
 
