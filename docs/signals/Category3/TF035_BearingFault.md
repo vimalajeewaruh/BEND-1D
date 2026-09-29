@@ -4,51 +4,58 @@
 
 ## Overview
 
-The **BearingFault** signal models a localized rolling-element defect. Nearly periodic impacts occur when the damaged region enters the load zone, and each impact excites damped structural resonances on two frequency scales.
-
-## Mathematical Definition
-
 Let the base impact times be
 
-$$
-b_k=0.075+0.112(k-1),\qquad k=1,\ldots,9,
-$$
+```math
+b_k=t_0+d(k-1),
+\qquad k=1,\ldots,K.
+```
 
-and weakly modulate them as
+Weakly modulate the impact times as
 
-$$
-t_k=b_k+0.0045\sin\!\left(\frac{2\pi(k-1)}{5}\right).
-$$
+```math
+t_k=
+b_k+A_t\sin\left(\frac{2\pi(k-1)}{P}\right).
+```
 
-With $u_k=x-t_k$, define
+With $u_k=x-t_k$, define the impact component
 
-$$
-I_k(x)=0.65\exp\!\left[-\frac12\left(\frac{u_k}{0.0035}\right)^2\right]
-$$
+```math
+I_k(x)=
+A_I\exp\left[
+-\frac{1}{2}
+\left(\frac{u_k}{s_I}\right)^2
+\right].
+```
 
-and
+Define the ring-down component
 
-$$
-R_k(x)=\mathbf{1}_{\{u_k\geq0\}}e^{-48u_k}
-\left[\sin(116\pi u_k)+0.32\sin(206\pi u_k)\right].
-$$
+```math
+R_k(x)=
+I(u_k\geq0)e^{-\alpha u_k}
+[\sin(\omega_1u_k)+A_2\sin(\omega_2u_k)],
+```
+
+where $I(\cdot)$ is the indicator function.
 
 The signal is
 
-$$
-f(x)=\sum_{k=1}^{9}\left[I_k(x)+R_k(x)\right].
-$$
+```math
+f(x)=
+\sum_{k=1}^{K}
+[I_k(x)+R_k(x)].
+```
 
-[BearingFault signal](../../assets/images/TF035_BearingFault.png)
+[View BearingFault signal](../../assets/images/TF035_BearingFault.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Nearly periodic impacts with damped resonances |
-| Number of impacts | 9 |
+| Number of impacts | $K$ |
 | Timing | Weakly modulated from a regular grid |
-| Ring-down frequencies | 58 and 103 cycles per unit interval |
+| Ring-down frequencies | Two distinct resonance frequencies |
 | Main challenge | Preserving sharp impacts and weaker oscillatory tails |
 
 ## Parameters
@@ -56,9 +63,17 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.112$ | Base impact spacing | 0.112 |
-| $0.0035$ | Impact width | 0.0035 |
-| $48$ | Ring-down decay rate | 48 |
+| $K$ | Number of impacts | 9 |
+| $t_0$ | First base impact time | 0.075 |
+| $d$ | Base impact spacing | 0.112 |
+| $A_t$ | Timing-modulation amplitude | 0.0045 |
+| $P$ | Timing-modulation period | 5 |
+| $A_I$ | Impact amplitude | 0.65 |
+| $s_I$ | Impact width | 0.0035 |
+| $\alpha$ | Ring-down decay rate | 48 |
+| $\omega_1$ | First resonance angular frequency | $116\pi$ |
+| $A_2$ | Second resonance relative amplitude | 0.32 |
+| $\omega_2$ | Second resonance angular frequency | $206\pi$ |
 
 ## MATLAB Implementation
 
