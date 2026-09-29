@@ -3,26 +3,25 @@
 The **RabiChirp** signal is a toy population probability for a chirped two-level quantum system. Its instantaneous oscillation frequency increases with $x$, while decoherence causes its amplitude to decrease. Fine-scale structure is therefore weakest where a denoising method is most likely to remove it.
 
 ## Mathematical Definition
-
-For $0\leq x\leq1$,
+For $0 \leq x \leq 1$, define
 
 ```math
-f(x)=
-e^{-0.9x}
-\sin^2\left[2\pi(3x+7x^2)\right].
+f(x)=e^{-\alpha x}\sin^2[\theta(x)],
 ```
 
-The phase is
+where the phase is
 
-$$
-\theta(x)=2\pi(3x+7x^2),
-$$
+```math
+\theta(x)=2\pi(ax+bx^2).
+```
 
-so its derivative increases linearly:
+Its derivative is
 
-$$
-\theta'(x)=2\pi(3+14x).
-$$
+```math
+\theta'(x)=2\pi(a+2bx),
+```
+
+so the instantaneous frequency increases linearly with $x$.
 
 [View RabiChirp signal](../../assets/images/TF023_RabiChirp.png)
 
@@ -32,8 +31,8 @@ $$
 |---|---|
 | Primary family | Chirp with decaying amplitude |
 | Signal type | Deterministic, oscillatory, and nonstationary |
-| Frequency behavior | Increases with $x$ |
-| Amplitude behavior | Decreases as $e^{-0.9x}$ |
+| Frequency behavior | Increases linearly with $x$ |
+| Amplitude behavior | Decreases as $e^{-\alpha x}$ |
 | Continuity | Smooth |
 | Main challenge | Retaining weak high-frequency structure late in the interval |
 
@@ -42,9 +41,9 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.9$ | Decoherence rate | 0.9 |
-| $3$ | Linear phase coefficient | 3 |
-| $7$ | Quadratic phase coefficient | 7 |
+| $\alpha$ | Decay rate | 0.9 |
+| $a$ | Linear phase coefficient | 3 |
+| $b$ | Quadratic phase coefficient | 7 |
 
 ## MATLAB Implementation
 
