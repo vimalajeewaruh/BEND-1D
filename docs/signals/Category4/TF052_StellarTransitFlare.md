@@ -6,30 +6,39 @@ The **StellarTransitFlare** signal contains weak periodic stellar variability, a
 
 ## Mathematical Definition
 
-Define the stellar background
+Define the stellar background component
 
-$$
-B(x)=1+0.018\sin(6\pi x)+0.008\sin(22\pi x+0.4),
-$$
+```math
+B(x)=b_0+A_1\sin(\omega_1x)+A_2\sin(\omega_2x+\delta).
+```
 
-the transit
+Define the transit component
 
-$$
-T(x)=-0.080\exp\!\left[-\left(\frac{x-0.39}{0.037}\right)^8\right],
-$$
+```math
+T(x)=-A_T\exp\left[
+-\left(\frac{x-\mu_T}{s_T}\right)^p
+\right].
+```
 
-and, with $u=(x-0.69)_+$, the flare
+With
 
-$$
-F(x)=0.19\mathbf{1}_{\{x\geq0.69\}}
-\left(1-e^{-150u}\right)e^{-18u}.
-$$
+```math
+u=(x-x_F)_+,
+```
+
+define the flare component
+
+```math
+F(x)=A_F I(x\geq x_F)
+\left(1-e^{-\alpha u}\right)e^{-\beta u}.
+```
 
 The signal is
 
-$$
+```math
 f(x)=B(x)+T(x)+F(x).
-$$
+```
+
 
 [StellarTransitFlare signal](../../assets/images/TF052_StellarTransitFlare.png)
 
@@ -38,8 +47,8 @@ $$
 | Property | Description |
 |---|---|
 | Primary family | Periodic baseline with opposite-sign events |
-| Transit center | $x=0.39$ |
-| Flare onset | $x=0.69$ |
+| Transit center | $x=\mu_T$ |
+| Flare onset | $x=x_F$ |
 | Flare shape | Rapid rise and slower decay |
 | Main challenge | Preserving weak variability, transit, and flare simultaneously |
 
@@ -48,9 +57,18 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.037$ | Transit width | 0.037 |
-| $150$ | Flare rise rate | 150 |
-| $18$ | Flare decay rate | 18 |
+| $b_0$ | Baseline brightness level | 1 |
+| $A_1,A_2$ | Background oscillation amplitudes | 0.018, 0.008 |
+| $\omega_1,\omega_2$ | Background angular frequencies | $6\pi,22\pi$ |
+| $\delta$ | Background phase shift | 0.4 |
+| $A_T$ | Transit depth | 0.080 |
+| $\mu_T$ | Transit center | 0.39 |
+| $s_T$ | Transit width | 0.037 |
+| $p$ | Transit shape exponent | 8 |
+| $A_F$ | Flare amplitude | 0.19 |
+| $x_F$ | Flare onset | 0.69 |
+| $\alpha$ | Flare rise rate | 150 |
+| $\beta$ | Flare decay rate | 18 |
 
 ## MATLAB Implementation
 
