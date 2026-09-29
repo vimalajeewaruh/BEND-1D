@@ -4,32 +4,42 @@ The **Platinum5Y** signal is based on 60 monthly World Bank Pink Sheet platinum 
 
 ## Mathematical Definition
 
-Let $P_m$ denote the observed price in month $m$. For each interior month, define the lightly smoothed value 
+Let $P_m$ denote the observed price in month $m$, for $m=1,\ldots,M$. For each interior month, define the lightly smoothed value
 
-```math 
-\widetilde{P}_m=\frac{P_{m-1}+6P_m+P_{m+1}}{8}.
+```math
+\bar{P}_m=
+w_{-1}P_{m-1}+w_0P_m+w_{+1}P_{m+1}.
 ```
 
-The two endpoint observations are retained unchanged. A shape-preserving piecewise cubic interpolant maps the 60 monthly values onto $[0,1]$:
+The two endpoint observations are retained unchanged.
+
+A shape-preserving piecewise cubic interpolant maps the $M$ monthly values onto $[0,1]$:
 
 ```math
 f_0(x)=
-\mathrm{PCHIP}\!\left(
-\left\{\frac{m-1}{59},\widetilde P_m\right\}_{m=1}^{60}
+\mathrm{PCHIP}
+\left(
+\left\{
+\frac{m-1}{M-1},\bar{P}_m
+\right\}_{m=1}^{M}
 \right)(x).
 ```
 
 For denoising simulations, the interpolated curve may first be centered and standardized:
 
-$$
+```math
 f_{\mathrm{std}}(x_i)=
-\frac{f_0(x_i)-\overline{f_0}}
-{\sqrt{N^{-1}\sum_{j=1}^{N}\left[f_0(x_j)-\overline{f_0}\right]^2}}.
-$$
+\frac{f_0(x_i)-\bar{f}_0}
+{\sqrt{
+\frac{1}{N-1}
+\sum_{j=1}^{N}
+[f_0(x_j)-\bar{f}_0]^2
+}}.
+```
 
-The common power-SNR normalization can then be applied as described on the [benchmarking page](benchmarking-role.md).
+The common power-SNR normalization can then be applied as described on the [benchmarking page](../benchmarking.md).
 
-> **Data requirement:** Exact reproduction requires the 60 source observations. Store them in `Platinum5Y_monthly.csv` with columns named `Date` and `Price`.
+> **Data requirement:** Exact reproduction requires the $M=60$ source observations. Store them in `Platinum5Y_monthly.csv` with columns named `Date` and `Price`.
 
 [View Platinum5Y signal](../../assets/images/TF025_Platinum5Y.png)
 
