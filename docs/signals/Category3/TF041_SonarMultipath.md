@@ -35,7 +35,7 @@ $$
 
 > **Required dependency:** The supplied MATLAB block calls `chirp_packet` but does not include its definition. Add the authoritative helper to reproduce the reference signal exactly. This page does not invent a replacement formula.
 
-[SonarMultipath signal](../../assets/images/TF041_SonarMultipath.png)
+[View SonarMultipath signal](../../assets/images/TF041_SonarMultipath.png)
 
 ## Morphological Characteristics
 
