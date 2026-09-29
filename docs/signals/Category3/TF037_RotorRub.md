@@ -9,36 +9,36 @@ The **RotorRub** signal begins with smooth periodic rotor motion. Whenever the t
 Define
 
 $$
-\phi(x)=2\pi\left[7x+0.035\sin(1.8\pi x)\right]
+\phi(x)=2\pi[f_0x+A_\phi\sin(\omega_\phi x)]
 $$
 
 and the unconstrained rotor trajectory
 
 $$
-z(x)=\sin\phi(x)+0.16\sin\{2\phi(x)-0.5\}.
+z(x)=\sin\phi(x)+A_2\sin(2\phi(x))-\delta.
 $$
 
 The contact component is
 
 $$
-c(x)=\max\{z(x)-0.48,0\}.
+c(x)=\max\{z(x)-z_c,0\}.
 $$
 
 The complete signal is
 
 $$
-f(x)=z(x)-0.78c(x)+0.09\sin\{3\phi(x)+0.3\}.
+f(x)=z(x)-\gamma c(x)+A_3\sin(3\phi(x))+b.
 $$
 
-[RotorRub signal](../../assets/images/TF037_RotorRub.png)
+[View RotorRub signal](../../assets/images/TF037_RotorRub.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Periodic motion with nonlinear contact |
-| Dominant rotation | Approximately 7 cycles |
-| Contact threshold | $z=0.48$ |
+| Dominant rotation | Approximately $f_0$ cycles |
+| Contact threshold | $z=z_c$ |
 | Local regularity | Repeated cusps at contact entry and exit |
 | Main challenge | Preserving periodicity together with nonlinear clipping |
 
@@ -47,10 +47,15 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $7$ | Nominal rotor frequency | 7 |
-| $0.48$ | Contact threshold | 0.48 |
-| $0.78$ | Contact correction weight | 0.78 |
-
+| $f_0$ | Nominal rotor frequency | 7 |
+| $A_\phi$ | Phase-modulation amplitude | 0.035 |
+| $\omega_\phi$ | Phase-modulation angular frequency | $1.8\pi$ |
+| $A_2$ | Second-harmonic amplitude | 0.16 |
+| $\delta$ | Rotor trajectory offset | 0.5 |
+| $z_c$ | Contact threshold | 0.48 |
+| $\gamma$ | Contact correction weight | 0.78 |
+| $A_3$ | Third-harmonic amplitude | 0.09 |
+| $b$ | Signal offset | 0.3 |
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF037_matlab.md)
