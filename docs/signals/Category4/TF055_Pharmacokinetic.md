@@ -9,7 +9,7 @@ The **Pharmacokinetic** signal represents absorption followed by biexponential e
 Let
 
 ```math
-t=T x,
+t=Tx,
 ```
 
 where $T$ is the total time interval in hours.
@@ -35,11 +35,7 @@ u=(t-t_s)_+,
 define the delayed shoulder
 
 ```math
-S(t)=
-\begin{cases}
-0, & t<t_s,\\
-A_s\left(1-e^{-k_su}\right)e^{-k_du}, & t\geq t_s.
-\end{cases}
+S(t)=A_s\left(1-e^{-k_su}\right)e^{-k_du}.
 ```
 
 The signal is
