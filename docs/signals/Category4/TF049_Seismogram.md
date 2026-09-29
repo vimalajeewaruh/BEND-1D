@@ -6,47 +6,59 @@ The **Seismogram** signal begins with a quiet baseline. A smaller localized chir
 
 ## Mathematical Definition
 
-Let
+Define the P-wave envelope
 
-$$
-w_P(x)=\exp\!\left[-\frac12\left(\frac{x-0.25}{0.028}\right)^2\right],
-$$
+```math
+w_P(x)=
+\exp\left[
+-\frac12\left(\frac{x-\mu_P}{s_P}\right)^2
+\right],
+```
 
-$$
-P(x)=0.42w_P(x)\sin\{2\pi(38x+24x^2)\},
-$$
+and the P-wave component
 
-$$
-w_S(x)=\exp\!\left[-\frac12\left(\frac{x-0.43}{0.055}\right)^2\right],
-$$
+```math
+P(x)=A_Pw_P(x)\sin[2\pi(f_Px+\beta_Px^2)].
+```
 
-$$
-S(x)=w_S(x)\left[\sin(48\pi x)+0.28\sin(102\pi x+0.5)\right].
-$$
+Define the S-wave envelope
 
-With $u=(x-0.47)_+$, the coda is
+```math
+w_S(x)=
+\exp\left[
+-\frac12\left(\frac{x-\mu_S}{s_S}\right)^2
+\right],
+```
 
-$$
-C(x)=0.40\mathbf{1}_{\{x\geq0.47\}}e^{-4.8u}
-\left[\sin(62\pi u)+0.35\sin(118\pi u+0.6)\right].
-$$
+and
+
+```math
+S(x)=w_S(x)[\sin(\omega_{S1}x)+A_{S2}\sin(\omega_{S2}x+\delta_S)].
+```
+
+With $u=x-\mu_C$, define the coda
+
+```math
+C(x)=A_C I(x\geq\mu_C)e^{-\alpha_Cu}
+[\sin(\omega_{C1}u)+A_{C2}\sin(\omega_{C2}u+\delta_C)].
+```
 
 Thus
 
-$$
-f(x)=0.01\sin(8\pi x)+P(x)+S(x)+C(x).
-$$
+```math
+f(x)=A_b\sin(\omega_bx)+P(x)+S(x)+C(x).
+```
 
-[Seismogram signal](../../assets/images/TF049_Seismogram.png)
+[View Seismogram signal](../../assets/images/TF049_Seismogram.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multiple arrivals and decaying coda |
-| P-wave center | $x=0.25$ |
-| S-wave center | $x=0.43$ |
-| Coda onset | $x=0.47$ |
+| P-wave center | $x=\mu_P$ |
+| S-wave center | $x=\mu_S$ |
+| Coda onset | $x=\mu_C$ |
 | Main challenge | Preserving arrivals across several amplitude and frequency scales |
 
 ## Parameters
@@ -54,9 +66,23 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.028$ | P-wave width | 0.028 |
-| $0.055$ | S-wave width | 0.055 |
-| $4.8$ | Coda decay rate | 4.8 |
+| $\mu_P$ | P-wave center | 0.25 |
+| $s_P$ | P-wave width | 0.028 |
+| $A_P$ | P-wave amplitude | 0.42 |
+| $f_P,\beta_P$ | P-wave phase coefficients | 38, 24 |
+| $\mu_S$ | S-wave center | 0.43 |
+| $s_S$ | S-wave width | 0.055 |
+| $\omega_{S1},\omega_{S2}$ | S-wave angular frequencies | $48\pi,102\pi$ |
+| $A_{S2}$ | Secondary S-wave amplitude | 0.28 |
+| $\delta_S$ | S-wave phase shift | 0.5 |
+| $\mu_C$ | Coda onset | 0.47 |
+| $A_C$ | Coda amplitude | 0.40 |
+| $\alpha_C$ | Coda decay rate | 4.8 |
+| $\omega_{C1},\omega_{C2}$ | Coda angular frequencies | $62\pi,118\pi$ |
+| $A_{C2}$ | Secondary coda amplitude | 0.35 |
+| $\delta_C$ | Coda phase shift | 0.6 |
+| $A_b$ | Baseline amplitude | 0.01 |
+| $\omega_b$ | Baseline angular frequency | $8\pi$ |
 
 ## MATLAB Implementation
 
