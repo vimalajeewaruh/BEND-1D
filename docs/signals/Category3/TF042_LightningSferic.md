@@ -37,7 +37,7 @@ $$
 f(x)=P(x)+S(x)+R(x)+D(x).
 $$
 
-[LightningSferic signal](../../assets/images/TF042_LightningSferic.png)
+[View LightningSferic signal](../../assets/images/TF042_LightningSferic.png)
 
 ## Morphological Characteristics
 
