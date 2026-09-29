@@ -9,23 +9,24 @@ The **IceCore** signal represents an isotope, dust, conductivity, or related pal
 Define
 
 $$
-L(x)=0.34\sin(2.5\pi x)+0.16\sin(6.8\pi x+0.7),
+L(x)=A_1\sin(\omega_1x)+A_2\sin(\omega_2x+\delta_2),
 $$
 
 $$
-H(x)=0.045\sin(54\pi x)\left[0.7+0.3\cos(2\pi x)\right],
+H(x)=A_H\sin(\omega_Hx)\left[b_H+c_H\cos(\omega_mx)\right],
 $$
 
 $$
-E(x)=-0.62\exp\!\left[-\frac12\left(\frac{x-0.58}{0.018}\right)^2\right],
+E(x)=-A_E\exp\left[-\frac12\left(\frac{x-\mu_E}{s_E}\right)^2\right],
 $$
 
 and the finite-duration level component
 
 $$
-S(x)=0.20\left[
-\frac{1}{1+e^{-85(x-0.62)}}-
-\frac{1}{1+e^{-55(x-0.76)}}
+S(x)=A_S\left[
+\frac{1}{1+e^{-k_1(x-x_1)}}
+-
+\frac{1}{1+e^{-k_2(x-x_2)}}
 \right].
 $$
 
@@ -35,7 +36,7 @@ $$
 f(x)=L(x)+H(x)+E(x)+S(x).
 $$
 
-[IceCore signal](../../assets/images/TF048_IceCore.png)
+[View IceCore signal](../../assets/images/TF048_IceCore.png)
 
 ## Morphological Characteristics
 
@@ -52,9 +53,19 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.58$ | Excursion center | 0.58 |
-| $0.018$ | Excursion width | 0.018 |
-| $0.62,0.76$ | Level-change boundaries | As shown |
+| $A_1,A_2$ | Slow-component amplitudes | 0.34, 0.16 |
+| $\omega_1,\omega_2$ | Slow angular frequencies | $2.5\pi,6.8\pi$ |
+| $\delta_2$ | Slow-component phase shift | 0.7 |
+| $A_H$ | Fine-component amplitude | 0.045 |
+| $\omega_H$ | Fine angular frequency | $54\pi$ |
+| $b_H,c_H$ | Modulation coefficients | 0.7, 0.3 |
+| $\omega_m$ | Modulation angular frequency | $2\pi$ |
+| $A_E$ | Excursion amplitude | 0.62 |
+| $\mu_E$ | Excursion center | 0.58 |
+| $s_E$ | Excursion width | 0.018 |
+| $A_S$ | Level-change amplitude | 0.20 |
+| $x_1,x_2$ | Level-change boundaries | 0.62, 0.76 |
+| $k_1,k_2$ | Level-change sharpness | 85, 55 |
 
 ## MATLAB Implementation
 
