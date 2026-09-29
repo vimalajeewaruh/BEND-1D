@@ -11,8 +11,8 @@ Define the potential sweep
 ```math
 E(x)=
 \begin{cases}
-E_{\min}+v_Fx, & 0\leq x\leq x_r,\\[6pt]
-E_{\max}-v_Rx, & x_r<x\leq1.
+E_{\min}+v_Fx, & 0\leq x\leq x_r,\\
+E_{\max}-v_Rx, & x_r<x\leq 1.
 \end{cases}
 ```
 
