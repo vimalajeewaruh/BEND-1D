@@ -110,15 +110,15 @@ BEND-1D generates signals in their native deterministic scales. SNR normalizatio
 
 The centered signal power is
 
-\[
+```math
 P_f=\frac{1}{N}\sum_{i=1}^{N}\left(f_i-\bar f\right)^2.
-\]
+```
 
 For noise standard deviation \(\sigma\), linear power SNR is defined as
 
-\[
+```math
 \operatorname{SNR}=\frac{P_f}{\sigma^2}.
-\]
+```
 
 The DC level is preserved but is not counted as signal power.
 
