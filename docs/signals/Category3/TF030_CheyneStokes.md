@@ -6,31 +6,32 @@ The **CheyneStokes** signal consists of three respiratory episodes whose amplitu
 
 ## Mathematical Definition
 
-For the episode intervals
+For the episode intervals $(a_k,b_k)$, $k=1,\ldots,K$, define the envelope
 
-$$
-(a_k,b_k)\in\{(0,0.26),(0.34,0.60),(0.68,0.94)\},
-$$
+```math
+E(x)=
+\sum_{k=1}^{K}
+I(a_k\leq x\leq b_k)
+\sin^p\left(
+\pi\frac{x-a_k}{b_k-a_k}
+\right),
+```
 
-define the envelope
+where $I(\cdot)$ is the indicator function.
 
-$$
-E(x)=\sum_{k=1}^{3}
-\mathbf{1}_{\{a_k\leq x\leq b_k\}}
-\sin^{1.65}\!\left(\pi\frac{x-a_k}{b_k-a_k}\right).
-$$
+Define the phase
 
-With
+```math
+\phi(x)=2\pi(f_0x+\beta x^2).
+```
 
-$$
-\phi(x)=2\pi(12x+0.55x^2),
-$$
+The signal is
 
-the signal is
-
-$$
-f(x)=E(x)\left[\sin\phi(x)+0.13\sin\{2\phi(x)-0.35\}\right].
-$$
+```math
+f(x)=
+E(x)
+[\sin\phi(x)+A_h\sin(2\phi(x)-\delta)].
+```
 
 [CheyneStokes signal](../../assets/images/TF030_CheyneStokes.png)
 
@@ -40,7 +41,7 @@ $$
 | Property | Description |
 |---|---|
 | Primary family | Repeated crescendo–decrescendo episodes |
-| Number of episodes | 3 |
+| Number of episodes | $K$ |
 | Between episodes | Nearly zero-amplitude apnea |
 | Carrier | Mildly chirped oscillation with weak harmonic |
 | Main challenge | Retaining weak boundary breaths and true quiescent intervals |
@@ -50,9 +51,13 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
+| $K$ | Number of episodes | 3 |
 | $(a_k,b_k)$ | Episode intervals | $(0,0.26),(0.34,0.60),(0.68,0.94)$ |
-| $1.65$ | Envelope exponent | 1.65 |
-| $0.13$ | Harmonic amplitude | 0.13 |
+| $p$ | Envelope exponent | 1.65 |
+| $f_0$ | Linear phase coefficient | 12 |
+| $\beta$ | Quadratic phase coefficient | 0.55 |
+| $A_h$ | Harmonic amplitude | 0.13 |
+| $\delta$ | Harmonic phase shift | 0.35 |
 
 ## MATLAB Implementation
 
