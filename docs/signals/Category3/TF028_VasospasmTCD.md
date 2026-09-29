@@ -2,35 +2,35 @@
 
 ## Overview
 
-The **VasospasmTCD** signal is a toy transcranial-Doppler velocity trace. Cardiac pulsatility persists throughout the record, while a smooth pathological onset increases both mean velocity and pulsatile amplitude.
+Define the phase
 
-## Mathematical Definition
+```math
+\phi(x)=2\pi[f_0x+a_\phi\sin(\omega_\phi x)],
+```
 
-Define
+and the periodic pulse component
 
-$$
-\phi(x)=2\pi\left[9x+0.06\sin(1.6\pi x)\right]
-$$
-
-and
-
-$$
-p(x)=0.55\sin\phi(x)+0.23\sin\{2\phi(x)-0.55\}
-+0.10\sin\{3\phi(x)-1\}.
-$$
+```math
+p(x)=
+a_1\sin\phi(x)
++a_2\sin[2\phi(x)-\delta_2]
++a_3\sin[3\phi(x)-\delta_3].
+```
 
 The smooth onset is
 
-$$
-o(x)=\frac{1}{1+e^{-65(x-0.56)}}.
-$$
+```math
+o(x)=\frac{1}{1+e^{-k(x-x_c)}}.
+```
 
 The complete signal is
 
-$$
-f(x)=0.35+0.18p(x)+o(x)\left[0.48+0.18p(x)\right]
-+0.035\sin(2.2\pi x).
-$$
+```math
+f(x)=
+b_0+b_1p(x)
++o(x)[b_2+b_3p(x)]
++A_s\sin(\omega_s x).
+```
 
 
 [VasospasmTCD signal](../../assets/images/TF028_VasospasmTCD.png)
@@ -41,7 +41,7 @@ $$
 |---|---|
 | Primary family | Periodic waveform with gradual pathological onset |
 | Persistent structure | Cardiac pulsatility |
-| Onset center | $x=0.56$ |
+| Onset center | $x=x_c$ |
 | Post-onset change | Increased mean level and pulse amplitude |
 | Main challenge | Preserving repeated pulses while localizing the smooth change |
 
@@ -50,9 +50,22 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.56$ | Onset center | 0.56 |
-| $65$ | Onset sharpness | 65 |
-| $9$ | Nominal cardiac frequency | 9 |
+| $f_0$ | Nominal cardiac frequency | 9 |
+| $a_\phi$ | Phase-modulation amplitude | 0.06 |
+| $\omega_\phi$ | Phase-modulation angular frequency | $1.6\pi$ |
+| $a_1$ | Fundamental pulse amplitude | 0.55 |
+| $a_2$ | Second-harmonic amplitude | 0.23 |
+| $\delta_2$ | Second-harmonic phase shift | 0.55 |
+| $a_3$ | Third-harmonic amplitude | 0.10 |
+| $\delta_3$ | Third-harmonic phase shift | 1 |
+| $x_c$ | Onset center | 0.56 |
+| $k$ | Onset sharpness | 65 |
+| $b_0$ | Baseline level | 0.35 |
+| $b_1$ | Pre-onset pulse scale | 0.18 |
+| $b_2$ | Post-onset level increase | 0.48 |
+| $b_3$ | Post-onset pulse-scale increase | 0.18 |
+| $A_s$ | Additional oscillation amplitude | 0.035 |
+| $\omega_s$ | Additional angular frequency | $2.2\pi$ |
 
 
 ## MATLAB Implementation
