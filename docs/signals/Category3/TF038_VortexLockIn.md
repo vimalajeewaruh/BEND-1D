@@ -6,32 +6,32 @@ The **VortexLockIn** signal represents idealized vortex-induced vibration. Its i
 
 ## Mathematical Definition
 
-The instantaneous frequency is
+Define the instantaneous frequency
 
 $$
 \nu(x)=
 \begin{cases}
-7+20x, & x\leq0.55,\\
-18, & x>0.55.
+f_0+\beta x, & x\leq x_c,\\
+f_L, & x>x_c.
 \end{cases}
 $$
 
 Define the accumulated phase
 
 $$
-\phi(x)=2\pi\int_0^x\nu(t)\,dt
+\phi(x)=2\pi\int_0^x \nu(t)\,dt
 $$
 
 and the amplitude envelope
 
 $$
-E(x)=0.16+\frac{0.84}{1+e^{-28(x-0.33)}}.
+E(x)=A_0+\frac{A_1}{1+e^{-k(x-x_a)}}.
 $$
 
 The signal is
 
 $$
-f(x)=E(x)\left[\sin\phi(x)+0.16\sin\{2\phi(x)-0.4\}\right].
+f(x)=E(x)\left[\sin\phi(x)+A_h\sin(2\phi(x)-\delta)\right].
 $$
 
 [VortexLockIn signal](../../assets/images/TF038_VortexLockIn.png)
@@ -41,9 +41,9 @@ $$
 | Property | Description |
 |---|---|
 | Primary family | Chirp-to-periodic lock-in transition |
-| Initial frequency | 7 |
-| Locked frequency | 18 |
-| Lock-in location | $x=0.55$ |
+| Initial frequency | $f_0$ |
+| Locked frequency | $f_L$ |
+| Lock-in location | $x=x_c$ |
 | Main challenge | Preserving simultaneous frequency and amplitude transitions |
 
 ## Parameters
@@ -51,9 +51,16 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.55$ | Frequency lock location | 0.55 |
-| $0.33$ | Amplitude-growth center | 0.33 |
-| $28$ | Amplitude-growth sharpness | 28 |
+| $f_0$ | Initial frequency | 7 |
+| $\beta$ | Pre-lock frequency slope | 20 |
+| $f_L$ | Locked frequency | 18 |
+| $x_c$ | Frequency lock location | 0.55 |
+| $A_0$ | Initial envelope level | 0.16 |
+| $A_1$ | Envelope growth amplitude | 0.84 |
+| $x_a$ | Amplitude-growth center | 0.33 |
+| $k$ | Amplitude-growth sharpness | 28 |
+| $A_h$ | Harmonic amplitude | 0.16 |
+| $\delta$ | Harmonic phase shift | 0.4 |
 
 ## MATLAB Implementation
 
