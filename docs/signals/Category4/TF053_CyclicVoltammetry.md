@@ -6,39 +6,43 @@ The **CyclicVoltammetry** signal parameterizes current along a forward and rever
 
 ## Mathematical Definition
 
-The potential sweep is
+Define the potential sweep
 
-$$
-E(x) =
+```math
+E(x)=
 \begin{cases}
--1 + 4x & 0 \le x \le 0.5 \\\\
-3 - 4x & 0.5 < x \le 1
+E_{\min}+v_Fx, & 0\leq x\leq x_r,\\
+E_{\max}-v_Rx, & x_r<x\leq1.
 \end{cases}
-$$
+```
 
 The current is
 
-$$
+```math
 f(x)=
 \begin{cases}
-0.07E(x)+\exp\left[-\dfrac12\left(\dfrac{E(x)-0.36}{0.18}\right)^2\right],
-& x\leq0.5, \\
-0.07E(x)-0.82\exp\left[-\dfrac12\left(\dfrac{E(x)-0.08}{0.22}\right)^2\right],
-& x>0.5.
+bE(x)+A_O\exp\left[
+-\frac12\left(\frac{E(x)-\mu_O}{s_O}\right)^2
+\right],
+& x\leq x_r,\\[6pt]
+bE(x)-A_R\exp\left[
+-\frac12\left(\frac{E(x)-\mu_R}{s_R}\right)^2
+\right],
+& x>x_r.
 \end{cases}
-$$
+```
 
 
-[CyclicVoltammetry signal](../../assets/images/TF053_CyclicVoltammetry.png)
+[View CyclicVoltammetry signal](../../assets/images/TF053_CyclicVoltammetry.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Forward–reverse hysteresis with unequal peaks |
-| Forward peak | Oxidation peak near $E=0.36$ |
-| Reverse peak | Reduction peak near $E=0.08$ |
-| Sweep reversal | $x=0.5$ |
+| Forward peak | Oxidation peak near $E=\mu_O$ |
+| Reverse peak | Reduction peak near $E=\mu_R$ |
+| Sweep reversal | $x=x_r$ |
 | Main challenge | Preserving two scientifically distinct smooth peaks |
 
 ## Parameters
@@ -46,9 +50,18 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.18$ | Oxidation-peak width | 0.18 |
-| $0.22$ | Reduction-peak width | 0.22 |
-| $0.82$ | Reduction-peak magnitude | 0.82 |
+| $E_{\min}$ | Initial potential | -1 |
+| $E_{\max}$ | Reverse-sweep intercept | 3 |
+| $v_F$ | Forward sweep rate | 4 |
+| $v_R$ | Reverse sweep rate | 4 |
+| $x_r$ | Sweep-reversal location | 0.5 |
+| $b$ | Linear background coefficient | 0.07 |
+| $A_O$ | Oxidation-peak magnitude | 1 |
+| $\mu_O$ | Oxidation-peak center | 0.36 |
+| $s_O$ | Oxidation-peak width | 0.18 |
+| $A_R$ | Reduction-peak magnitude | 0.82 |
+| $\mu_R$ | Reduction-peak center | 0.08 |
+| $s_R$ | Reduction-peak width | 0.22 |
 
 
 ## MATLAB Implementation
