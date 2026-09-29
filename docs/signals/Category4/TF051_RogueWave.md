@@ -6,36 +6,40 @@ The **RogueWave** signal combines a modulated narrow-band ocean-wave train with 
 
 ## Mathematical Definition
 
-The background sea is
+Define the background wave component
 
-$$
-S(x)=\left[0.48+0.15\sin(1.6\pi x)\right]
-\left[\sin(18\pi x)+0.20\sin(36\pi x+0.5)\right].
-$$
+```math
+S(x)=
+[A_0+A_m\sin(\omega_m x)]
+[\sin(\omega_c x)+A_h\sin(2\omega_c x+\delta_h)].
+```
 
-The localized extreme group is
+Define the localized extreme group
 
-$$
-R(x)=1.55\exp\!\left[-\frac12\left(\frac{x-0.61}{0.030}\right)^2\right]
-\sin\{18\pi(x-0.61)+\pi/2\}.
-$$
+```math
+R(x)=
+A_R\exp\left[
+-\frac12\left(\frac{x-x_R}{s_R}\right)^2
+\right]
+\sin\left[\omega_c(x-x_R)+\phi_R\right].
+```
 
 The signal is
 
-$$
+```math
 f(x)=S(x)+R(x).
-$$
+```
 
-[RogueWave signal](../../assets/images/TF051_RogueWave.png)
+[View RogueWave signal](../../assets/images/TF051_RogueWave.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Modulated wave train with localized extreme event |
-| Background frequency | 9 with weak second harmonic |
-| Extreme-event center | $x=0.61$ |
-| Extreme-event width | 0.030 |
+| Background frequency | $f_c$ with weak second harmonic |
+| Extreme-event center | $x=x_R$ |
+| Extreme-event width | $s_R$ |
 | Main challenge | Preserving ordinary wave structure and a rare extreme group |
 
 ## Parameters
@@ -43,9 +47,17 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $9$ | Carrier frequency | 9 |
-| $1.55$ | Extreme-event amplitude | 1.55 |
-| $0.030$ | Extreme-event width | 0.030 |
+| $A_0$ | Background amplitude level | 0.48 |
+| $A_m$ | Modulation amplitude | 0.15 |
+| $\omega_m$ | Modulation angular frequency | $1.6\pi$ |
+| $f_c$ | Carrier frequency | 9 |
+| $\omega_c$ | Carrier angular frequency | $18\pi$ |
+| $A_h$ | Second-harmonic amplitude | 0.20 |
+| $\delta_h$ | Second-harmonic phase shift | 0.5 |
+| $A_R$ | Extreme-event amplitude | 1.55 |
+| $x_R$ | Extreme-event center | 0.61 |
+| $s_R$ | Extreme-event width | 0.030 |
+| $\phi_R$ | Extreme-event phase shift | $\pi/2$ |
 
 ## MATLAB Implementation
 
