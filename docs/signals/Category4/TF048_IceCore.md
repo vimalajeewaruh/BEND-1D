@@ -22,19 +22,19 @@ $$
 
 and the finite-duration level component
 
-$$
+```math
 S(x)=A_S\left[
 \frac{1}{1+e^{-k_1(x-x_1)}}
 -
 \frac{1}{1+e^{-k_2(x-x_2)}}
 \right].
-$$
+```
 
 The signal is
 
-$$
+```math
 f(x)=L(x)+H(x)+E(x)+S(x).
-$$
+```
 
 [View IceCore signal](../../assets/images/TF048_IceCore.png)
 
