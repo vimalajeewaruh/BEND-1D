@@ -1,0 +1,15 @@
+function signalInfo = info(signalID)
+%BEND1D.INFO Return catalog information for one signal.
+
+signalID = upper(string(signalID));
+T = catalog;
+
+index = find(T.ID == signalID,1);
+
+if isempty(index)
+    error("BEND1D:UnknownSignal", ...
+        "Unknown signal identifier: %s",signalID);
+end
+
+signalInfo = T(index,:);
+end

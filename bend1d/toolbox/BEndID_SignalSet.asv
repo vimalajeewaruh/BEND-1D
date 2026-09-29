@@ -1,0 +1,3096 @@
+function [x,f,meta] = TF001_Percolation(N,pc,beta)
+    if nargin < 1 || isempty(N), N = 1024; end
+    if nargin < 2 || isempty(pc), pc = 0.38; end
+    if nargin < 3 || isempty(beta), beta = 0.41; end
+    validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+    x = linspace(0,1,N).';
+    f = max(x-pc,0).^beta;
+    meta = struct;
+    meta.ID = "TF001";
+    meta.Name = "Percolation";
+    meta.Category = 1;
+    meta.RecommendedN = 1024;
+    meta.Parameters = struct("pc",pc,"beta",beta);
+    meta.Morphology = "Continuous onset with a singular derivative";
+end
+
+function [x,f,meta] = TF002_Planck(N)
+if nargin < 1 || isempty(N), N = 1024; end
+
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+lambda = 0.08 + 0.92*x;
+f = lambda.^(-5) ./ expm1(2.5./lambda);
+meta = struct;
+meta.ID = "TF002";
+meta.Name = "Planck";
+meta.Category = 1;
+meta.RecommendedN = 1024;
+meta.Parameters = struct;
+meta.Morphology = "Smooth broadband spectral shape";
+end
+
+function [x,f,meta] = TF003_StickSlip(N,b,h)
+    if nargin < 1 || isempty(N), N = 1024; end
+    if nargin < 2 || isempty(b), b = [0.00 0.16 0.34 0.52 0.73 1.00]; end
+    if nargin < 3 || isempty(h), h = [0.80 1.15 0.75 1.35 0.95]; end
+    validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+    x = linspace(0,1,N).';
+    f = zeros(size(x));
+    for k = 1:numel(h)
+        if k < numel(h)
+            ind = (x >= b(k)) & (x < b(k+1));
+        else
+            ind = (x >= b(k)) & (x <= b(k+1));
+        end
+        f(ind) = h(k).*(x(ind)-b(k))./(b(k+1)-b(k));
+    end
+    f(end) = 0;
+    meta = struct;
+    meta.ID = "TF003";
+    meta.Name = "Stick-Slip";
+    meta.Category = 2;
+    meta.RecommendedN = 1024;
+    meta.Parameters = struct("b",b,"h",h);
+    meta.Morphology = "Piecewise-linear segments with abrupt changes";
+end
+
+function [x,f,meta] = TF004_RingDown(N,x0,alpha,nu)
+    if nargin < 1 || isempty(N), N = 1024; end
+    if nargin < 2 || isempty(x0), x0 = 0.28; end
+    if nargin < 3 || isempty(alpha), alpha = 7; end
+    if nargin < 4 || isempty(nu), nu = 16; end
+    validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+    x = linspace(0,1,N).';
+    u = max(x - x0, 0);
+    f = (x >= x0) .* exp(-alpha.*u) .* sin(2*pi*nu.*u);
+    meta = struct;
+    meta.ID = "TF004";
+    meta.Name = "Ring-Down";
+    meta.Category = 3;
+    meta.RecommendedN = 1024;
+    meta.Parameters = struct("x0",x0,"alpha",alpha,"nu",nu);
+    meta.Morphology = "Damped resonant transient";
+end
+
+function [x,f,meta] = TF005_DiffusionBand(N)
+    if nargin < 1 || isempty(N), N = 1024; end
+    validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+    x = linspace(0,1,N).';
+    f = 0.5*(erf((x-0.28)/0.025) - erf((x-0.72)/0.070));
+    meta = struct;
+    meta.ID = "TF005";
+    meta.Name = "Diffusion Band";
+    meta.Category = 4;
+    meta.RecommendedN = 1024;
+    meta.Parameters = struct;
+    meta.Morphology = "Two diffusive fronts of unequal sharpness";
+end
+
+function [x,f,meta] = TF006_Fano(N,q)
+    if nargin < 1 || isempty(N), N = 1024; end
+    if nargin < 2 || isempty(q), q = 1.5; end
+    validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+    x = linspace(0,1,N).';
+    epsF = (x-0.58)/0.025;
+    f = 0.35*exp(-((x-0.26)/0.12).^2) + 0.75*((q+epsF).^2./(1+epsF.^2)-1);
+    meta = struct;
+    meta.ID = "TF006";
+    meta.Name = "Fano";
+    meta.Category = 5;
+    meta.RecommendedN = 1024;
+    meta.Parameters = struct("q",q);
+    meta.Morphology = "Broad background plus asymmetric resonance";
+end
+
+function [x,f,meta] = TF007_BouncingBall(N,e,duration0)
+    if nargin < 1 || isempty(N), N = 1024; end
+    if nargin < 2 || isempty(e), e = 0.72; end
+    if nargin < 3 || isempty(duration0), duration0 = 1-e; end
+    validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+    x = linspace(0,1,N).';
+    f = zeros(size(x));
+    left = 0;
+    duration = duration0;
+    height = 1;
+    for k = 1:30
+        right = left + duration;
+        if right > 1, right = 1; end
+        ind = (x >= left) & (x <= right);
+        if right > left
+            u = (x(ind)-left)./(right-left);
+            f(ind) = height*(1 - (1 - 2*u).*u); % ballistic arc (parabolic-like)
+        end
+        left = right;
+        duration = duration * e;
+        height = height * e^2;
+        if left >= 1, break; end
+    end
+    meta = struct;
+    meta.ID = "TF007";
+    meta.Name = "Bouncing Ball";
+    meta.Category = 6;
+    meta.RecommendedN = 1024;
+    meta.Parameters = struct("e",e,"duration0",duration0);
+    meta.Morphology = "Sequence of decaying ballistic arcs accumulating at 1";
+end
+function [x,f,meta] = TF008_Logistic(N,k,x0)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(k), k = 18; end
+if nargin < 3 || isempty(x0), x0 = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 1./(1 + exp(-k.*(x-x0)));
+meta = struct("ID","TF008","Name","Logistic","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct("k",k,"x0",x0), ...
+    "Morphology","Smooth sigmoidal transition");
+end
+
+function [x,f,meta] = TF009_Gaussian(N,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2);
+meta = struct("ID","TF009","Name","Gaussian","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct("mu",mu,"sigma",sigma), ...
+    "Morphology","Localized smooth symmetric peak");
+end
+
+function [x,f,meta] = TF010_Lorentzian(N,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(gamma), gamma = 0.04; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 1./(1 + ((x-mu)./gamma).^2);
+meta = struct("ID","TF010","Name","Lorentzian","Category",5, ...
+    "RecommendedN",1024,"Parameters",struct("mu",mu,"gamma",gamma), ...
+    "Morphology","Localized symmetric peak with algebraic tails");
+end
+
+function [x,f,meta] = TF011_Exponential(N,lambda)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(lambda), lambda = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-lambda.*x);
+meta = struct("ID","TF011","Name","Exponential","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct("lambda",lambda), ...
+    "Morphology","Smooth monotonic exponential decay");
+end
+
+function [x,f,meta] = TF012_Sine(N,frequency,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 3; end
+if nargin < 3 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.5 + 0.5*sin(2*pi*frequency*x + phase);
+meta = struct("ID","TF012","Name","Sine","Category",3, ...
+    "RecommendedN",1024,"Parameters",struct("frequency",frequency,"phase",phase), ...
+    "Morphology","Smooth periodic oscillation");
+end
+
+function [x,f,meta] = TF013_Sawtooth(N,frequency,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 3; end
+if nargin < 3 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = mod(frequency*x + phase/(2*pi),1);
+meta = struct("ID","TF013","Name","Sawtooth","Category",2, ...
+    "RecommendedN",1024,"Parameters",struct("frequency",frequency,"phase",phase), ...
+    "Morphology","Piecewise-linear periodic ramp with abrupt resets");
+end
+function [x,f,meta] = TF014_SquareWave(N,frequency,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 3; end
+if nargin < 3 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = double(sin(2*pi*frequency*x + phase) >= 0);
+meta = struct("ID","TF014","Name","Square Wave","Category",2, ...
+    "RecommendedN",1024,"Parameters",struct("frequency",frequency,"phase",phase), ...
+    "Morphology","Piecewise-constant periodic waveform with abrupt transitions");
+end
+
+function [x,f,meta] = TF015_TriangleWave(N,frequency,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 3; end
+if nargin < 3 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 1 - abs(2*mod(frequency*x + phase/(2*pi),1) - 1);
+meta = struct("ID","TF015","Name","Triangle Wave","Category",2, ...
+    "RecommendedN",1024,"Parameters",struct("frequency",frequency,"phase",phase), ...
+    "Morphology","Piecewise-linear periodic waveform with sharp reversals");
+end
+function [x,f,meta] = TF016_Step(N,x0)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = double(x >= x0);
+meta = struct("ID","TF016","Name","Step","Category",2, ...
+    "RecommendedN",1024,"Parameters",struct("x0",x0), ...
+    "Morphology","Piecewise-constant discontinuous transition");
+end
+function [x,f,meta] = TF017_Ramp(N,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.2; end
+if nargin < 3 || isempty(x1), x1 = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = min(max((x-x0)./(x1-x0),0),1);
+meta = struct("ID","TF017","Name","Ramp","Category",2, ...
+    "RecommendedN",1024,"Parameters",struct("x0",x0,"x1",x1), ...
+    "Morphology","Piecewise-linear transition with bounded plateaus");
+end
+
+function [x,f,meta] = TF018_DoubleGaussian(N,mu1,mu2,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu1), mu1 = 0.35; end
+if nargin < 3 || isempty(mu2), mu2 = 0.65; end
+if nargin < 4 || isempty(sigma), sigma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu1)./sigma).^2) + exp(-0.5*((x-mu2)./sigma).^2);
+meta = struct("ID","TF018","Name","Double Gaussian","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct("mu1",mu1,"mu2",mu2,"sigma",sigma), ...
+    "Morphology","Two localized smooth symmetric peaks");
+end
+
+function [x,f,meta] = TF019_DoubleLorentzian(N,mu1,mu2,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu1), mu1 = 0.35; end
+if nargin < 3 || isempty(mu2), mu2 = 0.65; end
+if nargin < 4 || isempty(gamma), gamma = 0.04; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 1./(1 + ((x-mu1)./gamma).^2) + 1./(1 + ((x-mu2)./gamma).^2);
+meta = struct("ID","TF019","Name","Double Lorentzian","Category",5, ...
+    "RecommendedN",1024,"Parameters",struct("mu1",mu1,"mu2",mu2,"gamma",gamma), ...
+    "Morphology","Two localized symmetric peaks with algebraic tails");
+end
+
+function [x,f,meta] = TF020_DampedSine(N,frequency,decay,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 6; end
+if nargin < 3 || isempty(decay), decay = 4; end
+if nargin < 4 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-decay.*x).*sin(2*pi*frequency*x + phase);
+meta = struct("ID","TF020","Name","Damped Sine","Category",3, ...
+    "RecommendedN",1024,"Parameters",struct("frequency",frequency,"decay",decay,"phase",phase), ...
+    "Morphology","Decaying oscillatory waveform");
+end
+
+function [x,f,meta] = TF021_HeavisideSmoothed(N,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+if nargin < 3 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.5*(1 + tanh((x-x0)./width));
+meta = struct("ID","TF021","Name","Smoothed Heaviside","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct("x0",x0,"width",width), ...
+    "Morphology","Continuous transition with tunable sharpness");
+end
+
+function [x,f,meta] = TF022_PowerLaw(N,exponent)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(exponent), exponent = 2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = x.^exponent;
+meta = struct("ID","TF022","Name","Power Law","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct("exponent",exponent), ...
+    "Morphology","Smooth algebraic growth from the origin");
+end
+
+function [x,f,meta] = TF023_AbsValue(N,x0)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = abs(x-x0);
+meta = struct("ID","TF023","Name","Absolute Value","Category",2, ...
+    "RecommendedN",1024,"Parameters",struct("x0",x0), ...
+    "Morphology","Piecewise-linear cusp");
+end
+
+function [x,f,meta] = TF024_Cosine(N,frequency,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 3; end
+if nargin < 3 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.5 + 0.5*cos(2*pi*frequency*x + phase);
+meta = struct("ID","TF024","Name","Cosine","Category",3, ...
+    "RecommendedN",1024,"Parameters",struct("frequency",frequency,"phase",phase), ...
+    "Morphology","Smooth periodic oscillation");
+end
+
+function [x,f,meta] = TF025_Uniform(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = ones(size(x));
+meta = struct("ID","TF025","Name","Uniform","Category",1, ...
+    "RecommendedN",1024,"Parameters",struct, ...
+    "Morphology","Constant baseline across the domain");
+end
+
+function [x,f,meta] = TF026_WhiteNoise(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed);
+x = linspace(0,1,N).';
+f = randn(size(x));
+meta = struct("ID","TF026","Name","White Noise","Category",7, ...
+    "RecommendedN",1024,"Parameters",struct("seed",seed), ...
+    "Morphology","Uncorrelated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF027_PinkNoise(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed);
+x = linspace(0,1,N).';
+noise = randn(size(x));
+spectrum = fft(noise);
+frequencies = (0:N-1).';
+spectrum(2:end) = spectrum(2:end)./sqrt(frequencies(2:end));
+f = real(ifft(spectrum));
+meta = struct("ID","TF027","Name","Pink Noise","Category",7, ...
+    "RecommendedN",1024,"Parameters",struct("seed",seed), ...
+    "Morphology","Correlated stochastic fluctuations with 1/f spectral scaling");
+end
+
+function [x,f,meta] = TF028_BrownianNoise(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed);
+x = linspace(0,1,N).';
+f = cumsum(randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF028","Name","Brownian Noise","Category",7, ...
+    "RecommendedN",1024,"Parameters",struct("seed",seed), ...
+    "Morphology","Integrated stochastic fluctuations with strong low-frequency content");
+end
+
+function [x,f,meta] = TF029_WhiteNoiseNormalized(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = randn(size(x)); f = (f-mean(f))./std(f);
+meta = struct("ID","TF029","Name","Normalized White Noise","Category",7, ...
+    "RecommendedN",1024,"Parameters",struct("seed",seed), ...
+    "Morphology","Zero-mean unit-variance stochastic fluctuations");
+end
+
+function [x,f,meta] = TF030_PinkNoiseNormalized(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; noise = randn(size(x));
+spectrum = fft(noise); frequencies = (0:N-1).'; spectrum(2:end) = spectrum(2:end)./sqrt(frequencies(2:end));
+f = real(ifft(spectrum)); f = (f-mean(f))./std(f);
+meta = struct("ID","TF030","Name","Normalized Pink Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed),"Morphology","Zero-mean unit-variance 1/f stochastic fluctuations");
+end
+
+function [x,f,meta] = TF031_BrownianNoiseNormalized(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cumsum(randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF031","Name","Normalized Brownian Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed),"Morphology","Zero-mean unit-variance integrated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF032_UniformNoise(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 2*rand(size(x))-1;
+meta = struct("ID","TF032","Name","Uniform Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed),"Morphology","Independent uniformly distributed stochastic fluctuations");
+end
+
+function [x,f,meta] = TF033_UniformNoiseNormalized(N,seed)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 2*rand(size(x))-1; f = (f-mean(f))./std(f);
+meta = struct("ID","TF033","Name","Normalized Uniform Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed),"Morphology","Zero-mean unit-variance uniformly distributed fluctuations");
+end
+
+function [x,f,meta] = TF034_ClippedSine(N,frequency,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 3; end
+if nargin < 3 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = min(max(0.5 + 0.5*sin(2*pi*frequency*x + phase),0.2),0.8);
+meta = struct("ID","TF034","Name","Clipped Sine","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("frequency",frequency,"phase",phase),"Morphology","Periodic waveform with bounded plateaus");
+end
+
+function [x,f,meta] = TF035_MexicanHat(N,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; u = (x-mu)./sigma;
+f = (1-u.^2).*exp(-0.5*u.^2);
+meta = struct("ID","TF035","Name","Mexican Hat","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"sigma",sigma),"Morphology","Localized oscillatory wavelet with central peak");
+end
+
+function [x,f,meta] = TF036_ExponentialRise(N,lambda)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(lambda), lambda = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 1 - exp(-lambda.*x);
+meta = struct("ID","TF036","Name","Exponential Rise","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("lambda",lambda),"Morphology","Smooth monotonic exponential growth");
+end
+
+function [x,f,meta] = TF037_SigmoidBump(N,mu,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(width), width = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 1./(1 + exp(-((x-mu+width/2)./width))) - 1./(1 + exp(-((x-mu-width/2)./width)));
+meta = struct("ID","TF037","Name","Sigmoid Bump","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"width",width),"Morphology","Smooth localized plateau with sigmoid edges");
+end
+
+function [x,f,meta] = TF038_TopHat(N,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.3; end
+if nargin < 3 || isempty(x1), x1 = 0.7; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = double(x >= x0 & x <= x1);
+meta = struct("ID","TF038","Name","Top Hat","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("x0",x0,"x1",x1),"Morphology","Piecewise-constant localized plateau");
+end
+
+function [x,f,meta] = TF039_TriangularPulse(N,center,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+if nargin < 3 || isempty(width), width = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = max(1 - abs(x-center)./(width/2),0);
+meta = struct("ID","TF039","Name","Triangular Pulse","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("center",center,"width",width),"Morphology","Localized piecewise-linear pulse");
+end
+
+function [x,f,meta] = TF040_ParabolicPulse(N,center,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+if nargin < 3 || isempty(width), width = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = max(1 - ((x-center)./(width/2)).^2,0);
+meta = struct("ID","TF040","Name","Parabolic Pulse","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center,"width",width),"Morphology","Localized smooth compact pulse");
+end
+
+function [x,f,meta] = TF041_Cauchy(N,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 1./(pi*gamma*(1 + ((x-mu)./gamma).^2));
+meta = struct("ID","TF041","Name","Cauchy","Category",5,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"gamma",gamma),"Morphology","Localized peak with heavy algebraic tails");
+end
+
+function [x,f,meta] = TF042_BetaDistribution(N,a,b)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(a), a = 2; end
+if nargin < 3 || isempty(b), b = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = x.^(a-1).*(1-x).^(b-1)/beta(a,b);
+meta = struct("ID","TF042","Name","Beta Distribution","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("a",a,"b",b),"Morphology","Smooth bounded asymmetric distribution");
+end
+
+function [x,f,meta] = TF043_GammaDistribution(N,shape,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(shape), shape = 2; end
+if nargin < 3 || isempty(scale), scale = 0.2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = x.^(shape-1).*exp(-x./scale)./(gamma(shape)*scale^shape);
+meta = struct("ID","TF043","Name","Gamma Distribution","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("shape",shape,"scale",scale),"Morphology","Smooth positive skewed distribution");
+end
+
+function [x,f,meta] = TF044_LogNormal(N,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = -1; end
+if nargin < 3 || isempty(sigma), sigma = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-0.5*((log(max(x,eps))-mu)./sigma).^2)./(max(x,eps)*sigma*sqrt(2*pi));
+meta = struct("ID","TF044","Name","Log-Normal","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"sigma",sigma),"Morphology","Smooth positively skewed distribution");
+end
+
+function [x,f,meta] = TF045_Weibull(N,shape,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(shape), shape = 2; end
+if nargin < 3 || isempty(scale), scale = 0.35; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (shape/scale)*(x/scale).^(shape-1).*exp(-(x/scale).^shape);
+meta = struct("ID","TF045","Name","Weibull","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("shape",shape,"scale",scale),"Morphology","Smooth skewed distribution with tunable tail");
+end
+
+function [x,f,meta] = TF046_Rayleigh(N,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(scale), scale = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x./scale.^2).*exp(-x.^2./(2*scale.^2));
+meta = struct("ID","TF046","Name","Rayleigh","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("scale",scale),"Morphology","Smooth unimodal distribution with positive skew");
+end
+
+function [x,f,meta] = TF047_Rice(N,nu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(nu), nu = 0.4; end
+if nargin < 3 || isempty(sigma), sigma = 0.15; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = (x./sigma.^2).*exp(-(x.^2 + nu.^2)./(2*sigma.^2)).*besseli(0,x.*nu./sigma.^2);
+meta = struct("ID","TF047","Name","Rice","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("nu",nu,"sigma",sigma),"Morphology","Smooth noncentral radial distribution");
+end
+
+function [x,f,meta] = TF048_ChiSquare(N,degree)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(degree), degree = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = x.^(degree/2-1).*exp(-x/2)./(2^(degree/2)*gamma(degree/2));
+meta = struct("ID","TF048","Name","Chi-Square","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("degree",degree),"Morphology","Smooth positively skewed distribution");
+end
+
+function [x,f,meta] = TF049_StudentT(N,nu)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(nu), nu = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; t = (x-0.5)/0.15;
+f = gamma((nu+1)/2)/(sqrt(nu*pi)*gamma(nu/2)*0.15) .* (1+t.^2/nu).^(-(nu+1)/2);
+meta = struct("ID","TF049","Name","Student-t","Category",5,"RecommendedN",1024, ...
+    "Parameters",struct("nu",nu),"Morphology","Localized heavy-tailed symmetric distribution");
+end
+
+function [x,f,meta] = TF050_Laplace(N,mu,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(scale), scale = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-abs(x-mu)./scale)./(2*scale);
+meta = struct("ID","TF050","Name","Laplace","Category",5,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"scale",scale),"Morphology","Localized symmetric peak with exponential tails");
+end
+
+function [x,f,meta] = TF051_HyperbolicSecant(N,mu,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(scale), scale = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sech((x-mu)./scale).^2./(pi*scale);
+meta = struct("ID","TF051","Name","Hyperbolic Secant","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"scale",scale),"Morphology","Localized smooth symmetric peak");
+end
+
+function [x,f,meta] = TF052_Sinc(N,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sinc(frequency*(x-0.5));
+meta = struct("ID","TF052","Name","Sinc","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency",frequency),"Morphology","Localized oscillatory function with decaying sidelobes");
+end
+
+function [x,f,meta] = TF053_SincSquared(N,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sinc(frequency*(x-0.5)).^2;
+meta = struct("ID","TF053","Name","Sinc Squared","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("frequency",frequency),"Morphology","Localized nonnegative peak with decaying sidelobes");
+end
+
+function [x,f,meta] = TF054_MorletWavelet(N,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 8; end
+if nargin < 3 || isempty(mu), mu = 0.5; end
+if nargin < 4 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu));
+meta = struct("ID","TF054","Name","Morlet Wavelet","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized oscillatory wavelet with Gaussian envelope");
+end
+
+function [x,f,meta] = TF055_Chirp(N,frequency0,frequency1,phase)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency0), frequency0 = 2; end
+if nargin < 3 || isempty(frequency1), frequency1 = 12; end
+if nargin < 4 || isempty(phase), phase = 0; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.5 + 0.5*sin(2*pi*(frequency0*x + 0.5*(frequency1-frequency0)*x.^2) + phase);
+meta = struct("ID","TF055","Name","Chirp","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency0",frequency0,"frequency1",frequency1,"phase",phase), ...
+    "Morphology","Smooth oscillation with linearly varying frequency");
+end
+
+function [x,f,meta] = TF056_Gabor(N,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency), frequency = 10; end
+if nargin < 3 || isempty(mu), mu = 0.5; end
+if nargin < 4 || isempty(sigma), sigma = 0.12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu));
+meta = struct("ID","TF056","Name","Gabor","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized oscillatory waveform with Gaussian envelope");
+end
+
+function [x,f,meta] = TF057_HanningWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.5 - 0.5*cos(2*pi*x);
+meta = struct("ID","TF057","Name","Hanning Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth compact window with cosine-tapered edges");
+end
+
+function [x,f,meta] = TF058_HammingWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.54 - 0.46*cos(2*pi*x);
+meta = struct("ID","TF058","Name","Hamming Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth window with reduced sidelobes");
+end
+
+function [x,f,meta] = TF059_BlackmanWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.42 - 0.5*cos(2*pi*x) + 0.08*cos(4*pi*x);
+meta = struct("ID","TF059","Name","Blackman Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth cosine window with strongly reduced sidelobes");
+end
+
+function [x,f,meta] = TF060_BlackmanHarrisWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.35875 - 0.48829*cos(2*pi*x) + 0.14128*cos(4*pi*x) - 0.01168*cos(6*pi*x);
+meta = struct("ID","TF060","Name","Blackman-Harris Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth high-dynamic-range cosine window");
+end
+
+function [x,f,meta] = TF061_BartlettWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 1 - abs(2*x - 1);
+meta = struct("ID","TF061","Name","Bartlett Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Piecewise-linear triangular window");
+end
+
+function [x,f,meta] = TF062_BartlettHannWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = 0.62 - 0.48*abs(x-0.5) + 0.38*cos(2*pi*x);
+meta = struct("ID","TF062","Name","Bartlett-Hann Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Piecewise-smooth tapered window");
+end
+
+function [x,f,meta] = TF063_KaiserWindow(N,beta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(beta), beta = 8.6; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = besseli(0,beta*sqrt(max(1-(2*x-1).^2,0)))./besseli(0,beta);
+meta = struct("ID","TF063","Name","Kaiser Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("beta",beta),"Morphology","Smooth adjustable-taper window");
+end
+
+function [x,f,meta] = TF064_GaussianWindow(N,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(sigma), sigma = 0.18; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-0.5*((x-0.5)./sigma).^2);
+meta = struct("ID","TF064","Name","Gaussian Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("sigma",sigma),"Morphology","Smooth localized window with Gaussian taper");
+end
+
+function [x,f,meta] = TF065_TukeyWindow(N,alpha)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(alpha), alpha = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = ones(size(x));
+edge = alpha/2;
+left = x < edge; right = x > 1-edge;
+f(left) = 0.5*(1 + cos(2*pi*(x(left)/alpha - 0.5)));
+f(right) = 0.5*(1 + cos(2*pi*((x(right)-1)/alpha + 0.5)));
+meta = struct("ID","TF065","Name","Tukey Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("alpha",alpha),"Morphology","Cosine-tapered window with adjustable flat center");
+end
+
+
+function [x,f,meta] = TF066_ParzenWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; u = abs(2*x-1);
+f = (u <= 0.5).*(1 - 6*u.^2 + 6*u.^3) + (u > 0.5 & u <= 1).*2.*(1-u).^3;
+meta = struct("ID","TF066","Name","Parzen Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth compact window with cubic taper");
+end
+
+function [x,f,meta] = TF067_BohmanWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; u = abs(2*x-1);
+f = (1-u).*cos(pi*u) + sin(pi*u)/pi;
+meta = struct("ID","TF067","Name","Bohman Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth compact window with cosine-polynomial taper");
+end
+
+function [x,f,meta] = TF068_CosineWindow(N)
+if nargin < 1 || isempty(N), N = 1024; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sin(pi*x);
+meta = struct("ID","TF068","Name","Cosine Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct,"Morphology","Smooth symmetric cosine-tapered window");
+end
+
+function [x,f,meta] = TF069_ExponentialWindow(N,decay)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(decay), decay = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-decay*abs(2*x-1));
+meta = struct("ID","TF069","Name","Exponential Window","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("decay",decay),"Morphology","Smooth symmetric window with exponential taper");
+end
+
+function [x,f,meta] = TF070_PoissonKernel(N,mu,kappa)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(kappa), kappa = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = (1-kappa^2)./(1-2*kappa*cos(2*pi*(x-mu))+kappa^2);
+meta = struct("ID","TF070","Name","Poisson Kernel","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"kappa",kappa),"Morphology","Periodic localized kernel with tunable concentration");
+end
+
+function [x,f,meta] = TF071_SuperGaussian(N,mu,sigma,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(sigma), sigma = 0.12; end
+if nargin < 4 || isempty(order), order = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-0.5*abs((x-mu)./sigma).^order);
+meta = struct("ID","TF071","Name","Super-Gaussian","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"sigma",sigma,"order",order), ...
+    "Morphology","Localized symmetric peak with adjustable flatness");
+end
+
+function [x,f,meta] = TF072_SuperLorentzian(N,mu,gamma,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu), mu = 0.5; end
+if nargin < 3 || isempty(gamma), gamma = 0.08; end
+if nargin < 4 || isempty(order), order = 2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 1./(1 + abs((x-mu)./gamma).^order);
+meta = struct("ID","TF072","Name","Super-Lorentzian","Category",5,"RecommendedN",1024, ...
+    "Parameters",struct("mu",mu,"gamma",gamma,"order",order), ...
+    "Morphology","Localized symmetric peak with adjustable algebraic tails");
+end
+
+function [x,f,meta] = TF073_ArctangentStep(N,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+if nargin < 3 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.5 + atan((x-x0)./width)/pi;
+meta = struct("ID","TF073","Name","Arctangent Step","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("x0",x0,"width",width),"Morphology","Smooth transition with algebraic tails");
+end
+
+function [x,f,meta] = TF074_ErrorFunctionStep(N,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+if nargin < 3 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.5*(1 + erf((x-x0)./width));
+meta = struct("ID","TF074","Name","Error Function Step","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("x0",x0,"width",width),"Morphology","Smooth Gaussian-smoothed transition");
+end
+
+function [x,f,meta] = TF075_Softplus(N,k)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(k), k = 20; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = log1p(exp(k.*(x-0.5)))./k;
+meta = struct("ID","TF075","Name","Softplus","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("k",k),"Morphology","Smooth approximation to a rectified linear transition");
+end
+
+function [x,f,meta] = TF076_ReLU(N,x0)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = max(x-x0,0);
+meta = struct("ID","TF076","Name","ReLU","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("x0",x0),"Morphology","Piecewise-linear rectified transition");
+end
+
+function [x,f,meta] = TF077_LeakyReLU(N,x0,leak)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(x0), x0 = 0.5; end
+if nargin < 3 || isempty(leak), leak = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = max(x-x0,0) + leak*min(x-x0,0);
+meta = struct("ID","TF077","Name","Leaky ReLU","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("x0",x0,"leak",leak),"Morphology","Piecewise-linear transition with nonzero negative slope");
+end
+
+function [x,f,meta] = TF078_Quadratic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^2;
+meta = struct("ID","TF078","Name","Quadratic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth symmetric parabolic profile");
+end
+
+function [x,f,meta] = TF079_Cubic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^3;
+meta = struct("ID","TF079","Name","Cubic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth antisymmetric cubic profile");
+end
+
+function [x,f,meta] = TF080_Quartic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^4;
+meta = struct("ID","TF080","Name","Quartic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth symmetric quartic profile");
+end
+
+function [x,f,meta] = TF081_Quintic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^5;
+meta = struct("ID","TF081","Name","Quintic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth antisymmetric quintic profile");
+end
+
+function [x,f,meta] = TF082_Sextic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^6;
+meta = struct("ID","TF082","Name","Sextic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth symmetric sextic profile");
+end
+
+function [x,f,meta] = TF083_Septic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^7;
+meta = struct("ID","TF083","Name","Septic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth antisymmetric septic profile");
+end
+
+function [x,f,meta] = TF084_Octic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^8;
+meta = struct("ID","TF084","Name","Octic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth symmetric octic profile");
+end
+
+function [x,f,meta] = TF085_Nonagon(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^9;
+meta = struct("ID","TF085","Name","Nonic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth antisymmetric nonic profile");
+end
+
+function [x,f,meta] = TF086_Decic(N,center)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = (x-center).^10;
+meta = struct("ID","TF086","Name","Decic","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center),"Morphology","Smooth symmetric decic profile");
+end
+
+function [x,f,meta] = TF087_Superellipse(N,center,scale,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+if nargin < 3 || isempty(scale), scale = 0.3; end
+if nargin < 4 || isempty(order), order = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = max(1 - abs((x-center)./scale).^order,0);
+meta = struct("ID","TF087","Name","Superellipse","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center,"scale",scale,"order",order), ...
+    "Morphology","Localized compact profile with adjustable flatness");
+end
+
+function [x,f,meta] = TF088_Spike(N,center,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center), center = 0.5; end
+if nargin < 3 || isempty(width), width = 0.01; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-abs((x-center)./width));
+meta = struct("ID","TF088","Name","Spike","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center",center,"width",width),"Morphology","Sharp localized exponential peak");
+end
+
+function [x,f,meta] = TF089_DoubleSpike(N,center1,center2,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center1), center1 = 0.35; end
+if nargin < 3 || isempty(center2), center2 = 0.65; end
+if nargin < 4 || isempty(width), width = 0.01; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-abs((x-center1)./width)) + exp(-abs((x-center2)./width));
+meta = struct("ID","TF089","Name","Double Spike","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center1",center1,"center2",center2,"width",width), ...
+    "Morphology","Two sharp localized exponential peaks");
+end
+
+function [x,f,meta] = TF090_TripleGaussian(N,mu1,mu2,mu3,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu1), mu1 = 0.25; end
+if nargin < 3 || isempty(mu2), mu2 = 0.5; end
+if nargin < 4 || isempty(mu3), mu3 = 0.75; end
+if nargin < 5 || isempty(sigma), sigma = 0.05; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu1)./sigma).^2) + exp(-0.5*((x-mu2)./sigma).^2) + exp(-0.5*((x-mu3)./sigma).^2);
+meta = struct("ID","TF090","Name","Triple Gaussian","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("mu1",mu1,"mu2",mu2,"mu3",mu3,"sigma",sigma), ...
+    "Morphology","Three localized smooth symmetric peaks");
+end
+
+function [x,f,meta] = TF091_TripleLorentzian(N,mu1,mu2,mu3,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(mu1), mu1 = 0.25; end
+if nargin < 3 || isempty(mu2), mu2 = 0.5; end
+if nargin < 4 || isempty(mu3), mu3 = 0.75; end
+if nargin < 5 || isempty(gamma), gamma = 0.04; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = sum(1./(1 + ((x-[mu1 mu2 mu3])./gamma).^2),2);
+meta = struct("ID","TF091","Name","Triple Lorentzian","Category",5,"RecommendedN",1024, ...
+    "Parameters",struct("mu1",mu1,"mu2",mu2,"mu3",mu3,"gamma",gamma), ...
+    "Morphology","Three localized symmetric peaks with algebraic tails");
+end
+
+function [x,f,meta] = TF092_TripleSpike(N,center1,center2,center3,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(center1), center1 = 0.25; end
+if nargin < 3 || isempty(center2), center2 = 0.5; end
+if nargin < 4 || isempty(center3), center3 = 0.75; end
+if nargin < 5 || isempty(width), width = 0.01; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = sum(exp(-abs((x-[center1 center2 center3])./width)),2);
+meta = struct("ID","TF092","Name","Triple Spike","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("center1",center1,"center2",center2,"center3",center3,"width",width), ...
+    "Morphology","Three sharp localized exponential peaks");
+end
+
+function [x,f,meta] = TF093_MultiSine(N,frequency1,frequency2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency1), frequency1 = 3; end
+if nargin < 3 || isempty(frequency2), frequency2 = 7; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.5 + 0.25*sin(2*pi*frequency1*x) + 0.25*sin(2*pi*frequency2*x);
+meta = struct("ID","TF093","Name","Multi-Sine","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency1",frequency1,"frequency2",frequency2), ...
+    "Morphology","Superposition of smooth periodic oscillations");
+end
+
+function [x,f,meta] = TF094_MultiCosine(N,frequency1,frequency2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency1), frequency1 = 3; end
+if nargin < 3 || isempty(frequency2), frequency2 = 7; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.5 + 0.25*cos(2*pi*frequency1*x) + 0.25*cos(2*pi*frequency2*x);
+meta = struct("ID","TF094","Name","Multi-Cosine","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency1",frequency1,"frequency2",frequency2), ...
+    "Morphology","Superposition of smooth periodic oscillations");
+end
+
+function [x,f,meta] = TF095_MultiGaussian(N,centers,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(sigma), sigma = 0.05; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(exp(-0.5*((x-centers)./sigma).^2),2);
+meta = struct("ID","TF095","Name","Multi-Gaussian","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"sigma",sigma),"Morphology","Multiple localized smooth symmetric peaks");
+end
+
+function [x,f,meta] = TF096_MultiLorentzian(N,centers,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(gamma), gamma = 0.04; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(1./(1 + ((x-centers)./gamma).^2),2);
+meta = struct("ID","TF096","Name","Multi-Lorentzian","Category",5,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"gamma",gamma),"Morphology","Multiple localized peaks with algebraic tails");
+end
+
+function [x,f,meta] = TF097_MultiSpike(N,centers,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(width), width = 0.01; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(exp(-abs((x-centers)./width)),2);
+meta = struct("ID","TF097","Name","Multi-Spike","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"width",width),"Morphology","Multiple sharp localized exponential peaks");
+end
+
+function [x,f,meta] = TF098_MultiStep(N,breakpoints,levels)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(breakpoints), breakpoints = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(levels), levels = [0 1 0.5 1.2]; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = levels(1) + sum(levels(2:end)-levels(1:end-1) .* (x >= breakpoints),2);
+meta = struct("ID","TF098","Name","Multi-Step","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("breakpoints",breakpoints,"levels",levels), ...
+    "Morphology","Piecewise-constant waveform with multiple abrupt transitions");
+end
+
+function [x,f,meta] = TF099_MultiRamp(N,breakpoints,levels)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(breakpoints), breakpoints = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(levels), levels = [0 1 0.5 1.2]; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = interp1([0 breakpoints 1],levels,x,'linear');
+meta = struct("ID","TF099","Name","Multi-Ramp","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("breakpoints",breakpoints,"levels",levels), ...
+    "Morphology","Piecewise-linear waveform with multiple slope changes");
+end
+
+function [x,f,meta] = TF100_MultiPulse(N,centers,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(width), width = 0.15; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(max(1 - abs((x-centers)./(width/2)),0),2);
+meta = struct("ID","TF100","Name","Multi-Pulse","Category",2,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"width",width),"Morphology","Multiple localized piecewise-linear pulses");
+end
+
+function [x,f,meta] = TF101_MultiParabolicPulse(N,centers,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(width), width = 0.15; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(max(1 - ((x-centers)./(width/2)).^2,0),2);
+meta = struct("ID","TF101","Name","Multi-Parabolic Pulse","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"width",width),"Morphology","Multiple localized smooth compact pulses");
+end
+
+function [x,f,meta] = TF102_MultiExponential(N,decays,weights)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(decays), decays = [2 5 10]; end
+if nargin < 3 || isempty(weights), weights = [0.5 0.3 0.2]; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = exp(-x*decays)*weights(:);
+meta = struct("ID","TF102","Name","Multi-Exponential","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("decays",decays,"weights",weights),"Morphology","Superposition of exponential decays");
+end
+
+function [x,f,meta] = TF103_MultiPowerLaw(N,exponents,weights)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(exponents), exponents = [1 2 3]; end
+if nargin < 3 || isempty(weights), weights = [0.5 0.3 0.2]; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = x.^exponents*weights(:);
+meta = struct("ID","TF103","Name","Multi-Power Law","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("exponents",exponents,"weights",weights),"Morphology","Superposition of algebraic growth profiles");
+end
+
+function [x,f,meta] = TF104_MultiDampedSine(N,frequencies,decays,weights)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequencies), frequencies = [2 5 9]; end
+if nargin < 3 || isempty(decays), decays = [1 3 6]; end
+if nargin < 4 || isempty(weights), weights = [0.5 0.3 0.2]; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = sum(weights(:).'.*exp(-x*decays(:).').*sin(2*pi*x*frequencies(:).'),2);
+meta = struct("ID","TF104","Name","Multi-Damped Sine","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequencies",frequencies,"decays",decays,"weights",weights), ...
+    "Morphology","Superposition of decaying oscillatory components");
+end
+
+function [x,f,meta] = TF105_MultiCosineWindow(N,frequencies,weights)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequencies), frequencies = [1 2 3]; end
+if nargin < 3 || isempty(weights), weights = [0.5 0.3 0.2]; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = 0.5 + cos(2*pi*x*frequencies(:).')*weights(:);
+meta = struct("ID","TF105","Name","Multi-Cosine Window","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequencies",frequencies,"weights",weights), ...
+    "Morphology","Weighted superposition of smooth cosine oscillations");
+end
+
+function [x,f,meta] = TF106_MultiSinc(N,centers,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(sinc(frequency*(x-centers)),2);
+meta = struct("ID","TF106","Name","Multi-Sinc","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"frequency",frequency), ...
+    "Morphology","Superposition of localized oscillatory functions");
+end
+
+function [x,f,meta] = TF107_MultiSincSquared(N,centers,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(sinc(frequency*(x-centers)).^2,2);
+meta = struct("ID","TF107","Name","Multi-Sinc Squared","Category",1,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"frequency",frequency), ...
+    "Morphology","Superposition of localized nonnegative oscillatory peaks");
+end
+
+function [x,f,meta] = TF108_MultiMorletWavelet(N,centers,frequency,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(frequency), frequency = 8; end
+if nargin < 4 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(exp(-0.5*((x-centers)./sigma).^2).*cos(2*pi*frequency*(x-centers)),2);
+meta = struct("ID","TF108","Name","Multi-Morlet Wavelet","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"frequency",frequency,"sigma",sigma), ...
+    "Morphology","Superposition of localized oscillatory wavelets");
+end
+
+function [x,f,meta] = TF109_MultiGabor(N,centers,frequency,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 3 || isempty(frequency), frequency = 10; end
+if nargin < 4 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).'; f = sum(exp(-0.5*((x-centers)./sigma).^2).*cos(2*pi*frequency*(x-centers)),2);
+meta = struct("ID","TF109","Name","Multi-Gabor","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("centers",centers,"frequency",frequency,"sigma",sigma), ...
+    "Morphology","Superposition of localized oscillatory Gaussian waveforms");
+end
+
+function [x,f,meta] = TF110_MultiChirp(N,frequency0,frequency1,centers,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(frequency0), frequency0 = 2; end
+if nargin < 3 || isempty(frequency1), frequency1 = 12; end
+if nargin < 4 || isempty(centers), centers = [0.25 0.5 0.75]; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+x = linspace(0,1,N).';
+f = sum(exp(-0.5*((x-centers)./sigma).^2).*sin(2*pi*(frequency0*(x-centers) + 0.5*(frequency1-frequency0)*(x-centers).^2)),2);
+meta = struct("ID","TF110","Name","Multi-Chirp","Category",3,"RecommendedN",1024, ...
+    "Parameters",struct("frequency0",frequency0,"frequency1",frequency1,"centers",centers,"sigma",sigma), ...
+    "Morphology","Superposition of localized chirped oscillations");
+end
+
+function [x,f,meta] = TF111_RandomWalk(N,seed,stepScale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(stepScale), stepScale = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cumsum(stepScale*randn(size(x)));
+meta = struct("ID","TF111","Name","Random Walk","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"stepScale",stepScale),"Morphology","Discrete cumulative stochastic trajectory");
+end
+
+function [x,f,meta] = TF112_RandomWalkNormalized(N,seed,stepScale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(stepScale), stepScale = 1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cumsum(stepScale*randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF112","Name","Normalized Random Walk","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"stepScale",stepScale),"Morphology","Zero-mean unit-variance cumulative stochastic trajectory");
+end
+
+function [x,f,meta] = TF113_AR1Noise(N,seed,rho)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF113","Name","AR(1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho),"Morphology","Correlated stochastic fluctuations with exponential memory");
+end
+
+function [x,f,meta] = TF114_AR1NoiseNormalized(N,seed,rho)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF114","Name","Normalized AR(1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho),"Morphology","Zero-mean unit-variance correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF115_AR2Noise(N,seed,rho1,rho2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF115","Name","AR(2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2), ...
+    "Morphology","Correlated stochastic fluctuations with second-order memory");
+end
+
+function [x,f,meta] = TF116_AR2NoiseNormalized(N,seed,rho1,rho2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter(1,[1 -rho1 -rho2],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF116","Name","Normalized AR(2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2), ...
+    "Morphology","Zero-mean unit-variance second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF117_MA1Noise(N,seed,theta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(theta), theta = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta],1,randn(size(x)));
+meta = struct("ID","TF117","Name","MA(1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"theta",theta), ...
+    "Morphology","Correlated stochastic fluctuations with finite moving-average memory");
+end
+
+function [x,f,meta] = TF118_MA1NoiseNormalized(N,seed,theta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(theta), theta = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta],1,randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF118","Name","Normalized MA(1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"theta",theta),"Morphology","Zero-mean unit-variance finite-memory stochastic fluctuations");
+end
+
+function [x,f,meta] = TF119_MA2Noise(N,seed,theta1,theta2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(theta1), theta1 = 0.6; end
+if nargin < 4 || isempty(theta2), theta2 = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta1 theta2],1,randn(size(x)));
+meta = struct("ID","TF119","Name","MA(2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"theta1",theta1,"theta2",theta2), ...
+    "Morphology","Correlated stochastic fluctuations with second-order moving-average memory");
+end
+
+function [x,f,meta] = TF120_MA2NoiseNormalized(N,seed,theta1,theta2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(theta1), theta1 = 0.6; end
+if nargin < 4 || isempty(theta2), theta2 = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta1 theta2],1,randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF120","Name","Normalized MA(2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"theta1",theta1,"theta2",theta2), ...
+    "Morphology","Zero-mean unit-variance second-order moving-average stochastic fluctuations");
+end
+
+function [x,f,meta] = TF121_ARMA11Noise(N,seed,rho,theta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(theta), theta = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta],[1 -rho],randn(size(x)));
+meta = struct("ID","TF121","Name","ARMA(1,1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"theta",theta), ...
+    "Morphology","Correlated stochastic fluctuations with autoregressive and moving-average memory");
+end
+
+function [x,f,meta] = TF122_ARMA11NoiseNormalized(N,seed,rho,theta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(theta), theta = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta],[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF122","Name","Normalized ARMA(1,1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"theta",theta), ...
+    "Morphology","Zero-mean unit-variance autoregressive moving-average stochastic fluctuations");
+end
+
+function [x,f,meta] = TF123_ARMA22Noise(N,seed,rho1,rho2,theta1,theta2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(theta1), theta1 = 0.6; end
+if nargin < 6 || isempty(theta2), theta2 = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta1 theta2],[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF123","Name","ARMA(2,2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"theta1",theta1,"theta2",theta2), ...
+    "Morphology","Correlated stochastic fluctuations with second-order autoregressive and moving-average memory");
+end
+
+function [x,f,meta] = TF124_ARMA22NoiseNormalized(N,seed,rho1,rho2,theta1,theta2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(theta1), theta1 = 0.6; end
+if nargin < 6 || isempty(theta2), theta2 = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = filter([1 theta1 theta2],[1 -rho1 -rho2],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF124","Name","Normalized ARMA(2,2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"theta1",theta1,"theta2",theta2), ...
+    "Morphology","Zero-mean unit-variance second-order autoregressive moving-average stochastic fluctuations");
+end
+
+function [x,f,meta] = TF125_ARIMA11Noise(N,seed,rho,theta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(theta), theta = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; innovations = randn(size(x));
+f = cumsum(filter([1 theta],[1 -rho],innovations));
+meta = struct("ID","TF125","Name","ARIMA(1,1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"theta",theta), ...
+    "Morphology","Integrated autoregressive moving-average stochastic fluctuations");
+end
+
+function [x,f,meta] = TF126_ARIMA11NoiseNormalized(N,seed,rho,theta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(theta), theta = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cumsum(filter([1 theta],[1 -rho],randn(size(x)))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF126","Name","Normalized ARIMA(1,1) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"theta",theta),"Morphology","Zero-mean unit-variance integrated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF127_ARIMA22Noise(N,seed,rho1,rho2,theta1,theta2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(theta1), theta1 = 0.6; end
+if nargin < 6 || isempty(theta2), theta2 = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cumsum(filter([1 theta1 theta2],[1 -rho1 -rho2],randn(size(x))));
+meta = struct("ID","TF127","Name","ARIMA(2,2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"theta1",theta1,"theta2",theta2), ...
+    "Morphology","Integrated second-order autoregressive moving-average stochastic fluctuations");
+end
+
+function [x,f,meta] = TF128_ARIMA22NoiseNormalized(N,seed,rho1,rho2,theta1,theta2)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(theta1), theta1 = 0.6; end
+if nargin < 6 || isempty(theta2), theta2 = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cumsum(filter([1 theta1 theta2],[1 -rho1 -rho2],randn(size(x)))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF128","Name","Normalized ARIMA(2,2) Noise","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"theta1",theta1,"theta2",theta2), ...
+    "Morphology","Zero-mean unit-variance integrated second-order stochastic fluctuations");
+end
+
+function [x,f,meta] = TF129_AR1Sine(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sin(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF129","Name","AR(1) Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Periodic waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF130_AR1SineNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sin(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF130","Name","Normalized AR(1) Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency),"Morphology","Zero-mean unit-variance periodic waveform with correlated noise");
+end
+
+function [x,f,meta] = TF131_AR1Cosine(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cos(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF131","Name","AR(1) Cosine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Periodic waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF132_AR1CosineNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cos(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF132","Name","Normalized AR(1) Cosine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency),"Morphology","Zero-mean unit-variance periodic waveform with correlated noise");
+end
+
+function [x,f,meta] = TF133_AR1Gaussian(N,seed,rho,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-0.5*((x-mu)./sigma).^2) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF133","Name","AR(1) Gaussian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized Gaussian peak with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF134_AR1GaussianNormalized(N,seed,rho,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-0.5*((x-mu)./sigma).^2) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF134","Name","Normalized AR(1) Gaussian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized Gaussian profile with correlated noise");
+end
+
+function [x,f,meta] = TF135_AR1GaussianMixture(N,seed,rho,centers,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(centers), centers = [0.3 0.7]; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sum(exp(-0.5*((x-centers)./sigma).^2),2) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF135","Name","AR(1) Gaussian Mixture","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"centers",centers,"sigma",sigma), ...
+    "Morphology","Multiple localized Gaussian peaks with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF136_AR1GaussianMixtureNormalized(N,seed,rho,centers,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(centers), centers = [0.3 0.7]; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sum(exp(-0.5*((x-centers)./sigma).^2),2) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF136","Name","Normalized AR(1) Gaussian Mixture","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"centers",centers,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance Gaussian mixture with correlated noise");
+end
+
+function [x,f,meta] = TF137_AR1Lorentzian(N,seed,rho,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(1 + ((x-mu)./gamma).^2) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF137","Name","AR(1) Lorentzian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"gamma",gamma), ...
+    "Morphology","Localized Lorentzian peak with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF138_AR1LorentzianNormalized(N,seed,rho,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(1 + ((x-mu)./gamma).^2) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF138","Name","Normalized AR(1) Lorentzian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"gamma",gamma), ...
+    "Morphology","Zero-mean unit-variance Lorentzian profile with correlated noise");
+end
+
+function [x,f,meta] = TF139_AR1Sinc(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sinc(frequency*(x-0.5)) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF139","Name","AR(1) Sinc","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Localized oscillatory profile with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF140_AR1SincNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sinc(frequency*(x-0.5)) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF140","Name","Normalized AR(1) Sinc","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance localized oscillatory profile with correlated noise");
+end
+
+function [x,f,meta] = TF141_AR1Step(N,seed,rho,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(x0), x0 = 0.5; end
+if nargin < 5 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 0.5*(1 + tanh((x-x0)./width)) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF141","Name","AR(1) Step","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"x0",x0,"width",width), ...
+    "Morphology","Smooth transition with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF142_AR1StepNormalized(N,seed,rho,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(x0), x0 = 0.5; end
+if nargin < 5 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 0.5*(1 + tanh((x-x0)./width)) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF142","Name","Normalized AR(1) Step","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"x0",x0,"width",width), ...
+    "Morphology","Zero-mean unit-variance smooth transition with correlated noise");
+end
+
+function [x,f,meta] = TF143_AR1Ramp(N,seed,rho,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(x0), x0 = 0.2; end
+if nargin < 5 || isempty(x1), x1 = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = min(max((x-x0)./(x1-x0),0),1) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF143","Name","AR(1) Ramp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"x0",x0,"x1",x1), ...
+    "Morphology","Bounded ramp with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF144_AR1RampNormalized(N,seed,rho,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(x0), x0 = 0.2; end
+if nargin < 5 || isempty(x1), x1 = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = min(max((x-x0)./(x1-x0),0),1) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF144","Name","Normalized AR(1) Ramp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"x0",x0,"x1",x1), ...
+    "Morphology","Zero-mean unit-variance bounded ramp with correlated noise");
+end
+
+function [x,f,meta] = TF145_AR1Triangle(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; triangle = 1 - abs(2*mod(frequency*x,1)-1);
+f = triangle + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF145","Name","AR(1) Triangle","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Periodic triangular waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF146_AR1TriangleNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; triangle = 1 - abs(2*mod(frequency*x,1)-1);
+f = triangle + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF146","Name","Normalized AR(1) Triangle","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance triangular waveform with correlated noise");
+end
+
+function [x,f,meta] = TF147_AR1Square(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; squareWave = double(sin(2*pi*frequency*x) >= 0);
+f = squareWave + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF147","Name","AR(1) Square","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Periodic square waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF148_AR1SquareNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; squareWave = double(sin(2*pi*frequency*x) >= 0);
+f = squareWave + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF148","Name","Normalized AR(1) Square","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance square waveform with correlated noise");
+end
+
+function [x,f,meta] = TF149_AR1Sawtooth(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; sawtooth = mod(frequency*x,1);
+f = sawtooth + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF149","Name","AR(1) Sawtooth","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Periodic sawtooth waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF150_AR1SawtoothNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = mod(frequency*x,1) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF150","Name","Normalized AR(1) Sawtooth","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance sawtooth waveform with correlated noise");
+end
+
+
+function [x,f,meta] = TF151_AR1DampedSine(N,seed,rho,frequency,decay)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+if nargin < 5 || isempty(decay), decay = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-decay*x).*sin(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF151","Name","AR(1) Damped Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency,"decay",decay), ...
+    "Morphology","Decaying oscillatory waveform with correlated stochastic fluctuations");
+end
+
+
+function [x,f,meta] = TF152_AR1DampedSineNormalized(N,seed,rho,frequency,decay)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+if nargin < 5 || isempty(decay), decay = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-decay*x).*sin(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF152","Name","Normalized AR(1) Damped Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency,"decay",decay), ...
+    "Morphology","Zero-mean unit-variance damped oscillation with correlated noise");
+end
+
+function [x,f,meta] = TF153_AR1Chirp(N,seed,rho,frequency0,frequency1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency0), frequency0 = 2; end
+if nargin < 5 || isempty(frequency1), frequency1 = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+chirpSignal = sin(2*pi*(frequency0*x + 0.5*(frequency1-frequency0)*x.^2));
+f = chirpSignal + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF153","Name","AR(1) Chirp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency0",frequency0,"frequency1",frequency1), ...
+    "Morphology","Chirped oscillation with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF154_AR1ChirpNormalized(N,seed,rho,frequency0,frequency1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency0), frequency0 = 2; end
+if nargin < 5 || isempty(frequency1), frequency1 = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = sin(2*pi*(frequency0*x + 0.5*(frequency1-frequency0)*x.^2)) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF154","Name","Normalized AR(1) Chirp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency0",frequency0,"frequency1",frequency1), ...
+    "Morphology","Zero-mean unit-variance chirped oscillation with correlated noise");
+end
+
+
+function [x,f,meta] = TF155_AR1MorletWavelet(N,seed,rho,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 8; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF155","Name","AR(1) Morlet Wavelet","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized oscillatory wavelet with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF156_AR1MorletWaveletNormalized(N,seed,rho,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 8; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF156","Name","Normalized AR(1) Morlet Wavelet","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized wavelet with correlated noise");
+end
+
+function [x,f,meta] = TF157_AR1Gabor(N,seed,rho,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 10; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF157","Name","AR(1) Gabor","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized oscillatory Gaussian waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF158_AR1GaborNormalized(N,seed,rho,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 10; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF158","Name","Normalized AR(1) Gabor","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized Gabor waveform with correlated noise");
+end
+
+function [x,f,meta] = TF159_AR1MexicanHat(N,seed,rho,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; u = (x-mu)./sigma;
+f = (1-u.^2).*exp(-0.5*u.^2) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF159","Name","AR(1) Mexican Hat","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized wavelet with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF160_AR1MexicanHatNormalized(N,seed,rho,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; u = (x-mu)./sigma;
+f = (1-u.^2).*exp(-0.5*u.^2) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF160","Name","Normalized AR(1) Mexican Hat","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized wavelet with correlated noise");
+end
+
+function [x,f,meta] = TF161_AR1TopHat(N,seed,rho,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(x0), x0 = 0.3; end
+if nargin < 5 || isempty(x1), x1 = 0.7; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = double(x >= x0 & x <= x1) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF161","Name","AR(1) Top Hat","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"x0",x0,"x1",x1), ...
+    "Morphology","Localized plateau with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF162_AR1TopHatNormalized(N,seed,rho,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(x0), x0 = 0.3; end
+if nargin < 5 || isempty(x1), x1 = 0.7; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = double(x >= x0 & x <= x1) + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF162","Name","Normalized AR(1) Top Hat","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"x0",x0,"x1",x1), ...
+    "Morphology","Zero-mean unit-variance localized plateau with correlated noise");
+end
+
+function [x,f,meta] = TF163_AR1ParabolicPulse(N,seed,rho,center,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(center), center = 0.5; end
+if nargin < 5 || isempty(width), width = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = max(1 - ((x-center)./(width/2)).^2,0) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF163","Name","AR(1) Parabolic Pulse","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"center",center,"width",width), ...
+    "Morphology","Localized parabolic pulse with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF164_AR1ParabolicPulseNormalized(N,seed,rho,center,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(center), center = 0.5; end
+if nargin < 5 || isempty(width), width = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = max(1 - ((x-center)./(width/2)).^2,0) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF164","Name","Normalized AR(1) Parabolic Pulse","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"center",center,"width",width), ...
+    "Morphology","Zero-mean unit-variance localized parabolic pulse with correlated noise");
+end
+
+function [x,f,meta] = TF165_AR1Cauchy(N,seed,rho,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(pi*gamma*(1 + ((x-mu)./gamma).^2)) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF165","Name","AR(1) Cauchy","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"gamma",gamma), ...
+    "Morphology","Localized heavy-tailed profile with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF166_AR1CauchyNormalized(N,seed,rho,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(pi*gamma*(1 + ((x-mu)./gamma).^2)) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF166","Name","Normalized AR(1) Cauchy","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"gamma",gamma), ...
+    "Morphology","Zero-mean unit-variance heavy-tailed profile with correlated noise");
+end
+
+function [x,f,meta] = TF167_AR1BetaDistribution(N,seed,rho,a,b)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(a), a = 2; end
+if nargin < 5 || isempty(b), b = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = x.^(a-1).*(1-x).^(b-1)/beta(a,b) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF167","Name","AR(1) Beta Distribution","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"a",a,"b",b), ...
+    "Morphology","Bounded asymmetric distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF168_AR1BetaDistributionNormalized(N,seed,rho,a,b)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(a), a = 2; end
+if nargin < 5 || isempty(b), b = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = x.^(a-1).*(1-x).^(b-1)/beta(a,b) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF168","Name","Normalized AR(1) Beta Distribution","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"a",a,"b",b), ...
+    "Morphology","Zero-mean unit-variance bounded asymmetric distribution with correlated noise");
+end
+
+function [x,f,meta] = TF169_AR1GammaDistribution(N,seed,rho,shape,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(shape), shape = 2; end
+if nargin < 5 || isempty(scale), scale = 0.2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = x.^(shape-1).*exp(-x./scale)./(gamma(shape)*scale^shape) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF169","Name","AR(1) Gamma Distribution","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"shape",shape,"scale",scale), ...
+    "Morphology","Positive skewed distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF170_AR1GammaDistributionNormalized(N,seed,rho,shape,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(shape), shape = 2; end
+if nargin < 5 || isempty(scale), scale = 0.2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = x.^(shape-1).*exp(-x./scale)./(gamma(shape)*scale^shape) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF170","Name","Normalized AR(1) Gamma Distribution","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"shape",shape,"scale",scale), ...
+    "Morphology","Zero-mean unit-variance positive-skewed distribution with correlated noise");
+end
+
+function [x,f,meta] = TF171_AR1LogNormal(N,seed,rho,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = -1; end
+if nargin < 5 || isempty(sigma), sigma = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = exp(-0.5*((log(max(x,eps))-mu)./sigma).^2)./(max(x,eps)*sigma*sqrt(2*pi));
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF171","Name","AR(1) Log-Normal","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma), ...
+    "Morphology","Positively skewed distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF172_AR1LogNormalNormalized(N,seed,rho,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = -1; end
+if nargin < 5 || isempty(sigma), sigma = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = exp(-0.5*((log(max(x,eps))-mu)./sigma).^2)./(max(x,eps)*sigma*sqrt(2*pi));
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF172","Name","Normalized AR(1) Log-Normal","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance positively skewed distribution with correlated noise");
+end
+
+function [x,f,meta] = TF173_AR1Weibull(N,seed,rho,shape,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(shape), shape = 2; end
+if nargin < 5 || isempty(scale), scale = 0.35; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = (shape/scale)*(x/scale).^(shape-1).*exp(-(x/scale).^shape);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF173","Name","AR(1) Weibull","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"shape",shape,"scale",scale), ...
+    "Morphology","Skewed distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF174_AR1WeibullNormalized(N,seed,rho,shape,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(shape), shape = 2; end
+if nargin < 5 || isempty(scale), scale = 0.35; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = (shape/scale)*(x/scale).^(shape-1).*exp(-(x/scale).^shape);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF174","Name","Normalized AR(1) Weibull","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"shape",shape,"scale",scale), ...
+    "Morphology","Zero-mean unit-variance skewed distribution with correlated noise");
+end
+
+function [x,f,meta] = TF175_AR1Rayleigh(N,seed,rho,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(scale), scale = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = (x./scale.^2).*exp(-x.^2./(2*scale.^2));
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF175","Name","AR(1) Rayleigh","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"scale",scale), ...
+    "Morphology","Positive-skewed distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF176_AR1RayleighNormalized(N,seed,rho,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(scale), scale = 0.3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = (x./scale.^2).*exp(-x.^2./(2*scale.^2));
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF176","Name","Normalized AR(1) Rayleigh","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"scale",scale), ...
+    "Morphology","Zero-mean unit-variance positive-skewed distribution with correlated noise");
+end
+
+function [x,f,meta] = TF177_AR1Rice(N,seed,rho,nu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(nu), nu = 0.4; end
+if nargin < 5 || isempty(sigma), sigma = 0.15; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+base = (x./sigma.^2).*exp(-(x.^2 + nu.^2)./(2*sigma.^2)).*besseli(0,x.*nu./sigma.^2);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF177","Name","AR(1) Rice","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"nu",nu,"sigma",sigma), ...
+    "Morphology","Noncentral radial distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF178_AR1RiceNormalized(N,seed,rho,nu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(nu), nu = 0.4; end
+if nargin < 5 || isempty(sigma), sigma = 0.15; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+base = (x./sigma.^2).*exp(-(x.^2 + nu.^2)./(2*sigma.^2)).*besseli(0,x.*nu./sigma.^2);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF178","Name","Normalized AR(1) Rice","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"nu",nu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance noncentral radial distribution with correlated noise");
+end
+
+function [x,f,meta] = TF179_AR1ChiSquare(N,seed,rho,degree)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(degree), degree = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+base = x.^(degree/2-1).*exp(-x/2)./(2^(degree/2)*gamma(degree/2));
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF179","Name","AR(1) Chi-Square","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"degree",degree), ...
+    "Morphology","Chi-square distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF180_AR1ChiSquareNormalized(N,seed,rho,degree)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(degree), degree = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+base = x.^(degree/2-1).*exp(-x/2)./(2^(degree/2)*gamma(degree/2));
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF180","Name","Normalized AR(1) Chi-Square","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"degree",degree), ...
+    "Morphology","Zero-mean unit-variance Chi-square profile with correlated noise");
+end
+
+function [x,f,meta] = TF181_AR1StudentT(N,seed,rho,nu)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(nu), nu = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; t = (x-0.5)/0.15;
+base = gamma((nu+1)/2)/(sqrt(nu*pi)*gamma(nu/2)*0.15).*(1+t.^2/nu).^(-(nu+1)/2);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF181","Name","AR(1) Student-t","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"nu",nu), ...
+    "Morphology","Localized heavy-tailed distribution with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF182_AR1StudentTNormalized(N,seed,rho,nu)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(nu), nu = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; t = (x-0.5)/0.15;
+base = gamma((nu+1)/2)/(sqrt(nu*pi)*gamma(nu/2)*0.15).*(1+t.^2/nu).^(-(nu+1)/2);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF182","Name","Normalized AR(1) Student-t","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"nu",nu), ...
+    "Morphology","Zero-mean unit-variance heavy-tailed distribution with correlated noise");
+end
+
+function [x,f,meta] = TF183_AR1Laplace(N,seed,rho,mu,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(scale), scale = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = exp(-abs(x-mu)./scale)./(2*scale);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF183","Name","AR(1) Laplace","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"scale",scale), ...
+    "Morphology","Localized Laplace profile with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF184_AR1LaplaceNormalized(N,seed,rho,mu,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(scale), scale = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = exp(-abs(x-mu)./scale)./(2*scale);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF184","Name","Normalized AR(1) Laplace","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"scale",scale), ...
+    "Morphology","Zero-mean unit-variance localized Laplace profile with correlated noise");
+end
+
+function [x,f,meta] = TF185_AR1HyperbolicSecant(N,seed,rho,mu,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(scale), scale = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = sech((x-mu)./scale).^2./(pi*scale);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF185","Name","AR(1) Hyperbolic Secant","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"scale",scale), ...
+    "Morphology","Localized smooth symmetric profile with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF186_AR1HyperbolicSecantNormalized(N,seed,rho,mu,scale)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(scale), scale = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = sech((x-mu)./scale).^2./(pi*scale);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF186","Name","Normalized AR(1) Hyperbolic Secant","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"scale",scale), ...
+    "Morphology","Zero-mean unit-variance localized hyperbolic-secant profile with correlated noise");
+end
+
+function [x,f,meta] = TF187_AR1SuperGaussian(N,seed,rho,mu,sigma,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(sigma), sigma = 0.12; end
+if nargin < 6 || isempty(order), order = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = exp(-0.5*abs((x-mu)./sigma).^order);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF187","Name","AR(1) Super-Gaussian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma,"order",order), ...
+    "Morphology","Localized adjustable-flatness profile with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF188_AR1SuperGaussianNormalized(N,seed,rho,mu,sigma,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(sigma), sigma = 0.12; end
+if nargin < 6 || isempty(order), order = 4; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = exp(-0.5*abs((x-mu)./sigma).^order);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF188","Name","Normalized AR(1) Super-Gaussian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"sigma",sigma,"order",order), ...
+    "Morphology","Zero-mean unit-variance adjustable-flatness profile with correlated noise");
+end
+
+function [x,f,meta] = TF189_AR1SuperLorentzian(N,seed,rho,mu,gamma,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(gamma), gamma = 0.08; end
+if nargin < 6 || isempty(order), order = 2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = 1./(1 + abs((x-mu)./gamma).^order);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF189","Name","AR(1) Super-Lorentzian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"gamma",gamma,"order",order), ...
+    "Morphology","Localized adjustable-tail profile with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF190_AR1SuperLorentzianNormalized(N,seed,rho,mu,gamma,order)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(gamma), gamma = 0.08; end
+if nargin < 6 || isempty(order), order = 2; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; base = 1./(1 + abs((x-mu)./gamma).^order);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF190","Name","Normalized AR(1) Super-Lorentzian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"gamma",gamma,"order",order), ...
+    "Morphology","Zero-mean unit-variance adjustable-tail profile with correlated noise");
+end
+
+function [x,f,meta] = TF191_AR1PoissonKernel(N,seed,rho,mu,kappa)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(kappa), kappa = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+base = (1-kappa^2)./(1-2*kappa*cos(2*pi*(x-mu))+kappa^2);
+f = base + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF191","Name","AR(1) Poisson Kernel","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"kappa",kappa), ...
+    "Morphology","Periodic localized kernel with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF192_AR1PoissonKernelNormalized(N,seed,rho,mu,kappa)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(mu), mu = 0.5; end
+if nargin < 5 || isempty(kappa), kappa = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+base = (1-kappa^2)./(1-2*kappa*cos(2*pi*(x-mu))+kappa^2);
+f = base + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF192","Name","Normalized AR(1) Poisson Kernel","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"mu",mu,"kappa",kappa), ...
+    "Morphology","Zero-mean unit-variance periodic localized kernel with correlated noise");
+end
+
+function [x,f,meta] = TF193_AR1Percolation(N,seed,rho,pc,beta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(pc), pc = 0.38; end
+if nargin < 5 || isempty(beta), beta = 0.41; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = max(x-pc,0).^beta + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF193","Name","AR(1) Percolation","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"pc",pc,"beta",beta), ...
+    "Morphology","Percolation onset with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF194_AR1PercolationNormalized(N,seed,rho,pc,beta)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(pc), pc = 0.38; end
+if nargin < 5 || isempty(beta), beta = 0.41; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = max(x-pc,0).^beta + filter(1,[1 -rho],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF194","Name","Normalized AR(1) Percolation","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"pc",pc,"beta",beta), ...
+    "Morphology","Zero-mean unit-variance percolation profile with correlated noise");
+end
+
+function [x,f,meta] = TF195_AR1Logistic(N,seed,rho,k,x0)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(k), k = 18; end
+if nargin < 5 || isempty(x0), x0 = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(1 + exp(-k.*(x-x0))) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF195","Name","AR(1) Logistic","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"k",k,"x0",x0), ...
+    "Morphology","Smooth sigmoidal transition with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF196_AR1LogisticNormalized(N,seed,rho,k,x0)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(k), k = 18; end
+if nargin < 5 || isempty(x0), x0 = 0.5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(1 + exp(-k.*(x-x0))) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF196","Name","Normalized AR(1) Logistic","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"k",k,"x0",x0), ...
+    "Morphology","Zero-mean unit-variance sigmoidal transition with correlated noise");
+end
+
+function [x,f,meta] = TF197_AR1Exponential(N,seed,rho,lambda)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(lambda), lambda = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-lambda.*x) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF197","Name","AR(1) Exponential","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"lambda",lambda), ...
+    "Morphology","Exponential decay with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF198_AR1ExponentialNormalized(N,seed,rho,lambda)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(lambda), lambda = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-lambda.*x) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF198","Name","Normalized AR(1) Exponential","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"lambda",lambda), ...
+    "Morphology","Zero-mean unit-variance exponential decay with correlated noise");
+end
+
+function [x,f,meta] = TF199_AR1SineCosine(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sin(2*pi*frequency*x) + cos(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x)));
+meta = struct("ID","TF199","Name","AR(1) Sine-Cosine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Combined periodic waveform with correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF200_AR1SineCosineNormalized(N,seed,rho,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho), rho = 0.9; end
+if nargin < 4 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sin(2*pi*frequency*x) + cos(2*pi*frequency*x) + filter(1,[1 -rho],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF200","Name","Normalized AR(1) Sine-Cosine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho",rho,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance combined periodic waveform with correlated noise");
+end
+
+function [x,f,meta] = TF201_AR2Sine(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sin(2*pi*frequency*x) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF201","Name","AR(2) Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Periodic waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF202_AR2SineNormalized(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sin(2*pi*frequency*x) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF202","Name","Normalized AR(2) Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance periodic waveform with second-order correlated noise");
+end
+
+function [x,f,meta] = TF203_AR2Cosine(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cos(2*pi*frequency*x) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF203","Name","AR(2) Cosine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Periodic waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF204_AR2CosineNormalized(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 5; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = cos(2*pi*frequency*x) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF204","Name","Normalized AR(2) Cosine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance periodic waveform with second-order correlated noise");
+end
+
+function [x,f,meta] = TF205_AR2Gaussian(N,seed,rho1,rho2,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-0.5*((x-mu)./sigma).^2) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF205","Name","AR(2) Gaussian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized Gaussian peak with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF206_AR2GaussianNormalized(N,seed,rho1,rho2,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(sigma), sigma = 0.08; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = exp(-0.5*((x-mu)./sigma).^2) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF206","Name","Normalized AR(2) Gaussian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized Gaussian profile with second-order correlated noise");
+end
+
+function [x,f,meta] = TF207_AR2Lorentzian(N,seed,rho1,rho2,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(1 + ((x-mu)./gamma).^2) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF207","Name","AR(2) Lorentzian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"mu",mu,"gamma",gamma), ...
+    "Morphology","Localized Lorentzian peak with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF208_AR2LorentzianNormalized(N,seed,rho1,rho2,mu,gamma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(mu), mu = 0.5; end
+if nargin < 6 || isempty(gamma), gamma = 0.06; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 1./(1 + ((x-mu)./gamma).^2) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF208","Name","Normalized AR(2) Lorentzian","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"mu",mu,"gamma",gamma), ...
+    "Morphology","Zero-mean unit-variance localized Lorentzian profile with second-order correlated noise");
+end
+
+function [x,f,meta] = TF209_AR2Sinc(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sinc(frequency*(x-0.5)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF209","Name","AR(2) Sinc","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Localized oscillatory profile with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF210_AR2SincNormalized(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = sinc(frequency*(x-0.5)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF210","Name","Normalized AR(2) Sinc","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance localized oscillatory profile with second-order correlated noise");
+end
+
+function [x,f,meta] = TF211_AR2Step(N,seed,rho1,rho2,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(x0), x0 = 0.5; end
+if nargin < 6 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 0.5*(1+tanh((x-x0)./width)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF211","Name","AR(2) Step","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"x0",x0,"width",width), ...
+    "Morphology","Smooth transition with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF212_AR2StepNormalized(N,seed,rho1,rho2,x0,width)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(x0), x0 = 0.5; end
+if nargin < 6 || isempty(width), width = 0.02; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = 0.5*(1+tanh((x-x0)./width)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF212","Name","Normalized AR(2) Step","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"x0",x0,"width",width), ...
+    "Morphology","Zero-mean unit-variance smooth transition with second-order correlated noise");
+end
+
+function [x,f,meta] = TF213_AR2Ramp(N,seed,rho1,rho2,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(x0), x0 = 0.2; end
+if nargin < 6 || isempty(x1), x1 = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = min(max((x-x0)./(x1-x0),0),1) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF213","Name","AR(2) Ramp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"x0",x0,"x1",x1), ...
+    "Morphology","Bounded ramp with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF214_AR2RampNormalized(N,seed,rho1,rho2,x0,x1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(x0), x0 = 0.2; end
+if nargin < 6 || isempty(x1), x1 = 0.8; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = min(max((x-x0)./(x1-x0),0),1) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF214","Name","Normalized AR(2) Ramp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"x0",x0,"x1",x1), ...
+    "Morphology","Zero-mean unit-variance bounded ramp with second-order correlated noise");
+end
+
+function [x,f,meta] = TF215_AR2Triangle(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; triangle = 1 - abs(2*mod(frequency*x,1)-1);
+f = triangle + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF215","Name","AR(2) Triangle","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Periodic triangular waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF216_AR2TriangleNormalized(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; triangle = 1 - abs(2*mod(frequency*x,1)-1);
+f = triangle + filter(1,[1 -rho1 -rho2],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF216","Name","Normalized AR(2) Triangle","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance triangular waveform with second-order correlated noise");
+end
+
+function [x,f,meta] = TF217_AR2Square(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; squareWave = double(sin(2*pi*frequency*x) >= 0);
+f = squareWave + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF217","Name","AR(2) Square","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Periodic square waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF218_AR2SquareNormalized(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; squareWave = double(sin(2*pi*frequency*x) >= 0);
+f = squareWave + filter(1,[1 -rho1 -rho2],randn(size(x))); f = (f-mean(f))./std(f);
+meta = struct("ID","TF218","Name","Normalized AR(2) Square","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance square waveform with second-order correlated noise");
+end
+
+function [x,f,meta] = TF219_AR2Sawtooth(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = mod(frequency*x,1) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF219","Name","AR(2) Sawtooth","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Periodic sawtooth waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF220_AR2SawtoothNormalized(N,seed,rho1,rho2,frequency)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).'; f = mod(frequency*x,1) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF220","Name","Normalized AR(2) Sawtooth","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency), ...
+    "Morphology","Zero-mean unit-variance sawtooth waveform with second-order correlated noise");
+end
+
+function [x,f,meta] = TF221_AR2DampedSine(N,seed,rho1,rho2,frequency,decay)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 5; end
+if nargin < 6 || isempty(decay), decay = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-decay*x).*sin(2*pi*frequency*x) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF221","Name","AR(2) Damped Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency,"decay",decay), ...
+    "Morphology","Decaying oscillatory waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF222_AR2DampedSineNormalized(N,seed,rho1,rho2,frequency,decay)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 5; end
+if nargin < 6 || isempty(decay), decay = 3; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-decay*x).*sin(2*pi*frequency*x) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF222","Name","Normalized AR(2) Damped Sine","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency,"decay",decay), ...
+    "Morphology","Zero-mean unit-variance damped oscillation with second-order correlated noise");
+end
+
+function [x,f,meta] = TF223_AR2Chirp(N,seed,rho1,rho2,frequency0,frequency1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency0), frequency0 = 2; end
+if nargin < 6 || isempty(frequency1), frequency1 = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = sin(2*pi*(frequency0*x + 0.5*(frequency1-frequency0)*x.^2)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF223","Name","AR(2) Chirp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency0",frequency0,"frequency1",frequency1), ...
+    "Morphology","Chirped oscillation with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF224_AR2ChirpNormalized(N,seed,rho1,rho2,frequency0,frequency1)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency0), frequency0 = 2; end
+if nargin < 6 || isempty(frequency1), frequency1 = 12; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = sin(2*pi*(frequency0*x + 0.5*(frequency1-frequency0)*x.^2)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF224","Name","Normalized AR(2) Chirp","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency0",frequency0,"frequency1",frequency1), ...
+    "Morphology","Zero-mean unit-variance chirped oscillation with second-order correlated noise");
+end
+
+function [x,f,meta] = TF225_AR2MorletWavelet(N,seed,rho1,rho2,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 8; end
+if nargin < 6 || isempty(mu), mu = 0.5; end
+if nargin < 7 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF225","Name","AR(2) Morlet Wavelet","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized oscillatory wavelet with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF226_AR2MorletWaveletNormalized(N,seed,rho1,rho2,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 8; end
+if nargin < 6 || isempty(mu), mu = 0.5; end
+if nargin < 7 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF226","Name","Normalized AR(2) Morlet Wavelet","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized wavelet with second-order correlated noise");
+end
+
+function [x,f,meta] = TF227_AR2Gabor(N,seed,rho1,rho2,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 10; end
+if nargin < 6 || isempty(mu), mu = 0.5; end
+if nargin < 7 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+meta = struct("ID","TF227","Name","AR(2) Gabor","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Localized oscillatory Gaussian waveform with second-order correlated stochastic fluctuations");
+end
+
+function [x,f,meta] = TF228_AR2GaborNormalized(N,seed,rho1,rho2,frequency,mu,sigma)
+if nargin < 1 || isempty(N), N = 1024; end
+if nargin < 2 || isempty(seed), seed = 1; end
+if nargin < 3 || isempty(rho1), rho1 = 1.4; end
+if nargin < 4 || isempty(rho2), rho2 = -0.5; end
+if nargin < 5 || isempty(frequency), frequency = 10; end
+if nargin < 6 || isempty(mu), mu = 0.5; end
+if nargin < 7 || isempty(sigma), sigma = 0.1; end
+validateattributes(N,{'numeric'},{'scalar','integer','>=',2});
+rng(seed); x = linspace(0,1,N).';
+f = exp(-0.5*((x-mu)./sigma).^2).*cos(2*pi*frequency*(x-mu)) + filter(1,[1 -rho1 -rho2],randn(size(x)));
+f = (f-mean(f))./std(f);
+meta = struct("ID","TF228","Name","Normalized AR(2) Gabor","Category",7,"RecommendedN",1024, ...
+    "Parameters",struct("seed",seed,"rho1",rho1,"rho2",rho2,"frequency",frequency,"mu",mu,"sigma",sigma), ...
+    "Morphology","Zero-mean unit-variance localized Gabor waveform with second-order correlated noise");
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
