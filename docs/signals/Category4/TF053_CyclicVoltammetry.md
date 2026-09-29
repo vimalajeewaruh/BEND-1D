@@ -9,11 +9,11 @@ The **CyclicVoltammetry** signal parameterizes current along a forward and rever
 Define the potential sweep by
 
 ```math
-0\leq x\leq x_r:\qquad E(x)=E_0+v_Fx,
-```
-
-```math
-x_r<x\leq 1:\qquad E(x)=E_1-v_Rx.
+E(x)
+=
+(E_0+v_Fx)I(x\leq x_r)
++
+(E_1-v_Rx)I(x>x_r).
 ```
 
 
