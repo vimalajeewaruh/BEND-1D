@@ -4,12 +4,15 @@ The **Titration** signal contains three transitions with distinctly different ch
 
 ## Mathematical Definition
 
-For $0\leq x\leq1$,
+For $0 \leq x \leq 1$, define
 
 ```math
-f(x)= 0.08\log(1+20x)
-+0.55\tanh\!\left(\frac{x-0.31}{0.018}\right)+0.32\tanh\!\left(\frac{x-0.69}{0.060}\right)
-+0.13\tanh\!\left(\frac{x-0.84}{0.014}\right)+0.07\exp\!\left[-\left(\frac{x-0.50}{0.028}\right)^2\right].
+f(x)=
+A_0\log(1+kx)
++A_1\tanh\left(\frac{x-x_1}{w_1}\right)
++A_2\tanh\left(\frac{x-x_2}{w_2}\right)
++A_3\tanh\left(\frac{x-x_3}{w_3}\right)
++A_s\exp\left[-\left(\frac{x-x_s}{w_s}\right)^2\right].
 ```
 
 [View Titration signal](../../assets/images/TF022_Titration.png)
@@ -20,9 +23,9 @@ f(x)= 0.08\log(1+20x)
 |---|---|
 | Primary family | Multiple unequal smooth transitions |
 | Signal type | Deterministic and nonstationary |
-| Main transitions | Near $x=0.31$, $0.69$, and $0.84$ |
-| Transition widths | 0.018, 0.060, and 0.014 |
-| Weak feature | Gaussian shoulder near $x=0.50$ |
+| Main transitions | Centered at $x_1$, $x_2$, and $x_3$ |
+| Transition widths | $w_1$, $w_2$, and $w_3$ |
+| Weak feature | Gaussian shoulder centered at $x=x_s$ |
 | Main challenge | Preserving sharp and broad transitions together with a weak shoulder |
 
 ## Parameters
@@ -30,10 +33,20 @@ f(x)= 0.08\log(1+20x)
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.31,0.69,0.84$ | Transition centers | As shown |
-| $0.018,0.060,0.014$ | Transition widths | As shown |
-| $0.50$ | Shoulder center | 0.50 |
-| $0.028$ | Shoulder width | 0.028 |
+| $A_0$ | Logarithmic trend amplitude | 0.08 |
+| $k$ | Logarithmic trend scale | 20 |
+| $x_1$ | First transition center | 0.31 |
+| $w_1$ | First transition width | 0.018 |
+| $A_1$ | First transition amplitude | 0.55 |
+| $x_2$ | Second transition center | 0.69 |
+| $w_2$ | Second transition width | 0.060 |
+| $A_2$ | Second transition amplitude | 0.32 |
+| $x_3$ | Third transition center | 0.84 |
+| $w_3$ | Third transition width | 0.014 |
+| $A_3$ | Third transition amplitude | 0.13 |
+| $x_s$ | Shoulder center | 0.50 |
+| $w_s$ | Shoulder width | 0.028 |
+| $A_s$ | Shoulder amplitude | 0.07 |
 
 ## MATLAB Implementation
 
