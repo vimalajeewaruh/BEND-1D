@@ -34,7 +34,7 @@ f(x)=0.035+0.018x+
 +0.10\mathbf{1}_{\{x>0.67\}}e^{-18(x-0.67)}.
 $$
 
-[Chromatogram signal](../../assets/images/TF058_Chromatogram.png)
+[View Chromatogram signal](../../assets/images/TF058_Chromatogram.png)
 
 ## Morphological Characteristics
 
