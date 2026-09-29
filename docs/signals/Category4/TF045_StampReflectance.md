@@ -38,7 +38,7 @@ $$
 f(x)=B(\lambda(x))-A_1(\lambda(x))-A_2(\lambda(x))-S(\lambda(x)).
 $$
 
-[StampReflectance signal](../../assets/images/TF045_StampReflectance.png)
+[View StampReflectance signal](../../assets/images/TF045_StampReflectance.png)
 
 ## Morphological Characteristics
 
