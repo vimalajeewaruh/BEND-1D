@@ -10,22 +10,23 @@ The **TreeRing** signal represents annual ring-width variation. Multiscale oscil
 Define the background growth pattern
 
 $$
-g(x)=0.75+0.12\sin(10\pi x+0.3)
-+0.07\sin(26\pi x)+0.035\sin(62\pi x+0.7).
+g(x)=b_0+A_1\sin(\omega_1x+\delta_1)
++A_2\sin(\omega_2x)
++A_3\sin(\omega_3x+\delta_3).
 $$
 
-The drought and recovery components are
+Define the drought and recovery components
 
 $$
-D_1(x)=0.42\exp\!\left[-\frac12\left(\frac{x-0.34}{0.055}\right)^2\right],
-$$
-
-$$
-D_2(x)=0.30\exp\!\left[-\frac12\left(\frac{x-0.72}{0.035}\right)^2\right],
+D_1(x)=A_{D1}\exp\left[-\frac12\left(\frac{x-\mu_{D1}}{s_{D1}}\right)^2\right],
 $$
 
 $$
-R(x)=0.14\exp\!\left[-\frac12\left(\frac{x-0.43}{0.025}\right)^2\right].
+D_2(x)=A_{D2}\exp\left[-\frac12\left(\frac{x-\mu_{D2}}{s_{D2}}\right)^2\right],
+$$
+
+$$
+R(x)=A_R\exp\left[-\frac12\left(\frac{x-\mu_R}{s_R}\right)^2\right].
 $$
 
 Thus
@@ -34,15 +35,15 @@ $$
 f(x)=g(x)-D_1(x)-D_2(x)+R(x).
 $$
 
-[TreeRing signal](../../assets/images/TF047_TreeRing.png)
+[View TreeRing signal](../../assets/images/TF047_TreeRing.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multiscale environmental variation with depressions |
-| Drought centers | $x=0.34$ and $x=0.72$ |
-| Recovery center | $x=0.43$ |
+| Drought centers | $x=\mu_{D1}$ and $x=\mu_{D2}$ |
+| Recovery center | $x=\mu_R$ |
 | Background scales | Frequencies 5, 13, and 31 |
 | Main challenge | Preserving narrow environmental events within oscillatory growth |
 
@@ -51,9 +52,16 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.055$ | First drought width | 0.055 |
-| $0.035$ | Second drought width | 0.035 |
-| $0.025$ | Recovery width | 0.025 |
+| $b_0$ | Baseline growth level | 0.75 |
+| $A_1,A_2,A_3$ | Background amplitudes | 0.12, 0.07, 0.035 |
+| $\omega_1,\omega_2,\omega_3$ | Background angular frequencies | $10\pi,26\pi,62\pi$ |
+| $\delta_1,\delta_3$ | Background phase shifts | 0.3, 0.7 |
+| $A_{D1},A_{D2}$ | Drought amplitudes | 0.42, 0.30 |
+| $\mu_{D1},\mu_{D2}$ | Drought centers | 0.34, 0.72 |
+| $s_{D1},s_{D2}$ | Drought widths | 0.055, 0.035 |
+| $A_R$ | Recovery amplitude | 0.14 |
+| $\mu_R$ | Recovery center | 0.43 |
+| $s_R$ | Recovery width | 0.025 |
 
 ## MATLAB Implementation
 
