@@ -32,7 +32,7 @@ $$
 f(x)=0.025\sin(2.4\pi x)+\sum_{k=1}^{5}P_k(x).
 $$
 
-[InternalSolitons signal](../../assets/images/TF039_InternalSolitons.png)
+[View InternalSolitons signal](../../assets/images/TF039_InternalSolitons.png)
 
 ## Morphological Characteristics
 
