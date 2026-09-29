@@ -9,43 +9,50 @@ The **WhaleClicks** signal consists of an irregular sequence of narrow bipolar c
 Define the derivative-of-Gaussian pulse
 
 $$
-D(x;t,s)=\frac{x-t}{s}
-\exp\!\left[-\frac12\left(\frac{x-t}{s}\right)^2\right].
+D(x;t,s)=
+\frac{x-t}{s}
+\exp\left[
+-\frac{1}{2}\left(\frac{x-t}{s}\right)^2
+\right].
 $$
 
-The primary click times and amplitudes are
+Let the primary click times and amplitudes be
 
 $$
-t=(0.105,0.205,0.298,0.397,0.515,0.655,0.815,0.925),
+\mathbf{t}=(0.105,0.205,0.298,0.397,0.515,0.655,0.815,0.925),
 $$
 
 $$
-A=(1.00,0.82,1.08,0.90,0.72,1.03,0.86,0.76).
+\mathbf{A}=(1.00,0.82,1.08,0.90,0.72,1.03,0.86,0.76).
 $$
 
 For click $k$, define the echo time
 
 $$
-e_k=t_k+0.012+0.002\sin k.
+e_k=t_k+\tau_0+\tau_1\sin k.
 $$
 
 The complete signal is
 
 $$
-f(x)=\sum_{k=1}^{8}
-\left[A_kD(x;t_k,0.0022)+0.25A_kD(x;e_k,0.0030)\right].
+f(x)=
+\sum_{k=1}^{K}
+\left[
+A_kD(x;t_k,s_p)
++\rho A_kD(x;e_k,s_e)
+\right].
 $$
 
-[WhaleClicks signal](../../assets/images/TF040_WhaleClicks.png)
+[View WhaleClicks signal](../../assets/images/TF040_WhaleClicks.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Sparse irregular bipolar clicks with echoes |
-| Number of primary clicks | 8 |
-| Primary width | 0.0022 |
-| Echo width | 0.0030 |
+| Number of primary clicks | $K$ |
+| Primary width | $s_p$ |
+| Echo width | $s_e$ |
 | Main challenge | Recovering highly sparse features on two fine scales |
 
 ## Parameters
@@ -53,10 +60,14 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.0022$ | Primary-click width | 0.0022 |
-| $0.0030$ | Echo width | 0.0030 |
-| $0.25$ | Relative echo amplitude | 0.25 |
-
+| $K$ | Number of primary clicks | 8 |
+| $\mathbf{t}$ | Primary click times | As defined above |
+| $\mathbf{A}$ | Primary click amplitudes | As defined above |
+| $s_p$ | Primary-click width | 0.0022 |
+| $s_e$ | Echo width | 0.0030 |
+| $\rho$ | Relative echo amplitude | 0.25 |
+| $\tau_0$ | Base echo delay | 0.012 |
+| $\tau_1$ | Echo-delay modulation | 0.002 |
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF040_matlab.md)
