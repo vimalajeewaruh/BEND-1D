@@ -29,15 +29,13 @@ S(x;c_{T1},w_T)-S(x;c_{T2},w_T)
 \right].
 ```
 
-Define the restricted within-layer oscillation
+Define the restricted within-layer oscillation, for $c_1<x<c_4$, as
 
 ```math
-O(x)=
-\begin{cases}
-A_O\sin(2\pi f_Ox), & c_1<x<c_4,\\
-0, & \text{otherwise}.
-\end{cases}
+O(x)=A_O\sin(2\pi f_Ox),
 ```
+
+with $O(x)=0$ outside this interval.
 
 The signal is
 
