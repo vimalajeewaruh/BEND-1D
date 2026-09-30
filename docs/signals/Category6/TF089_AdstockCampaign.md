@@ -6,38 +6,70 @@ The **AdstockCampaign** signal sums five unequal campaign impulses with differen
 
 ## Mathematical Definition
 
-For campaign times $c_k$, amplitudes $a_k$, and decay rates $r_k$,
+Define the background component
 
-$$
-f(x)=0.12+0.025x+0.025\sin(8\pi x)+\sum_{k=1}^{5}a_k I(x\ge c_k)e^{-r_k(x-c_k)},
-$$
+```math
+B(x)=b_0+mx+A_B\sin(2\pi f_Bx).
+```
 
-with
+For campaign $k$, define the elapsed time since campaign onset as
 
-$$
-c=(0.12,0.29,0.47,0.66,0.81),\quad
-a=(0.32,0.26,0.42,0.30,0.22),\quad
-r=(7,9,6,8.5,10).
-$$
+```math
+u_k=(x-c_k)_+.
+```
 
-[AdstockCampaign signal](../../assets/images/TF089_AdstockCampaign.png)
+For $x\geq c_k$, define the campaign carry-over response as
+
+```math
+R_k(x)=a_ke^{-r_ku_k},
+```
+
+with $R_k(x)=0$ for $x<c_k$.
+
+The signal is
+
+```math
+f(x)=B(x)+\sum_{k=1}^{K}R_k(x).
+```
+
+The campaign times, initial effects, and decay rates are
+
+```math
+\mathbf{c}=(0.12,\,0.29,\,0.47,\,0.66,\,0.81),
+```
+
+```math
+\mathbf{a}=(0.32,\,0.26,\,0.42,\,0.30,\,0.22),
+```
+
+```math
+\mathbf{r}=(7,\,9,\,6,\,8.5,\,10).
+```
+
+[View AdstockCampaign signal](../../assets/images/TF089_AdstockCampaign.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Overlapping causal impulse responses |
-| Events | Five abrupt campaign onsets |
-| Persistence | Unequal exponential carry-over |
+| Events | $K$ abrupt campaign onsets at $\mathbf{c}$ |
+| Persistence | Unequal exponential carry-over controlled by $\mathbf{r}$ |
+| Background | Linear trend with weak periodic variation |
 | Main challenge | Resolving distinct interventions in accumulated smooth response |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $c_k$ | Campaign times | As above |
-| $a_k$ | Initial effects | As above |
-| $r_k$ | Carry-over decay rates | As above |
+| $b_0$ | Baseline level | 0.12 |
+| $m$ | Linear trend coefficient | 0.025 |
+| $A_B$ | Background oscillation amplitude | 0.025 |
+| $f_B$ | Background oscillation frequency | 4 |
+| $K$ | Number of campaigns | 5 |
+| $\mathbf{c}$ | Campaign onset times | As specified |
+| $\mathbf{a}$ | Initial campaign effects | As specified |
+| $\mathbf{r}$ | Carry-over decay rates | As specified |
 
 ## MATLAB Implementation
 
