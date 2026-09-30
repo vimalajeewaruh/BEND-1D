@@ -7,41 +7,108 @@ The **AudioIntro** signal is an original generic musical-intro surrogate with am
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and
+## Mathematical Definition
 
-$$
-\mathcal C=(0.420,0.505,0.590,0.675,0.760,0.845,0.930).
-$$
+Define the smooth step
 
-Then
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-$$
-\begin{aligned}
-f(x)={}&0.04\sin(8\pi x)+0.14s(x;0.18,0.020)\sin(18\pi x)\\
-&+0.12s(x;0.38,0.025)\sin(46\pi x+0.4)\\
-&+\sum_{c\in\mathcal C}0.20I(x\ge c)e^{-70(x-c)}\sin[2\pi\,70(x-c)]\\
-&+0.10x\sin[2\pi(14x+5x^2)].
-\end{aligned}
-$$
+Define the ambient component
 
-[AudioIntro signal](../../assets/images/TF096_AudioIntro.png)
+```math
+A(x)=A_A\sin(2\pi f_Ax).
+```
+
+Define the bass layer
+
+```math
+B(x)=A_Bs(x;c_B,w_B)\sin(2\pi f_Bx).
+```
+
+Define the harmonic layer
+
+```math
+H(x)=A_Hs(x;c_H,w_H)
+\sin(2\pi f_Hx+\delta_H).
+```
+
+Let the percussive beat centers be
+
+```math
+\mathcal{C}
+=
+(0.420,\,0.505,\,0.590,\,0.675,\,0.760,\,0.845,\,0.930).
+```
+
+For each $c\in\mathcal{C}$, define $u_c=(x-c)_+$. For $x\geq c$, define the damped percussive response as
+
+```math
+P_c(x)=
+A_Pe^{-\alpha_Pu_c}
+\sin(2\pi f_Pu_c),
+```
+
+with $P_c(x)=0$ for $x<c$.
+
+The complete percussive component is
+
+```math
+P(x)=\sum_{c\in\mathcal{C}}P_c(x).
+```
+
+Define the increasing chirp component
+
+```math
+Q(x)=
+A_Qx
+\sin\left[
+2\pi(f_Qx+\beta_Qx^2)
+\right].
+```
+
+The signal is
+
+```math
+f(x)=A(x)+B(x)+H(x)+P(x)+Q(x).
+```
+
+[View AudioIntro signal](../../assets/images/TF096_AudioIntro.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Layered tonal and transient structure |
-| Entries | Ambient, bass, and harmonic layers |
-| Transients | Seven damped percussive attacks |
+| Layer entries | Bass and harmonic layers enter near $c_B$ and $c_H$ |
+| Transients | $K$ damped percussive attacks centered at $\mathcal{C}$ |
+| Chirp | Increasing-amplitude component with changing frequency |
 | Main challenge | Preserving simultaneous smooth, oscillatory, and impulsive components |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.18,0.38$ | Layer-entry locations | As shown |
-| $\mathcal C$ | Percussive beat centers | As above |
-| $70$ | Percussive frequency and decay rate | 70 |
+| $A_A$ | Ambient-layer amplitude | 0.04 |
+| $f_A$ | Ambient-layer frequency | 4 |
+| $A_B$ | Bass-layer amplitude | 0.14 |
+| $f_B$ | Bass-layer frequency | 9 |
+| $c_B$ | Bass-layer entry location | 0.18 |
+| $w_B$ | Bass-layer transition width | 0.020 |
+| $A_H$ | Harmonic-layer amplitude | 0.12 |
+| $f_H$ | Harmonic-layer frequency | 23 |
+| $c_H$ | Harmonic-layer entry location | 0.38 |
+| $w_H$ | Harmonic-layer transition width | 0.025 |
+| $\delta_H$ | Harmonic-layer phase shift | 0.4 |
+| $K$ | Number of percussive attacks | 7 |
+| $\mathcal{C}$ | Percussive beat centers | As specified |
+| $A_P$ | Percussive amplitude | 0.20 |
+| $\alpha_P$ | Percussive decay rate | 70 |
+| $f_P$ | Percussive frequency | 70 |
+| $A_Q$ | Chirp amplitude-growth coefficient | 0.10 |
+| $f_Q$ | Chirp base frequency | 14 |
+| $\beta_Q$ | Quadratic phase coefficient | 5 |
 
 ## MATLAB Implementation
 
