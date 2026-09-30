@@ -6,38 +6,42 @@ The **FluorescenceBleach** signal represents photobleaching through fast and slo
 
 ## Mathematical Definition
 
-Define
+Define the multirate bleaching component
 
-$$
-B(x)=0.72e^{-3.8x}+0.30e^{-0.62x}+0.035,
-$$
+```math
+B(x)=A_1e^{-k_1x}+A_2e^{-k_2x}+b_0.
+```
 
-$$
-R(x)=0.070\exp\!\left[-\frac12\left(\frac{x-0.56}{0.045}\right)^2\right],
-$$
+Define the localized recovery component
 
-and
+```math
+R(x)=A_R\exp\left[
+-\frac12\left(\frac{x-\mu_R}{s_R}\right)^2
+\right].
+```
 
-$$
-S(x)=\frac{0.030}{1+e^{-75(x-0.73)}}.
-$$
+Define the small level-shift component
+
+```math
+S(x)=A_S\left[1+e^{-k_S(x-x_S)}\right]^{-1}.
+```
 
 The signal is
 
-$$
+```math
 f(x)=B(x)+R(x)+S(x).
-$$
+```
 
-[FluorescenceBleach signal](../../assets/images/TF067_FluorescenceBleach.png)
+[View FluorescenceBleach signal](../../assets/images/TF067_FluorescenceBleach.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multirate exponential decay with weak departures |
-| Fast decay rate | 3.8 |
-| Slow decay rate | 0.62 |
-| Recovery center | $x=0.56$ |
+| Fast decay rate | $k_1$ |
+| Slow decay rate | $k_2$ |
+| Recovery center | $x=\mu_R$ |
 | Main challenge | Retaining weak recovery and level change within smooth decay |
 
 ## Parameters
@@ -45,9 +49,17 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.045$ | Recovery width | 0.045 |
-| $0.73$ | Small-step center | 0.73 |
-| $75$ | Small-step sharpness | 75 |
+| $A_1$ | Fast-decay amplitude | 0.72 |
+| $k_1$ | Fast decay rate | 3.8 |
+| $A_2$ | Slow-decay amplitude | 0.30 |
+| $k_2$ | Slow decay rate | 0.62 |
+| $b_0$ | Baseline level | 0.035 |
+| $A_R$ | Recovery amplitude | 0.070 |
+| $\mu_R$ | Recovery center | 0.56 |
+| $s_R$ | Recovery width | 0.045 |
+| $A_S$ | Small-step magnitude | 0.030 |
+| $x_S$ | Small-step center | 0.73 |
+| $k_S$ | Small-step sharpness | 75 |
 
 ## MATLAB Implementation
 
