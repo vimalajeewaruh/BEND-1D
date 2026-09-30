@@ -71,4 +71,4 @@ $$
 
 ---
 
-[← Previous: CavefishNeuromast](TF099_CavefishNeuromast.md) | [Category 6 Catalog](index.md) | Next: end of Category 6
+[← Previous: CavefishNeuromast](TF099_CavefishNeuromast.md) | [Category 6 Catalog](index.md) 
