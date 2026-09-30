@@ -6,6 +6,7 @@ This page provides MATLAB version of the BEND-1D library. The library provides a
 
 - MATLAB R2026a or later.
 - No additional MathWorks products are currently required.
+- The optional wavelet-denoising example requires Wavelet Toolbox.
 
 Compatibility with earlier MATLAB releases has not yet been formally tested.
 
@@ -144,6 +145,10 @@ Use `listSignals(categoryNumber)` to obtain signal names and metadata for any ca
 | [9](docs/signals/Category9/index.md)  | TF156–TF180 |  
 | [10](docs/signals/Category10/index.md)  | TF181–TF230 | 
 
+## Denoising example
+
+`examples/ExampleWaveletDenoising.m` demonstrates how to denoise with bend1d.
+
 ## Public functions
 
 | Function | Purpose |
@@ -171,6 +176,7 @@ bend1d/
 │   ├── info.m
 │   ├── normalizeSNR.m
 │   └── GettingStarted.m
+|__ examples 
 ├── tests/
 │   └── testSignalCategory.m
 └── build/
