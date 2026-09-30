@@ -1,19 +1,6 @@
-# BEND-1D
+# BEND-1D - MATLAB version
 
-**BEND-1D** is a reproducible MATLAB library of 230 one-dimensional benchmark signals for evaluating denoising, smoothing, feature-extraction, and statistical signal-processing methods. The signals are organized into ten morphology-oriented categories spanning smooth trends, discontinuities, oscillations, transients, singularities, multiscale structure, biomedical waveforms, measurement signals, and complex mixed morphologies.
-
-The library provides a common interface for signal generation, catalog browsing, metadata lookup, and centered-power signal-to-noise ratio (SNR) normalization.
-
-## Key features
-
-- 230 deterministic one-dimensional benchmark signals.
-- Ten morphology-based signal categories.
-- Reproducible signal generation at user-selected sample sizes.
-- Catalog lookup by unique `TF###` identifier or signal name.
-- Consistent metadata returned with every signal.
-- Linear-ratio and decibel centered-power SNR normalization.
-- Automated structural and integration tests for every category.
-- Installable MATLAB toolbox distribution (`.mltbx`).
+This page provides MATLAB version of the BEND-1D library. The library provides a common interface for signal generation, catalog browsing, metadata lookup, and centered-power signal-to-noise ratio (SNR) normalization.
 
 ## Requirements
 
@@ -114,11 +101,7 @@ The centered signal power is
 P_f=\frac{1}{N}\sum_{i=1}^{N}\left(f_i-\bar f\right)^2.
 ```
 
-For noise standard deviation \(\sigma\), linear power SNR is defined as
-
-```math
-\operatorname{SNR}=\frac{P_f}{\sigma^2}.
-```
+For noise standard deviation $sigma$, linear power SNR is defined as $SNR=\frac{P_f}{\sigma^2}.$
 
 The DC level is preserved but is not counted as signal power.
 
@@ -130,8 +113,7 @@ The DC level is preserved but is not counted as signal power.
 sigma = 0.20;
 targetSNR = 5;
 
-[fScaled,normalization] = normalizeSNR( ...
-    f,sigma,targetSNR);
+[fScaled,normalization] = normalizeSNR(f,sigma,targetSNR);
 
 rng(2026,"twister");
 y = fScaled + sigma*randn(size(fScaled));
@@ -142,8 +124,7 @@ y = fScaled + sigma*randn(size(fScaled));
 ```matlab
 targetSNRdB = 7;
 
-[fScaled,normalization] = normalizeSNR( ...
-    f,sigma,targetSNRdB,"dB");
+[fScaled,normalization] = normalizeSNR(f,sigma,targetSNRdB,"dB");
 ```
 
 ## Signal categories
@@ -174,53 +155,6 @@ Use `listSignals(categoryNumber)` to obtain the authoritative signal names and m
 | `normalizeSNR` | Rescale a signal to a target centered-power SNR |
 | `SignalBank` | Dispatch to the local deterministic signal implementation |
 
-## Reproducible simulation practice
-
-When reporting an experiment using BEND-1D, record:
-
-- BEND-1D version;
-- signal ID and name;
-- MATLAB release;
-- sample size;
-- signal-specific parameter values;
-- noise distribution and parameters;
-- SNR definition, units, and target;
-- random-number seed;
-- number of Monte Carlo replications; and
-- method names and tuning parameters.
-
-Within each Monte Carlo replication, competing methods should receive exactly the same noisy realization.
-
-## Testing
-
-The category test suite verifies catalog consistency, dispatcher connectivity, output dimensions, finite real values, unit-interval sampling grids, nonconstant output, metadata, information lookup, SNR normalization, parameter forwarding, and expected error handling.
-
-To test a selected category from the repository root:
-
-```matlab
-projectRoot = "/path/to/bend1d";
-addpath(fullfile(projectRoot,"toolbox"));
-
-categoryNumber = 5;
-setenv("BEND1D_TEST_CATEGORY",string(categoryNumber));
-
-testFile = fullfile( ...
-    projectRoot,"tests","testSignalCategory.m");
-
-results = runtests(testFile);
-disp(table(results));
-```
-
-To build the toolbox, run:
-
-```matlab
-run(fullfile(projectRoot,"buildToolbox.m"));
-```
-
-The build script tests all ten categories before creating the `.mltbx` file.
-
-Passing the automated tests establishes software and structural validity. It does not, by itself, prove that every signal has the intended scientific interpretation; morphology-specific validation should also use the documented definitions and reference figures.
-
 ## Repository structure
 
 ```text
@@ -245,52 +179,4 @@ bend1d/
 
 ## Versioning
 
-BEND-1D follows semantic versioning:
-
-- major version: incompatible public-interface changes;
-- minor version: backward-compatible additions; and
-- patch version: backward-compatible corrections.
-
 The initial release is Version 1.0.0.
-
-## Citation
-
-If BEND-1D contributes to published research, please cite the software release. Replace the repository URL and DOI below after the public archive is available.
-
-```text
-Vimalajeewa, D. (2026). BEND-1D: A morphology-balanced library of
-one-dimensional benchmark signals (Version 1.0.0) [Computer software].
-Repository URL. DOI.
-```
-
-Suggested BibTeX:
-
-```bibtex
-@software{vimalajeewa2026bend1d,
-  author  = {Vimalajeewa, Dixon},
-  title   = {BEND-1D: A Morphology-Balanced Library of
-             One-Dimensional Benchmark Signals},
-  year    = {2026},
-  version = {1.0.0},
-  url     = {REPOSITORY-URL},
-  doi     = {RELEASE-DOI}
-}
-```
-
-## License
-
-See the `LICENSE` file for the terms governing use and redistribution. Add the selected license before publishing the first public release.
-
-## Author
-
-**Dixon Vimalajeewa**  
-Department of Statistics  
-University of Nebraska–Lincoln
-
-Project repository: `REPOSITORY-URL`  
-Contact: `PUBLIC-CONTACT-EMAIL`
-
-## Acknowledgment
-
-If the library is used in a publication, please identify the BEND-1D version and the exact TF identifiers used so that the experiment can be reproduced.
-
