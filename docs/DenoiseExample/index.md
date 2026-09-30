@@ -10,101 +10,167 @@ Hard and soft thresholding are used only as external illustrative methods. They 
 - an installed or locally accessible copy of BEND-1D; and
 - Wavelet Toolbox for `wavedec`, `detcoef`, `wthresh`, `waverec`, and `wmaxlev`.
 
-## Experimental design
+## Generate a Clean Signal 
 
-The example uses the following configuration:
+```matlab
+clear; clc; close all
 
-| Setting | Value |
-|---|---:|
-| BEND-1D signal | TF001 Percolation |
-| Sample size | 1024 |
-| Target SNR | 5 (linear power ratio) |
-| Noise distribution | Independent Gaussian |
-| Noise standard deviation | 0.20 |
-| Wavelet | Daubechies 4 (`db4`) |
-| Requested decomposition level | 5 |
-| Threshold | Universal threshold |
-| Denoising methods | Hard and soft thresholding |
-| Monte Carlo replications | 100 |
-| Random-number seed | 2026 |
+%% Experiment configuration
+% select a signal
+signalID = "TF001";
 
-The same noisy realization is supplied to both denoising methods within each replication. This paired design ensures that differences between the methods are not caused by different noise samples.
+% select signal length
+N = 1024;
 
-## Statistical definitions
+% Generate and normalize the BEND-1D signal
+[x,fNative,meta] = generate(signalID,N);
+```
+## Create a Noisy Signal
+The clean signal is rescaled by `normalizeSNR` so that its centered power satisfies the requested SNR.
 
-Let the clean signal be \(f=(f_1,\ldots,f_N)^\mathsf{T}\). BEND-1D uses centered signal power,
+```matlab
+% specify noise level
+noiseSigma = 0.20;
 
-\[
-P_f=\frac{1}{N}\sum_{i=1}^{N}(f_i-\bar f)^2,
-\]
+% Linear power ratio
+targetSNR = 5;             
 
-and defines the linear power SNR for Gaussian noise with standard deviation \(\sigma\) as
+[fClean,normalization] = normalizeSNR( ...
+    fNative,noiseSigma,targetSNR);
 
-\[
-\operatorname{SNR}=\frac{P_f}{\sigma^2}.
-\]
+fprintf("Signal: %s %s\n",meta.ID,meta.Name);
+fprintf("Sample size: %d\n",N);
+fprintf("Target linear SNR: %.3f\n",targetSNR);
+fprintf("Noise standard deviation: %.3f\n",noiseSigma);
 
-The clean signal is rescaled by `normalizeSNR` so that its centered power satisfies the requested SNR. A noisy observation in replication \(r\) is then generated as
+% plot clean and noisy signals
+figure("Color","white");
+plot(x,fClean,"k","LineWidth",2.0, "DisplayName","Clean signal");
+hold on;
+plot(x,firstNoisySignal,".", ...
+    "Color",[0.65 0.65 0.65], "MarkerSize",4, "DisplayName","Noisy signal");
+xlabel("x");
+ylabel("Signal value");
+title(meta.ID + " " + meta.Name + ": Clean and Noisy Signals");
+legend("Location","best");
+xlim([0 1]);
+grid on;
+box on;
+```
 
-\[
-y_i^{(r)}=f_i+\varepsilon_i^{(r)},
-\qquad
-\varepsilon_i^{(r)}\overset{\mathrm{iid}}{\sim}N(0,\sigma^2).
-\]
+## Console output
 
-For each method \(m\), the replication-specific mean squared error is
+The experiment produced:
 
-\[
-\operatorname{MSE}_{m,r}
-=\frac{1}{N}\sum_{i=1}^{N}
-\left(\widehat f_{m,i}^{(r)}-f_i\right)^2.
-\]
+```text
+Signal: TF001 Percolation
+Sample size: 1024
+Target linear SNR: 5.000
+Noise standard deviation: 0.200
+Wavelet: db4
+Monte Carlo replications: 100
+```
+![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TF001_denoised_signals.png)
 
-Across \(R=100\) replications, the average mean squared error is
+## Wavelet Thresholding
 
-\[
-\operatorname{AMSE}_m
-=\frac{1}{R}\sum_{r=1}^{R}\operatorname{MSE}_{m,r}.
-\]
+The noisy signal is first decomposed using the discrete wavelet transform. The noise standard deviation is estimated from the finest-scale detail coefficients \(d_1\) using
 
-The reported 95% Monte Carlo confidence interval is
+```math
+\widehat\sigma =\frac{median\{|d_{1,k}-median(d_1)|\}}{0.67448975}.
+```
+The universal threshold is $\lambda=\widehat\sigma\sqrt{2\log N}.$ Hard thresholding uses $\delta_H(w;\lambda)=w\,\mathbf{1}\{|w|>\lambda\},$ whereas soft thresholding uses $\delta_S(w;\lambda)=sign(w)(|w|-\lambda)_+.$
 
-\[
-\operatorname{AMSE}_m
-\pm 1.96\frac{s_m}{\sqrt{R}},
-\]
+The approximation coefficients are retained without thresholding, and all detail coefficients are thresholded using the common universal threshold.
 
-where \(s_m\) is the sample standard deviation of the 100 replication-level MSE values.
+```matlab
+% select a wavelet filter
+waveletName = "db4";
+
+% number of wavelet decomposition levels
+requestedLevel = 5;
+
+maximumLevel = wmaxlev(N,waveletName);
+decompositionLevel = min(requestedLevel,maximumLevel);
+
+if decompositionLevel < requestedLevel
+    warning("BEND1D:ReducedWaveletLevel", ...
+        ["The requested level %d is not available. " + ...
+         "Using level %d instead."], requestedLevel,decompositionLevel);
+end
+
+%% Allocate simulation results
+methodNames = [ "Hard thresholding", "Soft thresholding"];
+
+figure("Color","white");
+
+plot(x,fClean,"k","LineWidth",2.0, "DisplayName","Clean signal");
+hold on;
+
+plot(x,firstNoisySignal,".", "Color",[0.65 0.65 0.65], "MarkerSize",4, ...
+    "DisplayName","Noisy signal");
+
+plot(x,firstHardEstimate, "Color",[0.8500 0.3250 0.0980], "LineWidth",1.4, ...
+    "DisplayName","Hard thresholding");
+
+plot(x,firstSoftEstimate, "Color",[0 0.4470 0.7410], "LineWidth",1.4, ...
+    "DisplayName","Soft thresholding");
+
+xlabel("x");
+ylabel("Signal value");
+title(meta.ID + " " + meta.Name + ": Wavelet-Denoising Example");
+subtitle("SNR = " + targetSNR + ", \sigma = " + noiseSigma + ...
+    ", wavelet = " + waveletName);
+legend("Location","best");
+xlim([0 1]);
+grid on;
+box on;
+```
+![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TF001_denoised_signals.png)
+
+## Assess Denoising Performance
+
+For each method, the replication-specific mean squared error is
+
+```math
+MSE =\frac{1}{N}\sum_{i=1}^{N} \left(\widehat f_i-f_i\right)^2.
+```
+
+Across $R=100$ replications, the average mean squared error is
+
+```math
+AMSE_m =\frac{1}{R}\sum_{r=1}^{R} MSE_{m,r}.
+```
+
+The reported 95% Monte Carlo confidence interval is $AMSE_m \pm 1.96\frac{s_m}{\sqrt{R}},$ where $s_m$ is the sample standard deviation of the 100 replication-level MSE values.
 
 ## Wavelet thresholding used in the example
 
 The noisy signal is decomposed using the discrete wavelet transform. The noise standard deviation is estimated from the finest-scale detail coefficients \(d_1\) using
 
-\[
+```math
 \widehat\sigma
-=\frac{\operatorname{median}\{|d_{1,k}-\operatorname{median}(d_1)|\}}
+=\frac{median\{|d_{1,k}-median(d_1)|\}}
 {0.67448975}.
-\]
+```
 
 The universal threshold is
 
-\[
+```math
 \lambda=\widehat\sigma\sqrt{2\log N}.
-\]
+```
 
 Hard thresholding uses
 
-\[
+```math        
 \delta_H(w;\lambda)=w\,\mathbf{1}\{|w|>\lambda\},
-\]
+```
 
 whereas soft thresholding uses
 
-\[
-\delta_S(w;\lambda)
-=\operatorname{sign}(w)(|w|-\lambda)_+.
-\]
-
+```math
+\delta_S(w;\lambda)=sign(w)(|w|-\lambda)_+.
+```
 The approximation coefficients are retained without thresholding, and all detail coefficients are thresholded using the common universal threshold.
 
 ## Complete MATLAB example
@@ -114,9 +180,7 @@ Save the following as `ExampleWaveletDenoising.m`. If BEND-1D is not installed, 
 ```matlab
 %% BEND-1D Wavelet-Denoising Example
 
-clear
-clc
-close all
+clear; clc; close all
 
 %% Experiment configuration
 
@@ -182,17 +246,13 @@ for replication = 1:numberOfReplications
     noise = noiseSigma*randn(size(fClean));
     y = fClean + noise;
 
-    fHard = exampleWaveletThreshold( ...
-        y,waveletName,decompositionLevel,"hard");
+    fHard = exampleWaveletThreshold( y,waveletName,decompositionLevel,"hard");
 
-    fSoft = exampleWaveletThreshold( ...
-        y,waveletName,decompositionLevel,"soft");
+    fSoft = exampleWaveletThreshold( y,waveletName,decompositionLevel,"soft");
 
-    mseResults(replication,1) = ...
-        mean((fHard-fClean).^2);
+    mseResults(replication,1) = mean((fHard-fClean).^2);
 
-    mseResults(replication,2) = ...
-        mean((fSoft-fClean).^2);
+    mseResults(replication,2) = mean((fSoft-fClean).^2);
 
     if replication == 1
         firstNoisySignal = y;
@@ -205,32 +265,17 @@ end
 
 averageMSE = mean(mseResults,1);
 standardDeviationMSE = std(mseResults,0,1);
-standardErrorMSE = ...
-    standardDeviationMSE/sqrt(numberOfReplications);
+standardErrorMSE = standardDeviationMSE/sqrt(numberOfReplications);
 
-confidenceHalfWidth = ...
-    1.95996398454005*standardErrorMSE;
+confidenceHalfWidth = 1.96*standardErrorMSE;
 
-lowerConfidenceLimit = max( ...
-    averageMSE-confidenceHalfWidth,0);
+lowerConfidenceLimit = max( averageMSE-confidenceHalfWidth,0);
 
-upperConfidenceLimit = ...
-    averageMSE+confidenceHalfWidth;
+upperConfidenceLimit = averageMSE+confidenceHalfWidth;
 
 resultsTable = table( ...
-    methodNames, ...
-    averageMSE.', ...
-    standardDeviationMSE.', ...
-    standardErrorMSE.', ...
-    lowerConfidenceLimit.', ...
-    upperConfidenceLimit.', ...
-    'VariableNames',{ ...
-        'Method', ...
-        'AMSE', ...
-        'SD_MSE', ...
-        'SE_AMSE', ...
-        'CI95_Lower', ...
-        'CI95_Upper'});
+    methodNames, averageMSE.', standardDeviationMSE.', standardErrorMSE.', lowerConfidenceLimit.', upperConfidenceLimit.', ...
+    'VariableNames',{ 'Method','AMSE', 'SD_MSE','SE_AMSE', 'CI95_Lower', 'CI95_Upper'});
 
 fprintf("\nDenoising Results\n");
 fprintf("=================\n");
@@ -240,29 +285,18 @@ disp(resultsTable);
 
 figure("Color","white");
 
-plot(x,fClean,"k","LineWidth",2.0, ...
-    "DisplayName","Clean signal");
+plot(x,fClean,"k","LineWidth",2.0, "DisplayName","Clean signal");
 hold on;
 
-plot(x,firstNoisySignal,".", ...
-    "Color",[0.65 0.65 0.65], ...
-    "MarkerSize",4, ...
-    "DisplayName","Noisy signal");
+plot(x,firstNoisySignal,".", "Color",[0.65 0.65 0.65], "MarkerSize",4, "DisplayName","Noisy signal");
 
-plot(x,firstHardEstimate, ...
-    "Color",[0.8500 0.3250 0.0980], ...
-    "LineWidth",1.4, ...
-    "DisplayName","Hard thresholding");
+plot(x,firstHardEstimate, "Color",[0.8500 0.3250 0.0980], "LineWidth",1.4, "DisplayName","Hard thresholding");
 
-plot(x,firstSoftEstimate, ...
-    "Color",[0 0.4470 0.7410], ...
-    "LineWidth",1.4, ...
-    "DisplayName","Soft thresholding");
+plot(x,firstSoftEstimate, "Color",[0 0.4470 0.7410], "LineWidth",1.4, "DisplayName","Soft thresholding");
 
 xlabel("x");
 ylabel("Signal value");
-title(meta.ID + " " + meta.Name + ...
-    ": Wavelet-Denoising Example");
+title(meta.ID + " " + meta.Name + ": Wavelet-Denoising Example");
 subtitle("SNR = " + targetSNR + ...
     ", \sigma = " + noiseSigma + ...
     ", wavelet = " + waveletName);
@@ -275,8 +309,7 @@ box on;
 
 figure("Color","white");
 
-barHandle = bar( ...
-    categorical(methodNames),averageMSE,0.65);
+barHandle = bar( categorical(methodNames),averageMSE,0.65);
 
 barHandle.FaceColor = "flat";
 barHandle.CData = [
@@ -317,48 +350,36 @@ box on;
 
 %% Local example function
 
-function fHat = exampleWaveletThreshold( ...
-    y,waveletName,decompositionLevel,thresholdType)
+function fHat = exampleWaveletThreshold(y,waveletName,decompositionLevel,thresholdType)
 
     y = y(:);
     N = numel(y);
 
-    [coefficients,bookkeeping] = wavedec( ...
-        y,decompositionLevel,waveletName);
+    [coefficients,bookkeeping] = wavedec( y,decompositionLevel,waveletName);
 
-    finestDetails = detcoef( ...
-        coefficients,bookkeeping,1);
+    finestDetails = detcoef(coefficients,bookkeeping,1);
 
-    sigmaHat = median( ...
-        abs(finestDetails-median(finestDetails))) ...
-        /0.6744897501960817;
+    sigmaHat = median( abs(finestDetails-median(finestDetails)))/0.6744897501960817;
 
     threshold = sigmaHat*sqrt(2*log(N));
 
     approximationLength = bookkeeping(1);
-    detailIndices = ...
-        (approximationLength+1):numel(coefficients);
+    detailIndices = (approximationLength+1):numel(coefficients);
 
     thresholdedCoefficients = coefficients;
 
     switch lower(string(thresholdType))
         case "hard"
-            thresholdedCoefficients(detailIndices) = ...
-                wthresh(coefficients(detailIndices), ...
-                "h",threshold);
+            thresholdedCoefficients(detailIndices) = wthresh(coefficients(detailIndices), "h",threshold);
 
         case "soft"
-            thresholdedCoefficients(detailIndices) = ...
-                wthresh(coefficients(detailIndices), ...
-                "s",threshold);
+            thresholdedCoefficients(detailIndices) = wthresh(coefficients(detailIndices), "s",threshold);
 
         otherwise
-            error("BEND1D:InvalidExampleThreshold", ...
-                "thresholdType must be 'hard' or 'soft'.");
+            error("BEND1D:InvalidExampleThreshold", "thresholdType must be 'hard' or 'soft'.");
     end
 
-    fHat = waverec( ...
-        thresholdedCoefficients,bookkeeping,waveletName);
+    fHat = waverec( thresholdedCoefficients,bookkeeping,waveletName);
 
     fHat = fHat(1:N);
     fHat = fHat(:);
@@ -387,11 +408,10 @@ The denoising summary was:
 
 ## Representative denoising result
 
-The first replication illustrates the complete workflow. The gray points are the noisy observation, the black curve is the clean normalized BEND-1D signal, and the colored curves are the hard- and soft-threshold estimates.
-
+The first replication illustrates the complete workflow. 
 ![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TF001_denoised_signals.png)
 
-Both thresholding rules remove most of the Gaussian noise while retaining the critical transition near \(x=0.38\) and the increasing post-transition profile. Soft thresholding is visually smoother, whereas hard thresholding retains somewhat sharper coefficient-level changes. In portions of the figure, the two estimates nearly overlap.
+Both thresholding rules remove most of the Gaussian noise while retaining the critical transition near $x=0.38$ and the increasing post-transition profile. Soft thresholding is visually smoother, whereas hard thresholding retains somewhat sharper coefficient-level changes. In portions of the figure, the two estimates nearly overlap.
 
 ## Replication-level MSE distributions
 
