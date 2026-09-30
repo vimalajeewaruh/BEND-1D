@@ -30,7 +30,7 @@ $$
 f(x)=0.08+0.035\sin(2\pi\,1.8x)+\sum_{k=1}^{9}a_k g_k(x)[0.75+0.25o_k(x)]-0.10s(x;0.52,0.12).
 $$
 
-[NeuralBurstAdaptation signal](../../assets/images/TF100_NeuralBurstAdaptation.png)
+[View NeuralBurstAdaptation signal](../../assets/images/TF100_NeuralBurstAdaptation.png)
 
 ## Morphological Characteristics
 
