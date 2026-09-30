@@ -6,26 +6,65 @@ The **GravitationalWaveChirp** signal has simultaneous amplitude and frequency a
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$, $W(x)=s(x;0.10,0.018)-s(x;0.79,0.010)$, and
+Define the smooth step
 
-$$
-\phi(x)=2\pi(5x+4x^2+18x^4+38x^7),\qquad A(x)=0.06+0.62x^{2.8}.
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-Then
+Define the active chirp window
 
-$$
-f(x)=W(x)A(x)\sin\phi(x)+0.70I(x\ge0.79)e^{-15(x-0.79)}\sin[2\pi\,52(x-0.79)+0.3].
-$$
+```math
+W(x)=s(x;c_1,w_1)-s(x;c_2,w_2).
+```
 
-[GravitationalWaveChirp signal](../../assets/images/TF083_GravitationalWaveChirp.png)
+Define the chirp phase
+
+```math
+\phi(x)=2\pi
+\left(
+f_0x+\beta_2x^2+\beta_4x^4+\beta_7x^7
+\right).
+```
+
+Define the increasing chirp amplitude
+
+```math
+A(x)=A_0+A_1x^p.
+```
+
+The active chirp component is
+
+```math
+C(x)=W(x)A(x)\sin\phi(x).
+```
+
+Define the post-merger ring-down, for $x\geq c_2$, as
+
+```math
+R(x)=A_Re^{-\alpha_R(x-c_2)}
+\sin\left[
+2\pi f_R(x-c_2)+\delta_R
+\right],
+```
+
+with $R(x)=0$ for $x<c_2$.
+
+The signal is
+
+```math
+f(x)=C(x)+R(x).
+```
+
+[View GravitationalWaveChirp signal](../../assets/images/TF083_GravitationalWaveChirp.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Accelerating chirp and damped ring-down |
-| Active chirp | Approximately 0.10–0.79 |
+| Active chirp | Approximately $c_1<x<c_2$ |
+| Merger/ring-down time | $x=c_2$ |
 | Nonstationarity | Rapidly changing frequency and amplitude |
 | Main challenge | Preserving merger-localized fine scales and post-event ringing |
 
@@ -33,9 +72,20 @@ $$
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.79$ | Merger/ring-down time | 0.79 |
-| $15$ | Ring-down decay rate | 15 |
-| $52$ | Ring-down cycle frequency | 52 |
+| $c_1$ | Chirp onset location | 0.10 |
+| $c_2$ | Merger/ring-down location | 0.79 |
+| $w_1,w_2$ | Chirp-window transition widths | 0.018, 0.010 |
+| $f_0$ | Initial chirp phase coefficient | 5 |
+| $\beta_2$ | Quadratic phase coefficient | 4 |
+| $\beta_4$ | Quartic phase coefficient | 18 |
+| $\beta_7$ | Seventh-order phase coefficient | 38 |
+| $A_0$ | Initial chirp amplitude | 0.06 |
+| $A_1$ | Chirp amplitude-growth coefficient | 0.62 |
+| $p$ | Chirp amplitude-growth exponent | 2.8 |
+| $A_R$ | Ring-down amplitude | 0.70 |
+| $\alpha_R$ | Ring-down decay rate | 15 |
+| $f_R$ | Ring-down cycle frequency | 52 |
+| $\delta_R$ | Ring-down phase shift | 0.3 |
 
 ## MATLAB Implementation
 
