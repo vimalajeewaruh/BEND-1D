@@ -7,46 +7,88 @@ The **QuasarFlare** signal places a broad asymmetric flare and two smaller excur
 
 ## Mathematical Definition
 
-Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$ and
+Define the Gaussian feature
 
-$$
-b(x)=0.34+0.055\sin(2\pi\,1.4x+0.2)+0.035\sin(2\pi\,3.3x-0.6)+0.020x.
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-The asymmetric flare is
+Define the wandering baseline
 
-$$
-q(x)=
-\begin{cases}
-0.52g(x;0.56,0.060), & x<0.56,\\
-0.52e^{-(x-0.56)/0.18}, & x\ge0.56,
-\end{cases}
-$$
+```math
+b(x)=
+b_0
++A_1\sin(2\pi f_1x+\delta_1)
++A_2\sin(2\pi f_2x+\delta_2)
++mx.
+```
 
-and
+Define the flare-rise component, for $x<c_F$, as
 
-$$
-f(x)=b(x)+q(x)+0.075g(x;0.20,0.018)+0.055g(x;0.84,0.014).
-$$
+```math
+q_{\mathrm{rise}}(x)
+=
+A_Fg(x;c_F,w_F).
+```
 
-[QuasarFlare signal](../../assets/images/TF086_QuasarFlare.png)
+Define the flare-decay component, for $x\geq c_F$, as
+
+```math
+q_{\mathrm{decay}}(x)
+=
+A_F e^{-(x-c_F)/\tau_F}.
+```
+
+The asymmetric flare is $q(x)=q_{\mathrm{rise}}(x)$ for $x<c_F$ and
+$q(x)=q_{\mathrm{decay}}(x)$ for $x\geq c_F$.
+
+Define the secondary-excursion component
+
+```math
+E(x)=
+A_{E1}g(x;c_{E1},w_{E1})
++
+A_{E2}g(x;c_{E2},w_{E2}).
+```
+
+The signal is
+
+```math
+f(x)=b(x)+q(x)+E(x).
+```
+
+
+[View QuasarFlare signal](../../assets/images/TF086_QuasarFlare.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Wandering baseline with asymmetric flare |
-| Principal flare | Centered near $x=0.56$ |
-| Secondary features | Small excursions near 0.20 and 0.84 |
+| Principal flare | Centered at $x=c_F$ |
+| Flare shape | Gaussian rise followed by exponential decay |
+| Secondary features | Small excursions near $c_{E1}$ and $c_{E2}$ |
 | Main challenge | Preserving transients without distorting low-frequency variability |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.060$ | Flare rise width | 0.060 |
-| $0.18$ | Flare decay scale | 0.18 |
-| $0.52$ | Principal-flare amplitude | 0.52 |
+| $b_0$ | Baseline level | 0.34 |
+| $A_1,A_2$ | Baseline oscillation amplitudes | 0.055, 0.035 |
+| $f_1,f_2$ | Baseline oscillation frequencies | 1.4, 3.3 |
+| $\delta_1,\delta_2$ | Baseline phase shifts | 0.2, -0.6 |
+| $m$ | Linear baseline slope | 0.020 |
+| $A_F$ | Principal-flare amplitude | 0.52 |
+| $c_F$ | Principal-flare center | 0.56 |
+| $w_F$ | Flare rise width | 0.060 |
+| $\tau_F$ | Flare decay scale | 0.18 |
+| $A_{E1},A_{E2}$ | Secondary-excursion amplitudes | 0.075, 0.055 |
+| $c_{E1},c_{E2}$ | Secondary-excursion centers | 0.20, 0.84 |
+| $w_{E1},w_{E2}$ | Secondary-excursion widths | 0.018, 0.014 |
 
 ## MATLAB Implementation
 
