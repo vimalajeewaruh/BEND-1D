@@ -6,47 +6,57 @@ The **OceanThermocline** signal represents a vertical temperature-like profile. 
 
 ## Mathematical Definition
 
-Define
+Define the background trend
 
-$$
-M(x)=1-0.025x,
-$$
+```math
+M(x)=b_0-mx.
+```
 
-$$
-T(x)=-\frac{0.62}{1+e^{-42(x-0.43)}},
-$$
+Define the thermocline transition
 
-$$
-D(x)=-0.14(x-0.46)_+,
-$$
+```math
+T(x)=-A_T\left[1+e^{-k_T(x-x_T)}\right]^{-1}.
+```
 
-$$
-I(x)=0.075\exp\!\left[-\frac12\left(\frac{x-0.69}{0.035}\right)^2\right],
-$$
+Define the deep-gradient component
 
-and
+```math
+D(x)=-m_D(x-x_D)_+.
+```
 
-$$
-F(x)=0.015\sin(20\pi x)
-\exp\!\left[-\frac12\left(\frac{x-0.46}{0.20}\right)^2\right].
-$$
+Define the localized inversion
+
+```math
+I(x)=A_I\exp\left[
+-\frac12\left(\frac{x-\mu_I}{s_I}\right)^2
+\right].
+```
+
+Define the localized fine-structure component
+
+```math
+F(x)=A_F\sin(2\pi f_Fx)
+\exp\left[
+-\frac12\left(\frac{x-\mu_F}{s_F}\right)^2
+\right].
+```
 
 The signal is
 
-$$
+```math
 f(x)=M(x)+T(x)+D(x)+I(x)+F(x).
-$$
+```
 
-[OceanThermocline signal](../../assets/images/TF069_OceanThermocline.png)
+[View OceanThermocline signal](../../assets/images/TF069_OceanThermocline.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Smooth front with weak secondary ocean structure |
-| Thermocline center | $x=0.43$ |
-| Deep gradient onset | $x=0.46$ |
-| Inversion center | $x=0.69$ |
+| Thermocline center | $x=x_T$ |
+| Deep gradient onset | $x=x_D$ |
+| Inversion center | $x=\mu_I$ |
 | Main challenge | Recovering dominant transition and weak secondary features |
 
 ## Parameters
@@ -54,9 +64,20 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $42$ | Thermocline sharpness | 42 |
-| $0.035$ | Inversion width | 0.035 |
-| $10$ | Fine-structure frequency | 10 |
+| $b_0$ | Background level | 1 |
+| $m$ | Background slope | 0.025 |
+| $A_T$ | Thermocline magnitude | 0.62 |
+| $k_T$ | Thermocline sharpness | 42 |
+| $x_T$ | Thermocline center | 0.43 |
+| $m_D$ | Deep-gradient slope | 0.14 |
+| $x_D$ | Deep-gradient onset | 0.46 |
+| $A_I$ | Inversion amplitude | 0.075 |
+| $\mu_I$ | Inversion center | 0.69 |
+| $s_I$ | Inversion width | 0.035 |
+| $A_F$ | Fine-structure amplitude | 0.015 |
+| $f_F$ | Fine-structure frequency | 10 |
+| $\mu_F$ | Fine-structure center | 0.46 |
+| $s_F$ | Fine-structure width | 0.20 |
 
 ## MATLAB Implementation
 
