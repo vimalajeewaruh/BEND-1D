@@ -1,4 +1,4 @@
-# BEND-1D - MATLAB version
+# bend1d - MATLAB version
 
 This page provides MATLAB version of the BEND-1D library. The library provides a common interface for signal generation, catalog browsing, metadata lookup, and centered-power signal-to-noise ratio (SNR) normalization.
 
@@ -13,7 +13,7 @@ Compatibility with earlier MATLAB releases has not yet been formally tested.
 
 ### Install the packaged toolbox
 
-1. Download `BEND-1D_1.0.0.mltbx` from the project release page.
+1. Download `BEND-1D_1.0.0.mltbx` from the [bend1d](bend1d) folder.
 2. Double-click the file in MATLAB, or install it from the Command Window:
 
 ```matlab
@@ -129,20 +129,20 @@ targetSNRdB = 7;
 
 ## Signal categories
 
-| Category | TF identifiers | Signals | General emphasis |
-|---:|---|---:|---|
-| 1 | TF001–TF016 | 16 | Foundational physical, biological, and financial morphologies |
-| 2 | TF017–TF026 | 10 | Low-frequency structure with weaker localized features |
-| 3 | TF027–TF042 | 16 | Recurrent, pathological-onset, modulated, impulsive, and resonant signals |
-| 4 | TF043–TF058 | 16 | Measurement-science and observational signals |
-| 5 | TF059–TF070 | 12 | Biomedical, spectroscopic, geophysical, and energy profiles |
-| 6 | TF071–TF100 | 30 | Engineering, computing, astronomy, market, audio, and environmental signals |
-| 7 | TF101–TF125 | 25 | Quantum, genomic, semiconductor, space-weather, and adversarial morphologies |
-| 8 | TF126–TF155 | 30 | Modern sensing systems and deliberately challenging mixed structures |
-| 9 | TF156–TF180 | 25 | Nonlinear physical transitions, singularities, and matched regularity structures |
-| 10 | TF181–TF230 | 50 | Complex contemporary scientific, engineering, biomedical, and analytic signals |
+Use `listSignals(categoryNumber)` to obtain signal names and metadata for any category.
 
-Use `listSignals(categoryNumber)` to obtain the authoritative signal names and metadata for any category.
+| Category | TF identifiers |
+|---|---|
+| [1](docs/signals/Category1/index.md)  | TF001–TF016 |
+| [2](docs/signals/Category2/index.md)  | TF017–TF026 | 
+| [3](docs/signals/Category3/index.md)  | TF027–TF042 | 
+| [4](docs/signals/Category4/index.md)  | TF043–TF058 | 
+| [5](docs/signals/Category5/index.md)  | TF059–TF070 |  
+| [6](docs/signals/Category6/index.md)  | TF071–TF100 |  
+| [7](docs/signals/Category7/index.md)  | TF101–TF125 | 
+| [8](docs/signals/Category8/index.md)  | TF126–TF155 | 
+| [9](docs/signals/Category9/index.md)  | TF156–TF180 |  
+| [10](docs/signals/Category10/index.md)  | TF181–TF230 | 
 
 ## Public functions
 
