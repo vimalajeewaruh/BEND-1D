@@ -7,37 +7,66 @@ The **VibratoTone** signal has a smooth attack and release, periodic frequency m
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and
+Define the smooth step
 
-$$
-E(x)=s(x;0.12,0.025)-s(x;0.88,0.035),
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-$$
-\phi(x)=2\pi[30x+0.75\sin(2\pi\,5.5x)],\qquad
-A(x)=0.72+0.14\sin(2\pi\,2.2x).
-$$
+Define the smooth tone envelope
 
-The signal is $f(x)=E(x)A(x)\sin\phi(x)$.
+```math
+E(x)=s(x;c_1,w_1)-s(x;c_2,w_2).
+```
 
-[VibratoTone signal](../../assets/images/TF093_VibratoTone.png)
+Define the frequency-modulated phase
+
+```math
+\phi(x)=
+2\pi
+\left[
+f_Cx+A_V\sin(2\pi f_Vx)
+\right].
+```
+
+Define the amplitude modulation
+
+```math
+A(x)=A_0+A_M\sin(2\pi f_Mx).
+```
+
+The signal is
+
+```math
+f(x)=E(x)A(x)\sin\phi(x).
+```
+
+[View VibratoTone signal](../../assets/images/TF093_VibratoTone.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Frequency- and amplitude-modulated oscillation |
-| Envelope | Smooth onset near 0.12 and release near 0.88 |
-| Carrier | 30-cycle nominal tone with 5.5-cycle vibrato |
+| Envelope | Smooth onset near $c_1$ and release near $c_2$ |
+| Carrier | Nominal frequency $f_C$ with vibrato frequency $f_V$ |
+| Amplitude variation | Periodic modulation with frequency $f_M$ |
 | Main challenge | Preserving coherent modulation rather than isolated features |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $30$ | Nominal carrier cycles | 30 |
-| $5.5$ | Vibrato cycles | 5.5 |
-| $2.2$ | Amplitude-modulation cycles | 2.2 |
+| $c_1$ | Envelope onset location | 0.12 |
+| $w_1$ | Envelope onset width | 0.025 |
+| $c_2$ | Envelope release location | 0.88 |
+| $w_2$ | Envelope release width | 0.035 |
+| $f_C$ | Nominal carrier frequency | 30 |
+| $A_V$ | Vibrato phase-modulation magnitude | 0.75 |
+| $f_V$ | Vibrato frequency | 5.5 |
+| $A_0$ | Mean amplitude | 0.72 |
+| $A_M$ | Amplitude-modulation magnitude | 0.14 |
+| $f_M$ | Amplitude-modulation frequency | 2.2 |
 
 ## MATLAB Implementation
 
