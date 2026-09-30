@@ -7,34 +7,94 @@ The **MarketFlashCrash** signal combines gradual price-like movement, an abrupt 
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&1+0.10x+0.025\sin(6\pi x)-0.62s(x;0.535,0.004)\\
-&+0.44s(x;0.585,0.009)-0.13g(x;0.665,0.015)\\
-&+0.16I(x\ge0.585)[1-e^{-4.5(x-0.585)}].
-\end{aligned}
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1},
+```
 
-[MarketFlashCrash signal](../../assets/images/TF090_MarketFlashCrash.png)
+and the Gaussian feature
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the background component
+
+```math
+B(x)=b_0+mx+A_B\sin(2\pi f_Bx).
+```
+
+Define the abrupt crash component
+
+```math
+C(x)=-A_Cs(x;c_C,w_C).
+```
+
+Define the rapid rebound component
+
+```math
+R(x)=A_Rs(x;c_R,w_R).
+```
+
+Define the post-crash aftershock
+
+```math
+H(x)=-A_Hg(x;c_H,w_H).
+```
+
+Define the slow normalization component, for $x\geq c_R$, as
+
+```math
+N(x)=A_N
+\left[
+1-e^{-\alpha_N(x-c_R)}
+\right],
+```
+
+with $N(x)=0$ for $x<c_R$.
+
+The signal is
+
+```math
+f(x)=B(x)+C(x)+R(x)+H(x)+N(x).
+```
+
+
+[View MarketFlashCrash signal](../../assets/images/TF090_MarketFlashCrash.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Abrupt crash and asymmetric recovery |
-| Crash | Near $x=0.535$ |
-| Recovery | Partial rebound near 0.585 plus slow normalization |
+| Crash | Near $x=c_C$ |
+| Recovery | Partial rebound near $x=c_R$ followed by slow normalization |
+| Aftershock | Localized negative excursion centered at $x=c_H$ |
 | Main challenge | Preserving downside and rebound without ringing artifacts |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $-0.62$ | Crash magnitude | -0.62 |
-| $0.44$ | Rapid rebound magnitude | 0.44 |
-| $0.665$ | Aftershock center | 0.665 |
+| $b_0$ | Baseline level | 1 |
+| $m$ | Linear trend coefficient | 0.10 |
+| $A_B$ | Background oscillation amplitude | 0.025 |
+| $f_B$ | Background oscillation frequency | 3 |
+| $A_C$ | Crash magnitude | 0.62 |
+| $c_C$ | Crash location | 0.535 |
+| $w_C$ | Crash transition width | 0.004 |
+| $A_R$ | Rapid rebound magnitude | 0.44 |
+| $c_R$ | Rebound location | 0.585 |
+| $w_R$ | Rebound transition width | 0.009 |
+| $A_H$ | Aftershock magnitude | 0.13 |
+| $c_H$ | Aftershock center | 0.665 |
+| $w_H$ | Aftershock width | 0.015 |
+| $A_N$ | Slow-normalization magnitude | 0.16 |
+| $\alpha_N$ | Slow-normalization rate | 4.5 |
 
 ## MATLAB Implementation
 
