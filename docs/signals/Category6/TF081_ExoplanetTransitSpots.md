@@ -7,30 +7,87 @@ The **ExoplanetTransitSpots** signal contains weak stellar variability, a broad 
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$, $g(x;c,w)=e^{-((x-c)/w)^2/2}$, and $W(x)=s(x;0.34,0.008)-s(x;0.68,0.008)$. Then
+Define the smooth step
 
-$$
-f(x)=1+0.012\sin(2\pi\,1.2x)-0.20W(x)-0.035g(x;0.37,0.022)-0.035g(x;0.65,0.022)+0.050g(x;0.535,0.016).
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1},
+```
 
-[ExoplanetTransitSpots signal](../../assets/images/TF081_ExoplanetTransitSpots.png)
+and the Gaussian feature
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the transit window
+
+```math
+W(x)=s(x;c_1,w_T)-s(x;c_2,w_T).
+```
+
+Define the stellar baseline variation
+
+```math
+B(x)=b_0+A_B\sin(2\pi f_Bx).
+```
+
+Define the broad transit depression
+
+```math
+T(x)=-A_TW(x).
+```
+
+Define the ingress and egress features
+
+```math
+E(x)=
+-A_Eg(x;\mu_1,s_E)
+-A_Eg(x;\mu_2,s_E).
+```
+
+Define the spot-crossing anomaly
+
+```math
+P(x)=A_Pg(x;\mu_P,s_P).
+```
+
+The signal is
+
+```math
+f(x)=B(x)+T(x)+E(x)+P(x).
+```
+
+[View ExoplanetTransitSpots signal](../../assets/images/TF081_ExoplanetTransitSpots.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Broad depression with weak internal anomaly |
-| Transit interval | Approximately 0.34–0.68 |
-| Small feature | Positive spot-crossing bump near $x=0.535$ |
+| Transit interval | Approximately $c_1<x<c_2$ |
+| Edge features | Weak depressions centered at $\mu_1$ and $\mu_2$ |
+| Small feature | Positive spot-crossing bump near $x=\mu_P$ |
 | Main challenge | Preserving a weak anomaly relative to the transit depth |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.20$ | Transit depth | 0.20 |
-| $0.050$ | Spot-crossing amplitude | 0.050 |
-| $0.016$ | Spot-crossing width | 0.016 |
+| $b_0$ | Baseline flux level | 1 |
+| $A_B$ | Baseline oscillation amplitude | 0.012 |
+| $f_B$ | Baseline oscillation frequency | 1.2 |
+| $A_T$ | Transit depth | 0.20 |
+| $c_1,c_2$ | Transit boundaries | 0.34, 0.68 |
+| $w_T$ | Transit-boundary transition width | 0.008 |
+| $A_E$ | Edge-feature amplitude | 0.035 |
+| $\mu_1,\mu_2$ | Edge-feature centers | 0.37, 0.65 |
+| $s_E$ | Edge-feature width | 0.022 |
+| $A_P$ | Spot-crossing amplitude | 0.050 |
+| $\mu_P$ | Spot-crossing center | 0.535 |
+| $s_P$ | Spot-crossing width | 0.016 |
 
 ## MATLAB Implementation
 
