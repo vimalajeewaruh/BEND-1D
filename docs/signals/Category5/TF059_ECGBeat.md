@@ -6,48 +6,64 @@ The **ECGBeat** signal represents one electrocardiographic beat. A small broad P
 
 ## Mathematical Definition
 
-Let
+Define the Gaussian component
 
 ```math
-G(x;\mu,s)=\exp\!\left[-\frac12\left(\frac{x-\mu}{s}\right)^2\right].
+G(x;\mu,s)=
+\exp\left[
+-\frac12\left(\frac{x-\mu}{s}\right)^2
+\right].
 ```
 
-The baseline is $B(x)=0.018\sin(2.5\pi x)+0.010\sin(6.2\pi x+0.4).$
+Define the baseline component
 
-The waveform components are $P(x)=0.12G(x;0.18,0.030),$
+```math
+B(x)=A_{B1}\sin(\omega_{B1}x)
++A_{B2}\sin(\omega_{B2}x+\delta_B).
+```
 
-$$
-Q(x)=-0.16G(x;0.365,0.010),
-$$
+The waveform components are
 
-$$
-R(x)=1.05G(x;0.392,0.0065),
-$$
+```math
+P(x)=A_PG(x;\mu_P,s_P),
+```
 
-$$
-S(x)=-0.28G(x;0.418,0.012),
-$$
+```math
+Q(x)=-A_QG(x;\mu_Q,s_Q),
+```
 
-$$
-T(x)=0.34G(x;0.68,0.060),
-$$
+```math
+R(x)=A_RG(x;\mu_R,s_R),
+```
+
+```math
+S(x)=-A_SG(x;\mu_S,s_S),
+```
 
 and
 
-$$
-L(x)=0.045\left[
-\frac{1}{1+e^{-90(x-0.455)}}-
-\frac{1}{1+e^{-55(x-0.58)}}
+```math
+T(x)=A_TG(x;\mu_T,s_T).
+```
+
+Define the ST-level component
+
+```math
+L(x)=A_L
+\left[
+\frac{1}{1+e^{-k_1(x-x_1)}}
+-
+\frac{1}{1+e^{-k_2(x-x_2)}}
 \right].
-$$
+```
 
 The signal is
 
-$$
+```math
 f(x)=B(x)+P(x)+Q(x)+R(x)+S(x)+L(x)+T(x).
-$$
+```
 
-[ECGBeat signal](../../assets/images/TF059_ECGBeat.png)
+[View ECGBeat signal](../../assets/images/TF059_ECGBeat.png)
 
 ## Morphological Characteristics
 
@@ -64,9 +80,27 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.0065$ | R-wave width | 0.0065 |
-| $0.030$ | P-wave width | 0.030 |
-| $0.060$ | T-wave width | 0.060 |
+| $A_{B1},A_{B2}$ | Baseline oscillation amplitudes | 0.018, 0.010 |
+| $\omega_{B1},\omega_{B2}$ | Baseline angular frequencies | $2.5\pi,6.2\pi$ |
+| $\delta_B$ | Baseline phase shift | 0.4 |
+| $A_P$ | P-wave amplitude | 0.12 |
+| $\mu_P$ | P-wave center | 0.18 |
+| $s_P$ | P-wave width | 0.030 |
+| $A_Q$ | Q-wave magnitude | 0.16 |
+| $\mu_Q$ | Q-wave center | 0.365 |
+| $s_Q$ | Q-wave width | 0.010 |
+| $A_R$ | R-wave amplitude | 1.05 |
+| $\mu_R$ | R-wave center | 0.392 |
+| $s_R$ | R-wave width | 0.0065 |
+| $A_S$ | S-wave magnitude | 0.28 |
+| $\mu_S$ | S-wave center | 0.418 |
+| $s_S$ | S-wave width | 0.012 |
+| $A_T$ | T-wave amplitude | 0.34 |
+| $\mu_T$ | T-wave center | 0.68 |
+| $s_T$ | T-wave width | 0.060 |
+| $A_L$ | ST-level amplitude | 0.045 |
+| $x_1,x_2$ | ST-level interval locations | 0.435, 0.58 |
+| $k_1,k_2$ | ST-level transition sharpness | 90, 55 |
 
 ## MATLAB Implementation
 
