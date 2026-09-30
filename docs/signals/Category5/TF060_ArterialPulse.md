@@ -6,54 +6,83 @@ The **ArterialPulse** signal contains a rapid systolic upstroke, rounded main pe
 
 ## Mathematical Definition
 
-Let $u=(x-0.07)_+$ and define
+Let
 
-$$
-h(x)=u^{2.15}e^{-8.8u},
-\qquad
+```math
+u=(x-x_0)_+,
+```
+
+and define the unnormalized pulse component
+
+```math
+h(x)=u^p e^{-\alpha u}.
+```
+
+Define the normalized pulse
+
+```math
 M(x)=\frac{h(x)}{\max_{0\leq t\leq1}h(t)}.
-$$
+```
 
-The notch, rebound, and tail are
+Define the dicrotic notch
 
-$$
-N(x)=-0.115\exp\!\left[-\frac12\left(\frac{x-0.50}{0.012}\right)^2\right],
-$$
+```math
+N(x)=-A_N\exp\left[
+-\frac12\left(\frac{x-\mu_N}{s_N}\right)^2
+\right],
+```
 
-$$
-R(x)=0.060\exp\!\left[-\frac12\left(\frac{x-0.545}{0.021}\right)^2\right],
-$$
+the rebound
 
-$$
-D(x)=0.065\mathbf{1}_{\{x\geq0.53\}}e^{-4.8(x-0.53)}.
-$$
+```math
+R(x)=A_R\exp\left[
+-\frac12\left(\frac{x-\mu_R}{s_R}\right)^2
+\right],
+```
 
-Thus
+and the decaying tail
 
-$$
-f(x)=0.065+0.92M(x)+N(x)+R(x)+D(x).
-$$
+```math
+D(x)=A_D I(x\geq x_D)e^{-\beta(x-x_D)}.
+```
 
-[ArterialPulse signal](../../assets/images/TF060_ArterialPulse.png)
+Thus,
+
+```math
+f(x)=b_0+A_MM(x)+N(x)+R(x)+D(x).
+```
+
+[View ArterialPulse signal](../../assets/images/TF060_ArterialPulse.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Smooth asymmetric pulse with localized notch |
-| Pulse onset | $x=0.07$ |
-| Dicrotic notch | Centered at $x=0.50$ |
-| Rebound | Centered at $x=0.545$ |
-| Main challenge | Preserving the notch and rebound without ringing |
+| Pulse onset | $x=x_0$ |
+| Dicrotic notch | Centered at $x=\mu_N$ |
+| Rebound | Centered at $x=\mu_R$ |
+| Main challenge | Preserving the notch and rebound without introducing ringing |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $2.15$ | Pulse power | 2.15 |
-| $8.8$ | Main decay rate | 8.8 |
-| $0.012$ | Notch width | 0.012 |
+| $x_0$ | Pulse onset | 0.07 |
+| $p$ | Pulse power | 2.15 |
+| $\alpha$ | Main decay rate | 8.8 |
+| $b_0$ | Baseline level | 0.065 |
+| $A_M$ | Main pulse amplitude | 0.92 |
+| $A_N$ | Notch magnitude | 0.115 |
+| $\mu_N$ | Notch center | 0.50 |
+| $s_N$ | Notch width | 0.012 |
+| $A_R$ | Rebound amplitude | 0.060 |
+| $\mu_R$ | Rebound center | 0.545 |
+| $s_R$ | Rebound width | 0.021 |
+| $A_D$ | Tail amplitude | 0.065 |
+| $x_D$ | Tail onset | 0.53 |
+| $\beta$ | Tail decay rate | 4.8 |
 
 ## MATLAB Implementation
 
