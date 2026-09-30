@@ -7,30 +7,79 @@ The **ProductLaunch** signal follows a smooth sigmoidal adoption trend with a na
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the smooth step
 
-$$
-f(x)=0.08+0.68s(x;0.37,0.055)+0.28g(x;0.52,0.028)-0.12s(x;0.74,0.045)-0.10(x-0.83)_+.
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1},
+```
 
-[ProductLaunch signal](../../assets/images/TF088_ProductLaunch.png)
+and the Gaussian feature
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the sigmoidal adoption component
+
+```math
+A(x)=A_As(x;c_A,w_A).
+```
+
+Define the localized viral-burst component
+
+```math
+V(x)=A_Vg(x;c_V,w_V).
+```
+
+Define the late saturation adjustment
+
+```math
+S(x)=-A_Ss(x;c_S,w_S).
+```
+
+Define the late linear-decay component
+
+```math
+D(x)=-m_D(x-c_D)_+.
+```
+
+The signal is
+
+```math
+f(x)=b_0+A(x)+V(x)+S(x)+D(x).
+```
+
+[View ProductLaunch signal](../../assets/images/TF088_ProductLaunch.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Sigmoidal adoption plus localized burst |
-| Viral excursion | Narrow peak near $x=0.52$ |
-| Late behavior | Saturation adjustment and mild decay |
+| Adoption midpoint | $x=c_A$ |
+| Viral excursion | Narrow peak near $x=c_V$ |
+| Late behavior | Saturation adjustment near $x=c_S$ followed by mild decay after $x=c_D$ |
 | Main challenge | Preserving a short launch burst on a long adoption trend |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.37$ | Adoption midpoint | 0.37 |
-| $0.52$ | Viral-burst center | 0.52 |
-| $0.028$ | Viral-burst width | 0.028 |
+| $b_0$ | Baseline level | 0.08 |
+| $A_A$ | Adoption amplitude | 0.68 |
+| $c_A$ | Adoption midpoint | 0.37 |
+| $w_A$ | Adoption transition width | 0.055 |
+| $A_V$ | Viral-burst amplitude | 0.28 |
+| $c_V$ | Viral-burst center | 0.52 |
+| $w_V$ | Viral-burst width | 0.028 |
+| $A_S$ | Saturation-adjustment magnitude | 0.12 |
+| $c_S$ | Saturation-adjustment midpoint | 0.74 |
+| $w_S$ | Saturation-adjustment width | 0.045 |
+| $m_D$ | Late-decay slope | 0.10 |
+| $c_D$ | Late-decay onset | 0.83 |
 
 ## MATLAB Implementation
 
