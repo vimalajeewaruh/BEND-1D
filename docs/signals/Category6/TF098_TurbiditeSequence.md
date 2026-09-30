@@ -24,7 +24,7 @@ a=(0.28,0.42,0.22,0.50,0.35,0.20),\quad
 \tau=(0.045,0.065,0.030,0.075,0.050,0.028).
 $$
 
-[TurbiditeSequence signal](../../assets/images/TF098_TurbiditeSequence.png)
+[View TurbiditeSequence signal](../../assets/images/TF098_TurbiditeSequence.png)
 
 ## Morphological Characteristics
 
