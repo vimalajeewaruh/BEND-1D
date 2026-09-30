@@ -6,39 +6,44 @@ The **EEGSpindle** signal represents a localized sleep-spindle-like oscillatory 
 
 ## Mathematical Definition
 
-The background is
+Define the background component
 
-$$
-B(x)=0.055\sin(8.4\pi x+0.3)+0.028\sin(14.2\pi x-0.5).
-$$
+```math
+B(x)=A_1\sin(\omega_1x+\delta_1)
++A_2\sin(\omega_2x+\delta_2).
+```
 
-Define
+Define the spindle envelope
 
-$$
-E(x)=\exp\!\left[-\frac12\left(\frac{x-0.56}{0.115}\right)^2\right]
-$$
+```math
+E(x)=\exp\left[
+-\frac12\left(\frac{x-\mu_S}{s_S}\right)^2
+\right].
+```
 
-and
+Define the spindle phase
 
-$$
-\phi(x)=2\pi\left[20x+2.2(x-0.56)^2\right].
-$$
+```math
+\phi(x)=2\pi\left[
+f_Sx+\beta(x-\mu_S)^2
+\right].
+```
 
 The signal is
 
-$$
-f(x)=B(x)+0.39E(x)\sin\phi(x).
-$$
+```math
+f(x)=B(x)+A_SE(x)\sin\phi(x).
+```
 
-[EEGSpindle signal](../../assets/images/TF061_EEGSpindle.png)
+[View EEGSpindle signal](../../assets/images/TF061_EEGSpindle.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Localized frequency-modulated oscillatory packet |
-| Spindle center | $x=0.56$ |
-| Envelope width | 0.115 |
+| Spindle center | $x=\mu_S$ |
+| Envelope width | $s_S$ |
 | Background | Two weak low-frequency components |
 | Main challenge | Preserving packet coherence without retaining noise |
 
@@ -47,9 +52,14 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.39$ | Spindle amplitude | 0.39 |
-| $20$ | Nominal spindle frequency | 20 |
-| $2.2$ | Quadratic phase coefficient | 2.2 |
+| $A_1,A_2$ | Background amplitudes | 0.055, 0.028 |
+| $\omega_1,\omega_2$ | Background angular frequencies | $8.4\pi,14.2\pi$ |
+| $\delta_1,\delta_2$ | Background phase shifts | 0.3, -0.5 |
+| $\mu_S$ | Spindle center | 0.56 |
+| $s_S$ | Spindle envelope width | 0.115 |
+| $A_S$ | Spindle amplitude | 0.39 |
+| $f_S$ | Nominal spindle frequency | 20 |
+| $\beta$ | Quadratic phase coefficient | 2.2 |
 
 ## MATLAB Implementation
 
