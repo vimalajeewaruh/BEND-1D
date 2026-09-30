@@ -23,7 +23,7 @@ $$
 f(x)=0.018+0.012x+0.045G(x;0.64,0.09)+\sum_{k=1}^{6}A_kG(x;c_k,w_k).
 $$
 
-[LidarMultiEcho signal](../../assets/images/TF073_LidarMultiEcho.png)
+[View LidarMultiEcho signal](../../assets/images/TF073_LidarMultiEcho.png)
 
 ## Morphological Characteristics
 
