@@ -6,20 +6,53 @@ The **CacheThrash** signal has a stable workload outside a finite central interv
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $W(x)=s(x;0.34,0.005)-s(x;0.73,0.005)$. The signal is
+Define the smooth step
 
-$$
-f(x)=0.28+0.035\sin(8\pi x)+0.24W(x)\tanh[5\sin(44\pi x)]+0.08W(x)\sin(14\pi x).
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[CacheThrash signal](../../assets/images/TF079_CacheThrash.png)
+Define the finite thrashing window
+
+```math
+W(x)=s(x;c_1,w)-s(x;c_2,w).
+```
+
+Define the background component
+
+```math
+B(x)=b_0+A_B\sin(2\pi f_Bx).
+```
+
+Define the rapid switching component
+
+```math
+T(x)=A_TW(x)
+\tanh\left[
+\kappa\sin(2\pi f_Tx)
+\right].
+```
+
+Define the weaker within-regime oscillation
+
+```math
+O(x)=A_OW(x)\sin(2\pi f_Ox).
+```
+
+The signal is
+
+```math
+f(x)=B(x)+T(x)+O(x).
+```
+
+[View CacheThrash signal](../../assets/images/TF079_CacheThrash.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Finite switching regime |
-| Thrashing window | Approximately 0.34–0.73 |
+| Thrashing window | Approximately $c_1<x<c_2$ |
 | Internal structure | Rapid high/low switching plus weak oscillation |
 | Main challenge | Locating regime boundaries while preserving fast internal behavior |
 
@@ -27,9 +60,16 @@ $$
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.34,0.73$ | Thrashing-window boundaries | As shown |
-| $44\pi$ | Switching angular scale | As shown |
-| $0.24$ | Switching amplitude | 0.24 |
+| $b_0$ | Background level | 0.28 |
+| $A_B$ | Background oscillation amplitude | 0.035 |
+| $f_B$ | Background oscillation frequency | 4 |
+| $c_1,c_2$ | Thrashing-window boundaries | 0.34, 0.73 |
+| $w$ | Thrashing-window transition width | 0.005 |
+| $A_T$ | Switching amplitude | 0.24 |
+| $\kappa$ | Switching sharpness | 5 |
+| $f_T$ | Switching frequency | 22 |
+| $A_O$ | Within-regime oscillation amplitude | 0.08 |
+| $f_O$ | Within-regime oscillation frequency | 7 |
 
 ## MATLAB Implementation
 
