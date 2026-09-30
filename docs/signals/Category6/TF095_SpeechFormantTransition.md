@@ -7,28 +7,63 @@ The **SpeechFormantTransition** signal combines three oscillatory components who
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$,
+Define the smooth step
 
-$$
-E(x)=[s(x;0.07,0.025)-s(x;0.93,0.030)]
-[0.78+0.22e^{-((x-0.58)/0.22)^2/2}],
-$$
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-and
+Define the amplitude envelope
 
-$$
-\phi_1=2\pi(8x+7x^2),\quad
-\phi_2=2\pi(22x-5x^2),\quad
-\phi_3=2\pi(38x+4x^2).
-$$
+```math
+E(x)=
+\left[
+s(x;c_1,w_1)-s(x;c_2,w_2)
+\right]
+\left[
+A_0+A_E
+\exp\left(
+-\frac12
+\left(\frac{x-\mu_E}{s_E}\right)^2
+\right)
+\right].
+```
 
-Then
+Define the three nonstationary phase components
 
-$$
-f(x)=E(x)[0.42\sin\phi_1+0.27\sin(\phi_2+0.3)+0.14\sin(\phi_3-0.5)].
-$$
+```math
+\phi_k(x)=2\pi\left(f_kx+\beta_kx^2\right),
+\qquad k=1,\ldots,K.
+```
 
-[SpeechFormantTransition signal](../../assets/images/TF095_SpeechFormantTransition.png)
+The signal is
+
+```math
+f(x)=
+E(x)
+\sum_{k=1}^{K}
+A_k\sin\left[\phi_k(x)+\delta_k\right].
+```
+
+The base phase coefficients, quadratic phase coefficients, amplitudes, and phase shifts are
+
+```math
+\mathbf{f}=(8,\,22,\,38),
+```
+
+```math
+\boldsymbol{\beta}=(7,\,-5,\,4),
+```
+
+```math
+\mathbf{A}=(0.42,\,0.27,\,0.14),
+```
+
+```math
+\boldsymbol{\delta}=(0,\,0.3,\,-0.5).
+```
+
+[View SpeechFormantTransition signal](../../assets/images/TF095_SpeechFormantTransition.png)
 
 ## Morphological Characteristics
 
@@ -36,16 +71,25 @@ $$
 |---|---|
 | Primary family | Multiple nonstationary oscillatory bands |
 | Frequency trends | Two increasing and one decreasing phase rate |
-| Envelope | Smooth endpoints with broad emphasis near 0.58 |
+| Envelope | Smooth onset near $c_1$ and release near $c_2$ |
+| Broad emphasis | Centered near $x=\mu_E$ |
 | Main challenge | Preserving distributed, time-varying spectral structure |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $8,22,38$ | Base phase coefficients | As shown |
-| $7,-5,4$ | Quadratic phase coefficients | As shown |
-| $0.42,0.27,0.14$ | Band amplitudes | As shown |
+| $K$ | Number of oscillatory bands | 3 |
+| $c_1,c_2$ | Envelope boundaries | 0.07, 0.93 |
+| $w_1,w_2$ | Envelope transition widths | 0.025, 0.030 |
+| $A_0$ | Envelope baseline amplitude | 0.78 |
+| $A_E$ | Broad-emphasis amplitude | 0.22 |
+| $\mu_E$ | Broad-emphasis center | 0.58 |
+| $s_E$ | Broad-emphasis width | 0.22 |
+| $\mathbf{f}$ | Base phase coefficients | $(8,\,22,\,38)$ |
+| $\boldsymbol{\beta}$ | Quadratic phase coefficients | $(7,\,-5,\,4)$ |
+| $\mathbf{A}$ | Band amplitudes | $(0.42,\,0.27,\,0.14)$ |
+| $\boldsymbol{\delta}$ | Band phase shifts | $(0,\,0.3,\,-0.5)$ |
 
 ## MATLAB Implementation
 
