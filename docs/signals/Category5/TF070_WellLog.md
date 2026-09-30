@@ -8,41 +8,53 @@ The **WellLog** signal contains several instrument-smoothed stratigraphic level 
 
 Define the smooth step
 
-$$
-S(x;c,w)=\frac{1}{1+e^{-(x-c)/w}}.
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-The background and principal strata are
+Define the background and principal strata
 
-$$
-\begin{aligned}
-B(x)={}&0.48+0.10x+0.025\sin(6\pi x)\\
-&+0.30S(x;0.18,0.004)-0.40S(x;0.39,0.005)\\
-&+0.26S(x;0.64,0.0045)-0.20S(x;0.82,0.004).
-\end{aligned}
-$$
+```math
+B(x)=b_0+mx+A_B\sin(2\pi f_Bx)
++A_1S(x;c_1,w_1)-A_2S(x;c_2,w_2)
++A_3S(x;c_3,w_3)-A_4S(x;c_4,w_4).
+```
 
-The thin-bed feature is
+Define the thin-bed feature
 
-$$
-T(x)=0.24\left[S(x;0.515,0.0028)-S(x;0.548,0.0028)\right].
-$$
+```math
+T(x)=A_T
+\left[
+S(x;c_{T1},w_T)-S(x;c_{T2},w_T)
+\right].
+```
+
+Define the restricted within-layer oscillation
+
+```math
+O(x)=
+\begin{cases}
+A_O\sin(2\pi f_Ox), & c_1<x<c_4,\\
+0, & \text{otherwise}.
+\end{cases}
+```
 
 The signal is
 
-$$
-f(x)=B(x)+T(x)+0.020\mathbf{1}_{\{0.18<x<0.82\}}\sin(34\pi x).
-$$
+```math
+f(x)=B(x)+T(x)+O(x).
+```
 
-[WellLog signal](../../assets/images/TF070_WellLog.png)
+
+[View WellLog signal](../../assets/images/TF070_WellLog.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Instrument-smoothed strata with thin-bed anomaly |
-| Major boundaries | $x=0.18,0.39,0.64,0.82$ |
-| Thin bed | Approximately $0.515<x<0.548$ |
+| Major boundaries | $x=c_1,c_2,c_3,c_4$ |
+| Thin bed | Approximately $c_{T1}<x<c_{T2}$ |
 | Within-layer variation | Slow trend and restricted oscillation |
 | Main challenge | Preserving sharp boundaries and a much narrower layer |
 
@@ -51,9 +63,18 @@ $$
 | Parameter | Meaning | Default |
 |---|---|---:|
 | $N$ | Number of samples | 1024 |
-| $0.0028$ | Thin-bed edge width | 0.0028 |
-| $0.24$ | Thin-bed magnitude | 0.24 |
-| $17$ | Within-layer oscillation frequency | 17 |
+| $b_0$ | Background level | 0.48 |
+| $m$ | Background slope | 0.10 |
+| $A_B$ | Background oscillation amplitude | 0.025 |
+| $f_B$ | Background oscillation frequency | 3 |
+| $A_1,A_2,A_3,A_4$ | Stratum-step magnitudes | 0.30, 0.40, 0.26, 0.20 |
+| $c_1,c_2,c_3,c_4$ | Major boundary locations | 0.18, 0.39, 0.64, 0.82 |
+| $w_1,w_2,w_3,w_4$ | Major boundary widths | 0.004, 0.005, 0.0045, 0.004 |
+| $A_T$ | Thin-bed magnitude | 0.24 |
+| $c_{T1},c_{T2}$ | Thin-bed boundaries | 0.515, 0.548 |
+| $w_T$ | Thin-bed edge width | 0.0028 |
+| $A_O$ | Within-layer oscillation amplitude | 0.020 |
+| $f_O$ | Within-layer oscillation frequency | 17 |
 
 ## MATLAB Implementation
 
