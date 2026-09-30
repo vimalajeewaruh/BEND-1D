@@ -7,34 +7,103 @@ The **TrainingLossSchedule** signal combines fast and slow optimization decay, t
 
 ## Mathematical Definition
 
-Let $s(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+## Mathematical Definition
 
-$$
-\begin{aligned}
-f(x)={}&1.35e^{-5.8x}+0.24e^{-0.65x}+0.065\\
-&-0.065s(x;0.34,0.006)-0.045s(x;0.58,0.006)-0.028s(x;0.78,0.005)\\
-&+0.12g(x;0.27,0.010)+0.075g(x;0.47,0.008)+0.050g(x;0.705,0.006).
-\end{aligned}
-$$
+Define the smooth step
 
-[TrainingLossSchedule signal](../../assets/images/TF080_TrainingLossSchedule.png)
+```math
+s(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1},
+```
+
+and the Gaussian transient
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the multirate decay component
+
+```math
+D(x)=A_1e^{-\alpha_1x}+A_2e^{-\alpha_2x}+b_0.
+```
+
+Define the schedule-change component
+
+```math
+S(x)=
+-\sum_{j=1}^{J}d_j s(x;c_j,w_j).
+```
+
+Define the transient-spike component
+
+```math
+G(x)=
+\sum_{k=1}^{K}a_k g(x;\mu_k,\sigma_k).
+```
+
+The signal is
+
+```math
+f(x)=D(x)+S(x)+G(x).
+```
+
+The schedule-change locations, magnitudes, and transition widths are
+
+```math
+\mathbf{c}=(0.34,\,0.58,\,0.78),
+```
+
+```math
+\mathbf{d}=(0.065,\,0.045,\,0.028),
+```
+
+```math
+\mathbf{w}=(0.006,\,0.006,\,0.005).
+```
+
+The transient centers, amplitudes, and widths are
+
+```math
+\boldsymbol{\mu}=(0.27,\,0.47,\,0.705),
+```
+
+```math
+\mathbf{a}=(0.12,\,0.075,\,0.050),
+```
+
+```math
+\boldsymbol{\sigma}=(0.010,\,0.008,\,0.006).
+```
+
+[View TrainingLossSchedule signal](../../assets/images/TF080_TrainingLossSchedule.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multirate decay with steps and spikes |
-| Schedule changes | Near 0.34, 0.58, and 0.78 |
-| Transients | Three narrow positive spikes |
+| Schedule changes | At locations $\mathbf{c}$ |
+| Transients | $K$ narrow positive spikes centered at $\boldsymbol{\mu}$ |
 | Main challenge | Separating genuine schedule changes from optimization roughness |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $5.8,0.65$ | Fast and slow decay rates | As shown |
-| $0.34,0.58,0.78$ | Schedule locations | As shown |
-| $0.27,0.47,0.705$ | Spike centers | As shown |
+| $A_1,A_2$ | Fast and slow decay amplitudes | 1.35, 0.24 |
+| $\alpha_1,\alpha_2$ | Fast and slow decay rates | 5.8, 0.65 |
+| $b_0$ | Baseline level | 0.065 |
+| $J$ | Number of schedule changes | 3 |
+| $\mathbf{c}$ | Schedule-change locations | As specified |
+| $\mathbf{d}$ | Schedule-change magnitudes | As specified |
+| $\mathbf{w}$ | Schedule transition widths | As specified |
+| $K$ | Number of transient spikes | 3 |
+| $\boldsymbol{\mu}$ | Transient centers | As specified |
+| $\mathbf{a}$ | Transient amplitudes | As specified |
+| $\boldsymbol{\sigma}$ | Transient widths | As specified |
 
 ## MATLAB Implementation
 
