@@ -80,7 +80,7 @@ Sample size: 1024
 Target linear SNR: 5.000
 Noise standard deviation: 0.200
 ```
-![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TureNoisy.png)
+![Clean and noisy TF001 Percolation signals](figures/TureNoisy.png)
 
 ## Wavelet Denoising
 
