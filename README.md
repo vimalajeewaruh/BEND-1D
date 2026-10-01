@@ -6,13 +6,6 @@ A reproducible library of **230 one-dimensional test signals** representing
 different smoothness, oscillation, discontinuity, localization, multiscale,
 transient, and singularity structures.
 
-[Get Started](getting-started.md) ·
-[Browse All Signals](docs/index.md) ·
-[Golden Rules](docs/Rules.md) ·
-[MATLAB Code](docs/codes/matlab/) ·
-[Python Code](docs/codes/python/) ·
-[View on GitHub](repository)
-
 ---
 
 ## About the Library
@@ -32,15 +25,15 @@ engineering, biomedical, environmental, and economic measurements.
 
 | Resource | Contents |
 |---|---|
-| [Getting Started](getting-started.html) | Installation, folder structure, and first example |
-| [Complete Signal Catalog](docs/signals/) | All 230 signals organized into ten categories |
+| [Getting Started](getting-started.md) | Installation, folder structure, and first example |
+| [Complete Signal Catalog](docs/index.md) | All 230 signals organized into ten categories |
 | [Golden Rules](docs/Rules.md) | SNR normalization, fair aggregation, and reporting principles |
-| [Denoising Experiments](denoising-experiments.html) | Recommended simulation and evaluation workflow |
-| [MATLAB Code][matlab-code] | MATLAB implementations and figure-generation scripts |
-| [Python Code][python-code] | Reproducible Python implementations |
+| [Denoising Experiments](docs/DenoiseExamples.md) | Recommended simulation and evaluation workflow |
+| [MATLAB Code](docs/codes/matlab/) | MATLAB implementations |
+| [Python Code](docs/codes/python/) | Python implementations |
 | [Citation](citation.html) | How to cite BEND-1D |
 | [License](license.html) | Terms for using and redistributing the library |
-| [Contributing](contributing.html) | Reporting issues and proposing new signals |
+| [Contributing](.github/ISSUE_TEMPLATE/report-problem.yml) | Reporting issues and proposing new signals |
 
 ## Browse by Category
 
@@ -56,32 +49,6 @@ engineering, biomedical, environmental, and economic measurements.
 | [8](docs/signals/Category8/index.md) | 126–155 |  Modern sensing signals and adversarial MishMash constructions with incompatible local scales and regularities |
 | [9](docs/signals/Category9/index.md) | 156–180 |  Scientific and mechanism-inspired signals together with controlled diagnostics for alignment, boundaries, resolution, scale bias, and regularity |
 | [10](docs/signals/Category10/index.md) | 181–230 |  Research-frontier measurement morphologies and mathematical adversaries involving critical-time behavior, cancellation, and heterogeneous regularity |
-
-## What Each Signal Page Contains
-
-Every signal page provides:
-
-- a signal image using the naming convention `TF###_SignalName.png`;
-- an overview and scientific or mathematical motivation;
-- the mathematical definition and parameter values;
-- morphological characteristics and the principal denoising challenge;
-- standalone MATLAB and Python implementations;
-- recommended benchmarking uses and provenance information; and
-- previous, next, and category-catalog navigation links.
-
-## Recommended Benchmark Workflow
-
-1. Select a signal or a morphology-balanced collection from the
-   [signal catalog](docs/signals/index.md).
-2. Generate the deterministic clean signal using its MATLAB or Python code.
-3. Apply the common power–SNR normalization described in the
-   [Golden Rules](docs/Rules.md).
-4. Add noise using the same noisy realization for every method being compared.
-5. Apply each denoising or smoothing method without changing the native signal
-   morphology.
-6. Report signal-wise results, morphology-specific results, and the balanced
-   global score described in the
-   [denoising-experiment guide](docs/denoising-experiments.md).
 
 ## Core Evaluation Principle
 
@@ -100,11 +67,7 @@ figures:
 
 - [Browse the MATLAB source](docs/codes/matlab.md)
 - [Browse the Python source](docs/codes/python.md)
-- [Report a code or documentation issue][issues]
-
-All functions are defined on $0\leq x\leq1$ in their native deterministic
-forms. Power–SNR normalization should be applied only when constructing a
-denoising experiment.
+- [Report a code or documentation issue](.github/ISSUE_TEMPLATE/report-problem.yml)
 
 ## Citation
 
@@ -112,22 +75,36 @@ If BEND-1D contributes to a publication, presentation, software package, or
 teaching resource, please cite the library and record the version, signal IDs,
 sample size, noise model, SNR definition, and code commit used in the analysis.
 
-[View the citation information](docs/citation.md).
+Dixon Vimalajeewa, Malith Premarathna, and Brani Vidakovic. *BEND-1D: A Reproducible Library of One-Dimensional
+Benchmark Signals for Denoising and Smoothing*. 2026. Available from:
+[https://github.com/vimalajeewaruh/BEND-1S](https://github.com/vimalajeewaruh/BEND-1D).
+
+
+## BibTeX
+
+```bibtex
+@software{vimalajeewa_bend1d_2026,
+  author  = {Vimalajeewa, Dixon, Premarathna, Malith, Vidakovic, Brani},
+  title   = {BEND-1D: A Reproducible Library of One-Dimensional
+             Benchmark Signals for Denoising and Smoothing},
+  year    = {2026},
+  url     = {https://github.com/Yvimalajeewaruh/BEND-1D},
+  note    = {Version 1.0}
+}
+```
 
 ## License and Contributions
 
 The [license](license.html) explains permitted use and redistribution.
 Corrections, additional implementations, and carefully motivated new signals
-are welcome through the [contribution guide](contributing.html) or the
-[repository issue tracker][issues].
+are welcome through the [repository issue tracker](.github/ISSUE_TEMPLATE/report-problem.yml).
 
 ---
 
 **BEND-1D:** reproducible signals, transparent code, and morphology-balanced
 evaluation for one-dimensional denoising research.
 
-<!-- Replace YOUR-USERNAME/YOUR-REPOSITORY in the four links below. -->
-[repository]: https://github.com/vimalajeewaruh/BEND-1D
-[matlab-code]: https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/matlab
-[python-code]: https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/python
-[issues]: https://github.com/vimalajeewaruh/BEND-1D/issues/new/choose
+[repository](https://github.com/vimalajeewaruh/BEND-1D).
+[matlab-code](https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/matlab)
+[python-code](https://github.com/vimalajeewaruh/BEND-1D/tree/main/docs/code/python)
+[issues](https://github.com/vimalajeewaruh/BEND-1D/issues/new/choose)
