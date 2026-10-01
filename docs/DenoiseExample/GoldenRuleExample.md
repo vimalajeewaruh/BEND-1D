@@ -685,9 +685,7 @@ exportgraphics(gcf, ...
 ![Morphology-specific relative AMSE](figures/golden_rules_family_scores.png)
 
 
-## Local Wavelet-Thresholding Function
-
-Place the following local function at the end of the MATLAB script. It is used only to provide two external denoising methods for the Golden Rules demonstration.
+### Local Wavelet-Thresholding Function
 
 ```matlab
 function fHat = exampleWaveletThreshold( ...
