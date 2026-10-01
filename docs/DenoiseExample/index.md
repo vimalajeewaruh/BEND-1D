@@ -23,6 +23,21 @@ N = 1024;
 % Generate and normalize the BEND-1D signal
 [x,fNative,meta] = generate(signalID,N);
 ```
+```text
+x = [0 0.0010 ... .999 1]
+fNative = [0 0 ... .8215 .8220]
+meta = 
+
+  struct with fields:
+
+              ID: "TF001"
+            Name: "Percolation"
+        Category: 1
+    RecommendedN: 1024
+      Parameters: [1×1 struct]
+      Morphology: "Continuous onset with a singular derivative"
+```
+
 ## Create a Noisy Signal
 The clean signal is rescaled by `normalizeSNR` so that its centered power satisfies the requested SNR.
 
@@ -65,7 +80,7 @@ Sample size: 1024
 Target linear SNR: 5.000
 Noise standard deviation: 0.200
 ```
-![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TF001_denoised_signals.png)
+![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TureNoisy.png)
 
 ## Wavelet Denoising
 
@@ -95,7 +110,8 @@ if decompositionLevel < requestedLevel
 end
 
 %% Allocate simulation results
-methodNames = [ "Hard thresholding", "Soft thresholding"];
+methodNames = [ "Hard thresholding"
+                 "Soft thresholding"];
 
 
 HardEstimate = exampleWaveletThreshold( NoisySignal,waveletName,decompositionLevel,"hard");
@@ -175,7 +191,7 @@ function fHat = exampleWaveletThreshold( ...
 end
 ```
 
-![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/TF001_denoised_signals.png)
+![Clean, noisy, hard-thresholded, and soft-thresholded TF001 Percolation signals](figures/HardSoftDenoising.png)
 
 ## Assess Denoising Performance
 
@@ -193,8 +209,8 @@ fprintf("MSE Hard Thresholding: %.3f", mseHard);
 fprintf("MSE Soft Thresholding: %.3f ",mseSoft);
 ```
 ```text
-MSE Hard Thresholding:
-MSE Soft Thresholding
+MSE Hard Thresholding: 0.001
+MSE Soft Thresholding: 0.001
 ```
 
 ## Repeat Thresholding Across $100$ Replications and Assess Performance
@@ -323,22 +339,23 @@ grid on;
 box on;
 ```
 
-### Console output
+The denoising summary 
 
-The experiment produced:
+```text
+Denoising Results
+=================
+          Method             AMSE         SD_MSE       SE_AMSE      CI95_Lower    CI95_Upper
+    ___________________    _________    __________    __________    __________    __________
 
-The denoising summary was:
-
-| Method | AMSE | SD of MSE | SE of AMSE | 95% CI lower | 95% CI upper |
-|---|---:|---:|---:|---:|---:|
-| Hard thresholding | 0.0014652 | 0.00032809 | 0.000032809 | 0.0014008 | 0.0015295 |
-| Soft thresholding | 0.0013814 | 0.00030374 | 0.000030374 | 0.0013218 | 0.0014409 |
+    "Hard thresholding"    0.0014652    0.00032809    3.2809e-05    0.0014008     0.0015295 
+    "Soft thresholding"    0.0013814    0.00030374    3.0374e-05    0.0013218     0.0014409 
+```
 
 ## Replication-level MSE distributions
 
 The boxplots summarize the 100 MSE values obtained for each method.
 
-![Replication-level MSE distributions for hard and soft thresholding](figures/TF001_mse_distribution.png)
+![Replication-level MSE distributions for hard and soft thresholding](figures/MOnteCarloReplication.png)
 
 Soft thresholding has a slightly lower median MSE and a somewhat smaller dispersion. Its distribution includes several upper outliers and two low observations, showing that performance still varies across noise realizations. Because the methods use identical noisy signals within each replication, their errors are paired even though the displayed boxplots show the two marginal distributions.
 
@@ -346,7 +363,7 @@ Soft thresholding has a slightly lower median MSE and a somewhat smaller dispers
 
 The bars show AMSE, and the error bars show the marginal 95% Monte Carlo confidence intervals.
 
-![AMSE comparison with 95% Monte Carlo confidence intervals](figures/TF001_amse_comparison.png)
+![AMSE comparison with 95% Monte Carlo confidence intervals](figures/HardSoftCompare.png)
 
 Soft thresholding attained the smaller AMSE:
 
