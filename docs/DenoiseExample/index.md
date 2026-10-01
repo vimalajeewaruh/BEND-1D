@@ -80,7 +80,7 @@ Sample size: 1024
 Target linear SNR: 5.000
 Noise standard deviation: 0.200
 ```
-![Clean and noisy TF001 Percolation signals](figures/TureNoisy.png)
+![Clean and noisy TF001 Percolation signals](figures/TrueNoisy.png)
 
 ## Wavelet Denoising
 
@@ -355,7 +355,7 @@ Denoising Results
 
 The boxplots summarize the 100 MSE values obtained for each method.
 
-![Replication-level MSE distributions for hard and soft thresholding](figures/MOnteCarloReplication.png)
+![Replication-level MSE distributions for hard and soft thresholding](figures/MonteCarloReplications.png)
 
 Soft thresholding has a slightly lower median MSE and a somewhat smaller dispersion. Its distribution includes several upper outliers and two low observations, showing that performance still varies across noise realizations. Because the methods use identical noisy signals within each replication, their errors are paired even though the displayed boxplots show the two marginal distributions.
 
@@ -365,6 +365,7 @@ The bars show AMSE, and the error bars show the marginal 95% Monte Carlo confide
 
 ![AMSE comparison with 95% Monte Carlo confidence intervals](figures/HardSoftCompare.png)
 
+Complete MATLAB code is available at ![bend1d-Denoising](Denoising.md)
 Soft thresholding attained the smaller AMSE:
 
 \[
