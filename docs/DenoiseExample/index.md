@@ -365,27 +365,7 @@ The bars show AMSE, and the error bars show the marginal 95% Monte Carlo confide
 
 ![AMSE comparison with 95% Monte Carlo confidence intervals](figures/HardSoftCompare.png)
 
-Complete MATLAB code is available at ![bend1d-Denoising](Denoising.md)
-Soft thresholding attained the smaller AMSE:
-
-\[
-0.0013814 < 0.0014652.
-\]
-
-The relative AMSE reduction compared with hard thresholding was approximately
-
-\[
-\frac{0.0014652-0.0013814}{0.0014652}\times100\%
-\approx 5.72\%.
-\]
-
-Thus, under this particular signal, SNR, wavelet, threshold, and replication design, soft thresholding provided modestly better average reconstruction accuracy. The marginal confidence intervals overlap, so the plot alone should not be treated as a formal test of the paired method difference. If formal inference is desired, compute the 100 paired differences
-
-\[
-D_r= MSE_{H,r}-MSE_{S,r}
-\]
-
-and construct a confidence interval for their mean.
+Complete MATLAB code is available at ![bend1d-Denoising](DenoiseMatlab.md)
 
 ## Interpretation and limitations
 
