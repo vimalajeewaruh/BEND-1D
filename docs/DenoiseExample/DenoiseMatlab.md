@@ -1,6 +1,10 @@
 ```matlab
 
-%% Experiment configuration
+close all; clear all; clc
+
+randomSeed = 2026;
+rng(randomSeed,"twister");
+%% Clean Signal configuration
 % select a signal
 signalID = "TF001";
 
@@ -10,7 +14,7 @@ N = 1024;
 % Generate and normalize the BEND-1D signal
 [x,fNative,meta] = generate(signalID,N);
 
-%%
+%% Noise Settings
 
 % specify noise level
 noiseSigma = 0.20;
@@ -43,7 +47,7 @@ xlim([0 1]);
 grid on;
 box on;
 
-%%
+%% Wavelet denoising settings
 
 % select a wavelet filter
 waveletName = "db4";
@@ -69,6 +73,7 @@ HardEstimate = exampleWaveletThreshold( NoisySignal,waveletName,decompositionLev
 
 SoftEstimate = exampleWaveletThreshold( NoisySignal,waveletName,decompositionLevel,"soft");
 
+% print hard and soft thresholding results 
 figure("Color","white");
 
 plot(x,fClean,"k","LineWidth",2.0, "DisplayName","Clean signal");
@@ -102,6 +107,8 @@ fprintf("MSE Soft Thresholding: %.5f\n ",mseSoft);
 
 %% Repeat the denoising 100 times
 
+numberOfReplications = 100;
+
 numberOfMethods = numel(methodNames);
 mseResults = zeros(numberOfReplications,numberOfMethods);
 
@@ -109,13 +116,7 @@ firstNoisySignal = [];
 firstHardEstimate = [];
 firstSoftEstimate = [];
 
-
-numberOfReplications = 100;
-randomSeed = 2026;
-
 %% Run the Monte Carlo experiment
-
-rng(randomSeed,"twister");
 
 for replication = 1:numberOfReplications
 
@@ -223,5 +224,53 @@ subtitle(meta.ID + " " + meta.Name + ...
     ", SNR = " + targetSNR);
 grid on;
 box on;
+
+% Local function to perform Hard and Soft thresholding
+function fHat = exampleWaveletThreshold( ...
+    y,waveletName,decompositionLevel,thresholdType)
+
+y = y(:);
+N = numel(y);
+
+[coefficients,bookkeeping] = wavedec( ...
+    y,decompositionLevel,waveletName);
+
+finestDetails = detcoef( ...
+    coefficients,bookkeeping,1);
+
+sigmaHat = median( ...
+    abs(finestDetails-median(finestDetails))) ...
+    /0.6744897501960817;
+
+threshold = sigmaHat*sqrt(2*log(N));
+
+approximationLength = bookkeeping(1);
+detailIndices = ...
+    (approximationLength+1):numel(coefficients);
+
+thresholdedCoefficients = coefficients;
+
+switch lower(string(thresholdType))
+    case "hard"
+        thresholdedCoefficients(detailIndices) = ...
+            wthresh(coefficients(detailIndices), ...
+            "h",threshold);
+
+    case "soft"
+        thresholdedCoefficients(detailIndices) = ...
+            wthresh(coefficients(detailIndices), ...
+            "s",threshold);
+
+    otherwise
+        error("BEND1D:InvalidExampleThreshold", ...
+            "thresholdType must be 'hard' or 'soft'.");
+end
+
+fHat = waverec( ...
+    thresholdedCoefficients,bookkeeping,waveletName);
+
+fHat = fHat(1:N);
+fHat = fHat(:);
+end
 
 ```
