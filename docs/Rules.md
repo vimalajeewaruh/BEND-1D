@@ -28,14 +28,7 @@ For a prescribed noise standard deviation $\sigma$ and target SNR, rescale the n
 Thus,
 
 ```math
-f_i^*
-=
-\bar f+
-(f_i-\bar f)
-\sqrt{
-\frac{\mathrm{SNR}\,\sigma^2}
-{N^{-1}\sum_{k=1}^N(f_k-\bar f)^2}
-}.
+f_i^* = \bar f+ (f_i-\bar f) \sqrt{\frac{\mathrm{SNR}\,\sigma^2}{N^{-1}\sum_{k=1}^N(f_k-\bar f)^2}}.
 ```
 
 Centered power is preferable to $\sum_i f_i^2$, since an arbitrary DC level should not artificially increase the nominal signal strength.
@@ -59,18 +52,13 @@ should not be used as the primary global score. A few intrinsically difficult si
 For method $A$ and a fixed reference method $R$, define the signal-wise relative AMSE as
 
 ```math
-r_{A,s}
-=
-\frac{\mathrm{AMSE}_{A,s}}
-     {\mathrm{AMSE}_{R,s}}.
+r_{A,s} =\frac{\mathrm{AMSE}_{A,s}}{\mathrm{AMSE}_{R,s}}.
 ```
 
 The corresponding percentage improvement is
 
 ```math
-I_{A,s}
-=
-100(1-r_{A,s})\%.
+I_{A,s} = 100(1-r_{A,s})\%.
 ```
 
 Thus, a signal with an AMSE near $0.4$ receives no more weight than a signal with an AMSE near $0.04$.
@@ -82,23 +70,13 @@ Thus, a signal with an AMSE near $0.4$ receives no more weight than a signal wit
 The natural global relative-AMSE score is
 
 ```math
-G_A
-=
-\exp\left\{
-\frac{1}{S}
-\sum_{s=1}^S
-\log r_{A,s}
-\right\}.
+G_A = \exp\left\{\frac{1}{S}\sum_{s=1}^S\log r_{A,s}\right\}.
 ```
 
 The global improvement relative to the reference is then
 
 ```math
-\boxed{
-\mathrm{Improvement}_A
-=
-100(1-G_A)\%.
-}
+\boxed{\mathrm{Improvement}_A=100(1-G_A)\%.}
 ```
 
 The geometric mean is preferable to averaging percentage improvements directly. For example, relative risks $1/2$ and $2$ balance exactly on the multiplicative scale.
@@ -110,25 +88,13 @@ The geometric mean is preferable to averaging percentage improvements directly. 
 Let $c=1,\ldots,12$ denote the twelve morphology families, and let $\mathcal S_c$ contain the $n_c$ signals in family $c$. Define the class-specific relative-AMSE score by
 
 ```math
-G_{A,c}
-=
-\exp\left\{
-\frac{1}{n_c}
-\sum_{s\in\mathcal S_c}
-\log r_{A,s}
-\right\}.
+G_{A,c}=\exp\left\{\frac{1}{n_c}\sum_{s\in\mathcal S_c}\log r_{A,s}\right\}.
 ```
 
 The morphology-balanced global score is
 
 ```math
-G_A^{\mathrm{BEND}}
-=
-\exp\left\{
-\frac{1}{12}
-\sum_{c=1}^{12}
-\log G_{A,c}
-\right\}.
+G_A^{\mathrm{BEND}}=\exp\left\{\frac{1}{12}\sum_{c=1}^{12}\log G_{A,c}\right\}.
 ```
 
 Hence, every morphology family receives exactly $1/12$ of the global weight, regardless of how many functions happen to belong to that family.
@@ -136,11 +102,7 @@ Hence, every morphology family receives exactly $1/12$ of the global weight, reg
 The corresponding BEND-1D improvement is
 
 ```math
-\boxed{
-\mathrm{BEND\ Improvement}_A
-=
-100(1-G_A^{\mathrm{BEND}})\%.
-}
+\boxed{\mathrm{BEND\ Improvement}_A=100(1-G_A^{\mathrm{BEND}})\%.}
 ```
 
 ---
@@ -170,10 +132,7 @@ When a scientifically meaningful fixed reference $R$ is declared in advance, $r_
 For comparisons among many competing methods, one may instead define
 
 ```math
-q_{A,s}
-=
-\frac{\mathrm{AMSE}_{A,s}}
-     {\min_B\mathrm{AMSE}_{B,s}}.
+q_{A,s}=\frac{\mathrm{AMSE}_{A,s}}{\min_B\mathrm{AMSE}_{B,s}}.
 ```
 
 This measures performance relative to the best observed method for each signal. It should be called a *relative-to-best score*, not percentage improvement, because its denominator changes when the collection of methods changes.
@@ -182,7 +141,7 @@ This measures performance relative to the best observed method for each signal. 
 
 ### GR8. Report Both Global and Morphology-Specific Performance
 
-For Core48 and larger benchmarks, the main article need not display all signal-by-signal AMSEs. A compact summary should include at least:
+For Core48 and larger benchmarks, the main results need not display all signal-by-signal AMSEs. A compact summary should include at least:
 
 - the global morphology-balanced relative-AMSE score;
 - the percentage improvement over a fixed reference;
@@ -190,8 +149,6 @@ For Core48 and larger benchmarks, the main article need not display all signal-b
 - the number or fraction of signal-wise wins;
 - the fraction of signals within a prescribed tolerance of the best method, such as $5\%$; and
 - a measure of poor-case performance, such as the worst-performing morphology class or an upper quantile of relative AMSE.
-
-Complete signal-by-signal AMSE tables should remain available in supplementary material or in the benchmark repository.
 
 ---
 
@@ -206,9 +163,7 @@ Within each signal and Monte Carlo replication, all denoising methods should rec
 The guiding principle of global BEND-1D evaluation is
 
 ```math
-\boxed{
-\text{one signal, one vote; one morphology family, one fair share}.
-}
+\boxed{ \text{one signal, one vote; one morphology family, one fair share}.}
 ```
 
 A benchmark should identify methods that perform consistently across different signal structures, rather than methods whose global score is driven by exceptional performance on a small number of high-error functions.
