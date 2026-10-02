@@ -1,15 +1,7 @@
 # Signal Categories 
 
-We adopt the name **BEND-1D**, standing for **Benchmark for Endpoint-Neutral Denoising in One Dimension**. BEND-1D is a morphology-oriented benchmark bank for one-dimensional signal denoising.
-
-The present collection is referred to as **BEND-1D v1.0 (230 signals)**. The name is intentionally not tied to wavelets, to a particular denoising paradigm, or permanently to the number 230.
-
-A complementary name for the future quantitative feature description is **MorphPrint**. Each signal will eventually receive a compact morphological feature vector, or *MorphPrint*, summarizing properties such as regularity, sparsity, oscillation, localization, multiscale energy, and discontinuity structure. Thus, BEND-1D denotes the signal library, whereas MorphPrint denotes its quantitative characterization.
-
-## Browse by Category
-
 | Category | Signal range | Main emphasis |
-|---|---:|---|
+|---|:---|:---|
 | [1](docs/signals/Category1/index.md) | 1–16 | Foundational application-oriented morphologies, including critical onsets, spectra, impacts, oscillations, and structural changes |
 | [2](docs/signals/Category2/index.md) | 17–26 |  Additional application-oriented signals with local defects, transients, multiscale peaks, and asymmetric behavior |
 | [3](docs/signals/Category3/index.md) | 27–42 |  Physiological, mechanical, oceanographic, acoustic, and atmospheric measurement structures |
@@ -21,21 +13,12 @@ A complementary name for the future quantitative feature description is **MorphP
 | [9](docs/signals/Category9/index.md) | 156–180 |  Scientific and mechanism-inspired signals together with controlled diagnostics for alignment, boundaries, resolution, scale bias, and regularity |
 | [10](docs/signals/Category10/index.md) | 181–230 |  Research-frontier measurement morphologies and mathematical adversaries involving critical-time behavior, cancellation, and heterogeneous regularity |
 
-## Core Evaluation Principle
-
-> **One signal, one vote; one morphology family, one fair share.**
-
-Raw AMSE values should not be pooled across heterogeneous signals as the only
-global score. Relative risks should be computed signal by signal and aggregated
-geometrically, with morphology-balanced weighting when category sizes differ.
-See the [Golden Rules](docs/Rules.md) for the full definitions.
-
 ## Nested Benchmark Cores
 
 A large bank is useful for broad stress testing, but a benchmark also needs small, stable subsets that can be reproduced easily and compared across papers. We therefore propose the following nested architecture:
 
 | Subset | Size | Purpose |
-|---|---:|---|
+|---|:---|:---|
 | Core4 | 4 | Historical Donoho–Johnstone anchor set |
 | Core12 | 12 | One representative from each morphology family |
 | Core24 | 24 | Two representatives from each morphology family |
@@ -69,7 +52,7 @@ The proposed organization uses twelve broad morphology families. They are intend
 6. **Peak clusters and resolution challenges.**  
    Doublets, multiplets, overlapping peaks, and closely spaced features.
 
-7. **Periodic and quasi-periodic oscillation.**  
+7. **Periodic and quasi-periodic oscillations.**  
    Repeated oscillatory structure, beating, modulation, and recurrent waveforms.
 
 8. **Chirps and evolving frequency.**  
@@ -95,7 +78,7 @@ The benchmark cores should be selected *without reference to denoising performan
 
 Core12 should contain one representative of each morphology family, with the four classical Donoho–Johnstone signals retained as fixed historical anchors. Core24, Core48, and Core96 should expand each family in a balanced way by adding signals with different widths, scales, regularities, oscillation rates, degrees of sparsity, and feature interactions.
 
-In a later stage, MorphPrint descriptors can be used to quantify similarity among signals. Clustering or space-filling selection in MorphPrint space can then provide an objective way to choose representatives while preserving the nested Core12–Core96 structure.
+**Note:** In a later stage, *MorphPrint* descriptors can be used to quantify similarity among signals. Clustering or space-filling selection in *MorphPrint* space can then provide an objective way to choose representatives while preserving the nested Core12–Core96 structure.
 
 ## What BEND-1D Should Be
 
@@ -152,48 +135,33 @@ The *bank* and the *benchmark protocol* should remain separate. BEND-1D defines 
 
 This separation permits the same bank to support Gaussian denoising, heavy-tailed noise, heteroscedastic noise, Poisson observations, correlated noise, and future observation models without redefining the clean signals.
 
-The software should support arbitrary $N$, whereas published benchmark tables may use a small set of canonical sample sizes for reproducibility. Likewise, the bank should store signals on their native scale, while a simulation driver may rescale them to a common power SNR.
+<!--The software should support arbitrary $N$, whereas published benchmark tables may use a small set of canonical sample sizes for reproducibility. Likewise, the bank should store signals on their native %scale, while a simulation driver may rescale them to a common power SNR.-->
 
 ## Beyond a Single AMSE Ranking
 
-No single numerical summary can adequately describe performance over a heterogeneous morphology bank. The principal signal-by-signal error measure may remain AMSE, but benchmark summaries should eventually include several complementary views: mean or median rank, relative risk, frequency of being near the best method, worst-case or lower-tail performance, and results stratified by morphology family.
+Raw AMSE values should not be pooled across heterogeneous signals as the only global score. That is because no single numerical summary can adequately describe performance over a heterogeneous morphology bank. The principal signal-by-signal error measure may remain AMSE, but benchmark summaries should eventually include several complementary views: mean or median rank, relative risk, frequency of being near the best method, worst-case or lower-tail performance, and results stratified by morphology family. The guiding principle is that the benchmark should test a denoiser on *controlled signal morphology*, not on accidental implementation features of the test functions.
+
+> **One signal, one vote; one morphology family, one fair share.**
+
+Read [Golden Rules](docs/Rules.md) for detailed information about evaluation principles.
+
+
+<!--
 
 For method $A$ and signal $s$, a useful normalized quantity is
 
 ```math
-R_{A,s}
-=
-\frac{\mathrm{AMSE}_{A,s}}
+R_{A,s} = \frac{\mathrm{AMSE}_{A,s}}
      {\min_B \mathrm{AMSE}_{B,s}}.
 ```
 
 A corresponding performance profile is
 
 ```math
-P_A(r)
-=
-\frac{1}{S}
-\sum_{s=1}^{S}
-I\{R_{A,s}\leq r\},
+P_A(r) = \frac{1}{S} \sum_{s=1}^{S}I\{R_{A,s}\leq r\},
 ```
 
 which reports the fraction of benchmark signals on which method $A$ lies within a factor $r$ of the best observed method.
-
-## Planned Second-Stage Standardization
-
-The present consolidation is intentionally conservative: the existing functions, names, and formulas are first placed under one roof. The next stage will standardize the bank systematically. The principal tasks are:
-
-1. make every function callable at arbitrary $N$;
-2. enforce the boundary-neutral condition $f(0)=f(1)$;
-3. move any unintended boundary discontinuity into a controlled interior feature, or redesign the signal while preserving its intended morphology;
-4. assign permanent short names and numerical identifiers;
-5. attach primary morphology families and secondary feature tags;
-6. define MorphPrint descriptors and compute them for the entire bank;
-7. identify redundancies and near-duplicates;
-8. select the nested Core12, Core24, Core48, and Core96 subsets objectively;
-9. specify canonical Monte Carlo protocols separately from the signal definitions; and
-10. freeze a versioned public release of BEND-1D.
-
-The guiding principle is that the benchmark should test a denoiser on *controlled signal morphology*, not on accidental implementation features of the test functions.
+-->
 
 [&larr; Home](../README.md) | [Golden Rules](../docs/Rules.md)  | [Signal Catalog &rarr;](../docs/signals/index.md) 
