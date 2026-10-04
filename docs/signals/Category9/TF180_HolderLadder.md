@@ -3,58 +3,90 @@
 
 ## Overview
 
-Five localized profiles have identical nominal width and amplitude but different Hölder exponents. The construction moves from a sharp cusp-like center to progressively smoother local behavior, providing a controlled regularity diagnostic.
+The **HolderLadder** signal contains five localized profiles with identical nominal width and amplitude but different Hölder exponents. The construction moves from a sharp cusp-like center to progressively smoother local behavior, providing a controlled regularity diagnostic.
 
 ## Mathematical Definition
 
-Let
+Let the feature centers be
 
-$$
-c=(0.10,0.29,0.49,0.69,0.89),
+```math
+\mathbf{c}
+=
+(0.10,\,0.29,\,0.49,\,0.69,\,0.89),
+```
+
+with corresponding Hölder exponents
+
+```math
+\boldsymbol{\alpha}
+=
+(0.25,\,0.50,\,1.00,\,1.50,\,2.50).
+```
+
+For sampled positions $x_i$, define the standardized coordinate
+
+```math
+z_{ik}
+=
+\frac{x_i-c_k}{w},
 \qquad
-\alpha=(0.25,0.50,1.00,1.50,2.50),
-\qquad w=0.040.
-$$
+k=1,\ldots,K.
+```
 
-For sampled positions $x_i$, define
+Define the unnormalized localized profile by
 
-$$
-z_{ik}=\frac{x_i-c_k}{w},
-$$
+```math
+\psi_{ik}
+=
+e^{-z_{ik}^2/2}
+\left(
+1-\gamma |z_{ik}|^{\alpha_k}
+\right).
+```
 
-$$
-\psi_{ik}=e^{-z_{ik}^2/2}\left(1-0.62|z_{ik}|^{\alpha_k}\right),
-\qquad
-M_k=\max_i|\psi_{ik}|.
-$$
+For each profile, define its discrete normalization factor by
+
+```math
+M_k
+=
+\max_i |\psi_{ik}|.
+```
 
 The discrete test signal is
 
-$$
-f_i=0.42\sum_{k=1}^{5}\frac{\psi_{ik}}{M_k}.
-$$
+```math
+f_i
+=
+A
+\sum_{k=1}^{K}
+\frac{\psi_{ik}}{M_k}.
+```
 
-[Hölder Ladder](../../assets/images/TF180_HolderLadder.png)
+[View Hölder Ladder](../../assets/images/TF180_HolderLadder.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Controlled regularity diagnostic |
-| Signal type | Five normalized localized profiles |
-| Controlled variable | Hölder exponent $0.25$ to $2.50$ |
-| Constant properties | Nominal width and peak normalization |
-| Main challenge | Adapt to different local smoothness levels |
+| Signal type | $K$ normalized localized profiles |
+| Controlled variable | Hölder exponent $\alpha_k$ |
+| Regularity range | $\alpha_k$ from $0.25$ to $2.50$ |
+| Constant properties | Common nominal width $w$ and normalized amplitude $A$ |
+| Local behavior | Progresses from sharp cusp-like to increasingly smooth profiles |
+| Main challenge | Adapting to different local smoothness levels |
 
 ## Parameters
 
-| Center | Hölder exponent |
-|---:|---:|
-| $0.10$ | $0.25$ |
-| $0.29$ | $0.50$ |
-| $0.49$ | $1.00$ |
-| $0.69$ | $1.50$ |
-| $0.89$ | $2.50$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of localized profiles | 5 |
+| $\mathbf{c}$ | Profile centers | $(0.10,\,0.29,\,0.49,\,0.69,\,0.89)$ |
+| $\boldsymbol{\alpha}$ | Hölder exponents | $(0.25,\,0.50,\,1.00,\,1.50,\,2.50)$ |
+| $w$ | Common nominal width | 0.040 |
+| $\gamma$ | Shape coefficient | 0.62 |
+| $A$ | Common normalized amplitude | 0.42 |
+| $M_k$ | Discrete normalization factor | $\max_i|\psi_{ik}|$ |
 
 ## MATLAB Implementation
 
