@@ -18,7 +18,7 @@ E(x;c,s,\tau)
 -
 \frac{x-c}{\tau}
 \right]
-\operatorname{erfc}\left[
+\mathrm{erfc}\left[
 \frac{s^2/\tau-(x-c)}
 {\sqrt{2}\,s}
 \right].
