@@ -7,34 +7,96 @@ The **DerivativeZoo** stress test places a near jump, kink, curvature change, sq
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&0.10x+0.28S(x;0.18,0.0025)+0.35|x-0.36|\\
-&+0.18(x-0.55)^2I(x\ge0.55)+0.25\sqrt{|x-0.72|}\\
-&+0.16e^{-((x-0.88)/0.025)^2/2}.
-\end{aligned}
-$$
+```math
+S(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[DerivativeZoo signal](../../assets/images/TF145_DerivativeZoo.png)
+Define the smooth linear trend
+
+```math
+T(x)=mx.
+```
+
+Define the near-jump component
+
+```math
+J(x)=
+A_JS(x;c_J,w_J).
+```
+
+Define the kink
+
+```math
+K(x)=
+A_K|x-c_K|.
+```
+
+For $x\geq c_Q$, define the curvature-change component
+
+```math
+Q(x)=
+A_Q(x-c_Q)^2,
+```
+
+with $Q(x)=0$ for $x<c_Q$.
+
+Define the square-root cusp
+
+```math
+C(x)=
+A_C\sqrt{|x-c_C|}.
+```
+
+Define the analytic Gaussian bump
+
+```math
+B(x)=
+A_B
+\exp\left[
+-\frac12\left(\frac{x-c_B}{w_B}\right)^2
+\right].
+```
+
+The signal is
+
+```math
+f(x)=T(x)+J(x)+K(x)+Q(x)+C(x)+B(x).
+```
+
+[View DerivativeZoo signal](../../assets/images/TF145_DerivativeZoo.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multiple orders of local regularity |
-| Nonsmooth features | Near jump, kink, and square-root cusp |
-| Smooth features | Trend, curvature change, and Gaussian bump |
+| Near jump | Sharp smooth transition centered at $c_J$ |
+| Kink | Absolute-value singularity centered at $c_K$ |
+| Curvature change | One-sided quadratic component beginning at $c_Q$ |
+| Cusp | Square-root singularity centered at $c_C$ |
+| Smooth features | Linear trend and analytic Gaussian bump |
 | Main challenge | Adapting to different differentiability classes within one record |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.18$ | Near-jump location | 0.18 |
-| $0.36$ | Kink location | 0.36 |
-| $0.72$ | Cusp location | 0.72 |
+| $m$ | Linear trend slope | 0.10 |
+| $A_J$ | Near-jump magnitude | 0.28 |
+| $c_J$ | Near-jump location | 0.18 |
+| $w_J$ | Near-jump transition width | 0.0025 |
+| $A_K$ | Kink amplitude | 0.35 |
+| $c_K$ | Kink location | 0.36 |
+| $A_Q$ | Curvature-change amplitude | 0.18 |
+| $c_Q$ | Curvature-change location | 0.55 |
+| $A_C$ | Cusp amplitude | 0.25 |
+| $c_C$ | Cusp location | 0.72 |
+| $A_B$ | Gaussian-bump amplitude | 0.16 |
+| $c_B$ | Gaussian-bump center | 0.88 |
+| $w_B$ | Gaussian-bump width | 0.025 |
 
 ## MATLAB Implementation
 
