@@ -3,18 +3,74 @@
 
 ## Overview
 
-Three operating cycles contain rapid performance loss followed by slower recovery, with unequal amplitudes and recovery constants.
+The **FuelCellFloodDry** signal represents three operating cycles containing rapid performance loss followed by slower recovery, with unequal amplitudes and recovery time scales.
 
 ## Mathematical Definition
 
-For each event let $u_k=(x-c_k)_+$. With the parameter vectors shown below,
-$$
-f(x)=0.82+0.03\sin(4\pi x)
--\sum_{k=1}^{3}I(x\ge c_k)a_k
-(1-e^{-u_k/t_{f,k}})e^{-u_k/t_{s,k}}.
-$$
+Let the event centers, loss amplitudes, fast time scales, and slow time scales be
 
-[FuelCellFloodDry signal](../../assets/images/TF192_FuelCellFloodDry.png)
+```math
+\mathbf{c}
+=
+(0.20,\,0.50,\,0.76),
+```
+
+```math
+\mathbf{a}
+=
+(0.36,\,0.48,\,0.32),
+```
+
+```math
+\mathbf{t}_f
+=
+(0.010,\,0.012,\,0.008),
+```
+
+and
+
+```math
+\mathbf{t}_s
+=
+(0.095,\,0.135,\,0.080).
+```
+
+For each $k=1,\ldots,K$, let
+
+```math
+u_k=x-c_k.
+```
+
+For $x\geq c_k$, define the asymmetric causal loss component by
+
+```math
+P_k(x)=
+-a_k
+\left(
+1-e^{-u_k/t_{f,k}}
+\right)
+e^{-u_k/t_{s,k}},
+```
+
+with $P_k(x)=0$ for $x<c_k$.
+
+Define the baseline component by
+
+```math
+B(x)=
+b_0+
+A_B\sin(2\pi f_Bx).
+```
+
+The signal is
+
+```math
+f(x)=
+B(x)+
+\sum_{k=1}^{K}P_k(x).
+```
+
+[View Fuel Cell Flood Dry](../../assets/images/TF192_FuelCellFloodDry.png)
 
 ## Morphological Characteristics
 
@@ -22,17 +78,23 @@ $$
 |---|---|
 | Application family | Energy systems |
 | Structure | Baseline plus three negative asymmetric causal pulses |
+| Event behavior | Rapid performance losses followed by slower recoveries |
+| Time-scale behavior | Distinct fast activation and slow recovery scales for each event |
 | Regularity | Smooth but sharply activated and multirate |
-| Main challenge | Preserve both rapid losses and long recovery tails |
+| Main challenge | Preserving both rapid losses and long recovery tails |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Event centers | $0.20,0.50,0.76$ |
-| Loss amplitudes | $0.36,0.48,0.32$ |
-| Fast scales | $0.010,0.012,0.008$ |
-| Slow scales | $0.095,0.135,0.080$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Baseline level | 0.82 |
+| $A_B$ | Baseline oscillation amplitude | 0.03 |
+| $f_B$ | Baseline oscillation frequency | 2 |
+| $K$ | Number of loss-recovery events | 3 |
+| $\mathbf{c}$ | Event centers | $(0.20,\,0.50,\,0.76)$ |
+| $\mathbf{a}$ | Loss amplitudes | $(0.36,\,0.48,\,0.32)$ |
+| $\mathbf{t}_f$ | Fast time scales | $(0.010,\,0.012,\,0.008)$ |
+| $\mathbf{t}_s$ | Slow recovery time scales | $(0.095,\,0.135,\,0.080)$ |
 
 
 ## MATLAB Implementation
