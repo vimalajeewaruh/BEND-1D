@@ -3,41 +3,123 @@
 
 ## Overview
 
-This seismological surrogate combines a quiet low-frequency baseline, a small early arrival, a broad dispersive wave packet, and a weak late coda. Its physically meaningful components differ substantially in amplitude, duration, and instantaneous frequency.
+The **SeismicDispersiveWave** signal is a seismological surrogate that combines a quiet low-frequency baseline, a small early arrival, a broad dispersive wave packet, and a weak late coda. Its physically meaningful components differ substantially in amplitude, duration, and instantaneous frequency.
 
 ## Mathematical Definition
 
-Let $u_a(x)=(x-a)_+$ and $I_a(x)=1$ when $x\ge a$ and $0$ otherwise. Then
+Define the positive-part variable
 
-$$
-\begin{aligned}
-f(x)={}&0.015\sin(6\pi x)
-+0.10e^{-\frac12((x-0.24)/0.025)^2}\sin(84\pi x)\\
-&+0.48I_{0.39}(x)e^{-\frac12((x-0.64)/0.16)^2}
-\sin\{2\pi[34u_{0.39}(x)-10u_{0.39}(x)^2]\}\\
-&+0.10I_{0.72}(x)e^{-9u_{0.72}(x)}\sin\{96\pi u_{0.72}(x)\}.
-\end{aligned}
-$$
+```math
+u_a(x)=(x-a)_+.
+```
 
-[Seismic Dispersive Wave](../../assets/images/TF171_SeismicDispersiveWave.png)
+Define the low-frequency baseline
+
+```math
+B(x)=
+A_B\sin(2\pi f_Bx).
+```
+
+Define the localized early arrival
+
+```math
+E(x)=
+A_E
+\exp\left[
+-\frac12
+\left(
+\frac{x-c_E}{w_E}
+\right)^2
+\right]
+\sin(2\pi f_Ex).
+```
+
+Let
+
+```math
+u_M=(x-c_M)_+.
+```
+
+For $x\geq c_M$, define the main dispersive packet
+
+```math
+M(x)=
+A_M
+\exp\left[
+-\frac12
+\left(
+\frac{x-\mu_M}{w_M}
+\right)^2
+\right]
+\sin\left[
+2\pi
+\left(
+f_Mu_M-\beta_Mu_M^2
+\right)
+\right],
+```
+
+with $M(x)=0$ for $x<c_M$.
+
+Let
+
+```math
+u_C=(x-c_C)_+.
+```
+
+For $x\geq c_C$, define the late coda
+
+```math
+C(x)=
+A_Ce^{-\alpha_Cu_C}
+\sin(2\pi f_Cu_C),
+```
+
+with $C(x)=0$ for $x<c_C$.
+
+The signal is
+
+```math
+f(x)=
+B(x)+E(x)+M(x)+C(x).
+```
+
+[View Seismic Dispersive Wave](../../assets/images/TF171_SeismicDispersiveWave.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Localized dispersive oscillation |
-| Components | Baseline, early packet, main packet, coda |
-| Frequency behavior | Decreasing frequency in the main packet |
+| Components | Baseline, early packet, main packet, and coda |
+| Baseline | Weak low-frequency oscillation |
+| Early arrival | Localized high-frequency packet centered at $c_E$ |
+| Main arrival | Broad dispersive packet beginning at $c_M$ |
+| Frequency behavior | Decreasing frequency in the main packet controlled by $\beta_M$ |
+| Late structure | Exponentially decaying coda beginning at $c_C$ |
 | Amplitude hierarchy | Strong main arrival with weak precursor and coda |
-| Main challenge | Preserve dispersion and low-amplitude arrivals |
+| Main challenge | Preserving dispersion and low-amplitude arrivals |
 
 ## Parameters
 
-| Feature | Location/onset | Scale |
-|---|---:|---|
-| Early arrival | $0.24$ | Gaussian width $0.025$ |
-| Main packet | $0.39$ onward | Envelope centered at $0.64$ |
-| Coda | $0.72$ onward | Decay rate $9$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $A_B$ | Baseline amplitude | 0.015 |
+| $f_B$ | Baseline frequency | 3 |
+| $A_E$ | Early-arrival amplitude | 0.10 |
+| $c_E$ | Early-arrival center | 0.24 |
+| $w_E$ | Early-arrival envelope width | 0.025 |
+| $f_E$ | Early-arrival frequency | 42 |
+| $A_M$ | Main-packet amplitude | 0.48 |
+| $c_M$ | Main-packet onset | 0.39 |
+| $\mu_M$ | Main-packet envelope center | 0.64 |
+| $w_M$ | Main-packet envelope width | 0.16 |
+| $f_M$ | Initial main-packet frequency | 34 |
+| $\beta_M$ | Main-packet quadratic phase coefficient | 10 |
+| $A_C$ | Coda amplitude | 0.10 |
+| $c_C$ | Coda onset | 0.72 |
+| $\alpha_C$ | Coda decay rate | 9 |
+| $f_C$ | Coda frequency | 48 |
 
 ## MATLAB Implementation
 
