@@ -6,36 +6,79 @@ The **FusionELMSawtooth** signal places repeated sawtooth ramps and seven narrow
 
 ## Mathematical Definition
 
-Let $p=0.105$, $r(x)=(x\bmod p)/p$, $g(x;c,w)=e^{-((x-c)/w)^2/2}$, and
+Define the sawtooth period and ramp function
 
-$$
-\mathcal C=(0.18,0.30,0.42,0.54,0.66,0.78,0.90).
-$$
+```math
+r(x)=\frac{x\bmod p}{p}.
+```
 
-Then
+Define the Gaussian function
 
-$$
-f(x)=0.30+0.20x+0.18r(x)+0.28\sum_{c\in\mathcal C}g(x;c,0.005).
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-[FusionELMSawtooth signal](../../assets/images/TF103_FusionELMSawtooth.png)
+Let the ELM-like burst centers be
+
+```math
+\mathcal{C}
+=
+(0.18,\,0.30,\,0.42,\,0.54,\,0.66,\,0.78,\,0.90).
+```
+
+Define the rising baseline
+
+```math
+B(x)=b_0+mx.
+```
+
+Define the repeated sawtooth component
+
+```math
+R(x)=A_Rr(x).
+```
+
+Define the ELM-like burst component
+
+```math
+E(x)=
+A_E
+\sum_{c\in\mathcal{C}}
+g(x;c,w_E).
+```
+
+The signal is
+
+```math
+f(x)=B(x)+R(x)+E(x).
+```
+
+[View FusionELMSawtooth signal](../../assets/images/TF103_FusionELMSawtooth.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Repetitive ramps with narrow energetic bursts |
-| Sawtooth period | 0.105 |
-| Burst width | 0.005 |
+| Baseline | Linearly increasing with slope $m$ |
+| Sawtooth | Repeated ramps with period $p$ and amplitude $A_R$ |
+| ELM-like bursts | Seven narrow events centered at $\mathcal{C}$ |
 | Main challenge | Preserving narrow events without distorting repeated ramps |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
+| $b_0$ | Baseline level | 0.30 |
+| $m$ | Baseline slope | 0.20 |
 | $p$ | Sawtooth period | 0.105 |
-| $0.18$ | Sawtooth amplitude | 0.18 |
-| $0.28$ | ELM-like burst amplitude | 0.28 |
+| $A_R$ | Sawtooth amplitude | 0.18 |
+| $\mathcal{C}$ | ELM-like burst centers | $(0.18,\,0.30,\,0.42,\,0.54,\,0.66,\,0.78,\,0.90)$ |
+| $A_E$ | ELM-like burst amplitude | 0.28 |
+| $w_E$ | ELM-like burst width | 0.005 |
 
 ## MATLAB Implementation
 
