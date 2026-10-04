@@ -3,36 +3,65 @@
 
 ## Overview
 
-A sharp pluck attack excites a slowly decaying fundamental and three faster-decaying harmonics, leaving a long low-amplitude tail.
-
-[GuitarPluckDualDecay signal](../../assets/images/TF212_GuitarPluckDualDecay.png)
+The **GuitarPluckDualDecay** signal represents a sharp pluck attack that excites a slowly decaying fundamental and three faster-decaying harmonics, leaving a long low-amplitude tail.
 
 ## Mathematical Definition
 
-Let $u=(x-0.045)_+$ and
-$g(x)=[1+e^{-(x-0.045)/0.002}]^{-1}$. Then
-$$
-f(x)=g(x)\sum_{k=1}^{4}a_ke^{-\lambda_ku}
-\sin(2\pi\nu_ku+\phi_k),
-$$
-with the mode parameters given in the implementations.
+Define the smooth attack gate
+
+```math
+g(x)=
+\left[
+1+e^{-(x-c_A)/w_A}
+\right]^{-1}.
+```
+
+Let
+
+```math
+u=(x-c_A)_+.
+```
+
+For $k=1,\ldots,K$, define the damped harmonic component by
+
+```math
+P_k(x)=
+a_k e^{-\lambda_k u}
+\sin(2\pi\nu_k u+\phi_k).
+```
+
+The signal is
+
+```math
+f(x)=
+g(x)
+\sum_{k=1}^{K}P_k(x).
+```
+
+[View Guitar Pluck Dual Decay](../../assets/images/TF212_GuitarPluckDualDecay.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Music/acoustics |
-| Structure | Gated harmonic sum with mode-specific damping |
+| Structure | Smoothly gated harmonic sum with mode-specific damping |
+| Attack behavior | Sharp smooth onset centered at $c_A$ |
+| Decay behavior | Slowly decaying fundamental accompanied by faster-decaying higher harmonics |
 | Regularity | Sharp smooth onset and multirate oscillatory decay |
-| Main challenge | Keep the attack and weak late harmonics together |
+| Main challenge | Keeping the attack and weak late harmonics together |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Attack time/width | $0.045/0.002$ |
-| Frequencies | $6.5,13,19.5,32.5$ |
-| Decay rates | $1.8,5.5,8.0,11$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of harmonic components | 4 |
+| $c_A$ | Attack time | 0.045 |
+| $w_A$ | Attack width | 0.002 |
+| $\mathbf{a}$ | Harmonic amplitudes | Specified in implementation |
+| $\boldsymbol{\nu}$ | Harmonic frequencies | $(6.5,\,13,\,19.5,\,32.5)$ |
+| $\boldsymbol{\lambda}$ | Decay rates | $(1.8,\,5.5,\,8.0,\,11)$ |
+| $\boldsymbol{\phi}$ | Phase offsets | Specified in implementation |
 
 ## MATLAB Implementation
 
