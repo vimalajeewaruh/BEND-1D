@@ -7,41 +7,87 @@ The **TerahertzLayerEcho** signal contains six unequal bipolar layer reflections
 
 ## Mathematical Definition
 
-Let $z_k=(x-c_k)/w_k$. Then
+For $k=1,\ldots,K$, define the standardized distance
 
-$$
-f(x)=\sum_{k=1}^{6}a_k z_k e^{-z_k^2/2}+0.07I(x\ge0.72)e^{-9(x-0.72)}\sin[2\pi\,35(x-0.72)],
-$$
+```math
+z_k=\frac{x-c_k}{w_k}.
+```
 
-where
+Define the bipolar layer-reflection component
 
-$$
-c=(0.15,0.34,0.50,0.525,0.72,0.88),
-$$
+```math
+P_k(x)=
+a_k z_k e^{-z_k^2/2}.
+```
 
-$$
-a=(0.60,0.42,0.50,0.40,0.28,0.11),\quad
-w=(0.012,0.014,0.010,0.010,0.016,0.012).
-$$
+Let
 
-[TerahertzLayerEcho signal](../../assets/images/TF139_TerahertzLayerEcho.png)
+```math
+u=(x-c_T)_+.
+```
+
+For $x\geq c_T$, define the dispersive oscillatory tail
+
+```math
+T(x)=
+A_T e^{-\alpha_Tu}
+\sin(2\pi f_Tu),
+```
+
+with $T(x)=0$ for $x<c_T$.
+
+The signal is
+
+```math
+f(x)=
+\sum_{k=1}^{K}P_k(x)+T(x).
+```
+
+The echo centers, amplitudes, and widths are
+
+```math
+\mathbf{c}
+=
+(0.15,\,0.34,\,0.50,\,0.525,\,0.72,\,0.88),
+```
+
+```math
+\mathbf{a}
+=
+(0.60,\,0.42,\,0.50,\,0.40,\,0.28,\,0.11),
+```
+
+```math
+\mathbf{w}
+=
+(0.012,\,0.014,\,0.010,\,0.010,\,0.016,\,0.012).
+```
+
+[View TerahertzLayerEcho signal](../../assets/images/TF139_TerahertzLayerEcho.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Bipolar echoes with close interfaces and dispersive tail |
-| Close pair | Centers at 0.50 and 0.525 |
-| Deep reflection | Weak amplitude 0.11 at $x=0.88$ |
+| Layer reflections | $K$ unequal bipolar echoes |
+| Close pair | Centers at $c_3$ and $c_4$ |
+| Dispersive tail | Damped oscillation beginning at $c_T$ |
+| Deep reflection | Weak echo centered at $c_6$ |
 | Main challenge | Resolving close bipolar echoes while retaining a weak tail |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $c_k,a_k,w_k$ | Echo centers, amplitudes, and widths | As above |
-| $9,35$ | Tail decay and cycle frequency | As shown |
-
+| $K$ | Number of layer reflections | 6 |
+| $\mathbf{c}$ | Echo centers | $(0.15,\,0.34,\,0.50,\,0.525,\,0.72,\,0.88)$ |
+| $\mathbf{a}$ | Echo amplitudes | $(0.60,\,0.42,\,0.50,\,0.40,\,0.28,\,0.11)$ |
+| $\mathbf{w}$ | Echo widths | $(0.012,\,0.014,\,0.010,\,0.010,\,0.016,\,0.012)$ |
+| $c_T$ | Tail onset location | 0.72 |
+| $A_T$ | Tail amplitude | 0.07 |
+| $\alpha_T$ | Tail decay rate | 9 |
+| $f_T$ | Tail frequency | 35 |
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF139_matlab.md)
