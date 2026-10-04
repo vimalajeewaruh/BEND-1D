@@ -3,38 +3,110 @@
 
 ## Overview
 
-A slowly increasing baseline is punctuated by four sigmoidal growth spurts of different widths and magnitudes, with weak oscillation between them.
+The **FungalGrowthPulse** signal contains a slowly increasing baseline punctuated by four sigmoidal growth spurts of different widths and magnitudes, with a weak oscillation between them.
 
 ## Mathematical Definition
 
-With $L(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$,
-$$
-\begin{aligned}
-f(x)={}&0.06+0.12x+0.19L(x;0.19,0.035)
-+0.15L(x;0.39,0.018)\\
-&+0.27L(x;0.63,0.050)+0.12L(x;0.84,0.020)\\
-&+0.018\sin(18\pi x)[L(x;0.17,0.03)-L(x;0.88,0.03)].
-\end{aligned}
-$$
+Define the logistic transition
 
-[FungalGrowthPulse signal](../../assets/images/TF210_FungalGrowthPulse.png)
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
+
+Define the slowly increasing baseline by
+
+```math
+B(x)=
+b_0+mx.
+```
+
+For $k=1,\ldots,K$, define the growth increments by
+
+```math
+G_k(x)=
+A_kL(x;c_k,w_k).
+```
+
+Let the growth centers, magnitudes, and widths be
+
+```math
+\mathbf{c}
+=
+(0.19,\,0.39,\,0.63,\,0.84),
+```
+
+```math
+\mathbf{A}
+=
+(0.19,\,0.15,\,0.27,\,0.12),
+```
+
+and
+
+```math
+\mathbf{w}
+=
+(0.035,\,0.018,\,0.050,\,0.020).
+```
+
+Define the oscillation gate by
+
+```math
+g(x)=
+L(x;c_{R1},w_R)
+-
+L(x;c_{R2},w_R).
+```
+
+Define the weak oscillatory component by
+
+```math
+R(x)=
+A_R
+\sin(2\pi f_Rx)
+g(x).
+```
+
+The signal is
+
+```math
+f(x)=
+B(x)
++
+\sum_{k=1}^{K}G_k(x)
++
+R(x).
+```
+
+[View Fungal Growth Pulse](../../assets/images/TF210_FungalGrowthPulse.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Mycology |
-| Structure | Trend plus unequal logistic increments and gated ripple |
+| Structure | Trend plus unequal logistic growth increments and gated ripple |
+| Growth behavior | Four cumulative sigmoidal growth spurts with different magnitudes and widths |
+| Oscillatory behavior | Weak ripple localized across the main growth region |
 | Regularity | Smooth cumulative staircase |
-| Main challenge | Preserve weak and broad growth phases simultaneously |
+| Main challenge | Preserving weak and broad growth phases simultaneously |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Growth centers | $0.19,0.39,0.63,0.84$ |
-| Growth magnitudes | $0.19,0.15,0.27,0.12$ |
-| Growth widths | $0.035,0.018,0.050,0.020$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Initial baseline level | 0.06 |
+| $m$ | Baseline slope | 0.12 |
+| $K$ | Number of growth spurts | 4 |
+| $\mathbf{c}$ | Growth centers | $(0.19,\,0.39,\,0.63,\,0.84)$ |
+| $\mathbf{A}$ | Growth magnitudes | $(0.19,\,0.15,\,0.27,\,0.12)$ |
+| $\mathbf{w}$ | Growth widths | $(0.035,\,0.018,\,0.050,\,0.020)$ |
+| $A_R$ | Ripple amplitude | 0.018 |
+| $f_R$ | Ripple frequency | 9 |
+| $c_{R1}$ | Ripple-gate onset | 0.17 |
+| $c_{R2}$ | Ripple-gate termination | 0.88 |
+| $w_R$ | Ripple-gate transition width | 0.03 |
 
 ## MATLAB Implementation
 
