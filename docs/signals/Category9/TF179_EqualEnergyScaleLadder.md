@@ -3,53 +3,83 @@
 
 ## Overview
 
-Five Mexican-hat-like features span a wide range of widths. Their amplitudes are scaled inversely with the square root of width so that the features have comparable continuous-domain energy. This isolates scale preference from raw-energy preference.
+The **EqualEnergyScaleLadder** signal contains five Mexican-hat-like features spanning a wide range of widths. Their amplitudes are scaled inversely with the square root of width so that the features have comparable continuous-domain energy. This isolates scale preference from raw-energy preference.
 
 ## Mathematical Definition
 
-Let
+Let the feature centers be
 
-$$
-c=(0.10,0.27,0.45,0.65,0.85),
+```math
+\mathbf{c}
+=
+(0.10,\,0.27,\,0.45,\,0.65,\,0.85),
+```
+
+with corresponding widths
+
+```math
+\mathbf{w}
+=
+(0.005,\,0.008,\,0.013,\,0.022,\,0.037).
+```
+
+For each feature, define the standardized coordinate
+
+```math
+z_k(x)=
+\frac{x-c_k}{w_k},
 \qquad
-w=(0.005,0.008,0.013,0.022,0.037),
-$$
+k=1,\ldots,K.
+```
 
-and $w_0=0.013$. Define
+Using reference width $w_0$, define the amplitude scaling by
 
-$$
-z_k(x)=\frac{x-c_k}{w_k},
-\qquad
-A_k=\sqrt{\frac{w_0}{w_k}}.
-$$
+```math
+A_k=
+\sqrt{\frac{w_0}{w_k}}.
+```
+
+The $k$th Mexican-hat-like feature is
+
+```math
+M_k(x)=
+A_k
+\left[1-z_k(x)^2\right]
+e^{-z_k(x)^2/2}.
+```
 
 The signal is
 
-$$
-f(x)=\sum_{k=1}^{5}A_k[1-z_k(x)^2]e^{-z_k(x)^2/2}.
-$$
+```math
+f(x)=
+\sum_{k=1}^{K}M_k(x),
+\qquad
+0\leq x\leq1.
+```
 
-[Equal-Energy Scale Ladder](../../assets/images/TF179_EqualEnergyScaleLadder.png)
+[View Equal-Energy Scale Ladder](../../assets/images/TF179_EqualEnergyScaleLadder.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Controlled scale-bias diagnostic |
-| Signal type | Five second-derivative Gaussian profiles |
-| Controlled variable | Width from $0.005$ to $0.037$ |
+| Signal type | $K$ second-derivative Gaussian profiles |
+| Controlled variable | Feature width $w_k$ |
+| Width range | $0.005$ to $0.037$ |
+| Amplitude scaling | $A_k=\sqrt{w_0/w_k}$ |
 | Equalized property | Approximate continuous-domain energy |
-| Main challenge | Treat narrow and broad equal-energy features fairly |
+| Main challenge | Treating narrow and broad equal-energy features fairly |
 
 ## Parameters
 
-| Center | Width | Amplitude factor $\sqrt{0.013/w}$ |
-|---:|---:|---:|
-| $0.10$ | $0.005$ | $1.612$ |
-| $0.27$ | $0.008$ | $1.275$ |
-| $0.45$ | $0.013$ | $1.000$ |
-| $0.65$ | $0.022$ | $0.769$ |
-| $0.85$ | $0.037$ | $0.593$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of features | 5 |
+| $\mathbf{c}$ | Feature centers | $(0.10,\,0.27,\,0.45,\,0.65,\,0.85)$ |
+| $\mathbf{w}$ | Feature widths | $(0.005,\,0.008,\,0.013,\,0.022,\,0.037)$ |
+| $w_0$ | Reference width | 0.013 |
+| $A_k$ | Width-dependent amplitude factor | $\sqrt{w_0/w_k}$ |
 
 ## MATLAB Implementation
 
