@@ -3,44 +3,67 @@
 
 ## Overview
 
-Three identical wave packets are centered near the left boundary, in the interior, and near the right boundary. Any systematic difference among their estimates exposes boundary-extension artifacts or location-dependent smoothing.
+The **BoundaryInteriorTwins** signal contains three identical wave packets centered near the left boundary, in the interior, and near the right boundary. Any systematic difference among their estimates exposes boundary-extension artifacts or location-dependent smoothing.
 
 ## Mathematical Definition
 
-With centers
+Let the packet centers be
 
-$$
-c=(0.025,0.500,0.975),
-$$
+```math
+\mathbf{c}
+=
+(0.025,\,0.500,\,0.975).
+```
 
-the signal is
+Define each localized wave packet by
 
-$$
-f(x)=\sum_{k=1}^{3}
-\exp\left[-\frac12\left(\frac{x-c_k}{0.013}\right)^2\right]
-\cos\{2\pi31(x-c_k)\},
-\qquad 0\le x\le1.
-$$
+```math
+P_k(x)=
+A
+\exp\left[
+-\frac12
+\left(
+\frac{x-c_k}{w}
+\right)^2
+\right]
+\cos\left[
+2\pi f(x-c_k)
+\right],
+\qquad
+k=1,\ldots,K.
+```
 
-[Boundary / Interior Twins](../../assets/images/TF177_BoundaryInteriorTwins.png)
+The signal is
+
+```math
+f(x)=
+\sum_{k=1}^{K}P_k(x),
+\qquad
+0\leq x\leq1.
+```
+
+[View Boundary / Interior Twins](../../assets/images/TF177_BoundaryInteriorTwins.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Controlled boundary diagnostic |
-| Signal type | Three identical localized wave packets |
+| Signal type | $K$ identical localized wave packets |
+| Local morphology | Gaussian-windowed cosine oscillations |
 | Controlled variable | Distance from the domain boundary |
 | Symmetry | Left, center, and right placements |
-| Main challenge | Treat boundary and interior features consistently |
+| Main challenge | Treating boundary and interior features consistently |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Centers | $0.025,0.500,0.975$ |
-| Envelope width | $0.013$ |
-| Carrier frequency | $31$ cycles/unit |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of wave packets | 3 |
+| $\mathbf{c}$ | Packet centers | $(0.025,\,0.500,\,0.975)$ |
+| $A$ | Common packet amplitude | 1 |
+| $w$ | Gaussian envelope width | 0.013 |
+| $f$ | Carrier frequency | 31 |
 
 ## MATLAB Implementation
 
