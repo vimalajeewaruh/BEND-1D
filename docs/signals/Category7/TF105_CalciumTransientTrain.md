@@ -7,37 +7,74 @@ The **CalciumTransientTrain** signal contains six causal fast-rise, slow-decay r
 
 ## Mathematical Definition
 
-For event centers $c_k$ and amplitudes $a_k$, let $u_k=(x-c_k)_+$. Then
+Let the event centers and amplitudes be
 
-$$
-f(x)=0.05+0.01x+\sum_{k=1}^{6}a_k I(x\ge c_k)[1-e^{-120u_k}]e^{-10u_k},
-$$
+```math
+\mathbf{c}
+=
+(0.16,\,0.29,\,0.43,\,0.455,\,0.67,\,0.82),
+```
 
-where
+```math
+\mathbf{a}
+=
+(0.28,\,0.52,\,0.72,\,0.45,\,0.35,\,0.18).
+```
 
-$$
-c=(0.16,0.29,0.43,0.455,0.67,0.82),\qquad
-a=(0.28,0.52,0.72,0.45,0.35,0.18).
-$$
+For each event, define
 
-[CalciumTransientTrain signal](../../assets/images/TF105_CalciumTransientTrain.png)
+```math
+u_k=(x-c_k)_+.
+```
+
+For $x\geq c_k$, define the causal transient
+
+```math
+T_k(x)=
+a_k
+\left[
+1-e^{-k_ru_k}
+\right]
+e^{-k_du_k},
+```
+
+with $T_k(x)=0$ for $x<c_k$.
+
+Define the slowly varying baseline
+
+```math
+B(x)=b_0+mx.
+```
+
+The signal is
+
+```math
+f(x)=B(x)+\sum_{k=1}^{K}T_k(x).
+```
+
+[View CalciumTransientTrain signal](../../assets/images/TF105_CalciumTransientTrain.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Sparse overlapping asymmetric transients |
-| Rise and decay | Rapid rise and slower decay |
-| Close pair | Events at 0.43 and 0.455 |
-| Main challenge | Resolving overlap while preserving the weak event at 0.82 |
+| Rise and decay | Rapid rise governed by $k_r$ and slower decay governed by $k_d$ |
+| Close pair | Events centered at $c_3=0.43$ and $c_4=0.455$ |
+| Weak event | Final event at $c_6=0.82$ has the smallest amplitude |
+| Main challenge | Resolving overlap while preserving the weak final event |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $120$ | Rise rate | 120 |
-| $10$ | Decay rate | 10 |
-| $c_k,a_k$ | Event centers and amplitudes | As above |
+| $b_0$ | Baseline level | 0.05 |
+| $m$ | Baseline slope | 0.01 |
+| $K$ | Number of transient events | 6 |
+| $\mathbf{c}$ | Event centers | $(0.16,\,0.29,\,0.43,\,0.455,\,0.67,\,0.82)$ |
+| $\mathbf{a}$ | Event amplitudes | $(0.28,\,0.52,\,0.72,\,0.45,\,0.35,\,0.18)$ |
+| $k_r$ | Rise rate | 120 |
+| $k_d$ | Decay rate | 10 |
 
 ## MATLAB Implementation
 
