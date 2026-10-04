@@ -3,36 +3,107 @@
 
 ## Overview
 
-A sequence of slow ramp-and-crash cycles carries unequal narrow precursor or edge-localized events, mixing gradual buildup, resets, and localized peaks.
+The **TokamakELMTrain** signal contains a sequence of slow ramp-and-crash cycles with unequal narrow precursor or edge-localized events. It combines gradual buildup, repeated resets, and localized peaks within a single benchmark.
 
 ## Mathematical Definition
 
-Let $q(x)=6.4x+0.07\sin(2\pi x)$ and
-$r(x)=q(x)-\lfloor q(x)\rfloor$. With $G(x;c,w)=e^{-((x-c)/w)^2/2}$,
-$$
-f(x)=0.12+0.78r(x)[1+0.10\sin(2\pi1.1x)]
-+\sum_{k=1}^{6}a_kG(x;c_k,0.006),
-$$
-where the centers and unequal amplitudes are listed in the code.
+Define the phase-like ramp variable
 
-[TokamakELMTrain signal](../../assets/images/TF188_TokamakELMTrain.png)
+```math
+q(x)=
+f_0x+
+A_q\sin(2\pi f_qx).
+```
+
+Define its fractional part by
+
+```math
+r(x)=
+q(x)-\lfloor q(x)\rfloor.
+```
+
+Define the Gaussian event profile
+
+```math
+G(x;c,w)=
+\exp\left[
+-\frac12
+\left(
+\frac{x-c}{w}
+\right)^2
+\right].
+```
+
+The modulated ramp component is
+
+```math
+R(x)=
+A_R r(x)
+\left[
+1+A_M\sin(2\pi f_Mx)
+\right].
+```
+
+Let the event centers be
+
+```math
+\mathbf{c}
+=
+(0.156,\,0.312,\,0.468,\,0.625,\,0.782,\,0.937),
+```
+
+with corresponding unequal amplitudes
+
+```math
+\mathbf{a}
+=
+(a_1,\ldots,a_K).
+```
+
+The localized event component is
+
+```math
+E(x)=
+\sum_{k=1}^{K}
+a_kG(x;c_k,w_E).
+```
+
+The signal is
+
+```math
+f(x)=
+b_0+R(x)+E(x).
+```
+
+[View Tokamak ELM Train](../../assets/images/TF188_TokamakELMTrain.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Fusion plasma |
-| Structure | Modulated fractional-part ramp with six Gaussian events |
-| Regularity | Piecewise ramps with repeated resets |
-| Main challenge | Treat ramps, discontinuities, and narrow peaks simultaneously |
+| Primary family | Repeated ramp-and-crash process with localized events |
+| Structure | Modulated fractional-part ramp with $K$ Gaussian events |
+| Ramp behavior | Gradual buildup followed by repeated abrupt resets |
+| Local events | Unequal narrow peaks located near ramp transitions |
+| Regularity | Piecewise smooth ramps with repeated discontinuities |
+| Main challenge | Treating ramps, discontinuities, and narrow peaks simultaneously |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Nominal cycles | $6.4$ |
-| Event centers | $0.156,0.312,0.468,0.625,0.782,0.937$ |
-| Event width | $0.006$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Baseline level | 0.12 |
+| $f_0$ | Nominal number of ramp cycles | 6.4 |
+| $A_q$ | Ramp-timing modulation amplitude | 0.07 |
+| $f_q$ | Ramp-timing modulation frequency | 1 |
+| $A_R$ | Ramp amplitude | 0.78 |
+| $A_M$ | Ramp amplitude-modulation depth | 0.10 |
+| $f_M$ | Ramp amplitude-modulation frequency | 1.1 |
+| $K$ | Number of localized events | 6 |
+| $\mathbf{c}$ | Event centers | $(0.156,\,0.312,\,0.468,\,0.625,\,0.782,\,0.937)$ |
+| $\mathbf{a}$ | Unequal event amplitudes | Specified in implementation |
+| $w_E$ | Common event width | 0.006 |
 
 ## MATLAB Implementation
 
