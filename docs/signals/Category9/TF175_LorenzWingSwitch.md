@@ -3,32 +3,63 @@
 
 ## Overview
 
-This signal is the normalized first coordinate of a numerically integrated Lorenz trajectory after a burn-in period. Oscillations within each attractor wing are interrupted by irregular sign-changing wing switches, producing deterministic chaotic multiscale structure.
+The **LorenzWingSwitch** signal is the normalized first coordinate of a numerically integrated Lorenz trajectory after a burn-in period. Oscillations within each attractor wing are interrupted by irregular sign-changing wing switches, producing deterministic chaotic multiscale structure.
 
 ## Mathematical Definition
 
-The Lorenz system is
+The Lorenz system is defined by
 
-$$
-\dot X=\sigma(Y-X),\qquad
-\dot Y=X(\rho-Z)-Y,\qquad
-\dot Z=XY-\beta Z,
-$$
+```math
+\frac{dX}{dt}
+=
+\sigma(Y-X),
+```
 
-with
+```math
+\frac{dY}{dt}
+=
+X(\rho-Z)-Y,
+```
 
-$$
-(\sigma,\rho,\beta)=\left(10,28,\frac83\right),
-\qquad (X_0,Y_0,Z_0)=(1,1,1).
-$$
+```math
+\frac{dZ}{dt}
+=
+XY-\beta Z.
+```
 
-Fourth-order Runge–Kutta integration uses step $0.01$. After discarding $1200$ burn-in samples, retain $N=1024$ values $X_i$, center them, and normalize:
+The initial state is
 
-$$
-f_i=\frac{X_i-\bar X}{\max_j|X_j-\bar X|}.
-$$
+```math
+(X(0),Y(0),Z(0))
+=
+(X_0,Y_0,Z_0).
+```
 
-[Lorenz Wing Switch](../../assets/images/TF175_LorenzWingSwitch.png)
+The system is numerically integrated using the fourth-order Runge--Kutta method with step size $h$. After discarding the first $N_B$ burn-in samples, retain $N$ values of the first coordinate,
+
+```math
+X_1,\ldots,X_N.
+```
+
+Define their sample mean by
+
+```math
+\bar X=
+\frac{1}{N}
+\sum_{i=1}^{N}X_i.
+```
+
+The centered and normalized test signal is
+
+```math
+f_i=
+\frac{X_i-\bar X}
+{\max_j |X_j-\bar X|},
+\qquad
+i=1,\ldots,N.
+```
+
+[View Lorenz Wing Switch](../../assets/images/TF175_LorenzWingSwitch.png)
 
 ## Morphological Characteristics
 
@@ -37,19 +68,24 @@ $$
 | Primary family | Deterministic chaotic oscillation |
 | Local structure | Smooth within-wing rotations |
 | Regime changes | Irregular sign-changing wing switches |
+| Dynamics | Controlled by the Lorenz parameters $\sigma$, $\rho$, and $\beta$ |
 | Range | Centered and normalized to maximum absolute value $1$ |
-| Main challenge | Preserve nonperiodic structure without treating it as noise |
+| Main challenge | Preserving nonperiodic structure without treating it as noise |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---:|
-| $\sigma$ | $10$ |
-| $\rho$ | $28$ |
-| $\beta$ | $8/3$ |
-| RK4 step | $0.01$ |
-| Burn-in | $1200$ samples |
-| Retained length | $1024$ samples |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $\sigma$ | Lorenz system parameter | 10 |
+| $\rho$ | Lorenz system parameter | 28 |
+| $\beta$ | Lorenz system parameter | $8/3$ |
+| $X_0$ | Initial value of $X$ | 1 |
+| $Y_0$ | Initial value of $Y$ | 1 |
+| $Z_0$ | Initial value of $Z$ | 1 |
+| $h$ | RK4 integration step size | 0.01 |
+| $N_B$ | Number of discarded burn-in samples | 1200 |
+| $N$ | Number of retained samples | 1024 |
+| Integration method | Numerical ODE solver | Fourth-order Runge--Kutta |
 
 ## MATLAB Implementation
 
