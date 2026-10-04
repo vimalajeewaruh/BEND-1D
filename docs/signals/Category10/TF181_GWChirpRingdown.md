@@ -3,42 +3,82 @@
 
 ## Overview
 
-An accelerating compact-binary-inspired chirp grows in amplitude and frequency until a prescribed merger time, then changes immediately into a damped high-frequency ring-down.
+The **GWChirpRingdown** signal is an accelerating compact-binary-inspired chirp that grows in amplitude and frequency until a prescribed merger time, then changes immediately into a damped high-frequency ring-down.
 
 ## Mathematical Definition
 
-Let $x_c=0.72$,
-$$
-A(x)=0.12+0.88(x/x_c)^{1.6},\qquad
-\phi(x)=2\pi(4x+5x^2+12x^3+18x^5),
-$$
-and $\phi_c=\phi(x_c)$. Then
-$$
-f(x)=
-\begin{cases}
-A(x)\sin\{\phi(x)\}, & x<x_c,\\
-e^{-14(x-x_c)}\sin\{84\pi(x-x_c)+\phi_c\}, & x\ge x_c.
-\end{cases}
-$$
+Let the merger time be $x_c$. Define the pre-merger amplitude by
 
-[GWChirpRingdown signal](../../assets/images/TF181_GWChirpRingdown.png)
+```math
+A(x)=
+A_0+A_1
+\left(
+\frac{x}{x_c}
+\right)^p.
+```
+
+Define the chirp phase by
+
+```math
+\phi(x)=
+2\pi
+\left(
+a_1x+a_2x^2+a_3x^3+a_5x^5
+\right).
+```
+
+The phase at merger is
+
+```math
+\phi_c=\phi(x_c).
+```
+
+For $x<x_c$, define the accelerating chirp by
+
+```math
+f(x)=
+A(x)\sin\left(\phi(x)\right).
+```
+
+For $x\geq x_c$, define the ring-down by
+
+```math
+f(x)=
+A_R e^{-\alpha_R(x-x_c)}
+\sin\left[
+2\pi f_R(x-x_c)+\phi_c
+\right].
+```
+
+[View GW Chirp Ringdown](../../assets/images/TF181_GWChirpRingdown.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Astrophysics |
-| Structure | Accelerating chirp followed by ring-down |
-| Regularity | Continuous waveform with an abrupt change of oscillatory regime |
-| Main challenge | Preserve phase through the merger and the short decaying tail |
+| Primary family | Accelerating chirp with damped ring-down |
+| Pre-merger behavior | Increasing amplitude and instantaneous frequency |
+| Merger location | Transition at $x_c$ |
+| Post-merger behavior | Exponentially damped high-frequency oscillation |
+| Phase connection | Ring-down begins with phase $\phi_c$ |
+| Main challenge | Preserving phase through the merger and the short decaying tail |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Merger time $x_c$ | $0.72$ |
-| Ring-down rate | $14$ |
-| Ring-down frequency | $42$ cycles/unit |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $x_c$ | Merger time | 0.72 |
+| $A_0$ | Initial chirp amplitude | 0.12 |
+| $A_1$ | Chirp amplitude-growth coefficient | 0.88 |
+| $p$ | Chirp amplitude-growth exponent | 1.6 |
+| $a_1$ | Linear phase coefficient | 4 |
+| $a_2$ | Quadratic phase coefficient | 5 |
+| $a_3$ | Cubic phase coefficient | 12 |
+| $a_5$ | Fifth-order phase coefficient | 18 |
+| $A_R$ | Ring-down amplitude | 1 |
+| $\alpha_R$ | Ring-down decay rate | 14 |
+| $f_R$ | Ring-down frequency | 42 |
 
 ## MATLAB Implementation
 
