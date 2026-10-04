@@ -6,34 +6,87 @@ The **SpatialTranscriptScan** signal places a strong tissue-domain interval, a l
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&0.18+0.20x+0.04\sin(4\pi x)\\
-&+0.38[S(x;0.31,0.010)-S(x;0.55,0.012)]\\
-&+0.24g(x;0.72,0.030)+0.08g(x;0.80,0.012).
-\end{aligned}
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[SpatialTranscriptScan signal](../../assets/images/TF108_SpatialTranscriptScan.png)
+Define the Gaussian function
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the smooth spatial background
+
+```math
+B(x)=b_0+mx+A_B\sin(2\pi f_Bx).
+```
+
+Define the strong tissue-domain component
+
+```math
+D(x)=
+A_D
+\left[
+S(x;c_1,w_1)-S(x;c_2,w_2)
+\right].
+```
+
+Define the localized hotspot
+
+```math
+H(x)=A_Hg(x;c_H,w_H).
+```
+
+Define the weak neighboring feature
+
+```math
+W(x)=A_Wg(x;c_W,w_W).
+```
+
+The signal is
+
+```math
+f(x)=B(x)+D(x)+H(x)+W(x).
+```
+
+[View SpatialTranscriptScan signal](../../assets/images/TF108_SpatialTranscriptScan.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Spatial trend, domain, hotspot, and weak feature |
-| Strong domain | Approximately 0.31–0.55 |
-| Weak domain | Narrow peak near $x=0.80$ |
+| Background | Smooth increasing trend with low-frequency oscillation |
+| Strong domain | Approximately from $c_1$ to $c_2$ |
+| Hotspot | Localized feature centered at $c_H$ |
+| Weak feature | Narrow neighboring peak centered at $c_W$ |
 | Main challenge | Retaining a weak neighboring feature without roughening the trend |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.38$ | Tissue-domain amplitude | 0.38 |
-| $0.24$ | Hotspot amplitude | 0.24 |
-| $0.08$ | Weak-domain amplitude | 0.08 |
+| $b_0$ | Baseline level | 0.18 |
+| $m$ | Spatial trend slope | 0.20 |
+| $A_B$ | Background oscillation amplitude | 0.04 |
+| $f_B$ | Background oscillation frequency | 2 |
+| $A_D$ | Tissue-domain amplitude | 0.38 |
+| $c_1$ | Tissue-domain onset | 0.31 |
+| $w_1$ | Tissue-domain onset width | 0.010 |
+| $c_2$ | Tissue-domain offset | 0.55 |
+| $w_2$ | Tissue-domain offset width | 0.012 |
+| $A_H$ | Hotspot amplitude | 0.24 |
+| $c_H$ | Hotspot center | 0.72 |
+| $w_H$ | Hotspot width | 0.030 |
+| $A_W$ | Weak-feature amplitude | 0.08 |
+| $c_W$ | Weak-feature center | 0.80 |
+| $w_W$ | Weak-feature width | 0.012 |
 
 ## MATLAB Implementation
 
