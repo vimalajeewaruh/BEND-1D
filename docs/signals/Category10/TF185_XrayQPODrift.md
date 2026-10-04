@@ -2,38 +2,77 @@
 
 ## Overview
 
-A quasi-periodic oscillation changes both amplitude and instantaneous frequency, causing its wavelet representation to migrate across scales while its visibility changes.
+The **XrayQPODrift** signal is a quasi-periodic oscillation whose amplitude and instantaneous frequency both change over time. These changes cause its wavelet representation to migrate across scales while its visibility varies.
 
 ## Mathematical Definition
 
-With $L(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$,
-$$
-A(x)=0.45+0.35L(x;0.18,0.06)-0.22L(x;0.78,0.05),
-$$
-$$
-\phi(x)=2\pi(10x+8x^2+1.8x^3)+0.7\sin(2\pi1.3x),
-\qquad f(x)=A(x)\sin\{\phi(x)\}.
-$$
+Define the smooth logistic transition
 
-[XrayQPODrift signal](../../assets/images/TF185_XrayQPODrift.png)
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
+Define the amplitude envelope by
+
+```math
+A(x)=
+A_0
++
+A_R L(x;c_R,w_R)
+-
+A_F L(x;c_F,w_F).
+```
+
+Define the oscillatory phase by
+
+```math
+\phi(x)=
+2\pi
+\left(
+a_1x+a_2x^2+a_3x^3
+\right)
++
+A_M\sin(2\pi f_Mx).
+```
+
+The signal is
+
+```math
+f(x)=
+A(x)\sin\left[\phi(x)\right].
+```
+
+[View X-ray QPO Drift](../../assets/images/TF185_XrayQPODrift.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | High-energy astrophysics |
-| Structure | Amplitude-modulated polynomial-phase oscillation |
+| Primary family | Amplitude- and frequency-modulated oscillation |
+| Structure | Polynomial-phase oscillation with a smoothly varying amplitude envelope |
+| Amplitude behavior | Smooth rise followed by a later decrease |
+| Frequency behavior | Nonlinear drift with additional phase modulation |
 | Regularity | Smooth and globally oscillatory |
-| Main challenge | Follow simultaneous amplitude and frequency drift |
+| Main challenge | Following simultaneous amplitude and frequency drift |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Baseline amplitude | $0.45$ |
-| Rising transition | $(0.18,0.06)$ |
-| Falling transition | $(0.78,0.05)$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $A_0$ | Baseline amplitude | 0.45 |
+| $A_R$ | Rising amplitude increment | 0.35 |
+| $c_R$ | Rising-transition center | 0.18 |
+| $w_R$ | Rising-transition width | 0.06 |
+| $A_F$ | Falling amplitude decrement | 0.22 |
+| $c_F$ | Falling-transition center | 0.78 |
+| $w_F$ | Falling-transition width | 0.05 |
+| $a_1$ | Linear phase coefficient | 10 |
+| $a_2$ | Quadratic phase coefficient | 8 |
+| $a_3$ | Cubic phase coefficient | 1.8 |
+| $A_M$ | Phase-modulation amplitude | 0.7 |
+| $f_M$ | Phase-modulation frequency | 1.3 |
 
 ## MATLAB Implementation
 
