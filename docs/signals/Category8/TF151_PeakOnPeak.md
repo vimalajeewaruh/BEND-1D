@@ -7,30 +7,79 @@ The **PeakOnPeak** stress test nests a broad peak, a shoulder, a narrower positi
 
 ## Mathematical Definition
 
-Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the Gaussian function
 
-$$
-f(x)=0.75g(x;0.50,0.18)+0.26g(x;0.58,0.060)+0.22g(x;0.605,0.015)-0.10g(x;0.610,0.0035).
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-[PeakOnPeak signal](../../assets/images/TF151_PeakOnPeak.png)
+Define the broad peak
+
+```math
+P_B(x)=
+A_B g(x;c_B,w_B).
+```
+
+Define the shoulder
+
+```math
+P_S(x)=
+A_S g(x;c_S,w_S).
+```
+
+Define the narrow positive peak
+
+```math
+P_N(x)=
+A_N g(x;c_N,w_N).
+```
+
+Define the very narrow negative notch
+
+```math
+D(x)=
+-A_D g(x;c_D,w_D).
+```
+
+The signal is
+
+```math
+f(x)=P_B(x)+P_S(x)+P_N(x)+D(x).
+```
+
+[View PeakOnPeak signal](../../assets/images/TF151_PeakOnPeak.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Hierarchically nested peaks and notch |
-| Width hierarchy | 0.18, 0.060, 0.015, and 0.0035 |
-| Finest feature | Negative notch near $x=0.610$ |
+| Broad structure | Dominant peak centered at $c_B$ |
+| Shoulder | Intermediate-scale feature centered at $c_S$ |
+| Narrow peak | Positive feature centered at $c_N$ |
+| Finest feature | Negative notch centered at $c_D$ |
+| Width hierarchy | $w_B>w_S>w_N>w_D$ |
 | Main challenge | Preserving small nested structure inside dominant features |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.75,0.26,0.22,-0.10$ | Component amplitudes | As shown |
-| $0.18,0.060,0.015,0.0035$ | Component widths | As shown |
-
+| $A_B$ | Broad-peak amplitude | 0.75 |
+| $c_B$ | Broad-peak center | 0.50 |
+| $w_B$ | Broad-peak width | 0.18 |
+| $A_S$ | Shoulder amplitude | 0.26 |
+| $c_S$ | Shoulder center | 0.58 |
+| $w_S$ | Shoulder width | 0.060 |
+| $A_N$ | Narrow-peak amplitude | 0.22 |
+| $c_N$ | Narrow-peak center | 0.605 |
+| $w_N$ | Narrow-peak width | 0.015 |
+| $A_D$ | Notch magnitude | 0.10 |
+| $c_D$ | Notch center | 0.610 |
+| $w_D$ | Notch width | 0.0035 |
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF151_matlab.md)
