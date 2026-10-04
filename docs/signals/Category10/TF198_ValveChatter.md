@@ -3,36 +3,94 @@
 
 ## Overview
 
-A finite interval of rapid near-square switching is embedded in a slow trend and followed by a damped mechanical ring-down.
+The **ValveChatter** signal contains a finite interval of rapid near-square switching embedded in a slow trend, followed by a damped mechanical ring-down.
 
 ## Mathematical Definition
 
-Let $L(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and
-$g=L(x;0.30,0.003)-L(x;0.58,0.003)$. Then
-$$
-f(x)=0.12+0.18x+0.48g(x)\tanh[2.7\sin\{2\pi47(x-0.30)\}]
-+I(x\ge0.58)0.34e^{-18u}\sin(68\pi u),
-$$
-where $u=x-0.58$.
+Define the smooth logistic transition
 
-[ValveChatter signal](../../assets/images/TF198_ValveChatter.png)
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
+
+Define the chatter gate by
+
+```math
+g(x)=
+L(x;c_1,w_g)-L(x;c_2,w_g).
+```
+
+Define the slow baseline trend by
+
+```math
+B(x)=b_0+mx.
+```
+
+Define the localized chatter component by
+
+```math
+C(x)=
+A_C g(x)
+\tanh\left[
+\gamma_C
+\sin\left(
+2\pi f_C(x-c_1)
+\right)
+\right].
+```
+
+For $x\geq c_2$, let
+
+```math
+u=x-c_2,
+```
+
+and define the mechanical ring-down by
+
+```math
+R(x)=
+A_R e^{-\alpha_Ru}
+\sin(2\pi f_Ru),
+```
+
+with $R(x)=0$ for $x<c_2$.
+
+The signal is
+
+```math
+f(x)=
+B(x)+C(x)+R(x).
+```
+
+[View Valve Chatter](../../assets/images/TF198_ValveChatter.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Control systems |
-| Structure | Smooth gate, saturated sinusoidal chatter, and causal ring |
+| Structure | Smooth gate, saturated sinusoidal chatter, and causal ring-down |
+| Chatter behavior | Rapid near-square switching localized between $c_1$ and $c_2$ |
+| Ring-down behavior | Damped mechanical oscillation beginning at $c_2$ |
 | Regularity | Localized rapid switching with smooth recovery |
-| Main challenge | Retain persistent high-frequency switching without staircasing the trend |
+| Main challenge | Retaining persistent high-frequency switching without staircasing the trend |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Chatter interval | approximately $0.30$–$0.58$ |
-| Chatter frequency | $47$ cycles/unit |
-| Ring frequency/decay | $34/18$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Baseline level | 0.12 |
+| $m$ | Baseline slope | 0.18 |
+| $c_1$ | Chatter onset | 0.30 |
+| $c_2$ | Chatter termination | 0.58 |
+| $w_g$ | Gate transition width | 0.003 |
+| $A_C$ | Chatter amplitude | 0.48 |
+| $\gamma_C$ | Chatter saturation parameter | 2.7 |
+| $f_C$ | Chatter frequency | 47 |
+| $A_R$ | Ring-down amplitude | 0.34 |
+| $\alpha_R$ | Ring-down decay rate | 18 |
+| $f_R$ | Ring-down frequency | 34 |
 
 
 ## MATLAB Implementation
