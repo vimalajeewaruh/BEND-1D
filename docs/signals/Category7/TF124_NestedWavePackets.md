@@ -7,34 +7,69 @@ The **NestedWavePackets** signal explicitly nests a broad low-frequency packet, 
 
 ## Mathematical Definition
 
-Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the Gaussian function
 
-$$
-\begin{aligned}
-f(x)={}&0.30g(x;0.50,0.22)\sin(16\pi x)\\
-&+0.24g(x;0.56,0.080)\sin(56\pi x)\\
-&+0.17g(x;0.59,0.022)\sin(170\pi x).
-\end{aligned}
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-[NestedWavePackets signal](../../assets/images/TF124_NestedWavePackets.png)
+For $k=1,\ldots,K$, define the oscillatory packet
+
+```math
+P_k(x)=
+A_k g(x;c_k,w_k)
+\sin(2\pi f_kx).
+```
+
+The signal is
+
+```math
+f(x)=
+\sum_{k=1}^{K}P_k(x).
+```
+
+The packet amplitudes, centers, widths, and frequencies are
+
+```math
+\mathbf{A}=(0.30,\,0.24,\,0.17),
+```
+
+```math
+\mathbf{c}=(0.50,\,0.56,\,0.59),
+```
+
+```math
+\mathbf{w}=(0.22,\,0.080,\,0.022),
+```
+
+```math
+\mathbf{f}=(8,\,28,\,85).
+```
+
+[View NestedWavePackets signal](../../assets/images/TF124_NestedWavePackets.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Explicitly nested oscillatory packets |
-| Packet widths | 0.22, 0.080, and 0.022 |
-| Cycle frequencies | 8, 28, and 85 |
+| Packet widths | $0.22$, $0.080$, and $0.022$ |
+| Packet frequencies | $8$, $28$, and $85$ cycles per unit interval |
+| Packet centers | $0.50$, $0.56$, and $0.59$ |
 | Main challenge | Retaining the shortest packet without fragmenting broad structure |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.30,0.24,0.17$ | Packet amplitudes | As shown |
-| $0.50,0.56,0.59$ | Packet centers | As shown |
-| $8,28,85$ | Packet cycle frequencies | As shown |
+| $K$ | Number of oscillatory packets | 3 |
+| $\mathbf{A}$ | Packet amplitudes | $(0.30,\,0.24,\,0.17)$ |
+| $\mathbf{c}$ | Packet centers | $(0.50,\,0.56,\,0.59)$ |
+| $\mathbf{w}$ | Packet widths | $(0.22,\,0.080,\,0.022)$ |
+| $\mathbf{f}$ | Packet frequencies | $(8,\,28,\,85)$ |
 
 ## MATLAB Implementation
 
