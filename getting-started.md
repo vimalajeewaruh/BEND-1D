@@ -1,4 +1,4 @@
-# bend1d - MATLAB version
+# BEND-1D - MATLAB version
 
 This page provides MATLAB version of the BEND-1D library. The library provides a common interface for signal generation, catalog browsing, metadata lookup, and centered-power signal-to-noise ratio (SNR) normalization.
 
