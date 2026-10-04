@@ -2,27 +2,48 @@
 
 ## Overview
 
-This signal is a normalized numerical trajectory of the Van der Pol oscillator in its relaxation regime. Long, slowly varying portions alternate with rapid transitions, producing a deterministic waveform with strongly unequal local time scales.
+The **VanDerPolRelaxation** signal is a normalized numerical trajectory of the Van der Pol oscillator in its relaxation regime. Long, slowly varying portions alternate with rapid transitions, producing a deterministic waveform with strongly unequal local time scales.
 
 ## Mathematical Definition
 
-The state $(y_1,y_2)$ satisfies
+The Van der Pol system is defined by
 
-$$
+```math
 \frac{dy_1}{dt}=y_2,
+```
+
+```math
+\frac{dy_2}{dt}
+=
+\mu(1-y_1^2)y_2-y_1.
+```
+
+The initial conditions are
+
+```math
+y_1(0)=y_{1,0},
 \qquad
-\frac{dy_2}{dt}=\mu(1-y_1^2)y_2-y_1,
-\qquad \mu=7,
-$$
+y_2(0)=y_{2,0}.
+```
 
-with $y_1(0)=2$ and $y_2(0)=0$. The system is integrated over $0\le t\le20$ using $N=1024$ equally spaced samples and fourth-order Runge–Kutta steps. The test signal is
+The system is integrated over
 
-$$
-f_i=\frac{y_1(t_i)}{\max_j|y_1(t_j)|}.
-$$
+```math
+0\leq t\leq T
+```
 
-[Van der Pol Relaxation](../../assets/images/TF170_VanDerPolRelaxation.png)
+using $N$ equally spaced samples and fourth-order Runge--Kutta steps.
 
+The normalized test signal is
+
+```math
+f_i=
+\frac{y_1(t_i)}
+{\max_j |y_1(t_j)|},
+\qquad i=1,\ldots,N.
+```
+
+[View Van der Pol Relaxation](../../assets/images/TF170_VanDerPolRelaxation.png)
 
 ## Morphological Characteristics
 
@@ -30,18 +51,21 @@ $$
 |---|---|
 | Primary family | Nonlinear relaxation oscillation |
 | Signal type | Numerically integrated ODE trajectory |
-| Time scales | Slow branches and fast transitions |
+| Dynamics | Controlled by the nonlinearity parameter $\mu$ |
+| Time scales | Slowly varying branches separated by rapid transitions |
 | Range | Normalized to maximum absolute value $1$ |
-| Main challenge | Avoid blurring rapid transitions or roughening slow branches |
+| Main challenge | Avoiding blurring of rapid transitions while preventing roughness on slow branches |
 
 ## Parameters
 
-| Parameter | Value | Meaning |
-|---|---:|---|
-| $\mu$ | $7$ | Nonlinearity/relaxation strength |
-| Integration interval | $[0,20]$ | Native ODE time |
-| $N$ | $1024$ | Number of samples |
-| Initial state | $(2,0)$ | Starting condition |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $\mu$ | Nonlinearity and relaxation strength | 7 |
+| $T$ | Final integration time | 20 |
+| $N$ | Number of equally spaced samples | 1024 |
+| $y_{1,0}$ | Initial value of $y_1$ | 2 |
+| $y_{2,0}$ | Initial value of $y_2$ | 0 |
+| Integration method | Numerical ODE solver | Fourth-order Runge--Kutta |
 
 ## MATLAB Implementation
 
