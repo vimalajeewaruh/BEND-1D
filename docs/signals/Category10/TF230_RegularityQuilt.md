@@ -3,51 +3,82 @@
 
 ## Overview
 
-Five adjacent compact bumps meet continuously at zero but use different powers and signs, placing several local smoothness classes in one record.
+The **RegularityQuilt** signal consists of five adjacent compact bumps that meet continuously at zero but have different powers and signs, placing several local smoothness classes within a single record.
 
 ## Mathematical Definition
 
-For the interval $[a_k,b_k]$, set
+For $k=1,\ldots,K$, consider the interval $[a_k,b_k]$ and define the local coordinate
 
-$$
-s=\frac{x-a_k}{b_k-a_k}
-$$
+```math
+s_k(x)=
+\frac{x-a_k}{b_k-a_k}.
+```
+
+For $a_k\leq x\leq b_k$, define
+
+```math
+f(x)=
+A_k
+\left[
+4s_k(x)\left(1-s_k(x)\right)
+\right]^{p_k}.
+```
+
+The interval endpoints are
+
+```math
+\mathbf{a}
+=
+(0,\,0.2,\,0.4,\,0.6,\,0.8),
+```
 
 and
 
-$$
-f(x)=A_k[4s(1-s)]^{p_k},
-\qquad a_k\le x\le b_k.
-$$
+```math
+\mathbf{b}
+=
+(0.2,\,0.4,\,0.6,\,0.8,\,1).
+```
 
-The rows $(a_k,b_k,p_k,A_k)$ are
+The corresponding powers are
 
-$$
-(0,.2,4,1),\quad
-(.2,.4,3,-.85),\quad
-(.4,.6,2,.90),\quad
-(.6,.8,1.5,-.80),\quad
-(.8,1,.5,.65).
-$$
+```math
+\mathbf{p}
+=
+(4,\,3,\,2,\,1.5,\,0.5),
+```
 
-[RegularityQuilt signal](../../assets/images/TF230_RegularityQuilt.png)
+and the amplitudes are
+
+```math
+\mathbf{A}
+=
+(1,\,-0.85,\,0.90,\,-0.80,\,0.65).
+```
+
+[View Regularity Quilt](../../assets/images/TF230_RegularityQuilt.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Regularity stress test |
-| Structure | Piecewise compact beta-shaped bumps |
+| Structure | Five adjacent compact beta-shaped bumps |
+| Sign behavior | Alternating positive and negative bump amplitudes |
+| Smoothness behavior | Local boundary regularity changes according to $p_k$ |
+| Boundary behavior | Adjacent components meet continuously at zero |
 | Regularity | Region-dependent boundary regularity |
-| Main challenge | Apply one shrinkage policy across heterogeneous smoothness |
+| Main challenge | Applying one shrinkage policy across heterogeneous smoothness |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Intervals | Five equal subintervals |
-| Powers | $4,3,2,1.5,0.5$ |
-| Amplitudes | $1,-0.85,0.90,-0.80,0.65$ |
+| Symbol | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of compact bumps | 5 |
+| $\mathbf{a}$ | Left interval endpoints | $(0,\,0.2,\,0.4,\,0.6,\,0.8)$ |
+| $\mathbf{b}$ | Right interval endpoints | $(0.2,\,0.4,\,0.6,\,0.8,\,1)$ |
+| $\mathbf{p}$ | Bump powers | $(4,\,3,\,2,\,1.5,\,0.5)$ |
+| $\mathbf{A}$ | Bump amplitudes | $(1,\,-0.85,\,0.90,\,-0.80,\,0.65)$ |
 
 ## MATLAB Implementation
 
