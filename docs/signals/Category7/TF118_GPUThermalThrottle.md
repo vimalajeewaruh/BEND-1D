@@ -7,30 +7,65 @@ The **GPUThermalThrottle** signal rises smoothly toward a high-load thermal stat
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$. Then
+Define the smooth step
 
-$$
-f(x)=0.20+0.55S(x;0.28,0.060)-0.22S(x;0.64,0.008)+0.06\sin(16\pi x)S(x;0.64,0.010).
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[GPUThermalThrottle signal](../../assets/images/TF118_GPUThermalThrottle.png)
+Define the thermal-rise component
+
+```math
+R(x)=A_R S(x;c_R,w_R).
+```
+
+Define the throttling drop
+
+```math
+D(x)=-A_D S(x;c_D,w_D).
+```
+
+Define the post-throttle controller oscillation
+
+```math
+O(x)=
+A_O\sin(2\pi f_Ox)
+S(x;c_D,w_O).
+```
+
+The signal is
+
+```math
+f(x)=b_0+R(x)+D(x)+O(x).
+```
+
+
+[View GPUThermalThrottle signal](../../assets/images/TF118_GPUThermalThrottle.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Smooth rise, sharp throttle, and post-transition oscillation |
-| Load/thermal rise | Begins around $x=0.28$ |
-| Throttling | Sharp decrease near $x=0.64$ |
+| Load/thermal rise | Begins around $c_R$ with transition width $w_R$ |
+| Throttling | Sharp decrease near $c_D$ |
+| Controller response | Oscillation with frequency $f_O$ emerges after throttling |
 | Main challenge | Preserving the controller oscillation after the regime change |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.55$ | Pre-throttle rise | 0.55 |
-| $-0.22$ | Throttle drop | -0.22 |
-| $0.06$ | Controller-oscillation amplitude | 0.06 |
+| $b_0$ | Baseline level | 0.20 |
+| $A_R$ | Pre-throttle rise magnitude | 0.55 |
+| $c_R$ | Thermal-rise location | 0.28 |
+| $w_R$ | Thermal-rise transition width | 0.060 |
+| $A_D$ | Throttle-drop magnitude | 0.22 |
+| $c_D$ | Throttling location | 0.64 |
+| $w_D$ | Throttle transition width | 0.008 |
+| $A_O$ | Controller-oscillation amplitude | 0.06 |
+| $f_O$ | Controller-oscillation frequency | 8 |
+| $w_O$ | Controller-oscillation onset width | 0.010 |
 
 ## MATLAB Implementation
 
