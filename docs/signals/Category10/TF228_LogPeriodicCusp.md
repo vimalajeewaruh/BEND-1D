@@ -3,20 +3,53 @@
 
 ## Overview
 
-Cusp amplitude and logarithmically compressed oscillation scale change together near one singular point.
+The **LogPeriodicCusp** signal combines a power-law cusp with logarithmically compressed oscillations whose amplitude and local frequency change together near a common singular point.
 
 ## Mathematical Definition
 
-Let $u=x-0.57$ and $a=|u|$. Define
-$$
-r(x)=a^{0.34}[1+0.62\sin\{10.5\log(a+0.0025)\}].
-$$
-The sampled signal is centered and normalized:
-$$
-f_i=\frac{r(x_i)-\bar r}{\max_j|r(x_j)-\bar r|}.
-$$
+Let
 
-[LogPeriodicCusp signal](../../assets/images/TF228_LogPeriodicCusp.png)
+```math
+u=x-c,
+```
+
+and define the distance from the singular point by
+
+```math
+a=|u|.
+```
+
+Define the native signal by
+
+```math
+r(x)=
+a^{p}
+\left[
+1+
+A_L
+\sin\left(
+\omega_L\log(a+\varepsilon_L)
+\right)
+\right].
+```
+
+For sampled points $x_i$, define the sample mean
+
+```math
+\bar r=
+\frac{1}{N}
+\sum_{i=1}^{N}r(x_i).
+```
+
+The centered and max-normalized signal is
+
+```math
+f_i=
+\frac{r(x_i)-\bar r}
+{\max_j \lvert r(x_j)-\bar r\rvert}.
+```
+
+[View Log-Periodic Cusp](../../assets/images/TF228_LogPeriodicCusp.png)
 
 ## Morphological Characteristics
 
@@ -24,17 +57,23 @@ $$
 |---|---|
 | Application family | Critical phenomena |
 | Structure | Power cusp with multiplicative log-periodic modulation |
+| Cusp behavior | Amplitude decreases toward the singular point according to the power $p$ |
+| Oscillatory behavior | Logarithmically compressed oscillations concentrate near the same singular point |
+| Spatial interaction | Oscillation amplitude and local frequency change simultaneously near $c$ |
 | Regularity | Hölder-like singularity with local frequency compression |
-| Main challenge | Adapt simultaneously to changing amplitude and frequency |
+| Main challenge | Adapting simultaneously to changing amplitude and frequency |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Center | $0.57$ |
-| Cusp exponent | $0.34$ |
-| Modulation depth | $0.62$ |
-| Log frequency | $10.5$ |
+| Symbol | Meaning | Default |
+|---|---|---:|
+| $c$ | Singular-point center | 0.57 |
+| $p$ | Cusp exponent | 0.34 |
+| $A_L$ | Log-periodic modulation depth | 0.62 |
+| $\omega_L$ | Log-periodic angular frequency | 10.5 |
+| $\varepsilon_L$ | Logarithmic regularizer | 0.0025 |
+| $\bar r$ | Sample mean used for centering | Computed from samples |
+| $\max_j \lvert r(x_j)-\bar r\rvert$ | Normalization factor | Computed from samples |
 
 ## MATLAB Implementation
 
