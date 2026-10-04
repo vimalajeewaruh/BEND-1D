@@ -6,29 +6,66 @@ The **NeedleInChirp** stress test embeds a narrow weak needle where an accelerat
 
 ## Mathematical Definition
 
-$$
-f(x)=0.34(0.65+0.35x)\sin[2\pi(8x+26x^2)]+0.11e^{-((x-0.72)/0.003)^2/2}.
-$$
+Define the amplitude envelope
 
-[NeedleInChirp signal](../../assets/images/TF144_NeedleInChirp.png)
+```math
+A(x)=A_C(a_0+a_1x).
+```
+
+Define the accelerating chirp phase
+
+```math
+\phi(x)=
+2\pi(f_0x+\beta x^2).
+```
+
+Define the amplitude-varying chirp
+
+```math
+C(x)=
+A(x)\sin\phi(x).
+```
+
+Define the narrow needle
+
+```math
+N(x)=
+A_N
+\exp\left[
+-\frac12\left(\frac{x-c_N}{w_N}\right)^2
+\right].
+```
+
+The signal is
+
+```math
+f(x)=C(x)+N(x).
+```
+
+[View NeedleInChirp signal](../../assets/images/TF144_NeedleInChirp.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Amplitude-varying chirp with embedded needle |
-| Chirp | Quadratic phase with coefficient 26 |
-| Needle | Center 0.72, width 0.003 |
+| Chirp amplitude | Gradually increases according to $A(x)$ |
+| Chirp frequency | Increasing frequency governed by $f_0$ and $\beta$ |
+| Needle | Narrow weak peak centered at $c_N$ |
 | Main challenge | Sparse-event detection competes with dense local oscillation |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $26$ | Quadratic chirp coefficient | 26 |
-| $0.11$ | Needle amplitude | 0.11 |
-| $0.003$ | Needle width | 0.003 |
-
+| $A_C$ | Chirp amplitude scale | 0.34 |
+| $a_0$ | Initial amplitude-envelope level | 0.65 |
+| $a_1$ | Amplitude-envelope slope | 0.35 |
+| $f_0$ | Chirp base frequency | 8 |
+| $\beta$ | Quadratic chirp coefficient | 26 |
+| $A_N$ | Needle amplitude | 0.11 |
+| $c_N$ | Needle center | 0.72 |
+| $w_N$ | Needle width | 0.003 |
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF144_matlab.md)
