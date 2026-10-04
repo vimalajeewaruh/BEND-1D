@@ -3,36 +3,85 @@
 
 ## Overview
 
-A delayed sharp closure response is followed by slower incomplete reopening and a weak overshoot-like depression.
+The **StomatalClosure** signal represents a delayed sharp closure response followed by slower incomplete reopening and a weak overshoot-like depression.
 
 ## Mathematical Definition
 
-With
-$L(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and
-$G(x;c,w)=e^{-((x-c)/w)^2/2}$,
-$$
-f(x)=1-0.62L(x;0.39,0.020)
-+0.30L(x;0.79,0.055)-0.06G(x;0.50,0.055).
-$$
+Define the logistic transition
 
-[StomatalClosure signal](../../assets/images/TF207_StomatalClosure.png)
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
+
+Define the Gaussian profile
+
+```math
+G(x;c,w)=
+\exp\left[
+-\frac{1}{2}
+\left(
+\frac{x-c}{w}
+\right)^2
+\right].
+```
+
+Define the closure response by
+
+```math
+C(x)=
+-A_C L(x;c_C,w_C).
+```
+
+Define the slower reopening response by
+
+```math
+R(x)=
+A_R L(x;c_R,w_R).
+```
+
+Define the local depression by
+
+```math
+D(x)=
+-A_D G(x;c_D,w_D).
+```
+
+The signal is
+
+```math
+f(x)=
+b_0+C(x)+R(x)+D(x).
+```
+
+[View Stomatal Closure](../../assets/images/TF207_StomatalClosure.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Plant physiology |
-| Structure | Opposing logistic transitions plus Gaussian depression |
+| Structure | Opposing logistic transitions plus a Gaussian depression |
+| Closure behavior | Sharp delayed decrease centered at $c_C$ |
+| Reopening behavior | Slower partial recovery centered at $c_R$ |
+| Local behavior | Weak depression near $c_D$ modifies the post-closure profile |
 | Regularity | Smooth but strongly asymmetric |
-| Main challenge | Preserve threshold timing, overshoot, and incomplete recovery |
+| Main challenge | Preserving threshold timing, local depression, and incomplete recovery |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Closure center/width | $0.39/0.020$ |
-| Reopening center/width | $0.79/0.055$ |
-| Depression center/width | $0.50/0.055$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Initial baseline level | 1 |
+| $A_C$ | Closure magnitude | 0.62 |
+| $c_C$ | Closure center | 0.39 |
+| $w_C$ | Closure transition width | 0.020 |
+| $A_R$ | Reopening magnitude | 0.30 |
+| $c_R$ | Reopening center | 0.79 |
+| $w_R$ | Reopening transition width | 0.055 |
+| $A_D$ | Depression amplitude | 0.06 |
+| $c_D$ | Depression center | 0.50 |
+| $w_D$ | Depression width | 0.055 |
 
 ## MATLAB Implementation
 
