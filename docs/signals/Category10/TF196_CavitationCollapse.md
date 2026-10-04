@@ -3,37 +3,112 @@
 
 ## Overview
 
-Very narrow pressure impulses occur singly and in clusters, and every event excites a damped high-frequency ring-down.
+The **CavitationCollapse** signal contains very narrow pressure impulses occurring singly and in clusters, with every event exciting a damped high-frequency ring-down.
 
 ## Mathematical Definition
 
-For the vectors $(c_k,a_k,w_k,\nu_k)$ in the code and
-$G(x;c,w)=e^{-((x-c)/w)^2/2}$,
-$$
-f(x)=\sum_{k=1}^{6}\left[
-a_kG(x;c_k,w_k)+I(x\ge c_k)(0.18a_k)e^{-35(x-c_k)}
-\sin\{2\pi\nu_k(x-c_k)\}\right].
-$$
+Define the Gaussian impulse profile
 
-[CavitationCollapse signal](../../assets/images/TF196_CavitationCollapse.png)
+```math
+G(x;c,w)=
+\exp\left[
+-\frac{1}{2}
+\left(
+\frac{x-c}{w}
+\right)^2
+\right].
+```
+
+Let the event centers be
+
+```math
+\mathbf{c}
+=
+(0.18,\,0.225,\,0.46,\,0.69,\,0.735,\,0.84),
+```
+
+with corresponding amplitudes, widths, and ring-down frequencies
+
+```math
+\mathbf{a}
+=
+(a_1,\ldots,a_K),
+```
+
+```math
+\mathbf{w}
+=
+(w_1,\ldots,w_K),
+```
+
+and
+
+```math
+\boldsymbol{\nu}
+=
+(\nu_1,\ldots,\nu_K),
+```
+
+as specified in the implementation.
+
+For each $k=1,\ldots,K$, define the pressure impulse by
+
+```math
+P_k(x)=
+a_kG(x;c_k,w_k).
+```
+
+For $x\geq c_k$, let
+
+```math
+u_k=x-c_k,
+```
+
+and define the corresponding ring-down by
+
+```math
+R_k(x)=
+\rho a_k
+e^{-\alpha_Ru_k}
+\sin(2\pi\nu_ku_k),
+```
+
+with $R_k(x)=0$ for $x<c_k$.
+
+The signal is
+
+```math
+f(x)=
+\sum_{k=1}^{K}
+\left[
+P_k(x)+R_k(x)
+\right].
+```
+
+[View Cavitation Collapse](../../assets/images/TF196_CavitationCollapse.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Fluid machinery |
-| Structure | Six Gaussian impulses with causal oscillatory tails |
+| Structure | Six Gaussian pressure impulses with causal oscillatory tails |
+| Event behavior | Isolated and closely clustered narrow impulses |
+| Ring-down behavior | Each impulse excites a damped high-frequency oscillation |
 | Regularity | Strongly localized multiscale transients |
-| Main challenge | Resolve close impulses while retaining post-event ringing |
+| Main challenge | Resolving close impulses while retaining post-event ringing |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Event centers | $0.18,0.225,0.46,0.69,0.735,0.84$ |
-| Pulse widths | $0.002$–$0.0035$ |
-| Ring frequencies | $62$–$105$ cycles/unit |
-
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of cavitation events | 6 |
+| $\mathbf{c}$ | Event centers | $(0.18,\,0.225,\,0.46,\,0.69,\,0.735,\,0.84)$ |
+| $\mathbf{a}$ | Event amplitudes | Specified in implementation |
+| $\mathbf{w}$ | Pulse widths | $0.002$–$0.0035$ |
+| $\boldsymbol{\nu}$ | Ring-down frequencies | $62$–$105$ |
+| $\rho$ | Ring-down amplitude fraction | 0.18 |
+| $\alpha_R$ | Ring-down decay rate | 35 |
 
 ## MATLAB Implementation
 
