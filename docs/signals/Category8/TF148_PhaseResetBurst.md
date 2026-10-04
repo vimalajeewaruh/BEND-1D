@@ -7,31 +7,66 @@ The **PhaseResetBurst** stress test applies an abrupt phase reset to a nearly st
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$. Then
+Define the smooth step
 
-$$
-f(x)=0.28\sin[36\pi x+0.95S(x;0.48,0.003)]
-+0.20e^{-((x-0.67)/0.035)^2/2}\sin(140\pi x).
-$$
+```math
+S(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[PhaseResetBurst signal](../../assets/images/TF148_PhaseResetBurst.png)
+Define the phase-reset oscillation
+
+```math
+R(x)=
+A_R
+\sin\left[
+2\pi f_Rx+
+\Delta\phi\,S(x;c_R,w_R)
+\right].
+```
+
+Define the localized high-frequency packet
+
+```math
+B(x)=
+A_B
+\exp\left[
+-\frac12\left(\frac{x-c_B}{w_B}\right)^2
+\right]
+\sin(2\pi f_Bx).
+```
+
+The signal is
+
+```math
+f(x)=R(x)+B(x).
+```
+
+[View PhaseResetBurst signal](../../assets/images/TF148_PhaseResetBurst.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Abrupt phase reset plus localized fast packet |
-| Phase reset | Near $x=0.48$ |
-| Burst | 70-cycle packet centered at 0.67 |
+| Background oscillation | Nearly stationary oscillation with frequency $f_R$ |
+| Phase reset | Rapid phase transition centered at $c_R$ with magnitude $\Delta\phi$ |
+| Burst | Localized high-frequency packet centered at $c_B$ |
 | Main challenge | Detecting phase change without relying on amplitude discontinuity |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.95$ | Phase-reset magnitude | 0.95 radians |
-| $0.003$ | Reset width | 0.003 |
-| $70$ | Burst cycle frequency | 70 |
+| $A_R$ | Background-oscillation amplitude | 0.28 |
+| $f_R$ | Background-oscillation frequency | 18 |
+| $\Delta\phi$ | Phase-reset magnitude | 0.95 radians |
+| $c_R$ | Phase-reset location | 0.48 |
+| $w_R$ | Phase-reset transition width | 0.003 |
+| $A_B$ | Burst amplitude | 0.20 |
+| $c_B$ | Burst center | 0.67 |
+| $w_B$ | Burst width | 0.035 |
+| $f_B$ | Burst frequency | 70 |
 
 ## MATLAB Implementation
 
