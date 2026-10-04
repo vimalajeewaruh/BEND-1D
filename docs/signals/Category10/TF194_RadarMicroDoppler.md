@@ -3,38 +3,90 @@
 
 ## Overview
 
-Two overlapping oscillatory components use nested amplitude and phase modulation to reproduce a nonmonotone micro-Doppler-like time-frequency pattern.
+The **RadarMicroDoppler** signal contains two overlapping oscillatory components with nested amplitude and phase modulation, producing a nonmonotone micro-Doppler-like time-frequency pattern.
 
 ## Mathematical Definition
 
-Define
-$$
-\phi_1=2\pi(17x+5x^2)+1.25\sin(2\pi2.7x),\qquad
-\phi_2=2\pi(39x+2.5x^2)+0.70\sin(2\pi5.2x).
-$$
-Then
-$$
-f(x)=[0.58+0.25\cos(2\pi1.8x)]\sin\phi_1+0.24\sin\phi_2.
-$$
+Define the phase of the first oscillatory component by
 
-[RadarMicroDoppler signal](../../assets/images/TF194_RadarMicroDoppler.png)
+```math
+\phi_1(x)=
+2\pi\left(
+f_1x+\beta_1x^2
+\right)
++
+A_{M1}\sin(2\pi f_{M1}x).
+```
+
+Define the phase of the second oscillatory component by
+
+```math
+\phi_2(x)=
+2\pi\left(
+f_2x+\beta_2x^2
+\right)
++
+A_{M2}\sin(2\pi f_{M2}x).
+```
+
+Define the amplitude envelope of the first component by
+
+```math
+A_1(x)=
+A_{10}
++
+A_{11}\cos(2\pi f_Ax).
+```
+
+The two oscillatory components are
+
+```math
+C_1(x)=
+A_1(x)\sin\left[\phi_1(x)\right],
+```
+
+and
+
+```math
+C_2(x)=
+A_2\sin\left[\phi_2(x)\right].
+```
+
+The signal is
+
+```math
+f(x)=C_1(x)+C_2(x).
+```
+
+[View Radar Micro-Doppler](../../assets/images/TF194_RadarMicroDoppler.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Radar sensing |
-| Structure | Two polynomial-phase carriers with nested modulation |
+| Structure | Two polynomial-phase carriers with nested amplitude and phase modulation |
+| Component interaction | Overlapping oscillatory components with different frequency trajectories |
+| Modulation behavior | First component has amplitude and phase modulation; second component has phase modulation |
 | Regularity | Smooth, dense, and nonstationary |
-| Main challenge | Preserve migrating time-frequency components and sidebands |
+| Main challenge | Preserving migrating time-frequency components and sidebands |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Carrier 1 base frequency | $17$ |
-| Carrier 2 base frequency | $39$ |
-| Component-2 amplitude | $0.24$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $f_1$ | Component-1 base frequency | 17 |
+| $\beta_1$ | Component-1 quadratic phase coefficient | 5 |
+| $A_{M1}$ | Component-1 phase-modulation amplitude | 1.25 |
+| $f_{M1}$ | Component-1 phase-modulation frequency | 2.7 |
+| $A_{10}$ | Component-1 baseline amplitude | 0.58 |
+| $A_{11}$ | Component-1 amplitude-modulation magnitude | 0.25 |
+| $f_A$ | Component-1 amplitude-modulation frequency | 1.8 |
+| $f_2$ | Component-2 base frequency | 39 |
+| $\beta_2$ | Component-2 quadratic phase coefficient | 2.5 |
+| $A_{M2}$ | Component-2 phase-modulation amplitude | 0.70 |
+| $f_{M2}$ | Component-2 phase-modulation frequency | 5.2 |
+| $A_2$ | Component-2 amplitude | 0.24 |
 
 
 ## MATLAB Implementation
