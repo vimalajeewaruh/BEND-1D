@@ -3,40 +3,102 @@
 
 ## Overview
 
-This piecewise stress–strain surrogate moves through elastic loading, a short yield plateau, strain hardening, softening, and abrupt fracture. It combines slope changes with a large terminal discontinuity.
+The **StressStrainFracture** signal is a piecewise stress–strain surrogate that moves through elastic loading, a short yield plateau, strain hardening, softening, and abrupt fracture. It combines multiple slope changes with a large terminal discontinuity.
 
 ## Mathematical Definition
 
-For $0\le x\le1$,
+Let the regime boundaries be
 
-$$
+```math
+c_1=0.18,\qquad
+c_2=0.34,\qquad
+c_3=0.72,\qquad
+c_4=0.90.
+```
+
+For $0\leq x<c_1$, define the elastic-loading regime by
+
+```math
+f(x)=m_E x.
+```
+
+For $c_1\leq x<c_2$, define the yield regime by
+
+```math
 f(x)=
-\begin{cases}
-4x, & x<0.18,\\
-0.72+0.035\dfrac{x-0.18}{0.34-0.18}, & 0.18\le x<0.34,\\
-0.755+0.30u+0.055u^2,\quad u=\dfrac{x-0.34}{0.72-0.34}, & 0.34\le x<0.72,\\
-1.11-0.22v-0.03v^2,\quad v=\dfrac{x-0.72}{0.90-0.72}, & 0.72\le x<0.90,\\
-0.15+0.04e^{-18(x-0.90)}, & x\ge0.90.
-\end{cases}
-$$
+L_Y+
+A_Y\frac{x-c_1}{c_2-c_1}.
+```
 
-[Stress–Strain Fracture](../../assets/images/TF166_StressStrainFracture.png)
+For $c_2\leq x<c_3$, let
+
+```math
+u=
+\frac{x-c_2}{c_3-c_2},
+```
+
+and define the strain-hardening regime by
+
+```math
+f(x)=
+L_H+a_Hu+b_Hu^2.
+```
+
+For $c_3\leq x<c_4$, let
+
+```math
+v=
+\frac{x-c_3}{c_4-c_3},
+```
+
+and define the softening regime by
+
+```math
+f(x)=
+L_S-a_Sv-b_Sv^2.
+```
+
+For $x\geq c_4$, define the post-fracture regime by
+
+```math
+f(x)=
+L_F+A_Fe^{-\lambda_F(x-c_4)}.
+```
+
+[View Stress–Strain Fracture](../../assets/images/TF166_StressStrainFracture.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Piecewise constitutive curve |
-| Regimes | Elastic, yield, hardening, softening, fracture |
+| Regimes | Elastic, yield, hardening, softening, and fracture |
+| Regime boundaries | $c_1$, $c_2$, $c_3$, and $c_4$ |
 | Singular structure | Slope changes and terminal jump |
-| Dominant event | Fracture at $x=0.90$ |
-| Main challenge | Preserve both regime boundaries and the abrupt failure |
+| Dominant event | Fracture at $c_4$ |
+| Post-fracture behavior | Low-level exponentially decaying response |
+| Main challenge | Preserving both regime boundaries and the abrupt failure |
 
 ## Parameters
 
-| Boundary | $0.18$ | $0.34$ | $0.72$ | $0.90$ |
-|---|---:|---:|---:|---:|
-| Interpretation | Yield onset | Hardening onset | Softening onset | Fracture |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $c_1$ | Yield onset | 0.18 |
+| $c_2$ | Hardening onset | 0.34 |
+| $c_3$ | Softening onset | 0.72 |
+| $c_4$ | Fracture location | 0.90 |
+| $m_E$ | Elastic slope | 4 |
+| $L_Y$ | Yield-regime initial level | 0.72 |
+| $A_Y$ | Yield-regime increase | 0.035 |
+| $L_H$ | Hardening-regime initial level | 0.755 |
+| $a_H$ | Linear hardening coefficient | 0.30 |
+| $b_H$ | Quadratic hardening coefficient | 0.055 |
+| $L_S$ | Softening-regime initial level | 1.11 |
+| $a_S$ | Linear softening coefficient | 0.22 |
+| $b_S$ | Quadratic softening coefficient | 0.03 |
+| $L_F$ | Post-fracture baseline level | 0.15 |
+| $A_F$ | Post-fracture transient amplitude | 0.04 |
+| $\lambda_F$ | Post-fracture decay rate | 18 |
 
 ## MATLAB Implementation
 
