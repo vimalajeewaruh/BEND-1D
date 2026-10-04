@@ -2,35 +2,70 @@
 
 ## Overview
 
-A persistent pulsar-like oscillation undergoes an abrupt frequency change followed by two recovery time scales while remaining continuous in phase.
+The **PulsarGlitchRecovery** signal is a persistent pulsar-like oscillation that undergoes an abrupt frequency change followed by two recovery time scales while remaining continuous in phase.
 
 ## Mathematical Definition
 
-Let $c=0.43$, $u=(x-c)_+$, and $H=I(x\ge c)$. Define
-$$
-\phi(x)=2\pi\left[9x+H\{2.4u+0.22(1-e^{-u/0.03})
-+0.16(1-e^{-u/0.18})\}\right].
-$$
-Then $f(x)=\sin\{\phi(x)\}$.
+Let the glitch occur at $c$.
 
-[PulsarGlitchRecovery signal](../../assets/images/TF183_PulsarGlitchRecovery.png)
+For $x<c$, define the phase by
+
+```math
+\phi(x)=2\pi f_0x.
+```
+
+For $x\geq c$, let
+
+```math
+u=x-c,
+```
+
+and define the post-glitch phase by
+
+```math
+\phi(x)=
+2\pi\left[
+f_0x
++
+\Delta f\,u
++
+A_1\left(1-e^{-u/\tau_1}\right)
++
+A_2\left(1-e^{-u/\tau_2}\right)
+\right].
+```
+
+The signal is
+
+```math
+f(x)=\sin\left[\phi(x)\right].
+```
+
+[View Pulsar Glitch Recovery](../../assets/images/TF183_PulsarGlitchRecovery.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Astrophysics |
-| Structure | Sinusoid with a post-glitch nonlinear phase law |
-| Regularity | Continuous amplitude and phase; abrupt local-frequency change |
-| Main challenge | Retain a subtle change in oscillatory dynamics |
+| Primary family | Oscillation with frequency glitch and recovery |
+| Structure | Persistent sinusoid with a post-glitch nonlinear phase law |
+| Glitch event | Abrupt local-frequency change at $c$ |
+| Recovery | Two exponential recovery time scales $\tau_1$ and $\tau_2$ |
+| Regularity | Continuous amplitude and phase across the glitch |
+| Main challenge | Retaining a subtle change in oscillatory dynamics |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Glitch time | $0.43$ |
-| Frequency increment | $2.4$ |
-| Recovery scales | $0.03, 0.18$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $c$ | Glitch time | 0.43 |
+| $f_0$ | Pre-glitch frequency | 9 |
+| $\Delta f$ | Persistent frequency increment | 2.4 |
+| $A_1$ | Fast-recovery phase coefficient | 0.22 |
+| $\tau_1$ | Fast recovery time scale | 0.03 |
+| $A_2$ | Slow-recovery phase coefficient | 0.16 |
+| $\tau_2$ | Slow recovery time scale | 0.18 |
 
 ## MATLAB Implementation
 
