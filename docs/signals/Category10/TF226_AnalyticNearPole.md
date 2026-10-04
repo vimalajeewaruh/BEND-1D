@@ -3,21 +3,33 @@
 
 ## Overview
 
-This normalized rational peak is infinitely differentiable on the real interval, but nearby complex poles create extreme local curvature.
+The **AnalyticNearPole** signal is a normalized rational peak that is infinitely differentiable on the real interval, while nearby complex poles produce extreme local curvature around the peak.
 
 ## Mathematical Definition
 
-Let
-$$
-r(x)=\frac{1}{(x-0.52)^2+0.015^2}.
-$$
-For sampled points $x_i$, define
-$$
-f_i=\frac{r(x_i)}{\max_j r(x_j)}.
-$$
-The complex poles occur at $0.52\pm0.015i$.
+Define the rational function
 
-[AnalyticNearPole signal](../../assets/images/TF226_AnalyticNearPole.png)
+```math
+r(x)=
+\frac{1}
+{(x-x_0)^2+\delta^2}.
+```
+
+For sampled points $x_i$, define the normalized signal by
+
+```math
+f_i=
+\frac{r(x_i)}
+{\max_j r(x_j)}.
+```
+
+The corresponding complex poles are located at
+
+```math
+x=x_0\pm i\delta.
+```
+
+[View Analytic Near Pole](../../assets/images/TF226_AnalyticNearPole.png)
 
 ## Morphological Characteristics
 
@@ -25,16 +37,19 @@ The complex poles occur at $0.52\pm0.015i$.
 |---|---|
 | Application family | Mathematical stress test |
 | Structure | Unit-normalized narrow rational peak |
-| Regularity | Real analytic on $[0,1]$ despite extreme curvature |
+| Peak behavior | Sharp symmetric peak centered at $x_0$ |
+| Pole behavior | Complex poles lie a distance $\delta$ from the real axis |
+| Regularity | Real analytic on $[0,1]$ despite extreme local curvature |
 | Main challenge | Avoid equating mathematical smoothness with slow variation |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Center $x_0$ | $0.52$ |
-| Pole distance $\delta$ | $0.015$ |
-| Normalization | Sample maximum equals $1$ |
+| Symbol | Meaning | Default |
+|---|---|---:|
+| $x_0$ | Peak center | 0.52 |
+| $\delta$ | Distance of the complex poles from the real axis | 0.015 |
+| $x_0\pm i\delta$ | Complex pole locations | $0.52\pm0.015i$ |
+| $\max_j f_j$ | Sample-based normalization | 1 |
 
 ## MATLAB Implementation
 
