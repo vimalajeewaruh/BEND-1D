@@ -7,12 +7,6 @@ The **SideChannelPower** signal contains repeated damped computation-like transi
 
 ## Mathematical Definition
 
-## Overview
-
-The **SideChannelPower** signal contains repeated damped computation-like transients and one intentionally weak localized perturbation near the fifth operation.
-
-## Mathematical Definition
-
 Define the Gaussian function
 
 ```math
