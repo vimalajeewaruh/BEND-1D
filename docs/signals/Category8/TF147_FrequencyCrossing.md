@@ -7,36 +7,78 @@ The **FrequencyCrossing** stress test combines an increasing-frequency chirp and
 
 ## Mathematical Definition
 
-Let
+Define the increasing-frequency chirp phase
 
-$$
-\phi_u(x)=2\pi(8x+20x^2),\qquad
-\phi_d(x)=2\pi(28x-20x^2),
-$$
+```math
+\phi_u(x)=
+2\pi(f_u x+\beta_u x^2).
+```
 
-and $A(x)=0.75+0.25e^{-((x-0.50)/0.30)^2/2}$. Then
+Define the decreasing-frequency chirp phase
 
-$$
-f(x)=A(x)[0.25\sin\phi_u(x)+0.25\sin(\phi_d(x)+0.35)].
-$$
+```math
+\phi_d(x)=
+2\pi(f_d x+\beta_d x^2).
+```
 
-[FrequencyCrossing signal](../../assets/images/TF147_FrequencyCrossing.png)
+Define the amplitude envelope
+
+```math
+A(x)=
+A_0+
+A_E
+\exp\left[
+-\frac12\left(\frac{x-c_E}{w_E}\right)^2
+\right].
+```
+
+Define the two chirp components
+
+```math
+C_u(x)=
+A_u\sin\phi_u(x),
+```
+
+```math
+C_d(x)=
+A_d\sin\left[\phi_d(x)+\delta_d\right].
+```
+
+The signal is
+
+```math
+f(x)=
+A(x)\left[C_u(x)+C_d(x)\right].
+```
+
+[View FrequencyCrossing signal](../../assets/images/TF147_FrequencyCrossing.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Two chirps with crossing instantaneous frequencies |
-| Phase trends | One increasing and one decreasing |
-| Interference | Local reinforcement and cancellation |
+| Increasing chirp | Frequency increases according to $\beta_u$ |
+| Decreasing chirp | Frequency decreases according to $\beta_d$ |
+| Amplitude envelope | Smooth enhancement centered at $c_E$ |
+| Interference | Local reinforcement and cancellation between the two chirps |
 | Main challenge | Avoiding false interpretation of interference as signal disappearance |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $20,-20$ | Quadratic phase coefficients | As shown |
-| $0.35$ | Relative phase offset | 0.35 |
+| $f_u$ | Initial frequency of increasing chirp | 8 |
+| $\beta_u$ | Quadratic phase coefficient of increasing chirp | 20 |
+| $f_d$ | Initial frequency of decreasing chirp | 28 |
+| $\beta_d$ | Quadratic phase coefficient of decreasing chirp | -20 |
+| $A_0$ | Baseline envelope level | 0.75 |
+| $A_E$ | Envelope enhancement amplitude | 0.25 |
+| $c_E$ | Envelope center | 0.50 |
+| $w_E$ | Envelope width | 0.30 |
+| $A_u$ | Increasing-chirp amplitude | 0.25 |
+| $A_d$ | Decreasing-chirp amplitude | 0.25 |
+| $\delta_d$ | Relative phase offset | 0.35 |
 
 ## MATLAB Implementation
 
