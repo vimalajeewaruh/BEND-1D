@@ -82,7 +82,7 @@ f_i=
 | $\omega_H$ | Chirp phase numerator | 0.18 |
 | $\varepsilon_H$ | Chirp regularizer | 0.004 |
 | $\bar r$ | Sample mean used for centering | Computed from samples |
-| $\max_j|r(x_j)-\bar r|$ | Normalization factor | Computed from samples |
+| $\max_j \lvert r(x_j)-\bar r\rvert$ | Normalization factor | Computed from samples |
 
 ## MATLAB Implementation
 
