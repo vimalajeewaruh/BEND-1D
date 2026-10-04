@@ -3,51 +3,83 @@
 
 ## Overview
 
-Four identical Gaussian-windowed cosine packets are placed at deliberately selected sample indices. Because the local shapes are exact translations, differences in denoising quality reveal sensitivity to dyadic alignment, decimation phase, or location-dependent processing rather than to morphology.
+The **DyadicPhaseTwins** signal contains four identical Gaussian-windowed cosine packets placed at deliberately selected sample indices. Because the local shapes are exact translations, differences in denoising quality reveal sensitivity to dyadic alignment, decimation phase, or location-dependent processing rather than to morphology.
 
 ## Mathematical Definition
 
-This diagnostic uses $N=4096$ samples
+Using $N$ equally spaced samples on $[0,1]$, define
 
-$$
-x_i=\frac{i-1}{N-1},\qquad i=1,\ldots,N,
-$$
+```math
+x_i=
+\frac{i-1}{N-1},
+\qquad
+i=1,\ldots,N.
+```
 
-and one-based center indices
+Let the one-based center indices be
 
-$$
-j=(512,1409,2306,3203),
-\qquad c_k=\frac{j_k-1}{N-1}.
-$$
+```math
+\mathbf{j}
+=
+(512,\,1409,\,2306,\,3203),
+```
+
+with corresponding locations
+
+```math
+c_k=
+\frac{j_k-1}{N-1},
+\qquad
+k=1,\ldots,K.
+```
+
+Define each localized wave packet by
+
+```math
+P_k(x)=
+A
+\exp\left[
+-\frac12
+\left(
+\frac{x-c_k}{w}
+\right)^2
+\right]
+\cos\left[
+2\pi f(x-c_k)
+\right].
+```
 
 The signal is
 
-$$
-f(x)=\sum_{k=1}^{4}
-\exp\left[-\frac12\left(\frac{x-c_k}{0.014}\right)^2\right]
-\cos\{2\pi34(x-c_k)\}.
-$$
+```math
+f(x)=
+\sum_{k=1}^{K}P_k(x).
+```
 
-[Dyadic Phase Twins](../../assets/images/TF176_DyadicPhaseTwins.png)
+[View Dyadic Phase Twins](../../assets/images/TF176_DyadicPhaseTwins.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Controlled translation diagnostic |
-| Signal type | Four identical localized wave packets |
+| Signal type | $K$ identical localized wave packets |
+| Local morphology | Gaussian-windowed cosine oscillations |
 | Controlled variable | Sample-grid and dyadic alignment |
-| Native sampling | $N=4096$ |
-| Main challenge | Produce translation-consistent estimates |
+| Native sampling | $N$ equally spaced samples |
+| Main challenge | Producing translation-consistent estimates |
 
 ## Parameters
 
-| Parameter | Value | Meaning |
-|---|---|---|
-| Center indices | $512,1409,2306,3203$ | One-based MATLAB indices |
-| Envelope width | $0.014$ | Gaussian localization scale |
-| Carrier frequency | $34$ | Cycles per unit interval |
-| $N$ | $4096$ | Required native sample count |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $N$ | Required native sample count | 4096 |
+| $K$ | Number of wave packets | 4 |
+| $\mathbf{j}$ | One-based center indices | $(512,\,1409,\,2306,\,3203)$ |
+| $c_k$ | Center location corresponding to $j_k$ | $(j_k-1)/(N-1)$ |
+| $A$ | Common packet amplitude | 1 |
+| $w$ | Gaussian envelope width | 0.014 |
+| $f$ | Carrier frequency | 34 |
 
 ## MATLAB Implementation
 
