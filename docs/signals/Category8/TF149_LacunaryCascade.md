@@ -7,42 +7,75 @@ The **LacunaryCascade** stress test contains alternating events that become prog
 
 ## Mathematical Definition
 
-Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$ and
+Define the Gaussian function
 
-$$
-c=(0.18,0.37,0.52,0.63,0.71,0.77,0.815,0.848,0.872,0.890).
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-For $k=1,\ldots,10$, set
+Let the event centers be
 
-$$
-a_k=0.30(0.87)^{k-1},\qquad w_k=0.025(0.70)^{k-1}.
-$$
+```math
+\mathbf{c}
+=
+(0.18,\,0.37,\,0.52,\,0.63,\,0.71,\,0.77,\,0.815,\,0.848,\,0.872,\,0.890).
+```
 
-Then
+For $k=1,\ldots,K$, define the geometrically decreasing amplitudes
 
-$$
-f(x)=0.02+\sum_{k=1}^{10}a_k(-1)^{k+1}g(x;c_k,w_k).
-$$
+```math
+a_k=
+A_0 r_A^{k-1},
+```
 
-[LacunaryCascade signal](../../assets/images/TF149_LacunaryCascade.png)
+and widths
+
+```math
+w_k=
+w_0 r_w^{k-1}.
+```
+
+Define each alternating event as
+
+```math
+P_k(x)=
+(-1)^{k+1}a_k g(x;c_k,w_k).
+```
+
+The signal is
+
+```math
+f(x)=
+b_0+\sum_{k=1}^{K}P_k(x).
+```
+
+[View LacunaryCascade signal](../../assets/images/TF149_LacunaryCascade.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Alternating geometrically shrinking cascade |
-| Amplitude ratio | 0.87 per event |
-| Width ratio | 0.70 per event |
+| Event locations | Nonuniform centers specified by $\mathbf{c}$ |
+| Amplitude scaling | Successive magnitudes contract by factor $r_A$ |
+| Width scaling | Successive widths contract by factor $r_w$ |
+| Sign pattern | Alternating positive and negative events |
 | Main challenge | Strongly nonuniform event scales and spacing |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $c_k$ | Event centers | As above |
-| $0.87$ | Amplitude contraction | 0.87 |
-| $0.70$ | Width contraction | 0.70 |
+| $b_0$ | Baseline level | 0.02 |
+| $K$ | Number of cascade events | 10 |
+| $\mathbf{c}$ | Event centers | $(0.18,\,0.37,\,0.52,\,0.63,\,0.71,\,0.77,\,0.815,\,0.848,\,0.872,\,0.890)$ |
+| $A_0$ | Initial event amplitude | 0.30 |
+| $r_A$ | Amplitude contraction factor | 0.87 |
+| $w_0$ | Initial event width | 0.025 |
+| $r_w$ | Width contraction factor | 0.70 |
 
 ## MATLAB Implementation
 
