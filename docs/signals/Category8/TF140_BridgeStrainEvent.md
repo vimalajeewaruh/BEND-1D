@@ -6,34 +6,103 @@ The **BridgeStrainEvent** signal combines slow thermal drift, four repeated vehi
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$, $g(x;c,w)=e^{-((x-c)/w)^2/2}$, and $u=(x-0.62)_+$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&0.18+0.16x+0.05\sin(3\pi x)
-+0.16\sum_{c\in\{0.18,0.34,0.52,0.76\}}g(x;c,0.025)\\
-&+0.10S(x;0.62,0.004)+0.10I(x\ge0.62)e^{-12u}\sin(2\pi\,28u).
-\end{aligned}
-$$
+```math
+S(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[BridgeStrainEvent signal](../../assets/images/TF140_BridgeStrainEvent.png)
+Define the Gaussian function
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the thermal-drift component
+
+```math
+B(x)=
+b_0+mx+A_B\sin(2\pi f_Bx).
+```
+
+Define the repeated vehicle-load responses
+
+```math
+L(x)=
+A_L\sum_{k=1}^{K}g(x;c_k,w_L).
+```
+
+The vehicle-load locations are
+
+```math
+\mathbf{c}
+=
+(0.18,\,0.34,\,0.52,\,0.76).
+```
+
+Define the slip transition
+
+```math
+S_L(x)=
+A_SS(x;c_S,w_S).
+```
+
+Let
+
+```math
+u=(x-c_S)_+.
+```
+
+For $x\geq c_S$, define the damped structural vibration
+
+```math
+R(x)=
+A_Re^{-\alpha_Ru}
+\sin(2\pi f_Ru),
+```
+
+with $R(x)=0$ for $x<c_S$.
+
+The signal is
+
+```math
+f(x)=B(x)+L(x)+S_L(x)+R(x).
+```
+
+[View BridgeStrainEvent signal](../../assets/images/TF140_BridgeStrainEvent.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Drift, repeated loads, slip, and damped vibration |
-| Load responses | Four broad positive events |
-| Structural event | Slip and ringing beginning near $x=0.62$ |
+| Thermal drift | Linear trend with a low-frequency oscillatory component |
+| Load responses | $K$ broad positive events at locations specified by $\mathbf{c}$ |
+| Structural event | Slip transition and damped vibration beginning at $c_S$ |
 | Main challenge | Distinguishing local structural change from ordinary drift |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.16$ | Vehicle-load amplitude | 0.16 |
-| $0.10$ | Slip magnitude | 0.10 |
-| $12,28$ | Ringing decay and cycle frequency | As shown |
+| $b_0$ | Baseline strain level | 0.18 |
+| $m$ | Linear thermal-drift slope | 0.16 |
+| $A_B$ | Thermal-oscillation amplitude | 0.05 |
+| $f_B$ | Thermal-oscillation frequency | 1.5 |
+| $K$ | Number of vehicle-load responses | 4 |
+| $\mathbf{c}$ | Vehicle-load locations | $(0.18,\,0.34,\,0.52,\,0.76)$ |
+| $A_L$ | Vehicle-load amplitude | 0.16 |
+| $w_L$ | Vehicle-load width | 0.025 |
+| $A_S$ | Slip magnitude | 0.10 |
+| $c_S$ | Slip location | 0.62 |
+| $w_S$ | Slip transition width | 0.004 |
+| $A_R$ | Structural-vibration amplitude | 0.10 |
+| $\alpha_R$ | Structural-vibration decay rate | 12 |
+| $f_R$ | Structural-vibration frequency | 28 |
 
 ## MATLAB Implementation
 
