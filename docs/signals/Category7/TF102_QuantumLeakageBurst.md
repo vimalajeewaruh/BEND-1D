@@ -7,34 +7,86 @@ The **QuantumLeakageBurst** signal combines a nearly stable low-amplitude readou
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&0.08+0.02\sin(8\pi x)
-+0.20\sum_{c\in\{0.24,0.47,0.71\}}g(x;c,0.020)\\
-&+0.10[S(x;0.54,0.004)-S(x;0.64,0.006)].
-\end{aligned}
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[QuantumLeakageBurst signal](../../assets/images/TF102_QuantumLeakageBurst.png)
+Define the Gaussian function
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the low-amplitude background
+
+```math
+B(x)=b_0+A_B\sin(2\pi f_Bx).
+```
+
+Let the leakage-event centers be
+
+```math
+\mathcal{C}=(0.24,\,0.47,\,0.71).
+```
+
+Define the leakage component
+
+```math
+L(x)=
+A_L
+\sum_{c\in\mathcal{C}}
+g(x;c,w_L).
+```
+
+Define the finite-duration level shift
+
+```math
+Q(x)=
+A_Q
+\left[
+S(x;c_1,w_1)-S(x;c_2,w_2)
+\right].
+```
+
+The signal is
+
+```math
+f(x)=B(x)+L(x)+Q(x).
+```
+
+
+[View QuantumLeakageBurst signal](../../assets/images/TF102_QuantumLeakageBurst.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Sparse excursions plus finite level shift |
-| Leakage events | Near 0.24, 0.47, and 0.71 |
-| Shift interval | Approximately 0.54–0.64 |
+| Background | Low-amplitude oscillation around baseline $b_0$ |
+| Leakage events | Centered at the locations in $\mathcal{C}$ |
+| Shift interval | Approximately from $c_1$ to $c_2$ |
 | Main challenge | Preserving small transients in a low-amplitude background |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.20$ | Leakage-burst amplitude | 0.20 |
-| $0.020$ | Leakage-burst width | 0.020 |
-| $0.10$ | Level-shift amplitude | 0.10 |
+| $b_0$ | Baseline level | 0.08 |
+| $A_B$ | Background oscillation amplitude | 0.02 |
+| $f_B$ | Background oscillation frequency | 4 |
+| $\mathcal{C}$ | Leakage-event centers | $(0.24,\,0.47,\,0.71)$ |
+| $A_L$ | Leakage-burst amplitude | 0.20 |
+| $w_L$ | Leakage-burst width | 0.020 |
+| $A_Q$ | Level-shift amplitude | 0.10 |
+| $c_1$ | Level-shift onset location | 0.54 |
+| $w_1$ | Level-shift onset width | 0.004 |
+| $c_2$ | Level-shift offset location | 0.64 |
+| $w_2$ | Level-shift offset width | 0.006 |
 
 ## MATLAB Implementation
 
