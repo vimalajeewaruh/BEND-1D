@@ -56,7 +56,6 @@ b_0-mx-D(x).
 | $A_D$ | Nonlinear degradation magnitude | 0.58 |
 | $p$ | Nonlinear degradation power | 1.55 |
 
-
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF191_matlab.md)
