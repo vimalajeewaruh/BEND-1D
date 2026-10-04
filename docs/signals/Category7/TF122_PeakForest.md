@@ -7,33 +7,57 @@ The **PeakForest** signal is an artificial collection of twelve positive and neg
 
 ## Mathematical Definition
 
-Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the Gaussian function
 
-$$
-f(x)=0.02+\sum_{k=1}^{12}a_k g(x;c_k,w_k),
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-where
+Let the peak centers, signed amplitudes, and widths be
 
-$$
-c=(0.08,0.15,0.24,0.31,0.405,0.47,0.505,0.59,0.69,0.77,0.86,0.93),
-$$
+```math
+\mathbf{c}
+=
+(0.08,\,0.15,\,0.24,\,0.31,\,0.405,\,0.47,\,0.505,\,0.59,\,0.69,\,0.77,\,0.86,\,0.93),
+```
 
-$$
-a=(0.22,-0.18,0.30,0.50,-0.25,0.70,0.42,-0.35,0.55,0.24,-0.20,0.38),
-$$
+```math
+\mathbf{a}
+=
+(0.22,\,-0.18,\,0.30,\,0.50,\,-0.25,\,0.70,\,0.42,\,-0.35,\,0.55,\,0.24,\,-0.20,\,0.38),
+```
 
-$$
-w=(0.030,0.015,0.020,0.010,0.012,0.008,0.006,0.016,0.004,0.010,0.006,0.003).
-$$
+```math
+\mathbf{w}
+=
+(0.030,\,0.015,\,0.020,\,0.010,\,0.012,\,0.008,\,0.006,\,0.016,\,0.004,\,0.010,\,0.006,\,0.003).
+```
 
-[PeakForest signal](../../assets/images/TF122_PeakForest.png)
+Define the peak-forest component
+
+```math
+P(x)=
+\sum_{k=1}^{K}
+a_k g(x;c_k,w_k).
+```
+
+The signal is
+
+```math
+f(x)=b_0+P(x).
+```
+
+[View PeakForest signal](../../assets/images/TF122_PeakForest.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multiscale positive and negative peak forest |
+| Peak locations | $K$ irregularly spaced centers specified by $\mathbf{c}$ |
 | Width range | 0.003–0.030 |
 | Amplitude range | -0.35–0.70 |
 | Main challenge | No single smoothing bandwidth is suitable for all peaks |
@@ -42,9 +66,11 @@ $$
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $c_k$ | Peak centers | As above |
-| $a_k$ | Signed amplitudes | As above |
-| $w_k$ | Peak widths | As above |
+| $b_0$ | Baseline level | 0.02 |
+| $K$ | Number of peaks | 12 |
+| $\mathbf{c}$ | Peak centers | $(0.08,\,0.15,\,0.24,\,0.31,\,0.405,\,0.47,\,0.505,\,0.59,\,0.69,\,0.77,\,0.86,\,0.93)$ |
+| $\mathbf{a}$ | Signed peak amplitudes | $(0.22,\,-0.18,\,0.30,\,0.50,\,-0.25,\,0.70,\,0.42,\,-0.35,\,0.55,\,0.24,\,-0.20,\,0.38)$ |
+| $\mathbf{w}$ | Peak widths | $(0.030,\,0.015,\,0.020,\,0.010,\,0.012,\,0.008,\,0.006,\,0.016,\,0.004,\,0.010,\,0.006,\,0.003)$ |
 
 ## MATLAB Implementation
 
