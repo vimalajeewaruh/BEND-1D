@@ -2,10 +2,6 @@
 
 ## Overview
 
-This deterministic capnogram surrogate contains five repeated breaths. Each breath has a rapid expiratory upstroke, a sloping alveolar plateau, and a rapid inspiratory return. The fourth breath has a stronger shark-fin slope and a localized cleft, providing a small pathological departure from the repeated morphology.
-
-## Overview
-
 The **CapnogramBreaths** signal consists of five recurrent smooth-gated capnogram breaths, with a steeper shark-fin morphology in the fourth breath and a localized cleft.
 
 ## Mathematical Definition
