@@ -4,47 +4,82 @@
 
 This deterministic capnogram surrogate contains five repeated breaths. Each breath has a rapid expiratory upstroke, a sloping alveolar plateau, and a rapid inspiratory return. The fourth breath has a stronger shark-fin slope and a localized cleft, providing a small pathological departure from the repeated morphology.
 
+## Overview
+
+The **CapnogramBreaths** signal consists of five recurrent smooth-gated capnogram breaths, with a steeper shark-fin morphology in the fourth breath and a localized cleft.
+
 ## Mathematical Definition
 
 Define the smooth logistic transition
 
-$$
-L(x;c,w)=\frac{1}{1+\exp\{-(x-c)/w\}}.
-$$
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-For breath starts
+Let the breath start times be
 
-$$
-t=(0.010,0.205,0.400,0.595,0.790),
-$$
+```math
+\mathbf{t}
+=
+(0.010,\,0.205,\,0.400,\,0.595,\,0.790).
+```
 
-let $r_k=t_k+0.045$, $d_k=t_k+0.145$, and
+For each breath, define the upstroke and downstroke locations
 
-$$
-G_k(x)=L(x;r_k,0.0035)-L(x;d_k,0.0035).
-$$
+```math
+r_k=t_k+\delta_r,
+```
 
-The plateau slopes are
+```math
+d_k=t_k+\delta_d.
+```
 
-$$
-p_k(x)=0.80+0.12\frac{x-r_k}{d_k-r_k},\qquad k\ne4,
-$$
+The smooth gate for the $k$th breath is
 
-and
+```math
+G_k(x)=
+L(x;r_k,w_G)-L(x;d_k,w_G).
+```
 
-$$
-p_4(x)=0.70+0.34\frac{x-r_4}{d_4-r_4}.
-$$
+For $k\ne4$, define the plateau profile
+
+```math
+p_k(x)=
+A_P+
+m_P\frac{x-r_k}{d_k-r_k}.
+```
+
+For the fourth breath, define the shark-fin plateau profile
+
+```math
+p_4(x)=
+A_4+
+m_4\frac{x-r_4}{d_4-r_4}.
+```
+
+Define the localized cleft
+
+```math
+C(x)=
+-A_C
+\exp\left[
+-\frac12
+\left(
+\frac{x-c_C}{w_C}
+\right)^2
+\right].
+```
 
 The signal is
 
-$$
-f(x)=\sum_{k=1}^{5}G_k(x)p_k(x)
--0.12\exp\left[-\frac12\left(\frac{x-0.685}{0.009}\right)^2\right],
-\qquad 0\le x\le1.
-$$
+```math
+f(x)=
+\sum_{k=1}^{K}G_k(x)p_k(x)+C(x),
+\qquad 0\leq x\leq1.
+```
 
-[Capnogram Breaths](../../assets/images/TF161_CapnogramBreaths.png)
+[View Capnogram Breaths](../../assets/images/TF161_CapnogramBreaths.png)
 
 ## Morphological Characteristics
 
@@ -52,19 +87,28 @@ $$
 |---|---|
 | Primary family | Recurrent pulse morphology |
 | Signal type | Smooth gated plateaus with a localized defect |
-| Main structure | Five repeated capnogram breaths |
-| Local anomaly | Shark-fin fourth plateau and small cleft |
-| Main challenge | Preserve a weak abnormality within repeated structure |
+| Main structure | $K$ repeated capnogram breaths |
+| Breath timing | Upstroke and downstroke locations determined by $\delta_r$ and $\delta_d$ |
+| Typical plateaus | Initial level $A_P$ with slope controlled by $m_P$ |
+| Local anomaly | Shark-fin fourth plateau controlled by $A_4$ and $m_4$, with a small localized cleft |
+| Main challenge | Preserving a weak abnormality within repeated structure |
 
 ## Parameters
 
-| Parameter | Value | Meaning |
-|---|---:|---|
-| $t_k$ | listed above | Breath start times |
-| Rise offset | $0.045$ | Start-to-upstroke delay |
-| Fall offset | $0.145$ | Start-to-downstroke delay |
-| Gate width | $0.0035$ | Transition smoothness |
-| Cleft center | $0.685$ | Location of the localized depression |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $K$ | Number of breaths | 5 |
+| $\mathbf{t}$ | Breath start times | $(0.010,\,0.205,\,0.400,\,0.595,\,0.790)$ |
+| $\delta_r$ | Start-to-upstroke delay | 0.045 |
+| $\delta_d$ | Start-to-downstroke delay | 0.145 |
+| $w_G$ | Gate transition width | 0.0035 |
+| $A_P$ | Typical plateau initial level | 0.80 |
+| $m_P$ | Typical plateau increase | 0.12 |
+| $A_4$ | Fourth-breath plateau initial level | 0.70 |
+| $m_4$ | Fourth-breath plateau increase | 0.34 |
+| $A_C$ | Cleft magnitude | 0.12 |
+| $c_C$ | Cleft center | 0.685 |
+| $w_C$ | Cleft width | 0.009 |
 
 ## MATLAB Implementation
 
