@@ -3,39 +3,58 @@
 
 ## Overview
 
-A long mild degradation trend develops a smooth but pronounced knee followed by accelerated decline. The knee onset is intentionally subtle.
+The **BatteryKnee** signal represents a long mild degradation trend that develops a smooth but pronounced knee followed by accelerated decline. The onset of the knee is intentionally subtle.
 
 ## Mathematical Definition
 
-Let
-$$
-s(x)=\frac{\log[1+\exp\{\kappa(x-x_0)\}]}{\kappa},
-\qquad \kappa=26,\quad x_0=0.64.
-$$
-The normalized degradation curve is
-$$
-f(x)=1-0.18x-0.58\left[\frac{s(x)}{s(1)}\right]^{1.55}.
-$$
+Define the soft-plus function
 
-[BatteryKnee signal](../../assets/images/TF191_BatteryKnee.png)
+```math
+s(x)=
+\frac{
+\log\left[1+\exp\left(\kappa(x-x_0)\right)\right]
+}{\kappa}.
+```
+
+Define the normalized nonlinear degradation component by
+
+```math
+D(x)=
+A_D
+\left[
+\frac{s(x)}{s(1)}
+\right]^p.
+```
+
+The signal is
+
+```math
+f(x)=
+b_0-mx-D(x).
+```
+
+[View Battery Knee](../../assets/images/TF191_BatteryKnee.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Energy storage |
-| Structure | Linear trend plus normalized soft-plus power |
+| Structure | Linear degradation trend plus normalized soft-plus power |
+| Knee behavior | Smooth transition from mild to accelerated degradation |
 | Regularity | Globally smooth with strongly changing curvature |
-| Main challenge | Preserve the onset and severity of the knee |
+| Main challenge | Preserving the onset and severity of the knee |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Knee center $x_0$ | $0.64$ |
-| Sharpness $\kappa$ | $26$ |
-| Power | $1.55$ |
-| Nonlinear loss | $0.58$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Initial normalized level | 1 |
+| $m$ | Linear degradation rate | 0.18 |
+| $x_0$ | Knee center | 0.64 |
+| $\kappa$ | Knee sharpness | 26 |
+| $A_D$ | Nonlinear degradation magnitude | 0.58 |
+| $p$ | Nonlinear degradation power | 1.55 |
 
 
 ## MATLAB Implementation
