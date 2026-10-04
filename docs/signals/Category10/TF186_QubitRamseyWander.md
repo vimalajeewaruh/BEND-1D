@@ -3,39 +3,80 @@
 
 ## Overview
 
-A Ramsey-like fringe has slow phase wander, decreasing visibility, and a localized collapse and recovery of contrast.
+The **QubitRamseyWander** signal is a Ramsey-like fringe with slow phase wander, decreasing visibility, and a localized collapse and recovery of contrast.
 
 ## Mathematical Definition
 
-Let $G(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
-$$
-V(x)=(0.92-0.35x)[1-0.78G(x;0.56,0.055)],
-$$
-$$
-\phi(x)=2\pi(8x+2.8x^2)+0.55\sin(2\pi1.4x),
-\qquad f(x)=V(x)\cos\{\phi(x)\}.
-$$
+Define the Gaussian profile
 
+```math
+G(x;c,w)=
+\exp\left[
+-\frac12
+\left(
+\frac{x-c}{w}
+\right)^2
+\right].
+```
 
-[QubitRamseyWander signal](../../assets/images/TF186_QubitRamseyWander.png)
+Define the visibility envelope by
+
+```math
+V(x)=
+\left(
+V_0-m_Vx
+\right)
+\left[
+1-A_DG(x;c_D,w_D)
+\right].
+```
+
+Define the oscillatory phase by
+
+```math
+\phi(x)=
+2\pi
+\left(
+a_1x+a_2x^2
+\right)
++
+A_M\sin(2\pi f_Mx).
+```
+
+The signal is
+
+```math
+f(x)=
+V(x)\cos\left[\phi(x)\right].
+```
+
+[View Qubit Ramsey Wander](../../assets/images/TF186_QubitRamseyWander.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Quantum sensing |
+| Primary family | Visibility- and phase-modulated oscillation |
 | Structure | Phase-modulated fringe with a Gaussian visibility dip |
+| Visibility behavior | Gradual global decrease with localized collapse and recovery |
+| Phase behavior | Polynomial drift with additional slow modulation |
 | Regularity | Smooth oscillation with locally weak amplitude |
-| Main challenge | Preserve weak fringes inside the low-visibility region |
+| Main challenge | Preserving weak fringes inside the low-visibility region |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Visibility-dip center | $0.56$ |
-| Visibility-dip width | $0.055$ |
-| Visibility-dip depth | $0.78$ |
-
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $V_0$ | Initial visibility | 0.92 |
+| $m_V$ | Visibility decay slope | 0.35 |
+| $A_D$ | Visibility-dip depth | 0.78 |
+| $c_D$ | Visibility-dip center | 0.56 |
+| $w_D$ | Visibility-dip width | 0.055 |
+| $a_1$ | Linear phase coefficient | 8 |
+| $a_2$ | Quadratic phase coefficient | 2.8 |
+| $A_M$ | Phase-wander amplitude | 0.55 |
+| $f_M$ | Phase-wander frequency | 1.4 |
 ## MATLAB Implementation
 
 [View MATLAB implementation](../../codes/matlab/TF186_matlab.md)
