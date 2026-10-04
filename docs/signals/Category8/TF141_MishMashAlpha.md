@@ -6,33 +6,89 @@ The **MishMashAlpha** artificial stress test combines a linear trend, square-roo
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&0.18x+0.25S(x;0.68,0.004)+0.32\sqrt{|x-0.27|}\\
-&+0.22e^{-((x-0.48)/0.012)^2/2}+0.18\sin[2\pi(7x+18x^2)].
-\end{aligned}
-$$
+```math
+S(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[MishMashAlpha signal](../../assets/images/TF141_MishMashAlpha.png)
+Define the linear trend
+
+```math
+T(x)=mx.
+```
+
+Define the square-root cusp
+
+```math
+C(x)=
+A_C\sqrt{|x-c_C|}.
+```
+
+Define the narrow bump
+
+```math
+B(x)=
+A_B
+\exp\left[
+-\frac12\left(\frac{x-c_B}{w_B}\right)^2
+\right].
+```
+
+Define the sharp step
+
+```math
+J(x)=
+A_JS(x;c_J,w_J).
+```
+
+Define the accelerating chirp
+
+```math
+H(x)=
+A_H
+\sin\left[
+2\pi(f_0x+\beta x^2)
+\right].
+```
+
+The signal is
+
+```math
+f(x)=T(x)+C(x)+B(x)+J(x)+H(x).
+```
+
+[View MishMashAlpha signal](../../assets/images/TF141_MishMashAlpha.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Trend, cusp, bump, step, and chirp |
-| Local singularity | Cusp at $x=0.27$ |
-| Abrupt feature | Step near $x=0.68$ |
+| Trend | Linear increase with slope $m$ |
+| Local singularity | Square-root cusp centered at $c_C$ |
+| Localized feature | Narrow positive bump centered at $c_B$ |
+| Abrupt feature | Sharp positive transition centered at $c_J$ |
+| Chirp | Increasing frequency governed by $f_0$ and $\beta$ |
 | Main challenge | Each component favors a different smoothing scale |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.32$ | Cusp amplitude | 0.32 |
-| $0.012$ | Bump width | 0.012 |
-| $18$ | Quadratic chirp coefficient | 18 |
+| $m$ | Linear trend slope | 0.18 |
+| $A_C$ | Cusp amplitude | 0.32 |
+| $c_C$ | Cusp location | 0.27 |
+| $A_B$ | Bump amplitude | 0.22 |
+| $c_B$ | Bump center | 0.48 |
+| $w_B$ | Bump width | 0.012 |
+| $A_J$ | Step magnitude | 0.25 |
+| $c_J$ | Step location | 0.68 |
+| $w_J$ | Step transition width | 0.004 |
+| $A_H$ | Chirp amplitude | 0.18 |
+| $f_0$ | Chirp base frequency | 7 |
+| $\beta$ | Quadratic chirp coefficient | 18 |
 
 ## MATLAB Implementation
 
