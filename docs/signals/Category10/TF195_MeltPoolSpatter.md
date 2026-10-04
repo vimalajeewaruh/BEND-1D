@@ -3,37 +3,108 @@
 
 ## Overview
 
-A broad thermal envelope carries sparse positive and negative spatter events and weak local oscillation. The spikes are legitimate signal features rather than contamination.
+The **MeltPoolSpatter** signal contains a broad thermal envelope with sparse positive and negative spatter events and weak localized oscillation. The narrow events represent legitimate physical signal features rather than contamination.
 
 ## Mathematical Definition
 
-With $G(x;c,w)=e^{-((x-c)/w)^2/2}$,
-$$
-f(x)=0.12+0.72G(x;0.55,0.22)
-+\sum_{k=1}^{6}a_kG(x;c_k,w_k)
-+0.05G(x;0.58,0.20)\sin(36\pi x),
-$$
-where the signed event parameters are given in the code.
+Define the Gaussian profile
 
-[MeltPoolSpatter signal](../../assets/images/TF195_MeltPoolSpatter.png)
+```math
+G(x;c,w)=
+\exp\left[
+-\frac{1}{2}
+\left(
+\frac{x-c}{w}
+\right)^2
+\right].
+```
+
+Define the broad thermal envelope by
+
+```math
+T(x)=
+A_T G(x;c_T,w_T).
+```
+
+Let the spatter-event centers be
+
+```math
+\mathbf{c}
+=
+(0.21,\,0.37,\,0.49,\,0.58,\,0.74,\,0.79),
+```
+
+with corresponding signed amplitudes
+
+```math
+\mathbf{a}
+=
+(a_1,\ldots,a_K),
+```
+
+and widths
+
+```math
+\mathbf{w}
+=
+(w_1,\ldots,w_K),
+```
+
+as specified in the implementation.
+
+Define the sparse spatter component by
+
+```math
+P(x)=
+\sum_{k=1}^{K}
+a_kG(x;c_k,w_k).
+```
+
+Define the localized oscillatory component by
+
+```math
+R(x)=
+A_R
+G(x;c_R,w_R)
+\sin(2\pi f_Rx).
+```
+
+The signal is
+
+```math
+f(x)=
+b_0+T(x)+P(x)+R(x).
+```
+
+[View Melt Pool Spatter](../../assets/images/TF195_MeltPoolSpatter.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Application family | Additive manufacturing |
-| Structure | Gaussian background with sparse multiscale events |
+| Structure | Broad Gaussian thermal envelope with sparse multiscale events and localized oscillation |
+| Spatter behavior | Sparse positive and negative narrow events |
+| Oscillatory behavior | Weak high-frequency oscillation localized within the thermal region |
 | Regularity | Smooth but with extremely narrow high-curvature peaks |
-| Main challenge | Preserve rare physical events without fitting noise |
+| Main challenge | Preserving rare physical events without fitting noise |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Envelope center/width | $0.55/0.22$ |
-| Event centers | $0.21,0.37,0.49,0.58,0.74,0.79$ |
-| Event widths | $0.0025$–$0.004$ |
-
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Baseline level | 0.12 |
+| $A_T$ | Thermal-envelope amplitude | 0.72 |
+| $c_T$ | Thermal-envelope center | 0.55 |
+| $w_T$ | Thermal-envelope width | 0.22 |
+| $K$ | Number of spatter events | 6 |
+| $\mathbf{c}$ | Event centers | $(0.21,\,0.37,\,0.49,\,0.58,\,0.74,\,0.79)$ |
+| $\mathbf{a}$ | Signed event amplitudes | Specified in implementation |
+| $\mathbf{w}$ | Event widths | $0.0025$–$0.004$ |
+| $A_R$ | Localized-oscillation amplitude | 0.05 |
+| $c_R$ | Localized-oscillation center | 0.58 |
+| $w_R$ | Localized-oscillation width | 0.20 |
+| $f_R$ | Localized-oscillation frequency | 18 |
 
 ## MATLAB Implementation
 
