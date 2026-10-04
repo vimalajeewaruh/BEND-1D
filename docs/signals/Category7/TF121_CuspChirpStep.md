@@ -7,30 +7,74 @@ The **CuspChirpStep** signal is an artificial stress test combining a cusp, acce
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$. Then
+Define the smooth step
 
-$$
-f(x)=0.45\sqrt{|x-0.30|}+0.22\sin[2\pi(8x+18x^2)]+0.28S(x;0.68,0.004)+0.10x.
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[CuspChirpStep signal](../../assets/images/TF121_CuspChirpStep.png)
+Define the cusp component
+
+```math
+C(x)=A_C\sqrt{|x-c_C|}.
+```
+
+Define the accelerating chirp
+
+```math
+H(x)=
+A_H
+\sin\left[
+2\pi(f_0x+\beta x^2)
+\right].
+```
+
+Define the sharp step
+
+```math
+J(x)=A_JS(x;c_J,w_J).
+```
+
+Define the smooth linear trend
+
+```math
+T(x)=mx.
+```
+
+The signal is
+
+```math
+f(x)=C(x)+H(x)+J(x)+T(x).
+```
+
+[View CuspChirpStep signal](../../assets/images/TF121_CuspChirpStep.png)
+
+## Morphological Characteristics
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Cusp, chirp, step, and trend |
-| Cusp | At $x=0.30$ |
-| Step | Near $x=0.68$ |
+| Cusp | Located at $c_C$ with amplitude $A_C$ |
+| Chirp | Increasing frequency governed by $f_0$ and $\beta$ |
+| Step | Sharp positive transition near $c_J$ |
+| Trend | Smooth linear increase with slope $m$ |
 | Main challenge | Reconciling features that favor different smoothing scales |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.45$ | Cusp amplitude | 0.45 |
-| $18$ | Quadratic chirp coefficient | 18 |
-| $0.28$ | Step magnitude | 0.28 |
+| $A_C$ | Cusp amplitude | 0.45 |
+| $c_C$ | Cusp location | 0.30 |
+| $A_H$ | Chirp amplitude | 0.22 |
+| $f_0$ | Chirp base frequency | 8 |
+| $\beta$ | Quadratic chirp coefficient | 18 |
+| $A_J$ | Step magnitude | 0.28 |
+| $c_J$ | Step location | 0.68 |
+| $w_J$ | Step transition width | 0.004 |
+| $m$ | Linear trend slope | 0.10 |
 
 ## MATLAB Implementation
 
