@@ -7,41 +7,77 @@ The **HyperspectralMineral** signal contains five absorption bands of unequal am
 
 ## Mathematical Definition
 
-Let $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the Gaussian function
 
-$$
-f(x)=0.78+0.08x-\sum_{k=1}^{5}a_k g(x;c_k,w_k),
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
 
-where
+Define the smooth continuum
 
-$$
-c=(0.22,0.46,0.59,0.625,0.81),\quad
-a=(0.12,0.25,0.18,0.14,0.08),
-$$
+```math
+B(x)=b_0+mx.
+```
 
-$$
-w=(0.030,0.040,0.018,0.016,0.024).
-$$
+Let the absorption-band centers, depths, and widths be
 
-[HyperspectralMineral signal](../../assets/images/TF115_HyperspectralMineral.png)
+```math
+\mathbf{c}
+=
+(0.22,\,0.46,\,0.59,\,0.625,\,0.81),
+```
+
+```math
+\mathbf{a}
+=
+(0.12,\,0.25,\,0.18,\,0.14,\,0.08),
+```
+
+```math
+\mathbf{w}
+=
+(0.030,\,0.040,\,0.018,\,0.016,\,0.024).
+```
+
+Define the absorption component
+
+```math
+A(x)=
+-\sum_{k=1}^{K}
+a_k g(x;c_k,w_k).
+```
+
+The signal is
+
+```math
+f(x)=B(x)+A(x).
+```
+
+[View HyperspectralMineral signal](../../assets/images/TF115_HyperspectralMineral.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Unequal spectral absorption bands |
-| Close pair | Centers at 0.59 and 0.625 |
-| Weak feature | Band at $x=0.81$ with amplitude 0.08 |
-| Main challenge | Avoiding merger of close bands and loss of weak diagnostics |
+| Continuum | Smooth linear trend with baseline $b_0$ and slope $m$ |
+| Close pair | Bands centered at $c_3=0.59$ and $c_4=0.625$ |
+| Weak feature | Band centered at $c_5=0.81$ with depth $a_5=0.08$ |
+| Main challenge | Avoiding merger of close bands and loss of weak diagnostic features |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $c_k$ | Band centers | As above |
-| $a_k$ | Band depths | As above |
-| $w_k$ | Band widths | As above |
+| $b_0$ | Continuum baseline | 0.78 |
+| $m$ | Continuum slope | 0.08 |
+| $K$ | Number of absorption bands | 5 |
+| $\mathbf{c}$ | Band centers | $(0.22,\,0.46,\,0.59,\,0.625,\,0.81)$ |
+| $\mathbf{a}$ | Band depths | $(0.12,\,0.25,\,0.18,\,0.14,\,0.08)$ |
+| $\mathbf{w}$ | Band widths | $(0.030,\,0.040,\,0.018,\,0.016,\,0.024)$ |
 
 ## MATLAB Implementation
 
