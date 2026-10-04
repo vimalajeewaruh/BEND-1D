@@ -1,8 +1,3 @@
----
-layout: default
-title: "Category 10 — Benchmarking Role"
----
-
 # Category 10 — Benchmarking Role
 
 Category 10 extends BEND-1D with fifty deterministic signals that emphasize modern measurement morphologies and controlled structural adversaries. Each signal has a known noiseless truth, but the application labels describe qualitative inspiration rather than calibrated physical simulation.
