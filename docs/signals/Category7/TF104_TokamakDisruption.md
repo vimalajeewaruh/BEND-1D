@@ -7,33 +7,72 @@ The **TokamakDisruption** signal contains a growing chirped oscillation, a slowe
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$. Then
+Define the smooth step
 
-$$
-\begin{aligned}
-f(x)={}&0.55+(0.04+0.30x)\sin[2\pi(8x+10x^2)]\\
-&+0.16\sin(5\pi x)S(x;0.58,0.02)-0.95S(x;0.79,0.006).
-\end{aligned}
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[TokamakDisruption signal](../../assets/images/TF104_TokamakDisruption.png)
+Define the growing chirped component
+
+```math
+C(x)=
+(A_0+A_1x)
+\sin\left[
+2\pi(f_0x+\beta x^2)
+\right].
+```
+
+Define the locking-like component
+
+```math
+L(x)=
+A_L
+\sin(2\pi f_Lx)
+S(x;c_L,w_L).
+```
+
+Define the disruption collapse
+
+```math
+D(x)=
+-A_D S(x;c_D,w_D).
+```
+
+The signal is
+
+```math
+f(x)=b_0+C(x)+L(x)+D(x).
+```
+
+[View TokamakDisruption signal](../../assets/images/TF104_TokamakDisruption.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Growing precursor and abrupt collapse |
-| Locking component | Emerges near $x=0.58$ |
-| Disruption | Sharp negative transition near $x=0.79$ |
+| Chirped precursor | Increasing amplitude and frequency governed by $A_1$ and $\beta$ |
+| Locking component | Emerges near $c_L$ with transition width $w_L$ |
+| Disruption | Sharp negative transition near $c_D$ |
 | Main challenge | Retaining weak precursor structure before the dominant event |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.30$ | Oscillation-amplitude growth coefficient | 0.30 |
-| $0.58$ | Locking-component onset | 0.58 |
-| $-0.95$ | Collapse magnitude | -0.95 |
+| $b_0$ | Baseline level | 0.55 |
+| $A_0$ | Initial chirp amplitude | 0.04 |
+| $A_1$ | Chirp amplitude-growth coefficient | 0.30 |
+| $f_0$ | Chirp base frequency | 8 |
+| $\beta$ | Quadratic phase coefficient | 10 |
+| $A_L$ | Locking-component amplitude | 0.16 |
+| $f_L$ | Locking-component frequency | 2.5 |
+| $c_L$ | Locking-component onset location | 0.58 |
+| $w_L$ | Locking-component transition width | 0.02 |
+| $A_D$ | Collapse magnitude | 0.95 |
+| $c_D$ | Disruption location | 0.79 |
+| $w_D$ | Disruption transition width | 0.006 |
 
 ## MATLAB Implementation
 
