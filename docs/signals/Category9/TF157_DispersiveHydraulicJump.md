@@ -7,31 +7,76 @@ The **DispersiveHydraulicJump** signal contains a steep front followed by a genu
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $u=(x-0.34)_+$. Then
+Define the smooth step
 
-$$
-f(x)=0.12+0.07x+0.64S(x;0.34,0.006)
-+0.22I(x\ge0.34)e^{-7.5u}\sin[2\pi(17u+12u^2)].
-$$
+```math
+S(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[DispersiveHydraulicJump signal](../../assets/images/TF157_DispersiveHydraulicJump.png)
+Define the background trend
+
+```math
+B(x)=b_0+mx.
+```
+
+Define the hydraulic front
+
+```math
+J(x)=
+A_JS(x;c_J,w_J).
+```
+
+Let
+
+```math
+u=(x-c_J)_+.
+```
+
+For $x\geq c_J$, define the post-front dispersive wavetrain
+
+```math
+D(x)=
+A_De^{-\alpha_Du}
+\sin\left[
+2\pi(f_Du+\beta_Du^2)
+\right],
+```
+
+with $D(x)=0$ for $x<c_J$.
+
+The signal is
+
+```math
+f(x)=B(x)+J(x)+D(x).
+```
+
+[View DispersiveHydraulicJump signal](../../assets/images/TF157_DispersiveHydraulicJump.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Steep transition with dispersive wavetrain |
-| Front | Near $x=0.34$ |
-| Post-front structure | Decaying chirped oscillation |
+| Background | Slowly increasing linear trend |
+| Front | Steep positive transition centered at $c_J$ |
+| Post-front structure | Decaying chirped oscillation beginning at $c_J$ |
+| Dispersion | Oscillation frequency increases according to $\beta_D$ |
 | Main challenge | Avoiding removal of genuine waves as estimator ringing |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.64$ | Jump magnitude | 0.64 |
-| $7.5$ | Wavetrain decay rate | 7.5 |
-| $12$ | Quadratic phase coefficient | 12 |
+| $b_0$ | Baseline level | 0.12 |
+| $m$ | Linear trend slope | 0.07 |
+| $A_J$ | Jump magnitude | 0.64 |
+| $c_J$ | Front location | 0.34 |
+| $w_J$ | Front transition width | 0.006 |
+| $A_D$ | Wavetrain amplitude | 0.22 |
+| $\alpha_D$ | Wavetrain decay rate | 7.5 |
+| $f_D$ | Initial wavetrain frequency | 17 |
+| $\beta_D$ | Quadratic phase coefficient | 12 |
 
 ## MATLAB Implementation
 
