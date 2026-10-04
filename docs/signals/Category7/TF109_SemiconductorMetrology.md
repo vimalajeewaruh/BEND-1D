@@ -6,30 +6,82 @@ The **SemiconductorMetrology** signal combines slow critical-dimension-like drif
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the smooth step
 
-$$
-f(x)=0.62+0.11x+0.035\sin(18\pi x)+0.018\sin(62\pi x)-0.08S(x;0.58,0.004)+0.12g(x;0.76,0.010).
-$$
+```math
+S(x;c,w)=\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[SemiconductorMetrology signal](../../assets/images/TF109_SemiconductorMetrology.png)
+Define the Gaussian function
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the slow process trend
+
+```math
+B(x)=b_0+mx.
+```
+
+Define the periodic tool variation
+
+```math
+P(x)=
+A_1\sin(2\pi f_1x)
++
+A_2\sin(2\pi f_2x).
+```
+
+Define the recalibration shift
+
+```math
+R(x)=-A_R S(x;c_R,w_R).
+```
+
+Define the localized defect excursion
+
+```math
+D(x)=A_Dg(x;c_D,w_D).
+```
+
+The signal is
+
+```math
+f(x)=B(x)+P(x)+R(x)+D(x).
+```
+
+[View SemiconductorMetrology signal](../../assets/images/TF109_SemiconductorMetrology.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Drift, periodic variation, step, and local defect |
-| Recalibration | Negative shift near $x=0.58$ |
-| Defect excursion | Narrow positive peak near $x=0.76$ |
+| Background | Linear drift with periodic variation at frequencies $f_1$ and $f_2$ |
+| Recalibration | Negative shift near $c_R$ |
+| Defect excursion | Narrow positive peak centered at $c_D$ |
 | Main challenge | Separating tool periodicity from true process changes |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $9,31$ | Periodic cycle counts | As shown |
-| $-0.08$ | Recalibration magnitude | -0.08 |
-| $0.010$ | Defect width | 0.010 |
+| $b_0$ | Baseline level | 0.62 |
+| $m$ | Drift coefficient | 0.11 |
+| $A_1$ | First periodic-component amplitude | 0.035 |
+| $f_1$ | First periodic-component frequency | 9 |
+| $A_2$ | Second periodic-component amplitude | 0.018 |
+| $f_2$ | Second periodic-component frequency | 31 |
+| $A_R$ | Recalibration-shift magnitude | 0.08 |
+| $c_R$ | Recalibration location | 0.58 |
+| $w_R$ | Recalibration transition width | 0.004 |
+| $A_D$ | Defect-excursion amplitude | 0.12 |
+| $c_D$ | Defect-excursion center | 0.76 |
+| $w_D$ | Defect-excursion width | 0.010 |
 
 ## MATLAB Implementation
 
