@@ -7,37 +7,66 @@ The **ParticlePileup** signal contains six detector-like pulses with fast rise a
 
 ## Mathematical Definition
 
-For pulse centers $c_k$ and amplitudes $a_k$, let $u_k=(x-c_k)_+$. Then
+Let the pulse centers and amplitudes be
 
-$$
-f(x)=\sum_{k=1}^{6}a_k I(x\ge c_k)[1-e^{-140u_k}]e^{-18u_k},
-$$
+```math
+\mathbf{c}
+=
+(0.14,\,0.30,\,0.49,\,0.515,\,0.72,\,0.88),
+```
 
-where
+```math
+\mathbf{a}
+=
+(0.35,\,0.58,\,0.85,\,0.70,\,0.50,\,0.27).
+```
 
-$$
-c=(0.14,0.30,0.49,0.515,0.72,0.88),\qquad
-a=(0.35,0.58,0.85,0.70,0.50,0.27).
-$$
+For each pulse, define
 
-[ParticlePileup signal](../../assets/images/TF111_ParticlePileup.png)
+```math
+u_k=(x-c_k)_+.
+```
+
+For $x\geq c_k$, define the asymmetric detector pulse
+
+```math
+P_k(x)=
+a_k
+\left[
+1-e^{-k_ru_k}
+\right]
+e^{-k_du_k},
+```
+
+with $P_k(x)=0$ for $x<c_k$.
+
+The signal is
+
+```math
+f(x)=\sum_{k=1}^{K}P_k(x).
+```
+
+[View ParticlePileup signal](../../assets/images/TF111_ParticlePileup.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Overlapping asymmetric detector pulses |
-| Rise and decay | Fast rise, slower decay |
-| Pile-up pair | Centers at 0.49 and 0.515 |
+| Rise and decay | Fast rise governed by $k_r$ and slower decay governed by $k_d$ |
+| Pile-up pair | Pulses centered at $c_3=0.49$ and $c_4=0.515$ |
+| Weak event | Final pulse at $c_6=0.88$ has the smallest amplitude |
 | Main challenge | Resolving close arrivals without splitting isolated pulses |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $140$ | Pulse rise rate | 140 |
-| $18$ | Pulse decay rate | 18 |
-| $c_k,a_k$ | Arrival times and amplitudes | As above |
+| $K$ | Number of detector pulses | 6 |
+| $\mathbf{c}$ | Pulse arrival locations | $(0.14,\,0.30,\,0.49,\,0.515,\,0.72,\,0.88)$ |
+| $\mathbf{a}$ | Pulse amplitudes | $(0.35,\,0.58,\,0.85,\,0.70,\,0.50,\,0.27)$ |
+| $k_r$ | Pulse rise rate | 140 |
+| $k_d$ | Pulse decay rate | 18 |
 
 ## MATLAB Implementation
 
