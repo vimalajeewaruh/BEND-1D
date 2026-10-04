@@ -3,17 +3,42 @@
 
 ## Overview
 
-Two closely spaced modes produce a long-lived beat envelope, while a third higher mode decays much more rapidly.
+The **BellBeating** signal contains two closely spaced modes that produce a long-lived beat envelope, while a third higher-frequency mode decays much more rapidly.
 
 ## Mathematical Definition
 
-The signal is
-$$
-f(x)=e^{-2.3x}\{\sin(22\pi x)+0.92\sin(23.5\pi x+0.12)\}
-+0.35e^{-6.9x}\sin(2\pi27.3x+0.5).
-$$
+Define the two closely spaced modes by
 
-[BellBeating signal](../../assets/images/TF213_BellBeating.png)
+```math
+M_1(x)=
+A_1 e^{-\alpha_1 x}
+\sin(2\pi f_1x),
+```
+
+and
+
+```math
+M_2(x)=
+A_2 e^{-\alpha_1 x}
+\sin(2\pi f_2x+\delta_2).
+```
+
+Define the faster-decaying higher-frequency mode by
+
+```math
+M_3(x)=
+A_3 e^{-\alpha_3 x}
+\sin(2\pi f_3x+\delta_3).
+```
+
+The signal is
+
+```math
+f(x)=
+M_1(x)+M_2(x)+M_3(x).
+```
+
+[View Bell Beating](../../assets/images/TF213_BellBeating.png)
 
 ## Morphological Characteristics
 
@@ -21,16 +46,25 @@ $$
 |---|---|
 | Application family | Music/acoustics |
 | Structure | Three damped sinusoids with a close-frequency pair |
+| Beat behavior | Interference between $f_1$ and $f_2$ produces a long-lived amplitude envelope |
+| Decay behavior | The close-frequency pair shares a slow decay, while the higher mode decays more rapidly |
 | Regularity | Smooth, oscillatory, and nonstationary |
-| Main challenge | Preserve the perceptually important beat envelope |
+| Main challenge | Preserving the perceptually important beat envelope |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Close frequencies | $11,11.75$ |
-| Shared decay rate | $2.3$ |
-| Third frequency/decay | $27.3/6.9$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $A_1$ | First-mode amplitude | 1 |
+| $f_1$ | First-mode frequency | 11 |
+| $A_2$ | Second-mode amplitude | 0.92 |
+| $f_2$ | Second-mode frequency | 11.75 |
+| $\delta_2$ | Second-mode phase offset | 0.12 |
+| $\alpha_1$ | Shared decay rate of the close-frequency pair | 2.3 |
+| $A_3$ | Third-mode amplitude | 0.35 |
+| $f_3$ | Third-mode frequency | 27.3 |
+| $\delta_3$ | Third-mode phase offset | 0.5 |
+| $\alpha_3$ | Third-mode decay rate | 6.9 |
 
 ## MATLAB Implementation
 
