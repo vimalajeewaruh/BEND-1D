@@ -3,52 +3,119 @@
 
 ## Overview
 
-This deterministic turbulence surrogate combines a dyadic broadband background with three localized high-frequency packets. It moves between persistent multiscale fluctuation and intermittent fine-scale activity, challenging methods that equate weak high-frequency structure with noise.
+The **TurbulenceIntermittency** signal is a deterministic turbulence surrogate that combines a dyadic broadband background with three localized high-frequency packets. It moves between persistent multiscale fluctuation and intermittent fine-scale activity, challenging methods that equate weak high-frequency structure with noise.
 
 ## Mathematical Definition
 
-Let
+Let the phase vector be
 
-$$
-\theta=(0.2,1.1,2.0,0.7,2.7,1.6,0.4,2.3,1.3).
-$$
+```math
+\boldsymbol{\theta}
+=
+(0.2,\,1.1,\,2.0,\,0.7,\,2.7,\,1.6,\,0.4,\,2.3,\,1.3).
+```
 
-The broadband component is
+Define the dyadic broadband component
 
-$$
-B(x)=\sum_{m=0}^{8}0.13\,2^{-m/3}\sin(2\pi 2^m x+\theta_{m+1}).
-$$
+```math
+B(x)=
+\sum_{m=0}^{M}
+A_B\,2^{-m/\gamma}
+\sin\left(
+2\pi 2^m x+\theta_{m+1}
+\right).
+```
 
-With the Gaussian envelope $g(x;c,w)=\exp[-\tfrac12((x-c)/w)^2]$, the full signal is
+Define the Gaussian envelope
 
-$$
-\begin{aligned}
-f(x)=B(x)
-&+0.20g(x;0.24,0.055)\sin(2\pi73x+0.3)\\
-&+0.16g(x;0.56,0.040)\sin(2\pi119x+1.1)\\
-&+0.13g(x;0.81,0.028)\sin(2\pi181x+0.8).
-\end{aligned}
-$$
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12
+\left(
+\frac{x-c}{w}
+\right)^2
+\right].
+```
 
-[Turbulence Intermittency](../../assets/images/TF165_TurbulenceIntermittency.png)
+For each localized high-frequency packet, define
+
+```math
+P_k(x)=
+A_k
+g(x;c_k,w_k)
+\sin\left(
+2\pi f_kx+\delta_k
+\right).
+```
+
+The packet centers, widths, frequencies, amplitudes, and phases are
+
+```math
+\mathbf{c}
+=
+(0.24,\,0.56,\,0.81),
+```
+
+```math
+\mathbf{w}
+=
+(0.055,\,0.040,\,0.028),
+```
+
+```math
+\mathbf{f}
+=
+(73,\,119,\,181),
+```
+
+```math
+\mathbf{A}
+=
+(0.20,\,0.16,\,0.13),
+```
+
+```math
+\boldsymbol{\delta}
+=
+(0.3,\,1.1,\,0.8).
+```
+
+The signal is
+
+```math
+f(x)=
+B(x)+\sum_{k=1}^{K}P_k(x).
+```
+
+[View Turbulence Intermittency](../../assets/images/TF165_TurbulenceIntermittency.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Multiscale intermittent oscillation |
-| Background | Nine dyadic sinusoidal scales |
-| Local structure | Three shrinking high-frequency packets |
+| Background | $M+1$ dyadic sinusoidal scales with scale-dependent amplitudes |
+| Broadband scaling | Amplitudes decay according to $2^{-m/\gamma}$ |
+| Local structure | $K$ localized high-frequency packets |
+| Packet behavior | Increasing frequencies with decreasing amplitudes and widths |
 | Regularity | Smooth but strongly nonstationary |
-| Main challenge | Retain intermittent fine scales while reducing noise |
+| Main challenge | Retaining intermittent fine scales while reducing noise |
 
 ## Parameters
 
-| Feature | Center | Width | Frequency | Amplitude |
-|---|---:|---:|---:|---:|
-| Packet 1 | $0.24$ | $0.055$ | $73$ | $0.20$ |
-| Packet 2 | $0.56$ | $0.040$ | $119$ | $0.16$ |
-| Packet 3 | $0.81$ | $0.028$ | $181$ | $0.13$ |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $M$ | Maximum dyadic scale index | 8 |
+| $A_B$ | Broadband amplitude scale | 0.13 |
+| $\gamma$ | Broadband scaling exponent denominator | 3 |
+| $\boldsymbol{\theta}$ | Broadband phase vector | $(0.2,\,1.1,\,2.0,\,0.7,\,2.7,\,1.6,\,0.4,\,2.3,\,1.3)$ |
+| $K$ | Number of localized packets | 3 |
+| $\mathbf{c}$ | Packet centers | $(0.24,\,0.56,\,0.81)$ |
+| $\mathbf{w}$ | Packet widths | $(0.055,\,0.040,\,0.028)$ |
+| $\mathbf{f}$ | Packet frequencies | $(73,\,119,\,181)$ |
+| $\mathbf{A}$ | Packet amplitudes | $(0.20,\,0.16,\,0.13)$ |
+| $\boldsymbol{\delta}$ | Packet phases | $(0.3,\,1.1,\,0.8)$ |
 
 ## MATLAB Implementation
 
