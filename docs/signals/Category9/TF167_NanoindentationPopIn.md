@@ -3,43 +3,69 @@
 
 ## Overview
 
-This loading–unloading curve contains nonlinear loading, two small pop-in events, a separate unloading branch, and a late adhesion-like depression. The weak discrete events sit on a much larger smooth background.
+The **NanoindentationPopIn** signal is a loading–unloading curve containing nonlinear loading, two small pop-in events, a separate unloading branch, and a late adhesion-like depression. The weak discrete events sit on a much larger smooth background.
 
 ## Mathematical Definition
 
-Define
+Define the smooth logistic transition
 
-$$
-L(x;c,w)=\frac{1}{1+e^{-(x-c)/w}}.
-$$
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-On the loading branch,
+For $x\leq c_B$, define the loading branch
 
-$$
-f_L(x)=1.08\left(\frac{x}{0.70}\right)^{1.50}
--0.055L(x;0.29,0.0018)-0.070L(x;0.47,0.0018),
-\qquad x\le0.70.
-$$
+```math
+f_L(x)=
+A_L
+\left(
+\frac{x}{c_B}
+\right)^{p_L}
+-
+A_1L(x;c_1,w_P)
+-
+A_2L(x;c_2,w_P).
+```
 
-Let $f_{70}$ be the value of the sampled loading curve nearest $x=0.70$. The unloading branch is
+Let $f_B$ denote the value of the sampled loading curve nearest $x=c_B$.
 
-$$
-f_U(x)=f_{70}\left(\frac{1-x}{0.30}\right)^{1.32},
-\qquad x>0.70.
-$$
+For $x>c_B$, define the unloading branch
 
-Finally,
+```math
+f_U(x)=
+f_B
+\left(
+\frac{1-x}{1-c_B}
+\right)^{p_U}.
+```
 
-$$
-f(x)=
-\begin{cases}
-f_L(x), & x\le0.70,\\
-f_U(x), & x>0.70
-\end{cases}
--0.11\exp\left[-\frac12\left(\frac{x-0.925}{0.018}\right)^2\right].
-$$
+Define the adhesion-like depression
 
-[Nanoindentation Pop-In](../../assets/images/TF167_NanoindentationPopIn.png)
+```math
+D(x)=
+-A_D
+\exp\left[
+-\frac12
+\left(
+\frac{x-c_D}{w_D}
+\right)^2
+\right].
+```
+
+For $x\leq c_B$, the full signal is
+
+```math
+f(x)=f_L(x)+D(x).
+```
+
+For $x>c_B$, the full signal is
+
+```math
+f(x)=f_U(x)+D(x).
+```
+
+[View Nanoindentation Pop-In](../../assets/images/TF167_NanoindentationPopIn.png)
 
 ## Morphological Characteristics
 
@@ -47,18 +73,30 @@ $$
 |---|---|
 | Primary family | Hysteretic loading curve |
 | Background | Smooth nonlinear loading and unloading |
-| Local events | Two narrow pop-ins and a late adhesion dip |
-| Junction | Branch change near $x=0.70$ |
-| Main challenge | Preserve small abrupt events on a dominant trend |
+| Loading behavior | Power-law growth with exponent $p_L$ |
+| Local events | Two narrow pop-ins centered at $c_1$ and $c_2$ |
+| Junction | Loading-to-unloading branch change at $c_B$ |
+| Unloading behavior | Power-law decay with exponent $p_U$ |
+| Late feature | Adhesion-like negative depression centered at $c_D$ |
+| Main challenge | Preserving small abrupt events on a dominant smooth trend |
 
 ## Parameters
 
-| Parameter | Value | Meaning |
-|---|---:|---|
-| Pop-in centers | $0.29, 0.47$ | Loading discontinuities |
-| Pop-in widths | $0.0018$ | Logistic transition widths |
-| Branch point | $0.70$ | Loading-to-unloading transition |
-| Adhesion center | $0.925$ | Late negative feature |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $A_L$ | Loading amplitude scale | 1.08 |
+| $p_L$ | Loading power exponent | 1.50 |
+| $c_1$ | First pop-in center | 0.29 |
+| $c_2$ | Second pop-in center | 0.47 |
+| $A_1$ | First pop-in magnitude | 0.055 |
+| $A_2$ | Second pop-in magnitude | 0.070 |
+| $w_P$ | Pop-in transition width | 0.0018 |
+| $c_B$ | Loading-to-unloading branch point | 0.70 |
+| $f_B$ | Sampled loading value nearest the branch point | $f_L(c_B)$ approximately |
+| $p_U$ | Unloading power exponent | 1.32 |
+| $A_D$ | Adhesion-depression magnitude | 0.11 |
+| $c_D$ | Adhesion-depression center | 0.925 |
+| $w_D$ | Adhesion-depression width | 0.018 |
 
 ## MATLAB Implementation
 
