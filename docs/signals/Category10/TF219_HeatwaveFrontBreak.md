@@ -3,17 +3,51 @@
 
 ## Overview
 
-Temperature rises gradually toward a high plateau with increasingly visible diurnal oscillation, then collapses rapidly at a frontal passage.
+The **HeatwaveFrontBreak** signal represents a gradual temperature rise toward a high plateau with increasingly visible diurnal oscillation, followed by a rapid collapse associated with a frontal passage.
 
 ## Mathematical Definition
 
-With $L(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$,
-$$
-f(x)=0.18+0.72L(x;0.28,0.075)-0.82L(x;0.79,0.012)
-+[0.02+0.05L(x;0.35,0.08)]\sin(18\pi x).
-$$
+Define the logistic transition
 
-[HeatwaveFrontBreak signal](../../assets/images/TF219_HeatwaveFrontBreak.png)
+```math
+L(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
+
+Define the large-scale temperature trend by
+
+```math
+T(x)=
+b_0
++
+A_R L(x;c_R,w_R)
+-
+A_F L(x;c_F,w_F).
+```
+
+Define the varying oscillation amplitude by
+
+```math
+A(x)=
+A_0+
+A_1L(x;c_A,w_A).
+```
+
+The diurnal oscillatory component is
+
+```math
+D(x)=
+A(x)\sin(2\pi f_Dx).
+```
+
+The signal is
+
+```math
+f(x)=
+T(x)+D(x).
+```
+
+[View Heatwave Front Break](../../assets/images/TF219_HeatwaveFrontBreak.png)
 
 ## Morphological Characteristics
 
@@ -21,16 +55,28 @@ $$
 |---|---|
 | Application family | Climate |
 | Structure | Two unequal logistic transitions plus amplitude-varying oscillation |
+| Rise behavior | Gradual warming toward a high-temperature plateau |
+| Oscillatory behavior | Diurnal oscillation becomes stronger as the heatwave develops |
+| Break behavior | Rapid temperature collapse centered at $c_F$ |
 | Regularity | Smooth long trend with one sharp macroscopic break |
-| Main challenge | Keep the abrupt break and low-amplitude diurnal structure |
+| Main challenge | Preserving the abrupt break and low-amplitude diurnal structure |
 
 ## Parameters
 
-| Parameter | Value |
-|---|---|
-| Rise center/width | $0.28/0.075$ |
-| Break center/width | $0.79/0.012$ |
-| Oscillation frequency | $9$ cycles/unit |
+| Parameter | Meaning | Default |
+|---|---|---:|
+| $b_0$ | Baseline temperature level | 0.18 |
+| $A_R$ | Heatwave-rise magnitude | 0.72 |
+| $c_R$ | Rise center | 0.28 |
+| $w_R$ | Rise transition width | 0.075 |
+| $A_F$ | Frontal-break magnitude | 0.82 |
+| $c_F$ | Break center | 0.79 |
+| $w_F$ | Break transition width | 0.012 |
+| $A_0$ | Initial oscillation amplitude | 0.02 |
+| $A_1$ | Oscillation-amplitude increase | 0.05 |
+| $c_A$ | Oscillation-amplitude transition center | 0.35 |
+| $w_A$ | Oscillation-amplitude transition width | 0.08 |
+| $f_D$ | Diurnal oscillation frequency | 9 |
 
 ## MATLAB Implementation
 
