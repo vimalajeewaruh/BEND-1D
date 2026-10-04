@@ -7,30 +7,68 @@ The **DoubletOnCliff** stress test places two nearby narrow peaks directly on a 
 
 ## Mathematical Definition
 
-Let $S(x;c,w)=[1+e^{-(x-c)/w}]^{-1}$ and $g(x;c,w)=e^{-((x-c)/w)^2/2}$. Then
+Define the smooth step
 
-$$
-f(x)=0.75S(x;0.53,0.015)+0.28g(x;0.505,0.008)+0.24g(x;0.548,0.008).
-$$
+```math
+S(x;c,w)=
+\left[1+e^{-(x-c)/w}\right]^{-1}.
+```
 
-[DoubletOnCliff signal](../../assets/images/TF143_DoubletOnCliff.png)
+Define the Gaussian function
+
+```math
+g(x;c,w)=
+\exp\left[
+-\frac12\left(\frac{x-c}{w}\right)^2
+\right].
+```
+
+Define the steep cliff
+
+```math
+C(x)=
+A_CS(x;c_C,w_C).
+```
+
+Define the peak doublet
+
+```math
+P(x)=
+A_1g(x;c_1,w_P)
++
+A_2g(x;c_2,w_P).
+```
+
+The signal is
+
+```math
+f(x)=C(x)+P(x).
+```
+
+[View DoubletOnCliff signal](../../assets/images/TF143_DoubletOnCliff.png)
 
 ## Morphological Characteristics
 
 | Property | Description |
 |---|---|
 | Primary family | Close peak doublet on steep edge |
-| Edge center | $x=0.53$ |
-| Doublet centers | 0.505 and 0.548 |
+| Cliff | Sharp sigmoidal transition centered at $c_C$ |
+| Doublet | Two narrow peaks centered at $c_1$ and $c_2$ |
+| Peak scale | Both peaks have common width $w_P$ |
 | Main challenge | Maintaining peak resolution while recovering the underlying cliff |
 
 ## Parameters
 
 | Parameter | Meaning | Default |
 |---|---|---:|
-| $0.015$ | Edge width | 0.015 |
-| $0.008$ | Common peak width | 0.008 |
-| $0.28,0.24$ | Peak amplitudes | As shown |
+| $A_C$ | Cliff magnitude | 0.75 |
+| $c_C$ | Cliff center | 0.53 |
+| $w_C$ | Cliff transition width | 0.015 |
+| $A_1$ | First peak amplitude | 0.28 |
+| $c_1$ | First peak center | 0.505 |
+| $A_2$ | Second peak amplitude | 0.24 |
+| $c_2$ | Second peak center | 0.548 |
+| $w_P$ | Common peak width | 0.008 |
 
 ## MATLAB Implementation
 
